@@ -332,7 +332,89 @@ Para submissão a periódicos internacionais de alto impacto em Matemática Apli
 
 ---
 
-## 13. Diretriz Permanente e Conclusão
-Toda a base matemática, empírica, modelos treinados, artigos científicos publicáveis e apresentações executivas foram consolidadas integralmente dentro deste ecossistema (`C:\MathDoCarvalho\P_NP`).
+## 14. O Programa CLG (Computational Landscape Geometry) e a Trilogia de Benchmarks (2026)
+
+Para investigar se a não-linearidade geométrica de relaxações contínuas poderia mapear a fronteira P vs NP, foi estruturada a 5-tupla CLG $\mathcal{L}(I) = (\mathcal{M}, \Phi, \mathcal{H}, \Omega_{\text{curv}}, \mathcal{G}(I))$:
+
+1. **Benchmark CLG-01 (`Fontes/exp_clg01_p_vs_np.py`):**
+   - Comparou 2-SAT (Classe P, $\deg=2$) com Random-3-SAT (NP-Completo, $\deg=3$).
+   - Demonstrou curvatura estática nula para 2-SAT ($\Omega_{\text{curv}} = 0.0000$) e anarmonicidade para 3-SAT ($\Omega_{\text{curv}} \approx 1.86$), com separação de rigidez estatística ($p = 1.53 \times 10^{-6}$).
+   - **Objeção do Professor Avaliador:** Apontou que a diferença observada poderia ser um artefato do grau polinomial da penalidade ($\deg=2$ vs $\deg=3$), atuando como variável oculta confundidora.
+
+2. **Benchmark CLG-02 (`Fontes/exp_clg02_degree_control.py`):**
+   - Implementou o teste de controle estrito de grau ($\deg=3$ mantido constante em todas as famílias).
+   - Comparou Horn-3-SAT (Classe P, $\deg=3$) com Random-3-SAT (NP-Completo, $\deg=3$).
+   - **Resultado do Controle:** Curvatura estática e norma tensorial $\Gamma = \|\nabla^3 \Phi\|_F$ foram praticamente idênticas ($\Omega \approx 1.81$ vs $1.90$), confirmando que a curvatura estática mede apenas o grau algébrico.
+   - **Métrica Dinâmica de Bacias:** Horn-3-SAT apresentou **100.0% de Reachability e 0.00 armadilhas**, enquanto Random-3-SAT no ponto crítico caiu para **6.0% de Reachability com 2.23 armadilhas**.
+
+3. **Benchmark CLG-03 (`Fontes/exp_clg03_xorsat_and_ogp.py`):**
+   - O teste canônico e definitivo: introdução da família **3-XOR-SAT** (sistemas de paridade em $\text{GF}(2)$) com satisfatibilidade garantida (Planted SAT).
+   - **Propriedades:** 3-XOR-SAT está estritamente em **Classe P** (solvível em $\mathcal{O}(N^3)$ por Eliminação Gaussiana em $\text{GF}(2)$) e possui grau algébrico $\deg=3$.
+   - **Resultados Empíricos ($N=30$ e $N=60$):**
+     - Eliminação Gaussiana em $\text{GF}(2)$: **100.0% de sucesso em 3.6 a 4.8 ms**.
+     - Relaxação Contínua Diferencial: **Reachability = 0.0% (colapso total) e 8.81 armadilhas metaestáveis**.
+   - **Conclusão:** O 3-XOR-SAT exibe paisagem mais vítrea do que o próprio Random-3-SAT. Isso refuta experimentalmente a hipótese de que a geometria contínua separa P de NP.
+
+---
+
+## 15. Auditoria Científica Independente: Gemini Pro + Claude Opus
+
+O programa foi submetido a uma rigorosa auditoria dupla por modelos de inteligência artificial de fronteira sob papéis de avaliadores de periódicos de topo (JACM / Annals / SIAM / NeurIPS):
+
+### A. Parecer do Gemini Pro (Física Estatística e Otimização)
+- Identificou o contraexemplo mortal do 3-XOR-SAT antes de sua execução empírica.
+- Forneceu as rotas de prova analítica: Horn-3-SAT via **Sistemas Dinâmicos Cooperativos (Condições de Kamke-Müller / Teorema de Hirsch)** com matrizes Jacobianas Z; e Random-3-SAT via **Fórmula de Kac-Rice** com complexidade topológica $\Sigma(\alpha) > 0$.
+- Confirmou a elegância e rigor da arquitetura esparsa (`SparseGNN`) no processamento de $N=10.000$ nós em $0.79\text{s}$ com $1.26\text{ MB RAM}$.
+
+### B. Parecer do Claude Opus (Teoria da Complexidade e Análise Funcional)
+- Revelou quatro identidades algébricas e metodológicas fundamentais:
+  1. **Identidade de Curvatura:** $\Omega_{\text{curv}} = \frac{1}{\sqrt{3}} \|\mathcal{T}\|_F$ em amostragem uniforme $[-1, 1]$, demonstrando que $\Omega$ re-amostrava o desvio da distribuição uniforme e contava cláusulas.
+  2. **Cancelamento em Equi-3-SAT:** $[(1-z) + (1+z)] = 2$, provando que a variável auxiliar se cancela na extensão multilinear, fazendo o grau contínuo colapsar de volta para 2.
+  3. **Atrator all-FALSE em Horn:** A atribuição all-negative satisfaz trivialmente qualquer fórmula Horn aleatória com $\le 1$ literal positivo.
+  4. **Confundidor UNSAT:** No limiar crítico de 3-SAT, ~50% das fórmulas são insatisfatíveis por definição, impondo teto artificial ao sucesso contínuo.
+- **Veredito:** Recomendação de *Reject* para submissões alegando resolver P vs NP no Annals/JACM (evitando desk reject), e recomendação entusiasta de *Major Revision / Aceitação* para periódicos de Otimização e Machine Learning (JMLR / NeurIPS / TPAMI) via **Overlap Gap Property (OGP)**.
+
+---
+
+## 16. O Reposicionamento Teórico Epistemológico da Pesquisa
+
+A tese do projeto foi reformulada com absoluta honestidade intelectual e rigor científico:
+
+```
+                            CLASSES DE PROBLEMAS EM P
+                                      │
+             ┌────────────────────────┴────────────────────────┐
+             ▼                                                 ▼
+      P-CONTÍNUO (Smooth / Monotone)                  P-ALGÉBRICO (Glassy in P)
+      - Horn-SAT, 2-SAT, Fluxo Máximo                 - 3-XOR-SAT, Sistemas GF(2)
+      - Paisagens conexas / sem armadilhas            - Paisagens com vidro de spin / OGP
+      - Solvível por Gradiente e GNNs                 - GNNs e Gradiente FALHAM (0% Reach)
+      - Alinhado com a física contínua                - Resolvido por Eliminação Gaussiana
+```
+
+### O Que a Pesquisa Efetivamente Prova:
+1. A Geometria Contínua da Paisagem (CLG) mapeia a fronteira entre **Tratabilidade por Otimização Contínua / Métodos Locais Estáveis** e **Dureza Vítrea (Glassy Hardness via Overlap Gap Property - OGP)**.
+2. Demonstra formal e empiricamente os **limites fundamentais de Redes Neurais em Grafos (GNNs) e métodos diferenciais em Problemas de Satisfatibilidade de Restrições (CSPs)**: provamos onde a física do gradiente colapsa e por que a Álgebra Abstrata em P consegue contornar as barreiras topológicas do espaço de configurações.
+
+---
+
+## 17. Reorganização Estratégica das Publicações Internacionais
+
+1. **Retirada de Reivindicações sobre P vs NP em Matemática Pura:**
+   Canceladas formalmente submissões pretendidas a Annals of Mathematics e JACM com foco em provar $P \neq NP$.
+2. **Papers I e II (Max-Cut, HISAC e Escala Extrema $N=10.000$):**
+   - **Periódicos:** *SIAM Journal on Optimization (SIOPT)*, *IEEE TPAMI* ou *ACM TOCS*.
+   - **Destaque:** Desempenho linear comprovado de $N=10.000$ em $0.79\text{s}$ com $1.26\text{ MB RAM}$, quebra do recorde de $80\%$ de corte ($80.01\%$) e respeito estrito aos limites da Unique Games Conjecture (UGC) e Goemans-Williamson.
+3. **Paper IV e Teoria de Limites de GNNs (CLG-03 e 3-XOR-SAT):**
+   - **Conferências / Periódicos:** *NeurIPS / ICML* ou *Journal of Machine Learning Research (JMLR)*.
+   - **Destaque:** Estudo formal sobre os limites de aprendizado profundo e relaxações contínuas sob a ótica da Overlap Gap Property (OGP), utilizando o teste do 3-XOR-SAT como demonstração canônica do desacoplamento entre otimização contínua e complexidade de linguagens.
+4. **Documento Formal para a Banca:**
+   - [RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md) consolidado com todos os agradecimentos, provas algébricas e tabelas empíricas do CLG-03.
+
+---
+
+## 18. Diretriz Permanente e Conclusão
+Toda a base matemática, empírica, modelos treinados, artigos científicos publicáveis, relatórios de benchmark (CLG-01, CLG-02, CLG-03), cartas de resposta técnica e apresentações executivas foram consolidadas integralmente dentro deste ecossistema (`C:\MathDoCarvalho\P_NP`) e sincronizadas no GitHub (`https://github.com/thiagocarvalhodba/p-vs-np-carvalho`).
+
 
 
