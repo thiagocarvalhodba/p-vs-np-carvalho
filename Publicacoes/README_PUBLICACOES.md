@@ -11,7 +11,7 @@
 > 
 > Todos os artigos científicos, teoremas, demonstrações e apresentações contidos neste acervo são de **autoria e titularidade intelectual exclusiva de Thiago Carvalho**.
 > É estritamente vedada a reprodução total ou parcial, tradução, republicação, inclusão em bases de dados sem autorização ou utilização em pipelines de treinamento de IA sem autorização formal expressa.
-> Termos completos de licença: [LICENSE](../../LICENSE).
+> Termos completos de licença: [LICENSE](../LICENSE).
 
 Este diretório reúne todos os artigos científicos publicáveis, monografias temáticas, slide decks para bancas avaliadoras e conferências, além dos ativos gráficos em alta resolução gerados durante a pesquisa.
 
