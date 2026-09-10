@@ -235,6 +235,22 @@ $$\mathcal{L}_{\text{SAT}}(v) \in \mathcal{C}^\infty(\mathbb{R}^n)$$
 
 The multilinear product landscape replaces discrete Hamming barriers with continuous saddle manifolds. The Langevin thermal perturbation $\sigma_0(1 - t/T)$ imparts sufficient kinetic energy along the negative curvature eigenvectors of the continuous Hessian $\nabla^2 \mathcal{L}_{\text{SAT}}$, allowing the trajectory to bypass discrete barrier peaks by **curving around them in continuous space**.
 
+### 5.1 Analytical Landscape Geometry: The CLG-R Theorems
+
+To rigorously understand why SATMetaGNN succeeds where standard gradient descent on quadratic relaxations fails, we ground our empirical findings in the **Computational Landscape Geometry Representation Theorems (CLG-R)** [Carvalho, 2026]:
+
+1. **The Central Fractional Plateau of Hinge Relaxations ($\mu(\mathcal{C}_0) > 0$):**  
+   Standard quadratic hinge relaxations $\Phi_{\text{quad}}(x) = \sum_c [\max(0, g_c(x))]^2$ suffer from an artificial, open interior plateau centered at the origin: $\mathcal{U}_n = (-1/3, 1/3)^n$, where $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$ while $E_{\text{disc}}(\text{sign}(x)) \ge 1$. This is the exact continuous dynamical expression of **Håstad's 7/8 Linear Programming Integrality Gap** [6]: at $x=\mathbf{0}$, fractional assignments satisfy every clause with slack $0.5$, completely halting first-order methods in invalid states.
+2. **Harmonicity and Total Absence of Interior Minima in Multilinear Potentials:**  
+   For the multilinear relaxation $\mathcal{L}_{\text{SAT}}$, the Laplacian vanishes identically everywhere:
+   $$\Delta \mathcal{L}_{\text{SAT}}(x) = \text{Tr}(\nabla^2 \mathcal{L}_{\text{SAT}}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^n$$
+   By the **Strong Minimum Principle for Harmonic Functions**, $\mathcal{L}_{\text{SAT}}$ contains **no local minima (strict or degenerate) in the interior** of the hypercube. All interior critical points are strictly **saddle points** ($1 \le m \le n-1$).
+3. **The Vertex Confinement Theorem:**  
+   Under projected gradient dynamics on $[-1, 1]^n$, every local minimum of $\mathcal{L}_{\text{SAT}}$ is strictly confined to the $2^n$ discrete vertices $\{-1, +1\}^n$. The interior is a repelling harmonic corridor that forces trajectories toward boolean corners.
+4. **Convex Semidefinite Funnels via Softplus Regularization:**  
+   When regularized via log-sum-exp / Softplus activations ($\beta > 0$), the Hessian becomes globally positive semidefinite: $\nabla^2 \Phi_{\text{soft}} \succeq 0$. This destroys the harmonic saddle condition, converting the landscape into a smooth convex funnel and explaining why SATMetaGNN's continuous dynamics achieve $98.4\% - 99.25\%$ satisfaction near the critical threshold.
+
+
 ---
 
 ## 6. Related Work
