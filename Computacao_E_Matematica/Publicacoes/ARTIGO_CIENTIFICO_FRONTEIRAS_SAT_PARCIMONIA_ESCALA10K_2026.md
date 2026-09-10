@@ -109,7 +109,7 @@ Desenvolvemos o pipeline de alocação zero de matriz densa:
 
 ### 4.3 Resultados Experimentais em Grafos Gigantes
 
-| Escala ($N$ nós) | Arestas Médias ($|E|$) | Espaço de Busca Combinatorial | Consumo de Memória RAM | Tempo Médio de Convergência | Throughput | Taxa de Corte Carvalho vs Greedy |
+| Escala ($N$ nós) | Arestas Médias ($\\vert E \\vert$) | Espaço de Busca Combinatorial | Consumo de Memória RAM | Tempo Médio de Convergência | Throughput | Taxa de Corte Carvalho vs Greedy |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **$N=2.000$** | 7.978 | $2^{2000} \approx 10^{602}$ | **0.25 MB** | 1.45 s | 5.507 arestas/s | **34.48%** vs 28.23% (+6.25 p.p.) |
 | **$N=5.000$** | 19.977 | $2^{5000} \approx 10^{1505}$ | **0.63 MB** | 0.40 s | 49.976 arestas/s | **34.38%** vs 27.62% (+6.76 p.p.) |

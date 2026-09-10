@@ -12,7 +12,7 @@
 Este diretório contém a suíte completa de algoritmos, modelos neurais pré-treinados, benchmarks e rotinas de validação empírica desenvolvidos ao longo da pesquisa. A base computacional combina:
 1. **Álgebra Linear Esparsa & Operadores Diferenciais**: Relaxações contínuas no hipercubo $[-1, 1]^N$ via matriz laplaciana combinatória $L = D - A$ e produtos multilineares para CNF.
 2. **Graph Neural Networks (GNNs)**: Convoluções espectrais esparsas lineares (`SparseGNN`), Atenção Multi-Head com Normalização Escalar (`ScaledDotProductGNN`) e Redes em Grafos Bipartidos de Fatores (`SATMetaGNN`).
-3. **Meta-Governança de Políticas de Otimização**: Agentes neurais que inspecionam a topologia latente da instância em tempo polinomial $\mathcal{O}(|E|)$ e governam os hiperparâmetros de solvers iterativos (temperatura, amortecimento e passos de recozimento estocástico).
+3. **Meta-Governança de Políticas de Otimização**: Agentes neurais que inspecionam a topologia latente da instância em tempo polinomial $\mathcal{O}(\\vert E \\vert)$ e governam os hiperparâmetros de solvers iterativos (temperatura, amortecimento e passos de recozimento estocástico).
 
 ---
 
@@ -23,8 +23,8 @@ Este diretório contém a suíte completa de algoritmos, modelos neurais pré-tr
 | Arquivo | Descrição Técnica & Arquitetura | Modelo Associado | Complexidade |
 | :--- | :--- | :--- | :--- |
 | **`fase3_op1_max_sat.py`** | **Núcleo de Cook-Levin (Max-3-SAT):** Implementa a formulação contínua da probabilidade de insatisfação de cláusulas $\mathcal{L}_{\text{SAT}}(v)$ em conjunto com a rede em grafo de fatores `SATMetaGNN`. Governa learning rate, ruído de Langevin e horizonte de descida no limiar crítico $m/n \approx 4.267$. | `model_sat_meta_manager.pth` | $\mathcal{O}(M)$ |
-| **`fase3_op2_hybrid_gnn.py`** | **Princípio da Parcimônia Espectral:** Avaliação comparativa de três paradigmas (SparseGNN linear, HybridGNN com atenção gated e Heurística Gulosa). Demonstra experimentalmente que a convolução espectral linear esparsa evita oversmoothing e **bate o recorde histórico de $80.01\%$ de corte**. | `model_maxcut_hybrid.pth` / `model_maxcut.pth` | $\mathcal{O}(|E|)$ |
-| **`fase3_op3_extreme_scale.py`** | **Escalação Linear em Grafos Gigantes ($N=10.000$ nós):** Motor de partição laplaciana puramente baseado em indexação esparsa (`index_add_`) com zero alocação intermediária. Executa convergência em **$0.79\text{s}$ em CPU comum**, alocando apenas **$1.26\text{ MB RAM}$** para $10^{3010}$ combinações ($50.288\text{ arestas/s}$). | — (Diferencial analítico) | Estrito $\mathcal{O}(|E|)$ |
+| **`fase3_op2_hybrid_gnn.py`** | **Princípio da Parcimônia Espectral:** Avaliação comparativa de três paradigmas (SparseGNN linear, HybridGNN com atenção gated e Heurística Gulosa). Demonstra experimentalmente que a convolução espectral linear esparsa evita oversmoothing e **bate o recorde histórico de $80.01\%$ de corte**. | `model_maxcut_hybrid.pth` / `model_maxcut.pth` | $\mathcal{O}(\\vert E \\vert)$ |
+| **`fase3_op3_extreme_scale.py`** | **Escalação Linear em Grafos Gigantes ($N=10.000$ nós):** Motor de partição laplaciana puramente baseado em indexação esparsa (`index_add_`) com zero alocação intermediária. Executa convergência em **$0.79\text{s}$ em CPU comum**, alocando apenas **$1.26\text{ MB RAM}$** para $10^{3010}$ combinações ($50.288\text{ arestas/s}$). | — (Diferencial analítico) | Estrito $\mathcal{O}(\\vert E \\vert)$ |
 
 ### B. Módulos Teóricos e de Universalidade (Fase 2 - 2026)
 

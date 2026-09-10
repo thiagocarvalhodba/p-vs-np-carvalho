@@ -170,7 +170,7 @@ The restoring force scaling with $d_h$ drives $|\tanh(x_h)| \to 1$ exponentially
 
 ### 4.1 Empirical Validation of Theorem 1
 
-| Graph Topology ($N=200, |E| \approx 1000$) | Baseline Cut Ratio | Carvalho MetaGNN Cut Ratio | Net Differential Gain ($\pm \sigma$) | Max Gain Peak |
+| Graph Topology ($N=200, \vert E \vert \approx 1000$) | Baseline Cut Ratio | Carvalho MetaGNN Cut Ratio | Net Differential Gain ($\pm \sigma$) | Max Gain Peak |
 | :--- | :---: | :---: | :---: | :---: |
 | **Erdős-Rényi (Uniform Random)** | 53.50% | 53.65% | $+1.60 \pm 20.66$ | $+30.0$ |
 | **Watts-Strogatz (Small-World)** | 53.56% | 53.70% | $+1.40 \pm 5.92$ | $+6.0$ |

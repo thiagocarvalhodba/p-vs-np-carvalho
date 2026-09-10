@@ -118,7 +118,7 @@ A `MetaGNN` foi treinada por 25 épocas exclusivamente sobre instâncias ER e en
 
 ### 3.3 Resultados Obtidos
 
-| Topologia | Arestas ($|E|$) | Ratio Corte Base | Ratio Corte IA | Ganho Médio ($\pm \sigma$) | Pico Máximo de Ganho |
+| Topologia | Arestas ($\\vert E \\vert$) | Ratio Corte Base | Ratio Corte IA | Ganho Médio ($\pm \sigma$) | Pico Máximo de Ganho |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Erdős-Rényi** | $994 \pm 22$ | 53.50% | **53.65%** | $+1.60 \pm 20.66$ | $+30.0$ arestas |
 | **Watts-Strogatz** | $1000 \pm 0$ | 53.56% | **53.70%** | $+1.40 \pm 5.92$ | $+6.0$ arestas |
@@ -145,9 +145,9 @@ Comparamos duas classes de redes neurais em grafos para predição direta de rel
 
 | Instância / Escala | Random | Greedy Local Search | SparseGNN (`model_maxcut.pth`) | EdgeAttentionGNN (`model_maxcut_gat.pth`) |
 | :--- | :---: | :---: | :---: | :---: |
-| **$N=200, p=0.02$ ($|E| \approx 400$)** | 48.80% | 76.76% | **79.85%** ($33.3\text{ ms}$) | 61.94% ($1611\text{ ms}$) |
-| **$N=200, p=0.05$ ($|E| \approx 1020$)** | 49.10% | 68.02% | **68.10%** ($16.5\text{ ms}$) | 0.00% *(colapso)* ($829\text{ ms}$) |
-| **$N=400, p=0.015$ ($|E| \approx 1200$)** | 49.65% | 72.95% | **74.65%** ($20.8\text{ ms}$) | 17.37% ($3140\text{ ms}$) |
+| **$N=200, p=0.02$ ($\\vert E \\vert \approx 400$)** | 48.80% | 76.76% | **79.85%** ($33.3\text{ ms}$) | 61.94% ($1611\text{ ms}$) |
+| **$N=200, p=0.05$ ($\\vert E \\vert \approx 1020$)** | 49.10% | 68.02% | **68.10%** ($16.5\text{ ms}$) | 0.00% *(colapso)* ($829\text{ ms}$) |
+| **$N=400, p=0.015$ ($\\vert E \\vert \approx 1200$)** | 49.65% | 72.95% | **74.65%** ($20.8\text{ ms}$) | 17.37% ($3140\text{ ms}$) |
 
 ### 4.3 Análise da Anomalia de Atenção
 Constatou-se uma falha catastrófica no GAT com atenção em aresta para densidades moderadas ($p \ge 0.05$), onde a taxa de corte caiu para $0.00\%$. 

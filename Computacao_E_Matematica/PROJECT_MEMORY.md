@@ -83,7 +83,7 @@ O repositório está estruturado em duas pastas principais para organização e 
 | `Fontes/README_FONTES.md` | Guia detalhado de cada script, execução, parâmetros e reprodutibilidade. |
 | `Fontes/fase3_op1_max_sat.py` | SATMetaGNN no limiar crítico de Cook-Levin ($m/n=4.267$). |
 | `Fontes/fase3_op2_hybrid_gnn.py` | Prova empírica da Parcimônia Espectral (SparseGNN quebrando 80%). |
-| `Fontes/fase3_op3_extreme_scale.py` | Solver $\mathcal{O}(|E|)$ para grafos gigantes de $N=10.000$ nós em sub-segundo ($1.26\text{ MB RAM}$). |
+| `Fontes/fase3_op3_extreme_scale.py` | Solver $\mathcal{O}(\\vert E \\vert)$ para grafos gigantes de $N=10.000$ nós em sub-segundo ($1.26\text{ MB RAM}$). |
 | `Fontes/trilha1_*.py` a `trilha4_*.py` | Scaled GAT, Goemans-Williamson UGC, TSP MCMC e gerador de gráficos. |
 | `Fontes/model_*.pth` | Pesos treinados de todos os modelos neurais. |
 | `Fontes/Framework_UGC_Carvalho/` | Framework de testes para jogos únicos. |
