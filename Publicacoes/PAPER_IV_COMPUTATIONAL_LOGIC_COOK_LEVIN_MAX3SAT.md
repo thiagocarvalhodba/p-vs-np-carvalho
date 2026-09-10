@@ -73,14 +73,15 @@ The nature of the solution space undergoes three distinct structural regimes [4,
 At $\alpha = 4.267$, standard complete solvers (DPLL, CDCL) suffer exponential worst-case runtime $\mathcal{O}(2^{\gamma n})$, while stochastic local search solvers (WalkSAT, SLAM) become trapped in deep local minima induced by frozen backbone variables.
 
 ### 1.3 Inapproximability and the Håstad Bound
-For any Boolean assignment sampled uniformly at random, a 3-SAT clause $(l_1 \lor l_2 \lor l_3)$ is satisfied with probability:
+For any Boolean assignment sampled uniformly at random, an unconstrained 3-SAT clause $(l_1 \lor l_2 \lor l_3)$ is satisfied with expected probability:
 $$\mathbb{P}[\text{Satisfied}] = 1 - \left(\frac{1}{2}\right)^3 = \frac{7}{8} = 0.875$$
 
-In 1997, Johan Håstad proved a landmark result in inapproximability [6]:
-**Theorem (Håstad's $7/8$ Theorem):**  
-For any $\epsilon > 0$, it is NP-hard to distinguish between a satisfiable 3-CNF formula and one in which at most $(7/8 + \epsilon)$ fraction of clauses can be satisfied. 
+In 1997, Johan Håstad proved a landmark theoretical result in computational complexity [6]:
+**Theorem (Håstad's $7/8$ Inapproximability Theorem):**  
+For any $\epsilon > 0$, approximating general Max-3-SAT within a factor of $(7/8 + \epsilon)$ in polynomial time is NP-hard under worst-case instances, unless $\text{P} = \text{NP}$.
 
-Hence, achieving a polynomial-time approximation ratio strictly exceeding $87.5\%$ for general 3-SAT is impossible unless $\text{P} = \text{NP}$. In the context of Max-3-SAT at $\alpha_c = 4.26$, heuristics that exceed $98\%$ clause satisfaction approach the theoretical maximum achievable boundary.
+*Theoretical Clarification (Worst-Case Hardness vs. Random Ensembles):*  
+Håstad's bound strictly governs worst-case formulas designed adversarially (such as PCP reductions). It does not preclude heuristic or continuous solvers from achieving higher empirical clause satisfaction rates (e.g., $>98\%$) on specific random distributions, such as the standard random 3-SAT ensemble at the algorithmic phase transition threshold $\alpha_c \approx 4.267$. Achieving $\approx 99\%$ satisfaction on such ensembles demonstrates the exceptional empirical optimization capability of factor-graph relaxations on typical-case geometries, without contradicting worst-case inapproximability bounds.
 
 ---
 
@@ -206,7 +207,7 @@ For each tier, five independent randomized instances were benchmarked across fou
 
 ### 4.1 Benchmark Analysis and Discussion
 
-1. **Surpassing the Håstad Inapproximability Barrier**: The theoretical randomized expectation for 3-SAT is $87.5\%$. Both the static continuous solver and SATMetaGNN comfortably surpassed $98.4\%$ clause satisfaction across all scales, reaching a peak of **$99.25\%$ at $N=50$** (representing $211.4$ satisfied clauses out of $213$).
+1. **High-Fidelity Empirical Clause Satisfaction on Critical Random Ensembles**: While uniform random assignment satisfies an expected $87.5\%$ of clauses, both the continuous relaxation and the SATMetaGNN achieve exceptionally high clause satisfaction on random 3-SAT instances generated at the critical threshold $\alpha_c \approx 4.267$, exceeding $98.4\%$ across all evaluated scales ($N=50, 100, 150$) and reaching a peak of **$99.25\%$ at $N=50$** (averaging $211.4$ satisfied clauses out of $213$). This indicates that continuous factor-graph relaxation effectively circumvents the local combinatorial traps typical of 1-flip discrete moves on random instances.
 2. **Meta-Governed Performance Gain**: Across $N=100$ and $N=150$, SATMetaGNN attained a **$60.0\%$ head-to-head win rate** against the static continuous solver, providing a net positive gain in satisfied clauses across every single scale (+1.00 net clauses at $N=100$).
 3. **Synergy with Discrete Polishing**: Discretizing continuous logits via $x_i = \text{sign}(v_i)$ followed by short WalkSAT boundary polishing combines the global basin-finding capabilities of continuous gradient descent with the discrete precision of 1-flip neighborhood moves.
 
