@@ -170,3 +170,12 @@ A suíte CLG investiga a interface entre problemas de satisfatibilidade booleana
 
 8. **`generate_response_06_doc.py`**:
    - Gerador do documento oficial de resposta técnica em Word (`C:\MathDoCarvalho\RespostaAoProfessor06.docx`).
+
+9. **`compute_hierarchical_stats.py`**:
+   - Computa a estatística hierárquica desagregada entre o nível da trajetória ($R_{\text{traj}}$) e o nível da instância ($R_{\text{inst}} = \text{Média} \pm \text{SEM}$), prevenindo pseudorreplicamento.
+
+10. **`exp_clg04_conditioning_and_phase2.py`**:
+    - **CLG-04 Fase II:** Implementa o gerador de 3-XOR-SAT com unicidade garantida ($\text{rank}_{\mathbb{F}_2}(A) = N$, $|S|=1$) e o rastreador temporal de métricas de condicionamento hessiano ($\kappa(H)$, $\|\nabla \Phi\|$, overlap $q$, $E_{\text{disc}}$).
+
+11. **`generate_response_07_doc.py`**:
+    - Gerador do documento formal de resposta técnica em Word (`C:\MathDoCarvalho\RespostaAoProfessor07.docx`).

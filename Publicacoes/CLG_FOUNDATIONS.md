@@ -172,7 +172,7 @@ To transition beyond proof-of-concept scales ($N=30, 60$) to asymptotic scaling 
 3. **$\mathcal{E}_{\text{controlled}}$ (Unique / Structured Horn & XOR):** Non-singular systems over $\mathbb{F}_2$ and acyclic/monotone Horn formulas with unambiguous solution sets.
 
 
-### 7.2 The Decisive Experiment: Representation Invariance (CLG-04 / Ensemble $\mathcal{E}_{\text{equiv}}$)
+### 7.2 The Decisive Experiment: Representation Invariance (CLG-04 Phase I & Phase II)
 
 Following the senior review recommendation, we implemented the critical representation invariance test: evaluating the **exact same Boolean logical formulas** across three distinct continuous relaxation mappings on $[-1, 1]^N$:
 1. **Multilinear extension:** $\Phi_{\text{mult}}(x) = \sum_c \prod_{j \in c} \frac{1 - \sigma_j x_j}{2}$

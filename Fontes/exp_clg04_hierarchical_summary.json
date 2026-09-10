@@ -1,0 +1,602 @@
+{
+  "N30_3-XOR-SAT_GD_multilinear": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4928888888888888,
+    "dh_sem": 0.011995884067791793,
+    "dh_per_instance": [
+      0.5199999999999999,
+      0.5155555555555555,
+      0.49555555555555547,
+      0.47777777777777775,
+      0.45555555555555555
+    ]
+  },
+  "N30_3-XOR-SAT_GD_quadratic": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4902222222222223,
+    "dh_sem": 0.01166613755413927,
+    "dh_per_instance": [
+      0.5066666666666666,
+      0.5044444444444445,
+      0.49333333333333335,
+      0.5022222222222222,
+      0.4444444444444445
+    ]
+  },
+  "N30_3-XOR-SAT_GD_softplus": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.49422222222222223,
+    "dh_sem": 0.0054251358292149825,
+    "dh_per_instance": [
+      0.49777777777777776,
+      0.4866666666666666,
+      0.5,
+      0.5088888888888888,
+      0.47777777777777775
+    ]
+  },
+  "N30_3-XOR-SAT_Langevin_multilinear": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5013333333333334,
+    "dh_sem": 0.01534138275030507,
+    "dh_per_instance": [
+      0.5355555555555556,
+      0.5022222222222221,
+      0.5177777777777777,
+      0.5066666666666666,
+      0.4444444444444444
+    ]
+  },
+  "N30_3-XOR-SAT_Langevin_quadratic": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.49422222222222223,
+    "dh_sem": 0.007489910909490123,
+    "dh_per_instance": [
+      0.49333333333333335,
+      0.4977777777777777,
+      0.5022222222222222,
+      0.5111111111111112,
+      0.46666666666666656
+    ]
+  },
+  "N30_3-XOR-SAT_Langevin_softplus": {
+    "n": 30,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5079999999999999,
+    "dh_sem": 0.008905539959783935,
+    "dh_per_instance": [
+      0.4866666666666667,
+      0.48666666666666664,
+      0.5266666666666666,
+      0.5155555555555555,
+      0.5244444444444444
+    ]
+  },
+  "N30_Planted-3-SAT_GD_multilinear": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "multilinear",
+    "r_traj": 0.13333333333333333,
+    "r_inst_mean": 0.13333333333333336,
+    "r_inst_sem": 0.047140452079103175,
+    "r_inst_per_instance": [
+      0.06666666666666667,
+      0.26666666666666666,
+      0.0,
+      0.13333333333333333,
+      0.2
+    ],
+    "dh_mean": 0.352,
+    "dh_sem": 0.030214051182999083,
+    "dh_per_instance": [
+      0.36,
+      0.3511111111111111,
+      0.45777777777777773,
+      0.3133333333333333,
+      0.2777777777777778
+    ]
+  },
+  "N30_Planted-3-SAT_GD_quadratic": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.47333333333333333,
+    "dh_sem": 0.012804320258567045,
+    "dh_per_instance": [
+      0.5,
+      0.45111111111111113,
+      0.5088888888888888,
+      0.45555555555555555,
+      0.4511111111111111
+    ]
+  },
+  "N30_Planted-3-SAT_GD_softplus": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "softplus",
+    "r_traj": 0.09333333333333334,
+    "r_inst_mean": 0.09333333333333334,
+    "r_inst_sem": 0.04000000000000001,
+    "r_inst_per_instance": [
+      0.0,
+      0.13333333333333333,
+      0.0,
+      0.13333333333333333,
+      0.2
+    ],
+    "dh_mean": 0.3222222222222222,
+    "dh_sem": 0.03283328633198364,
+    "dh_per_instance": [
+      0.3466666666666667,
+      0.2866666666666667,
+      0.4288888888888888,
+      0.31777777777777777,
+      0.23111111111111113
+    ]
+  },
+  "N30_Planted-3-SAT_Langevin_multilinear": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "multilinear",
+    "r_traj": 0.16,
+    "r_inst_mean": 0.16,
+    "r_inst_sem": 0.058118652580542315,
+    "r_inst_per_instance": [
+      0.2,
+      0.3333333333333333,
+      0.0,
+      0.06666666666666667,
+      0.2
+    ],
+    "dh_mean": 0.352,
+    "dh_sem": 0.025401467829659654,
+    "dh_per_instance": [
+      0.35555555555555557,
+      0.3488888888888889,
+      0.4422222222222222,
+      0.3244444444444444,
+      0.28888888888888886
+    ]
+  },
+  "N30_Planted-3-SAT_Langevin_quadratic": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4653333333333333,
+    "dh_sem": 0.01642942256824403,
+    "dh_per_instance": [
+      0.48444444444444446,
+      0.4466666666666666,
+      0.5044444444444445,
+      0.48000000000000004,
+      0.4111111111111111
+    ]
+  },
+  "N30_Planted-3-SAT_Langevin_softplus": {
+    "n": 30,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "softplus",
+    "r_traj": 0.16,
+    "r_inst_mean": 0.16,
+    "r_inst_sem": 0.06863753427324668,
+    "r_inst_per_instance": [
+      0.06666666666666667,
+      0.4,
+      0.0,
+      0.2,
+      0.13333333333333333
+    ],
+    "dh_mean": 0.32222222222222224,
+    "dh_sem": 0.03567341576850457,
+    "dh_per_instance": [
+      0.3577777777777777,
+      0.2644444444444444,
+      0.4422222222222221,
+      0.3022222222222223,
+      0.24444444444444446
+    ]
+  },
+  "N60_3-XOR-SAT_GD_multilinear": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5066666666666666,
+    "dh_sem": 0.007934920476158711,
+    "dh_per_instance": [
+      0.48000000000000004,
+      0.5166666666666666,
+      0.5122222222222221,
+      0.4988888888888888,
+      0.5255555555555556
+    ]
+  },
+  "N60_3-XOR-SAT_GD_quadratic": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5057777777777778,
+    "dh_sem": 0.00765296682565447,
+    "dh_per_instance": [
+      0.47555555555555556,
+      0.5133333333333333,
+      0.5155555555555555,
+      0.508888888888889,
+      0.5155555555555555
+    ]
+  },
+  "N60_3-XOR-SAT_GD_softplus": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "GD",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4995555555555555,
+    "dh_sem": 0.007145748973694886,
+    "dh_per_instance": [
+      0.4733333333333334,
+      0.4977777777777777,
+      0.5022222222222222,
+      0.5133333333333333,
+      0.5111111111111111
+    ]
+  },
+  "N60_3-XOR-SAT_Langevin_multilinear": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5066666666666666,
+    "dh_sem": 0.009108400680852983,
+    "dh_per_instance": [
+      0.48111111111111116,
+      0.5133333333333333,
+      0.5011111111111111,
+      0.5011111111111111,
+      0.5366666666666667
+    ]
+  },
+  "N60_3-XOR-SAT_Langevin_quadratic": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4995555555555556,
+    "dh_sem": 0.006800508332488581,
+    "dh_per_instance": [
+      0.47666666666666674,
+      0.5111111111111111,
+      0.4933333333333333,
+      0.5022222222222222,
+      0.5144444444444444
+    ]
+  },
+  "N60_3-XOR-SAT_Langevin_softplus": {
+    "n": 60,
+    "family": "3-XOR-SAT",
+    "dynamics": "Langevin",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.5048888888888888,
+    "dh_sem": 0.0022662308949301063,
+    "dh_per_instance": [
+      0.49666666666666676,
+      0.5033333333333333,
+      0.5077777777777778,
+      0.5088888888888888,
+      0.5077777777777778
+    ]
+  },
+  "N60_Planted-3-SAT_GD_multilinear": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.32711111111111113,
+    "dh_sem": 0.015510251488437179,
+    "dh_per_instance": [
+      0.3644444444444444,
+      0.2777777777777778,
+      0.31444444444444447,
+      0.3233333333333333,
+      0.35555555555555557
+    ]
+  },
+  "N60_Planted-3-SAT_GD_quadratic": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.4764444444444445,
+    "dh_sem": 0.00830290741878639,
+    "dh_per_instance": [
+      0.46,
+      0.4555555555555556,
+      0.49111111111111116,
+      0.4777777777777778,
+      0.4977777777777777
+    ]
+  },
+  "N60_Planted-3-SAT_GD_softplus": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "GD",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.28422222222222226,
+    "dh_sem": 0.021674927200242285,
+    "dh_per_instance": [
+      0.33666666666666667,
+      0.20666666666666664,
+      0.28777777777777774,
+      0.28111111111111114,
+      0.30888888888888894
+    ]
+  },
+  "N60_Planted-3-SAT_Langevin_multilinear": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "multilinear",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.32555555555555554,
+    "dh_sem": 0.01490297840809341,
+    "dh_per_instance": [
+      0.36999999999999994,
+      0.2788888888888889,
+      0.3177777777777777,
+      0.32111111111111107,
+      0.34
+    ]
+  },
+  "N60_Planted-3-SAT_Langevin_quadratic": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "quadratic",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.472888888888889,
+    "dh_sem": 0.004951617767812688,
+    "dh_per_instance": [
+      0.4666666666666668,
+      0.46666666666666673,
+      0.4722222222222222,
+      0.4666666666666667,
+      0.49222222222222217
+    ]
+  },
+  "N60_Planted-3-SAT_Langevin_softplus": {
+    "n": 60,
+    "family": "Planted-3-SAT",
+    "dynamics": "Langevin",
+    "rep": "softplus",
+    "r_traj": 0.0,
+    "r_inst_mean": 0.0,
+    "r_inst_sem": 0.0,
+    "r_inst_per_instance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dh_mean": 0.292,
+    "dh_sem": 0.02032574235960733,
+    "dh_per_instance": [
+      0.3555555555555555,
+      0.23444444444444443,
+      0.2766666666666666,
+      0.2788888888888889,
+      0.31444444444444447
+    ]
+  }
+}

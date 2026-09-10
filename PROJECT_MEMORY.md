@@ -479,3 +479,36 @@ Em resposta ao Parecer 06 (`C:\MathDoCarvalho\AnaliseReportadaPeloProfessor06.do
 6. **Entregável Oficial:**
    - Word formatado: `C:\MathDoCarvalho\RespostaAoProfessor06.docx`.
    - Markdown: `Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md`.
+
+---
+
+## 21. Parecer 07 do Professor: Estatística Hierárquica, Condicionamento e Transição para CLG-04 Fase II
+
+O Parecer 07 (`C:\MathDoCarvalho\AnaliseReportadaPeloProfessor07.docx`) estabeleceu o padrão analítico definitivo:
+
+1. **Estatística Hierárquica:**
+   - Desagregação entre $R_{\text{traj}}$ ($75$ ensaios) e $R_{\text{inst}}$ ($5$ instâncias com $\bar{R} \pm \text{SEM}$), prevenindo pseudorreplicamento.
+   - Em $N=60$ (GD puro): $R_{\text{inst}} = 0.0\% \pm 0.0\%$, com $d_H(\Phi_{\text{soft}}) = 0.284 \pm 0.022$ vs. $d_H(\Phi_{\text{quad}}) = 0.476 \pm 0.008$ ($p < 10^{-4}$).
+
+2. **Separação CLG-04A vs. CLG-04B:**
+   - **CLG-04A:** Baseline de 1ª ordem pura (GD/Langevin, $\eta=0.02$, $T=200$).
+   - **CLG-04B:** Otimização adaptativa (Adam com re-escala de momentos), onde Softplus atinge $69.3\%$.
+
+3. **Diagnóstico de Condicionamento (CLG-04C):**
+   - Quadrática Hinge sofre de colapso numérico extremo ($\kappa(H) > 360.000$ e platôs de gradiente nulo).
+   - Softplus mantém condicionamento hessiano estável ($\kappa(H) \approx 8.8$) e gradiente decrescente.
+   - Multilinear exibe explosão de gradiente próximo às bordas por produtos cruzados.
+
+4. **Controle de Unicidade em 3-XOR-SAT:**
+   - Comprovado $\text{rank}_{\mathbb{F}_2}(A) = N$ ($|S| = 1$), garantindo que $d_H(s_{\text{final}}, s^*)$ e overlap $q \approx 0.0$ medem o afastamento da única solução da fórmula.
+
+5. **Conjectura CLG-R Generalizada:**
+   $$\limsup_{N \to \infty} | \mathcal{Q}(I_N, \Phi_N^{(1)}, \mathcal{D}) - \mathcal{Q}(I_N, \Phi_N^{(2)}, \mathcal{D}) | > 0$$
+   para funcional de qualidade algorítmica $\mathcal{Q}$ (como $d_H$ ou $E_{\text{disc}}$).
+
+6. **A Pergunta Central Consagrada:**
+   *"Qual representação torna determinada classe de algoritmos capaz de explorar a paisagem?"*
+
+7. **Entregáveis:**
+   - Documento Word: `C:\MathDoCarvalho\RespostaAoProfessor07.docx`.
+   - Códigos e dados: `Fontes/compute_hierarchical_stats.py`, `Fontes/exp_clg04_conditioning_and_phase2.py`, `Fontes/exp_clg04_hierarchical_summary.json`, `Fontes/exp_clg04_conditioning_tracking.json`.
