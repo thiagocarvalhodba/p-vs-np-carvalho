@@ -1,0 +1,294 @@
+{
+  "N_30": {
+    "3-XOR-SAT (Classe P)": {
+      "GD": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 5.746666666666667,
+          "mean_hamming_dist": 0.49288888888888893,
+          "mean_cont_energy": 5.585603284835815
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 9.653333333333334,
+          "mean_hamming_dist": 0.4902222222222222,
+          "mean_cont_energy": 0.3403905870517095
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 9.466666666666667,
+          "mean_hamming_dist": 0.4942222222222222,
+          "mean_cont_energy": 2.38738712310791
+        }
+      },
+      "Langevin": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 5.706666666666667,
+          "mean_hamming_dist": 0.5013333333333333,
+          "mean_cont_energy": 5.649442017873128
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 9.386666666666667,
+          "mean_hamming_dist": 0.4942222222222222,
+          "mean_cont_energy": 0.3686827063560486
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 12.906666666666666,
+          "mean_hamming_dist": 0.5080000000000001,
+          "mean_cont_energy": 2.5247166379292807
+        }
+      }
+    },
+    "Random-3-SAT (NP-C)": {
+      "GD": {
+        "multilinear": {
+          "success_fraction": "10/75",
+          "reachability_pct": 13.333333333333334,
+          "ci_95_pct": [
+            7.406593511092339,
+            22.833141117606292
+          ],
+          "mean_trap_severity": 2.246153846153846,
+          "mean_hamming_dist": 0.352,
+          "mean_cont_energy": 2.243496438662211
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 9.533333333333333,
+          "mean_hamming_dist": 0.47333333333333333,
+          "mean_cont_energy": 0.30518956154584886
+        },
+        "softplus": {
+          "success_fraction": "7/75",
+          "reachability_pct": 9.333333333333334,
+          "ci_95_pct": [
+            4.5948588008290185,
+            18.03466506009128
+          ],
+          "mean_trap_severity": 2.3970588235294117,
+          "mean_hamming_dist": 0.32222222222222224,
+          "mean_cont_energy": 2.417051410675049
+        }
+      },
+      "Langevin": {
+        "multilinear": {
+          "success_fraction": "12/75",
+          "reachability_pct": 16.0,
+          "ci_95_pct": [
+            9.396523812933202,
+            25.916684660950985
+          ],
+          "mean_trap_severity": 2.2222222222222223,
+          "mean_hamming_dist": 0.3519999999999999,
+          "mean_cont_energy": 2.3206902607282003
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 9.133333333333333,
+          "mean_hamming_dist": 0.4653333333333333,
+          "mean_cont_energy": 0.33693190733591716
+        },
+        "softplus": {
+          "success_fraction": "12/75",
+          "reachability_pct": 16.0,
+          "ci_95_pct": [
+            9.396523812933202,
+            25.916684660950985
+          ],
+          "mean_trap_severity": 2.4285714285714284,
+          "mean_hamming_dist": 0.32222222222222224,
+          "mean_cont_energy": 2.463406292597453
+        }
+      }
+    }
+  },
+  "N_60": {
+    "3-XOR-SAT (Classe P)": {
+      "GD": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 11.493333333333334,
+          "mean_hamming_dist": 0.5066666666666667,
+          "mean_cont_energy": 11.26808069229126
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 19.386666666666667,
+          "mean_hamming_dist": 0.5057777777777778,
+          "mean_cont_energy": 0.6449775079886119
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 18.546666666666667,
+          "mean_hamming_dist": 0.4995555555555557,
+          "mean_cont_energy": 4.708232593536377
+        }
+      },
+      "Langevin": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 11.693333333333333,
+          "mean_hamming_dist": 0.5066666666666667,
+          "mean_cont_energy": 11.523007462819418
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 19.12,
+          "mean_hamming_dist": 0.4995555555555557,
+          "mean_cont_energy": 0.7068628279368082
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 24.8,
+          "mean_hamming_dist": 0.5048888888888889,
+          "mean_cont_energy": 4.953187630971272
+        }
+      }
+    },
+    "Random-3-SAT (NP-C)": {
+      "GD": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 4.506666666666667,
+          "mean_hamming_dist": 0.327111111111111,
+          "mean_cont_energy": 4.369119027455648
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 20.413333333333334,
+          "mean_hamming_dist": 0.47644444444444445,
+          "mean_cont_energy": 0.6501487851142883
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 4.6,
+          "mean_hamming_dist": 0.2842222222222222,
+          "mean_cont_energy": 4.9108637428283695
+        }
+      },
+      "Langevin": {
+        "multilinear": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 4.466666666666667,
+          "mean_hamming_dist": 0.3255555555555556,
+          "mean_cont_energy": 4.406068649291992
+        },
+        "quadratic": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 20.293333333333333,
+          "mean_hamming_dist": 0.4728888888888888,
+          "mean_cont_energy": 0.6952893614768982
+        },
+        "softplus": {
+          "success_fraction": "0/75",
+          "reachability_pct": 0.0,
+          "ci_95_pct": [
+            0.0,
+            4.872365402770864
+          ],
+          "mean_trap_severity": 4.68,
+          "mean_hamming_dist": 0.29200000000000004,
+          "mean_cont_energy": 5.079733829498291
+        }
+      }
+    }
+  }
+}

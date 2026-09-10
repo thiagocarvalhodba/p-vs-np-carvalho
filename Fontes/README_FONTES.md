@@ -160,3 +160,13 @@ A suíte CLG investiga a interface entre problemas de satisfatibilidade booleana
 
 6. **`generate_response_docs.py`**:
    - Gerador automatizado dos documentos de resposta técnica formal para o Professor e banca examinadora (Markdown e DOCX estilizado).
+
+7. **`exp_clg04_strict_audit.py`**:
+   - **Auditoria Rigorosa CLG-04 (Parecer 06):** Benchmark estritamente pareado executando 1.800 trajetórias:
+     - Mesmíssima instância $I \times$ mesmíssimo $x_0$ inicial compartilhado $\times$ mesmo orçamento ($T=200$ passos, $\eta=0.02$).
+     - Separação de dinâmicas: Gradient Descent (GD determinístico puro) vs. Langevin estocástico ($T_{\text{temp}} = 0.005$).
+     - Três representações contínuas: Multilinear, Quadrática Hinge e Softplus ($\\beta=5.0$).
+     - Gera log imutável de cada trajetória em `exp_clg04_audit_log.json` e relatório comparativo em `exp_clg04_audit_report.txt`.
+
+8. **`generate_response_06_doc.py`**:
+   - Gerador do documento oficial de resposta técnica em Word (`C:\MathDoCarvalho\RespostaAoProfessor06.docx`).

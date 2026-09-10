@@ -133,18 +133,17 @@ for continuous gradient dynamics.
 To resolve previous conceptual ambiguities, we formalize the three operational levels of Computational Landscape Geometry:
 
 ```
-                            THE CLG THREE-TIER TRIAD
-                                       │
-         ┌─────────────────────────────┼─────────────────────────────┐
-         ▼                             ▼                             ▼
-      CLG-L                          CLG-G                         CLG-A
-(Local Differential)           (Global Landscape)          (Algorithmic Dynamics)
-- Hessian H(x)                 - Basins of attraction      - Stability of GNNs
-- Spectrum and trace           - Free energy barriers      - Langevin diffusions
-- Curvature dispersion         - Solution overlap q(x, y)  - Local algorithm limits
-- Tensor T = grad^3 Phi        - Glassy clustering         - Abstract algebra vs. Flow
-[Falsified as complexity       [Connects to statistical    [Limits of low-depth GNNs
- invariant: Omega = sigma||T||] physics and OGP]            via shattered spaces]
+                                  THE CLG QUADRIAD
+                                         │
+       ┌────────────────────┬────────────┴────────────┬────────────────────┐
+       ▼                    ▼                         ▼                    ▼
+     CLG-L                CLG-G                     CLG-A                CLG-R
+ (Local Geometry)    (Global Landscape)         (Algorithmic)        (Representation)
+ - Hessian H(x)      - Basins & barriers        - Dynamics (GD/Lang) - Invariance across
+ - Tensor T          - Overlap q(s, t)          - Locality bounds      equivalent Phi
+ - Curvature Omega   - Solution clustering      - GNN limits         - Non-isomorphism
+ [Falsified as       [Connects to statistical   [Testable hypothesis: [Transversal Axis:
+  invariant: sigmaT]  physics & shattered space] solver boundaries]   Conjecture CLG-R]
 ```
 
 ### Operational Distinction Among Families in Class P:
