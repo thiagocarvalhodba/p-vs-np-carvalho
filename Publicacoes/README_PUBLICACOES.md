@@ -45,10 +45,14 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Periódico Alvo:** *Journal of the ACM (JACM)* / *Artificial Intelligence (AIJ)*
    - **Contribuições:** Formulação contínua e diferenciável do núcleo da NP-completude (redução de Cook-Levin). A `SATMetaGNN` em grafo bipartido de fatores alcançou **$99.25\%$ de satisfação de cláusulas** no ponto crítico de transição de fase ($m/n \approx 4.267$).
 
-5. 🌐 **Monografia Teórica de Fronteira - Geometria da Paisagem Computacional (Projeto CLG-01):**
+5. 🌐 **Monografia Teórica de Fronteira - Geometria da Paisagem Computacional (Projeto CLG-01 e CLG-02):**
    - **Arquivo:** [CLG_FOUNDATIONS.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/CLG_FOUNDATIONS.md)
    - **Título:** *Computational Landscape Geometry (CLG): Mathematical Foundations and Negative Controls for the P versus NP Boundary*
    - **Contribuições:** Fundamentação da 5-tupla $\mathcal{L}(I)$, prova analítica do Teorema da Curvatura Constante em 2-SAT (Classe P, $\nabla_x \mathcal{H} \equiv 0$) versus Proliferação Dinâmica de Curvatura Anarmônica em 3-SAT (Classe NP, $\nabla_x \mathcal{H} \neq 0$), e validação estatística da Hipótese de Separabilidade com gap de 5 ordens de magnitude ($p = 1.53 \times 10^{-6}$).
+
+6. 📑 **Dossiê de Auditoria Científica Independente para Claude Opus:**
+   - **Arquivo:** [DOSSIE_AUDITORIA_CLAUDE_OPUS.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md)
+   - **Conteúdo:** Prompt de Peer Review sênior (JACM / Annals of Mathematics) e dados dos benchmarks CLG-01 e CLG-02 formatados para auditoria externa cética.
 
 ---
 
