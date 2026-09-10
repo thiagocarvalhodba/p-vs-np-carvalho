@@ -1,123 +1,139 @@
-# Estudo Analítico do Conjunto Crítico e Geometria Dinâmica do Fluxo
+# Estudo Analítico do Conjunto Crítico e Geometria do Fluxo em Representações Contínuas de 3-SAT
 
 **Autor:** Thiago Carvalho  
 **Data:** 10 de Setembro de 2026  
-**Ambiente:** `C:\MathDoCarvalho\P_NP` | [GitHub Repository](https://github.com/thiagocarvalhodba/p-vs-np-carvalho)  
-**Status:** Monografia Analítica Formal de Apoio Teórico ao CLG-R
+**Status:** Teoremas Analíticos Consolidados (Revisão Pós-Parecer 09)  
+**Assunto:** Caracterização Rigorosa de $\nabla \Phi = \mathbf{0}$, Medida de $\mathcal{C}_0(\Phi)$, Massa de Atração Espúria $\mathcal{M}_{\text{spur}}(\Phi)$ e Dinâmica do Fluxo
 
 ---
 
-## 1. Definição do Problema e Notação
+## 1. Definições Fundamentais
 
-Seja $I = (N, M, \mathcal{C})$ uma fórmula booleana 3-CNF com $N$ variáveis e $M$ cláusulas. Denotamos por $\mathcal{V} = \{-1, +1\}^N$ os vértices discretos do hipercubo $\mathcal{X} = [-1, 1]^N$, e por $S(I) = \{ v \in \mathcal{V} \mid E_{\text{disc}}(v) = 0 \}$ o conjunto de soluções satisfatíveis.
+Seja $F$ uma fórmula 3-CNF com $M$ cláusulas $\mathcal{C} = \{c_1, \dots, c_M\}$ sobre $N$ variáveis booleanas $x = (x_1, \dots, x_N) \in \mathcal{X} = [-1, 1]^N$.
+Para cada cláusula $c \in \mathcal{C}$, denotamos por $\sigma_j^{(c)} \in \{-1, +1\}$ o sinal do literal da variável $x_j$, de modo que a cláusula é $c = \bigvee_{j \in c} (\sigma_j^{(c)} x_j = +1)$.
 
-Para qualquer estado contínuo $x \in \mathcal{X}$, a atribuição discreta correspondente é dada pelo operador de sinal:
-$$s_{\text{round}}(x) = \text{sign}(x) \in \mathcal{V}, \quad \text{com } s_i = 1 \text{ se } x_i = 0$$
-
-O erro discreto $E_{\text{disc}}(s_{\text{round}}(x))$ é o número exato de cláusulas violadas por $s_{\text{round}}(x)$.
+O arredondamento discreto $s_{\text{round}}: \mathcal{X} \to \{-1, +1\}^N$ é o mapeamento de sinal:
+$$s_{\text{round}}(x) = \text{sign}(x), \quad \text{com } s_i = +1 \text{ se } x_i \ge 0 \text{ e } s_i = -1 \text{ se } x_i < 0$$
+O erro discreto $E_{\text{disc}}(s_{\text{round}}(x))$ é o número exato de cláusulas violadas pela atribuição $s_{\text{round}}(x)$.
 
 ### O Conjunto Crítico Espúrio $\mathcal{C}_0(\Phi)$
 Definimos o conjunto de pontos críticos espúrios de uma relaxação contínua $\Phi: \mathcal{X} \to \mathbb{R}_{\ge 0}$ como:
 $$\mathcal{C}_0(\Phi) \equiv \left\{ x \in \text{int}(\mathcal{X}) \;\middle|\; \nabla \Phi(x) = \mathbf{0} \quad\text{e}\quad E_{\text{disc}}(s_{\text{round}}(x)) > 0 \right\}$$
 
-Dizemos que uma relaxação sofre de **estagnação de medida positiva** se a medida de Lebesgue do conjunto crítico espúrio for estritamente não-nula:
+Dizemos que uma relaxação possui **patologia de medida positiva** se a medida de Lebesgue de seu conjunto crítico espúrio for estritamente positiva:
 $$\mu(\mathcal{C}_0(\Phi)) > 0$$
 
 ---
 
-## 2. Teorema 1: A Patologia de Medida Positiva da Quadrática Hinge
+## 2. Lema 1: Inatividade Simultânea de Cláusulas na Relaxação Hinge
 
-Consideremos a relaxação Quadrática Hinge (Sum-of-Squares relaxada):
-$$\Phi_{\text{quad}}(x) = \sum_{c \in \mathcal{C}} \left[ \max\left(0, \, g_c(x)\right) \right]^2$$
-onde $g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2}$.
+A relaxação Quadrática Hinge é dada por:
+$$\Phi_{\text{quad}}(x) = \sum_{c=1}^M \left[ \max\left(0, \, g_c(x)\right) \right]^2$$
+onde a função de violação contínua da cláusula $c$ é:
+$$g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2} = -\frac{1}{2} \left( 1 + \sum_{j \in c} \sigma_j^{(c)} x_j \right)$$
 
-O gradiente espacial em qualquer ponto onde $g_c(x) \ne 0$ é dado por:
-$$\nabla_i \Phi_{\text{quad}}(x) = -\sum_{c \ni i, \, g_c(x) > 0} g_c(x) \sigma_i^{(c)}$$
+O gradiente espacial de $\Phi_{\text{quad}}$ é a soma sobre as cláusulas ativas:
+$$\nabla \Phi_{\text{quad}}(x) = \sum_{c: g_c(x) > 0} 2 g_c(x) \nabla g_c(x) = -\sum_{c: g_c(x) > 0} g_c(x) \sum_{j \in c} \sigma_j^{(c)} e_j$$
 
-> **Teorema 1 (Existência de Platôs Críticos Espúrios de Medida Positiva).**  
-> *Para qualquer fórmula 3-CNF não-trivial, existe uma região aberta $\Omega \subset \text{int}(\mathcal{X})$ com medida de Lebesgue $\mu(\Omega) > 0$ tal que, para todo $x \in \Omega$:*
-> $$\nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0} \quad\text{e}\quad E_{\text{disc}}(s_{\text{round}}(x)) \ge 1$$
-> *Consequentemente, $\mu(\mathcal{C}_0(\Phi_{\text{quad}})) > 0$.*
-
-### Demonstração Construtiva Passo a Passo:
-1. Seja $c_1 = (x_1 \lor x_2 \lor x_3)$ uma cláusula da fórmula (com $\sigma_1 = \sigma_2 = \sigma_3 = +1$).
-2. A função de violação associada é:
-   $$g_{c_1}(x) = 1 - \left( \frac{1+x_1}{2} + \frac{1+x_2}{2} + \frac{1+x_3}{2} \right) = -\frac{1}{2}(x_1 + x_2 + x_3 + 1)$$
-3. A cláusula contribui com violação nula no hinge se e somente se $g_{c_1}(x) \le 0$, o que equivale ao semi-espaço:
-   $$\mathcal{H}_{c_1} = \left\{ x \in \mathbb{R}^N \;\middle|\; x_1 + x_2 + x_3 \ge -1 \right\}$$
-4. Por outro lado, o arredondamento booleano $s_{\text{round}}(x)$ viola a cláusula $c_1$ se e somente se todas as três variáveis tiverem coordenadas estritamente negativas:
-   $$\mathcal{O}_{c_1} = \left\{ x \in \mathbb{R}^N \;\middle|\; x_1 < 0, \; x_2 < 0, \; x_3 < 0 \right\}$$
-5. A interseção $\Omega_{c_1} = \mathcal{H}_{c_1} \cap \mathcal{O}_{c_1}$ é o poliedro aberto definido por:
-   $$\Omega_{c_1} = \left\{ x \in \mathbb{R}^N \;\middle|\; -1 \le x_1 + x_2 + x_3 < 0 \quad\text{com}\quad x_1, x_2, x_3 \in (-1, 0) \right\}$$
-6. Para qualquer $x \in \Omega_{c_1}$ (por exemplo, o ponto central $x^* = (-0.2, -0.2, -0.2)$):
-   - $x_1 + x_2 + x_3 = -0.6 \ge -1 \implies g_{c_1}(x) \le 0 \implies \max(0, g_{c_1}(x)) = 0$. A cláusula $c_1$ tem gradiente nulo: $\nabla g_{c_1} \equiv \mathbf{0}$.
-   - Contudo, $s_{\text{round}}(x^*) = (-1, -1, -1)$, que viola estritamente a cláusula booleana $c_1$ ($E_{\text{disc}} \ge 1$).
-7. Como $\Omega_{c_1}$ contém uma bola euclidiana aberta de raio $\epsilon = 0.1$ em torno de $x^*$, sua medida de Lebesgue satisfaz:
-   $$\mu(\Omega_{c_1}) \ge \text{Vol}(B_\epsilon^N) > 0$$
-8. Portanto, todo o conjunto $\Omega$ forma um platô exatamente plano onde o campo vetorial do gradiente é identicamente nulo ($\dot{x} = -\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$), paralisando qualquer dinâmica de primeira ordem em estados onde a solução booleana é falsa. $\blacksquare$
+> **Lema 1 (Inatividade Simultânea das Cláusulas).**  
+> *Uma condição suficiente para que $\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$ em uma vizinhança aberta $\Omega$ é que todas as $M$ cláusulas da fórmula estejam simultaneamente inativas na relaxação:*
+> $$g_c(x) \le 0, \quad \forall c \in \{1, \dots, M\} \iff \sum_{j \in c} \sigma_j^{(c)} x_j \ge -1, \quad \forall c \in \{1, \dots, M\}$$
+> *Neste caso, $\Phi_{\text{quad}}(x) = 0$ e $\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$ de forma idêntica em $\Omega$.*
 
 ---
 
-## 3. Teorema 2: Medida Nula dos Conjuntos Críticos nas Relaxações Analíticas
+## 3. Teorema 1: Teorema da Caixa Fracionária Central (Medida Positiva Universal)
 
-Consideremos agora as relaxações $\mathcal{C}^\infty$ / analíticas reais ($\mathcal{C}^\omega$): a **Multilinear** ($\Phi_{\text{mult}}$) e a **Softplus** ($\Phi_{\text{soft}}$).
+> **Teorema 1 (Universalidade da Patologia de Medida Positiva no Hinge).**  
+> *Para qualquer fórmula 3-CNF não-tautológica $F$ com $M$ cláusulas sobre $N$ variáveis, o conjunto de pontos críticos espúrios possui medida de Lebesgue estritamente positiva:*
+> $$\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0$$
+> *Se a fórmula $F$ for insatisfatível (UNSAT), a medida satisfaz a cota assintótica:*
+> $$\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \left( \frac{2}{3} \right)^N > 0$$
 
-### 3.1 O Caso Multilinear ($\Phi_{\text{mult}}$)
-$$\Phi_{\text{mult}}(x) = \sum_{c \in \mathcal{C}} \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}$$
-
-A $i$-ésima componente do gradiente é um polinômio quadrático em $x$:
-$$\nabla_i \Phi_{\text{mult}}(x) = -\frac{1}{2} \sum_{c \ni i} \sigma_i^{(c)} \prod_{j \in c \setminus \{i\}} \frac{1 - \sigma_j^{(c)} x_j}{2}$$
-
-> **Proposição 2.1 (Variedade Algébrica Crítica da Multilinear).**  
-> *Para qualquer fórmula onde cada variável $x_i$ participa de ao menos uma cláusula, $\nabla \Phi_{\text{mult}}(x) \not\equiv \mathbf{0}$ em $\mathbb{R}^N$. O conjunto crítico:*
-> $$\text{Crit}(\Phi_{\text{mult}}) = \left\{ x \in \mathbb{R}^N \;\middle|\; \nabla_1 \Phi_{\text{mult}}(x) = 0, \dots, \nabla_N \Phi_{\text{mult}}(x) = 0 \right\}$$
-> *é uma variedade algébrica afim real de dimensão topológica $\le N-1$.*  
-> *Pelo Teorema de Medida de Variedades Algébricas Reais (Whitney, 1957), tem-se estritamente:*
-> $$\mu(\text{Crit}(\Phi_{\text{mult}})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{mult}})) = 0$$
-
-### 3.2 O Caso Softplus ($\Phi_{\text{soft}}$)
-$$\Phi_{\text{soft}}(x) = \sum_{c \in \mathcal{C}} \frac{1}{\beta} \ln\left(1 + \exp\left(\beta g_c(x)\right)\right)$$
-
-A derivada espacial é dada por:
-$$\nabla_i \Phi_{\text{soft}}(x) = -\frac{1}{2} \sum_{c \ni i} \sigma_i^{(c)} \sigma\left(\beta g_c(x)\right), \quad \text{com } \sigma(z) = \frac{1}{1 + e^{-z}}$$
-
-> **Proposição 2.2 (Analiticidade Real e Medida Nula no Softplus).**  
-> *A função $\Phi_{\text{soft}}$ é analítica real ($\mathcal{C}^\omega$) em todo $\mathbb{R}^N$. Pelo Teorema da Identidade para Funções Analíticas Conexas (Krantz & Parks, 2002), se o conjunto de zeros de um campo analítico $F(x) = \nabla \Phi_{\text{soft}}(x) = \mathbf{0}$ possuísse medida de Lebesgue positiva ($\mu(Z(F)) > 0$), então $F$ deveria ser identicamente nulo em todo o $\mathbb{R}^N$.*  
-> *Como $\nabla_i \Phi_{\text{soft}}(x)$ varia estritamente com $x$ ao longo das direções normais aos hiperplanos de cláusula, $\nabla \Phi_{\text{soft}} \not\equiv \mathbf{0}$. Consequentemente:*
-> $$\mu(\text{Crit}(\Phi_{\text{soft}})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$$
+### Demonstração Construtiva Universal:
+1. Considere a caixa hipercúbica aberta centrada na origem do $\mathbb{R}^N$:
+   $$\mathcal{U}_N = \left( -\frac{1}{3}, \, \frac{1}{3} \right)^N \subset \text{int}(\mathcal{X})$$
+2. Para qualquer ponto $x \in \mathcal{U}_N$, suas coordenadas satisfazem $|x_i| < \frac{1}{3}$ para todo $i \in \{1, \dots, N\}$.
+3. Para **qualquer cláusula 3-CNF arbitrária** $c = (\ell_1 \lor \ell_2 \lor \ell_3)$, com coeficientes $\sigma_j^{(c)} \in \{-1, +1\}$:
+   $$\sum_{j \in c} \sigma_j^{(c)} x_j \ge -\sum_{j \in c} |\sigma_j^{(c)} x_j| = -\sum_{j \in c} |x_j| > -3 \times \frac{1}{3} = -1$$
+4. Substituindo na função de violação $g_c(x)$:
+   $$g_c(x) = -\frac{1}{2}\left( 1 + \sum_{j \in c} \sigma_j^{(c)} x_j \right) < -\frac{1}{2}(1 - 1) = 0$$
+5. Como esta desigualdade independe dos índices e sinais das variáveis que compõem a cláusula, ela é satisfeita **estritamente e simultaneamente por todas as $M$ cláusulas da fórmula**:
+   $$g_c(x) < 0, \quad \forall c \in \{1, \dots, M\}, \quad \forall x \in \mathcal{U}_N$$
+6. Pelo Lema 1, como $\max(0, g_c(x)) = 0$ para toda cláusula em $\mathcal{U}_N$, a função potencial e seu gradiente anulam-se identicamente em todo o aberto $\mathcal{U}_N$:
+   $$\Phi_{\text{quad}}(x) \equiv 0 \quad \text{e} \quad \nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}, \quad \forall x \in \mathcal{U}_N$$
+7. Analisamos agora o erro discreto do arredondamento booleano $s(x) = \text{sign}(x) \in \{-1, +1\}^N$ dentro de $\mathcal{U}_N$:
+   - Se $F$ é não-tautológica, existe ao menos uma atribuição booleana discreta $s^* \in \{-1, +1\}^N$ que viola pelo menos uma cláusula $c \in F$ ($E_{\text{disc}}(s^*) \ge 1$).
+   - O ortante associado a $s^*$, restrito à caixa $\mathcal{U}_N$, é o conjunto aberto:
+     $$\Omega_{s^*} = \mathcal{U}_N \cap \left\{ x \in \mathbb{R}^N \;\middle|\; \text{sign}(x_i) = s^*_i, \; \forall i \right\} = \prod_{i=1}^N I_i$$
+     onde $I_i = (0, 1/3)$ se $s^*_i = +1$ e $I_i = (-1/3, 0)$ se $s^*_i = -1$.
+   - A medida de Lebesgue de $\Omega_{s^*}$ é exatamente:
+     $$\mu(\Omega_{s^*}) = \left( \frac{1}{3} \right)^N > 0$$
+   - Para todo $x \in \Omega_{s^*}$, temos $\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$ e $E_{\text{disc}}(\text{sign}(x)) \ge 1$. Logo, $\Omega_{s^*} \subseteq \mathcal{C}_0(\Phi_{\text{quad}})$, demonstrando que $\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge (1/3)^N > 0$.
+8. Se a fórmula $F$ for insatisfatível (UNSAT), toda atribuição $s \in \{-1, +1\}^N$ viola pelo menos uma cláusula. Portanto, a quase totalidade da caixa central $\mathcal{U}_N$ (exceto os hiperplanos de coordenadas nulas $x_i = 0$, que têm medida zero) pertence a $\mathcal{C}_0(\Phi_{\text{quad}})$, resultando em:
+   $$\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \mu(\mathcal{U}_N) = \left( \frac{2}{3} \right)^N > 0 \quad \blacksquare$$
 
 ---
 
-## 4. O Teorema da Geometria Dinâmica da Representação
+## 4. Teorema 2: Medida Zero de $\mathcal{C}_0$ via Analiticidade e Teoria de Polinômios
 
-Podemos agora estabelecer formalmente a cadeia causal que conecta a representação à acessibilidade dinâmica:
+> **Teorema 2 (Medida Nula dos Críticos Espúrios para Multilinear e Softplus).**  
+> *Seja $F$ uma fórmula 3-CNF tal que o gradiente da relaxação não seja identicamente nulo (isto é, existe $k \in \{1, \dots, N\}$ tal que $\partial_k \Phi \not\equiv 0$). Então:*
+> $$\mu(\mathcal{C}_0(\Phi_{\text{mult}})) = 0 \quad \text{e} \quad \mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$$
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                   A CADEIA CAUSAL DE CLG-R                             │
-└────────────────────────────────────────────────────────────────────────┘
-  Representação Contínua Φ(x)
-       │
-       ▼
-  Topologia e Medida do Conjunto Crítico Espúrio C_0(Φ)
-       │
-       ├─► [Quadrática Hinge]: μ(C_0) > 0  (Platô com interior aberto)
-       │     └─► Fluxo colide com ponto crítico espúrio com probabilidade > 0
-       │
-       └─► [Softplus / Multilinear]: μ(C_0) = 0  (Variedade de codimensão >= 1)
-             └─► Trajetórias quase certamente não colidem com platôs abertos;
-                 Acessibilidade governada pelo campo vetorial e selas
-```
+### Demonstração:
+1. **Caso Multilinear ($\Phi_{\text{mult}}$):**
+   - O potencial $\Phi_{\text{mult}}(x) = \sum_{c \in \mathcal{C}} \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}$ é uma função polinomial em $\mathbb{R}[x_1, \dots, x_N]$.
+   - Consequentemente, cada derivada parcial $\partial_k \Phi_{\text{mult}}(x) = \frac{\partial \Phi_{\text{mult}}}{\partial x_k}(x)$ é um polinômio multivariado em $\mathbb{R}^N$.
+   - **Lema dos Zeros de Polinômios Reais (Okamoto, 1973; Caron & Traynor, 2005):** O conjunto de raízes de qualquer polinômio real não-nulo $P \in \mathbb{R}[x_1, \dots, x_N]$, $Z(P) = \{ x \in \mathbb{R}^N \mid P(x) = 0 \}$, possui medida de Lebesgue estritamente zero em $\mathbb{R}^N$: $\mu(Z(P)) = 0$.
+   - Como $\nabla \Phi_{\text{mult}}(x) = \mathbf{0} \implies \partial_k \Phi_{\text{mult}}(x) = 0$, temos a inclusão:
+     $$\text{Crit}(\Phi_{\text{mult}}) = \bigcap_{i=1}^N \{ x \mid \partial_i \Phi_{\text{mult}}(x) = 0 \} \subseteq \{ x \mid \partial_k \Phi_{\text{mult}}(x) = 0 \} = Z(\partial_k \Phi_{\text{mult}})$$
+   - Pela monotonicidade da medida de Lebesgue:
+     $$\mu(\mathcal{C}_0(\Phi_{\text{mult}})) \le \mu(\text{Crit}(\Phi_{\text{mult}})) \le \mu(Z(\partial_k \Phi_{\text{mult}})) = 0$$
 
-> **Teorema 3 (Teorema de Bloqueio Dinâmico por Medida Positiva).**  
-> *Seja $\mathcal{D}_{\text{GD}}$ o fluxo contínuo de descida de gradiente $\dot{x} = -\nabla \Phi(x)$ iniciado sob distribuição absolutamente contínua $x_0 \sim \mu_0$ no hipercubo $\mathcal{X}$.*  
-> 1. *Para a relaxação Quadrática Hinge, existe probabilidade estritamente positiva de captura imediata em platôs espúrios:*
->    $$P_{x_0 \sim \mu_0}\left( x_0 \in \mathcal{C}_0(\Phi_{\text{quad}}) \right) \ge \mu(\Omega) > 0$$
->    *onde a velocidade instantânea colapsa a zero ($\|\dot{x}\| = 0$) enquanto $E_{\text{disc}} \ge 1$.*
-> 2. *Para as relaxações Softplus e Multilinear, o conjunto de pontos críticos espúrios tem medida nula ($\mu(\mathcal{C}_0) = 0$). O fluxo gradiente possui velocidade estritamente não-nula quase em toda parte:*
->    $$P_{x_0 \sim \mu_0}\left( \|\nabla \Phi(x_0)\| = 0 \right) = 0$$
+2. **Caso Softplus ($\Phi_{\text{soft}}$):**
+   - $\Phi_{\text{soft}}(x) = \sum_{c=1}^M \frac{1}{\beta} \ln(1 + e^{\beta g_c(x)})$ é a composição de funções analíticas reais (afim, exponencial, logaritmo), logo é real analítica (classe $\mathcal{C}^\omega$) em todo $\mathbb{R}^N$.
+   - Cada componente do gradiente $\partial_k \Phi_{\text{soft}}(x)$ é, portanto, uma função real analítica em $\mathbb{R}^N$.
+   - **Princípio da Identidade / Teorema de Medida Nula de Analíticas Reais (Krantz & Parks, 2002; Mityagin, 2015):** Se $f: \mathbb{R}^N \to \mathbb{R}$ é uma função analítica real sobre um domínio conexo, e seu conjunto de zeros $Z(f) = \{ x \in \mathbb{R}^N \mid f(x) = 0 \}$ tem medida de Lebesgue positiva ($\mu(Z(f)) > 0$), então $f$ é identicamente nula em todo o domínio ($f \equiv 0$).
+   - Como $\partial_k \Phi_{\text{soft}} \not\equiv 0$ para qualquer variável com cláusulas incidentes, seu conjunto de zeros possui obrigatoriamente medida de Lebesgue zero: $\mu(Z(\partial_k \Phi_{\text{soft}})) = 0$.
+   - Consequentemente:
+     $$\mu(\mathcal{C}_0(\Phi_{\text{soft}})) \le \mu(\text{Crit}(\Phi_{\text{soft}})) \le \mu(Z(\partial_k \Phi_{\text{soft}})) = 0 \quad \blacksquare$$
 
-### Consequência Teórica Formal:
-Este teorema demonstra no papel o mecanismo analítico que os experimentos da Fase II revelaram: a relaxação Quadrática Hinge falha não por mero desbalanceamento de constante de passo ($\eta$), mas porque sua topologia introduz **subvariedades de gradiente identicamente nulo com interior aberto** onde o discrete rounding é falso, criando aprisionamento absoluto de medida positiva.
+---
 
-Por outro lado, o Softplus e a Multilinear preservam $\mu(\mathcal{C}_0) = 0$, transferindo a navegabilidade para a suavidade das bacias e o condicionamento hessiano $\kappa_2(H)$.
+## 5. Massa de Atração Espúria $\mathcal{M}_{\text{spur}}(\Phi)$ e Dinâmica do Fluxo
+
+### Definição (Massa de Atração Espúria):
+Seja $X(t; x_0)$ a curva integral do fluxo gradiente contínuo $\dot{x}(t) = -\nabla \Phi(x(t))$, com condição inicial $x(0) = x_0 \in \mathcal{X}$.
+Definimos a **Massa de Atração Espúria** $\mathcal{M}_{\text{spur}}(\Phi)$ como a medida de Lebesgue do conjunto de condições iniciais cujas trajetórias convergem assintoticamente para o conjunto crítico espúrio:
+$$\mathcal{M}_{\text{spur}}(\Phi) \equiv \mu\left( \left\{ x_0 \in \mathcal{X} \;\middle|\; \lim_{t \to \infty} X(t; x_0) \in \mathcal{C}_0(\Phi) \right\} \right)$$
+
+### Proposição (Desacoplamento entre Medida Crítica e Massa de Atração):
+
+1. **Para a Quadrática Hinge:**
+   Como todo ponto $x \in \mathcal{U}_N$ satisfaz $\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$, a velocidade do fluxo é nula ($X(t; x_0) = x_0$ para todo $t \ge 0$). Portanto:
+   $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge \mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0$$
+   Qualquer trajetória iniciada na caixa fracionária central estagna instantaneamente com velocidade zero.
+
+2. **Para Multilinear e Softplus:**
+   Embora $\mu(\mathcal{C}_0) = 0$ (o fluxo quase certamente não é iniciado em repouso), a convergência depende da estrutura das bacias de atração dos mínimos locais espúrios $\mathcal{C}_0^{\text{min}}$ e das variedades estáveis das selas $\mathcal{C}_0^{\text{saddle}}$:
+   $$\mathcal{M}_{\text{spur}}(\Phi) = \sum_{x^* \in \mathcal{C}_0^{\text{min}}} \mu(\mathcal{B}(x^*)) + \sum_{x_s \in \mathcal{C}_0^{\text{saddle}}} \mu(W^s(x_s))$$
+   - Para selas com índice de Morse $m \ge 1$, a variedade estável possui dimensão estritamente menor que $N$ ($\dim(W^s) \le N - m < N$), implicando $\mu(W^s(x_s)) = 0$.
+   - Portanto, para representações suaves, $\mathcal{M}_{\text{spur}}$ é dominada inteiramente pelas **bacias de atração dos mínimos locais espúrios**:
+     $$\mathcal{M}_{\text{spur}}(\Phi) \approx \mu\left( \bigcup_{x^* \in \mathcal{C}_0^{\text{min}}} \mathcal{B}(x^*) \right)$$
+
+### Conexão Rigorosa com as Evidências Experimentais:
+- **Multilinear:** A rugosidade combinatória pura gera um número exponencial de mínimos locais espúrios com bacias de atração de grande volume: $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \approx 0.94$, explicando os 6% de reachability.
+- **Softplus:** A convolução log-sum-exp suaviza o relevo e elimina as bacias dos mínimos espúrios rasos, contraindo a massa de atração espúria $\mathcal{M}_{\text{spur}}(\Phi_{\text{soft}}) \to 0$ e produzindo 100% de reachability.
+
+---
+
+## 6. Quadro Síntese do CLG-R
+
+| Propriedade Matemática | Quadrática Hinge ($\Phi_{\text{quad}}$) | Multilinear ($\Phi_{\text{mult}}$) | Softplus ($\Phi_{\text{soft}}$) |
+| :--- | :--- | :--- | :--- |
+| **Classe de Regularidade** | $\mathcal{C}^1$ (por partes) | $\mathcal{C}^\infty$ (polinomial) | $\mathcal{C}^\omega$ (analítica real) |
+| **Medida dos Críticos $\mu(\mathcal{C}_0)$** | $> 0$ (Volume $\ge (1/3)^N$) | $= 0$ (Lema Polinomial) | $= 0$ (Identidade Analítica) |
+| **Estagnação Inicial** | Presente com probabilidade $> 0$ | Quase certamente ausente ($p = 0$) | Quase certamente ausente ($p = 0$) |
+| **Massa de Atração $\mathcal{M}_{\text{spur}}$** | $\ge (1/3)^N > 0$ (Platôs) | Elevada ($\approx 0.94$) por mínimos locais | Quase nula ($\approx 0.00$) por regularização |
+| **Acessibilidade Dinâmica** | **Bloqueada** por estagnação estática | **Aprisionada** por bacias de atração | **Fluida** em direção aos mínimos globais |
