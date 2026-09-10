@@ -179,3 +179,9 @@ A suíte CLG investiga a interface entre problemas de satisfatibilidade booleana
 
 11. **`generate_response_07_doc.py`**:
     - Gerador do documento formal de resposta técnica em Word (`C:\MathDoCarvalho\RespostaAoProfessor07.docx`).
+
+12. **`exp_clg04_phase2_factorial.py`**:
+    - **CLG-04 Fase II Factorial:** Executa a matriz 3x3 (Representação x Dinâmica) com normalização de escala de gradiente $c_\Phi = \mathbb{E}[\|\nabla \Phi\|]$, condicionamento espectral $\kappa_2(H)$ e diferenças pareadas $\Delta_i$ por instância.
+
+13. **`generate_response_08_doc.py`**:
+    - Gerador da resposta formal do Parecer 08 (`C:\MathDoCarvalho\RespostaAoProfessor08.docx`).

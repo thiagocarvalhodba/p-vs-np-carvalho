@@ -30,6 +30,12 @@ $$\text{Discrete Combinatorial Instance } I \;\xrightarrow{\quad}\; \text{Contin
 
 ---
 
+
+### 1.1 The Consolidated CLG-R Thesis
+
+> **Central Thesis:**  
+> *Boolean equivalence does not determine the algorithmic accessibility of a continuous relaxation: equivalent representations induce distinct numerical geometries and representation–dynamics interactions, yielding differing solution qualities under the same class of local algorithms.*
+
 ## 2. The Formal CLG Mathematical Tuple
 
 For any discrete combinatorial instance $I \in \mathcal{I}$ over $N$ variables, we define its continuous relaxation as a 5-tuple:

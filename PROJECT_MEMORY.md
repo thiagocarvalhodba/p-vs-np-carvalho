@@ -512,3 +512,23 @@ O Parecer 07 (`C:\MathDoCarvalho\AnaliseReportadaPeloProfessor07.docx`) estabele
 7. **Entregáveis:**
    - Documento Word: `C:\MathDoCarvalho\RespostaAoProfessor07.docx`.
    - Códigos e dados: `Fontes/compute_hierarchical_stats.py`, `Fontes/exp_clg04_conditioning_and_phase2.py`, `Fontes/exp_clg04_hierarchical_summary.json`, `Fontes/exp_clg04_conditioning_tracking.json`.
+
+---
+
+## 22. Parecer 08 do Professor: Os Quatro Controles Mandatórios do CLG-R
+
+O Parecer 08 (`C:\MathDoCarvalho\AnaliseReportadaPeloProfessor08.docx`) validou a mudança da pergunta para a dependência da dinâmica em relação à representação e estabeleceu quatro controles experimentais rigorosos:
+
+1. **Normalização de Escala de Gradiente:**
+   - Potenciais normalizados $\tilde{\Phi} = \Phi / c_\Phi$, com $c_\Phi = \mathbb{E}[\|\nabla \Phi\|]$ ($c_{\text{multi}} = 5.26, c_{\text{quad}} = 5.93, c_{\text{soft}} = 8.65$).
+2. **Matriz Fatorial 3x3 Completa:**
+   - Avaliadas 3 Representações $\times$ 3 Dinâmicas (GD puro, Langevin, Adam) em $N=60$.
+   - A Quadrática Hinge exibe colapso severo de condicionamento ($\kappa_2 > 80.000$), enquanto Softplus permanece estável ($\kappa_2 \approx 25$).
+3. **Diferenças Pareadas por Instância:**
+   - $\Delta_i = d_{H, i}^{\text{quad}} - d_{H, i}^{	ext{soft}} > 0$ em 100% das instâncias independentes.
+4. **Alinhamento Teórico Rigoroso:**
+   - Posto-Nulidade no 3-XOR-SAT: $\text{rank}(A) = N \implies \dim \ker(A) = 0 \implies |S(I)| = 1$.
+   - Conjectura CLG-R com funcional limitado $\mathcal{Q} \in [0, 1]$.
+   - Tese Central: *"A equivalência booleana não determina a acessibilidade algorítmica de uma relaxação contínua: representações equivalentes podem induzir geometrias numéricas e interações representação–dinâmica distintas, produzindo diferentes qualidades de solução sob a mesma classe de algoritmo local."*
+5. **Entregável Oficial:**
+   - Word: `C:\MathDoCarvalho\RespostaAoProfessor08.docx`.
