@@ -143,7 +143,7 @@ $$V = \begin{bmatrix} v_1^T \\ v_2^T \\ \vdots \\ v_M^T \end{bmatrix}, \quad \te
 > **Teorema 5 (Álgebra Linear da Hessiana do Softplus).**  
 > *A Hessiana da relaxação Softplus fatora-se exatamente como:*
 > $$\nabla^2 \Phi_{\text{soft}}(x) = V^T W(x) V$$
-> *onde $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ com $w_c(x) = \frac{\beta}{4} \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ para todo $x \in \mathbb{R}^N$ e $\beta < \infty$.*
+> *onde $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ com $w_c(x) = \beta \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ para todo $x \in \mathbb{R}^N$ e $\beta < \infty$.*
 > *Consequentemente:*
 > 1. *$\nabla^2 \Phi_{\text{soft}}(x) \succeq 0$ em todo o $\mathbb{R}^N$ (convexidade global semidefinida).*
 > 2. *$\ker(\nabla^2 \Phi_{\text{soft}}(x)) = \ker(V)$ para todo $x \in \mathbb{R}^N$.*
@@ -163,7 +163,7 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 > **Teorema 6 (Cotas de Lipschitz e Escalas de Underflow do Softplus).**  
 > *Para a relaxação Softplus, no regime de alta precisão inversa $\beta \to \infty$:*
 > 1. *A constante de Lipschitz satisfaz a escala exata $L_\beta = \Theta(\beta)$, admitindo as cotas:*
->    $$\frac{3}{64} \beta \le L_\beta \le \frac{3 d_{\max}}{16} \beta$$
+>    $$\frac{3}{16} \beta \le L_\beta \le \frac{3 d_{\max}}{4} \beta$$
 > 2. *Na subcaixa de contração central $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ com $\rho < 1/3$ (por exemplo, para $\rho = 1/6$, $g_c(x) \le -1/4$), o gradiente sofre subfluxo numérico exponencial:*
 >    $$\|\nabla \Phi_{\text{soft}}(x)\| \le \frac{M}{2} e^{-\beta (1 - 3\rho)/2}$$
 > 3. *Para $x = \mathbf{0}$ ($g_c = -1/2$), o fator sigmoidal atinge regimes de subnormal/flush-to-zero:*
@@ -171,8 +171,8 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 >    - *Em FP64: normal para $\beta \approx 1417$, subnormal/zero absoluto para $\beta \approx 1489$.*
 
 ### Demonstração:
-- **Cota Superior:** Como $w_c(x) \le \beta/16$, pelo Teorema de Gershgorin, $\|\nabla^2 \Phi_{\text{soft}}\|_2 \le \frac{\beta}{16} \|V^T V\|_2 \le \frac{3 d_{\max}}{16} \beta$.
-- **Cota Inferior:** Seja $x_0$ um ponto em um hiperplano ativo $g_c(x_0) = 0$. Então $\sigma(0)(1-\sigma(0)) = 1/4 \implies w_c(x_0) = \beta/16$. Tomando a direção unitária $u = v_c / \|v_c\|_2$, $u^T \nabla^2 \Phi(x_0) u \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{16} \times \frac{3}{4} = \frac{3}{64} \beta$. Logo, $L_\beta = \Theta(\beta)$. $\blacksquare$
+- **Cota Superior:** Como $w_c(x) \le \beta/16$, pelo Teorema de Gershgorin, $\|\nabla^2 \Phi_{\text{soft}}\|_2 \le \frac{\beta}{4} \|V^T V\|_2 \le \frac{3 d_{\max}}{4} \beta$.
+- **Cota Inferior:** Seja $x_0$ um ponto em um hiperplano ativo $g_c(x_0) = 0$. Então $\sigma(0)(1-\sigma(0)) = 1/4 \implies w_c(x_0) = \beta/16$. Tomando a direção unitária $u = v_c / \|v_c\|_2$, $u^T \nabla^2 \Phi(x_0) u \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{4} \times \frac{3}{4} = \frac{3}{16} \beta$. Logo, $L_\beta = \Theta(\beta)$. $\blacksquare$
 
 ---
 
@@ -180,7 +180,7 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 
 Conforme preconizado pelo Comitê de Avaliação, a relevância do framework CLG-R reside na prova de que representações booleanamente equivalentes geram acessibilidades assintóticas radicalmente distintas sob uma mesma dinâmica contínua.
 
-> **Teorema 7 (Separação Dinâmica Assintótica CLG-R).**  
+> **Proposição Teórica 7 (Separação Dinâmica Assintótica CLG-R).**  
 > *Sejam $\Phi_{\text{quad}}$ e $\Phi_{\text{mult}}$ as representações Hinge e Multilinear da mesma fórmula 3-CNF, e seja $\mathcal{D}_{\text{proj}}$ o fluxo de gradiente projetado. Então, para famílias de instâncias aleatórias no limiar crítico:*
 > $$\liminf_{N \to \infty} \left[ \mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}, \mathcal{D}_{\text{proj}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}, \mathcal{D}_{\text{proj}}) \right] \ge c > 0$$
 

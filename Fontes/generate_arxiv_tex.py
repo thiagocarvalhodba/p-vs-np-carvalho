@@ -249,7 +249,7 @@ The Hessian operator of the Softplus relaxation factors everywhere as:
 \begin{equation}
 \nabla^2 \Phi_{\rm soft}(x) = V^T W(x) V
 \end{equation}
-where $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ with $w_c(x) = \frac{\beta}{4} \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ for all finite $x$ and $\beta < \infty$.
+where $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ with $w_c(x) = \beta \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ for all finite $x$ and $\beta < \infty$.
 Consequently:
 \begin{enumerate}
     \item $\nabla^2 \Phi_{\rm soft}(x) \succeq 0$ everywhere on $\mathbb{R}^N$ (global positive semidefiniteness).
@@ -284,7 +284,7 @@ For the Softplus relaxation as $\beta \to \infty$:
 \begin{enumerate}
     \item \textbf{Exact Lipschitz Scaling:} $L_\beta \equiv \sup_x \|\nabla^2 \Phi_{\rm soft}(x)\|_2 = \Theta(\beta)$, satisfying:
     \begin{equation}
-    \frac{3}{64} \beta \leq L_\beta \leq \frac{3 d_{\max}}{16} \beta.
+    \frac{3}{16} \beta \leq L_\beta \leq \frac{3 d_{\max}}{4} \beta.
     \end{equation}
     \item \textbf{Uniform Sub-box Underflow:} On the contracted sub-box $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ with $\rho < 1/3$ (e.g., $\rho = 1/6 \implies g_c(x) \leq -1/4$), the gradient vanishes exponentially:
     \begin{equation}
@@ -299,8 +299,8 @@ For the Softplus relaxation as $\beta \to \infty$:
 \end{theorem}
 
 \begin{proof}
-Upper bound: $\|\nabla^2 \Phi_{\rm soft}\|_2 \le \frac{\beta}{16} \|V^T V\|_2 \le \frac{3 d_{\max}}{16} \beta$ via Gershgorin.
-Lower bound: at any active clause boundary $g_c(x_0) = 0$, $\sigma(0)(1-\sigma(0)) = 1/4$, giving $w_c(x_0) = \beta/16$. Taking unit vector $u = v_c / \|v_c\|_2$, $u^T \nabla^2 \Phi(x_0) u \ge \frac{3}{64} \beta$.
+Upper bound: $\|\nabla^2 \Phi_{\rm soft}\|_2 \le \frac{\beta}{4} \|V^T V\|_2 \le \frac{3 d_{\max}}{4} \beta$ via Gershgorin.
+Lower bound: at any active clause boundary $g_c(x_0) = 0$, $\sigma(0)(1-\sigma(0)) = 1/4$, giving $w_c(x_0) = \beta/16$. Taking unit vector $u = v_c / \|v_c\|_2$, $u^T \nabla^2 \Phi(x_0) u \ge \frac{3}{16} \beta$.
 Underflow thresholds follow directly from IEEE 754 exponents: $2^{-126}$ and $2^{-149}$ for FP32; $2^{-1022}$ and $2^{-1074}$ for FP64.
 \end{proof}
 
@@ -308,7 +308,7 @@ Underflow thresholds follow directly from IEEE 754 exponents: $2^{-126}$ and $2^
 
 \section{Theorem 7: CLG-R Asymptotic Dynamic Separation}
 
-\begin{theorem}[CLG-R Dynamic Separation Theorem]
+\begin{theorem}[CLG-R Dynamic Separation Principle]
 \label{thm:separation}
 Let $\Phi_{\rm quad}$ and $\Phi_{\rm mult}$ be the Hinge and Multilinear continuous representations of the same 3-CNF formula, and let $\mathcal{D}_{\rm proj}$ denote projected gradient descent.
 Then, for random 3-SAT ensembles at the critical ratio $\alpha = M/N$:

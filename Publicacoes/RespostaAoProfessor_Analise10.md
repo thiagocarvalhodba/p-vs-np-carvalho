@@ -97,7 +97,7 @@ Definindo a matriz de incidência de cláusulas $V \in \mathbb{R}^{M \times N}$:
 $$V = \begin{bmatrix} v_1^T \\ v_2^T \\ \vdots \\ v_M^T \end{bmatrix}, \quad v_c = -\frac{1}{2} \sigma^{(c)}$$
 A Hessiana da relaxação Softplus escreve-se exatamente como:
 $$\nabla^2 \Phi_{\text{soft}}(x) = V^T W(x) V$$
-onde $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ com $w_c(x) = \frac{\beta}{4} \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ para todo $x \in \mathbb{R}^N$ e $\beta < \infty$.
+onde $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ com $w_c(x) = \beta \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ para todo $x \in \mathbb{R}^N$ e $\beta < \infty$.
 
 ### Consequências Imediatas:
 1. **Semidefinida Positiva Global:** $\nabla^2 \Phi_{\text{soft}}(x) \succeq 0$ para todo $x \in \mathbb{R}^N$.
@@ -112,10 +112,10 @@ onde $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ com $w_c(x) = \frac{\beta}{4} \
 ## 6. Teorema 6: Cotas Superior e Inferior para $L_\beta$ e Underflow Uniforme
 
 ### 6.1. Cota Inferior e Superior: $L_\beta = \Theta(\beta)$
-- **Cota Superior:** Para qualquer ponto $x$, como $w_c(x) \le \beta/16$, temos:
-  $$\|\nabla^2 \Phi_{\text{soft}}(x)\|_2 \le \frac{\beta}{16} \|V^T V\|_2 \le \frac{3 d_{\max}}{16} \beta \implies L_\beta = \mathcal{O}(\beta)$$
-- **Cota Inferior:** Seja $x_0$ um ponto pertencente a um hiperplano de cláusula ativa onde $g_c(x_0) = 0$. Nesse ponto, $\sigma(\beta g_c(x_0)) = 1/2$, de modo que $w_c(x_0) = \beta/16$. Tomando $z = v_c / \|v_c\|_2$:
-  $$z^T \nabla^2 \Phi_{\text{soft}}(x_0) z \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{16} \cdot \frac{3}{4} = \frac{3}{64} \beta \implies L_\beta \ge \frac{3}{64} \beta$$
+- **Cota Superior:** Para qualquer ponto $x$, como $w_c(x) \le \beta/4$, temos:
+  $$\|\nabla^2 \Phi_{\text{soft}}(x)\|_2 \le \frac{\beta}{4} \|V^T V\|_2 \le \frac{3 d_{\max}}{4} \beta \implies L_\beta = \mathcal{O}(\beta)$$
+- **Cota Inferior:** Seja $x_0$ um ponto pertencente a um hiperplano de cláusula ativa onde $g_c(x_0) = 0$. Nesse ponto, $\sigma(\beta g_c(x_0)) = 1/2$, de modo que $w_c(x_0) = \beta/4$. Tomando $z = v_c / \|v_c\|_2$:
+  $$z^T \nabla^2 \Phi_{\text{soft}}(x_0) z \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{4} \cdot \frac{3}{4} = \frac{3}{16} \beta \implies L_\beta \ge \frac{3}{16} \beta$$
   Portanto, **$L_\beta = \Theta(\beta)$** está formalmente provado com cotas superior e inferior.
 
 ### 6.2. Underflow Uniforme na Subcaixa $\mathcal{U}_N(\rho)$
