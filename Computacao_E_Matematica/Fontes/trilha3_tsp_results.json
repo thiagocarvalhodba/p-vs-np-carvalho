@@ -1,0 +1,35 @@
+{
+  "N=30 cidades": {
+    "mean_random_len": 14.556011937545879,
+    "mean_nn_len": 5.814941383354369,
+    "mean_base_len": 5.840722855629527,
+    "mean_ia_len": 6.205569059551721,
+    "mean_gain": -0.36484620392219397,
+    "ia_win_rate_vs_base": 20.0,
+    "ia_improvement_over_random": 57.36765615350292,
+    "mean_predicted_temp": 0.7185136330127716,
+    "mean_predicted_steps": 715.4
+  },
+  "N=60 cidades": {
+    "mean_random_len": 32.3351566127652,
+    "mean_nn_len": 7.5207990934666356,
+    "mean_base_len": 13.721920611334124,
+    "mean_ia_len": 13.88829793106155,
+    "mean_gain": -0.16637731972742492,
+    "ia_win_rate_vs_base": 40.0,
+    "ia_improvement_over_random": 57.048923259030204,
+    "mean_predicted_temp": 0.7205761444568635,
+    "mean_predicted_steps": 717.2
+  },
+  "N=100 cidades": {
+    "mean_random_len": 51.07423479349295,
+    "mean_nn_len": 9.620805341837809,
+    "mean_base_len": 26.861835650089354,
+    "mean_ia_len": 25.34310951998116,
+    "mean_gain": 1.518726130108196,
+    "ia_win_rate_vs_base": 80.0,
+    "ia_improvement_over_random": 50.37985469101935,
+    "mean_predicted_temp": 0.7209201002120972,
+    "mean_predicted_steps": 717.8
+  }
+}

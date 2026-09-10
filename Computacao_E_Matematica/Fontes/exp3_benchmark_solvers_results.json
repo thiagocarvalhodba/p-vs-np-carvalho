@@ -1,0 +1,26 @@
+{
+  "N=100, p=0.05": {
+    "random_mean_ratio": 0.49102974800124494,
+    "greedy_mean_ratio": 0.7420256530510377,
+    "base_mean_ratio": 0.5995609763239719,
+    "metagnn_mean_ratio": 0.6068542572986514,
+    "metagnn_mean_gain": 1.8333333333333333,
+    "metagnn_win_rate": 66.66666666666666
+  },
+  "N=200, p=0.03": {
+    "random_mean_ratio": 0.5145559543576367,
+    "greedy_mean_ratio": 0.7223225141817898,
+    "base_mean_ratio": 0.5764620871814602,
+    "metagnn_mean_ratio": 0.5898399292730544,
+    "metagnn_mean_gain": 8.5,
+    "metagnn_win_rate": 66.66666666666666
+  },
+  "N=300, p=0.02": {
+    "random_mean_ratio": 0.49959939800234904,
+    "greedy_mean_ratio": 0.7288156131543388,
+    "base_mean_ratio": 0.58593560045033,
+    "metagnn_mean_ratio": 0.5819095730673748,
+    "metagnn_mean_gain": -4.333333333333333,
+    "metagnn_win_rate": 50.0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "Erdos-Renyi (Uniforme)": {
+    "mean_gain": 1.6,
+    "std_gain": 20.655265672462313,
+    "mean_cut_base": 535.6,
+    "mean_cut_ia": 537.2,
+    "mean_ratio_base": 0.5349635085732322,
+    "mean_ratio_ia": 0.5364873840559413,
+    "mean_steps": 142.0,
+    "mean_noise": 0.023760515809059142,
+    "mean_lr": 0.024985948324203495
+  },
+  "Watts-Strogatz (Small-World)": {
+    "mean_gain": 1.4,
+    "std_gain": 5.9194594347794975,
+    "mean_cut_base": 535.6,
+    "mean_cut_ia": 537.0,
+    "mean_ratio_base": 0.5356,
+    "mean_ratio_ia": 0.537,
+    "mean_steps": 142.0,
+    "mean_noise": 0.023760514557361605,
+    "mean_lr": 0.024985947608947755
+  },
+  "Barab\u00e1si-Albert (Scale-Free)": {
+    "mean_gain": 8.0,
+    "std_gain": 20.019990009987517,
+    "mean_cut_base": 533.0,
+    "mean_cut_ia": 541.0,
+    "mean_ratio_base": 0.5466666666666666,
+    "mean_ratio_ia": 0.5548717948717949,
+    "mean_steps": 142.0,
+    "mean_noise": 0.02376050955057144,
+    "mean_lr": 0.024985911130905154
+  }
+}

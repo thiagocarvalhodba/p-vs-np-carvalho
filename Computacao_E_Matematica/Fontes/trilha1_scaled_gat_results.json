@@ -1,0 +1,20 @@
+{
+  "Esparso (N=200, p=0.02)": {
+    "old_gat_mean_ratio": 0.5151507509993746,
+    "new_scaled_gat_mean_ratio": 0.6582461570525453,
+    "relative_improvement": 0.14309540605317073,
+    "avg_latency_ms": 165.3085231781006
+  },
+  "Denso / Cr\u00edtico (N=200, p=0.05)": {
+    "old_gat_mean_ratio": 0.0,
+    "new_scaled_gat_mean_ratio": 0.4126762615078413,
+    "relative_improvement": 0.4126762615078413,
+    "avg_latency_ms": 146.57411575317383
+  },
+  "Escala M\u00e9dia (N=300, p=0.03)": {
+    "old_gat_mean_ratio": 0.0,
+    "new_scaled_gat_mean_ratio": 0.43746282932962066,
+    "relative_improvement": 0.43746282932962066,
+    "avg_latency_ms": 118.61729621887207
+  }
+}

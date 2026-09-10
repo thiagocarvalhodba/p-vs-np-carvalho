@@ -1,0 +1,29 @@
+=== RESULTADOS: OPÇÃO 3 (ESCALAÇÃO EXTREMA N=2000 A 10000 NÓS) ===
+Data/Hora: Thu Sep 10 07:42:34 2026
+
+Escala: N=2.000 nós (Espaço 10^602)
+  - Vértices: 2000 | Arestas Médias: 7978
+  - Consumo de Memória RAM:           0.25 MB
+  - Tempo Médio do Solver Carvalho:   1.45 s
+  - Throughput de Arestas:            5507 arestas/s
+  - Random Cut Ratio:                 25.00%
+  - Greedy Cut Ratio:                 28.23%
+  - Carvalho Cut Ratio:               34.48%
+
+Escala: N=5.000 nós (Espaço 10^1505)
+  - Vértices: 5000 | Arestas Médias: 19977
+  - Consumo de Memória RAM:           0.63 MB
+  - Tempo Médio do Solver Carvalho:   0.40 s
+  - Throughput de Arestas:            49976 arestas/s
+  - Random Cut Ratio:                 25.20%
+  - Greedy Cut Ratio:                 27.62%
+  - Carvalho Cut Ratio:               34.38%
+
+Escala: N=10.000 nós (Espaço 10^3010)
+  - Vértices: 10000 | Arestas Médias: 39975
+  - Consumo de Memória RAM:           1.26 MB
+  - Tempo Médio do Solver Carvalho:   0.79 s
+  - Throughput de Arestas:            50288 arestas/s
+  - Random Cut Ratio:                 24.80%
+  - Greedy Cut Ratio:                 28.04%
+  - Carvalho Cut Ratio:               34.37%

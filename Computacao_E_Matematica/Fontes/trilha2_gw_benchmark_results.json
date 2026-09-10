@@ -1,0 +1,35 @@
+{
+  "N=100 (Denso p=0.06)": {
+    "mean_gw_ratio": 0.7672877743974353,
+    "mean_carvalho_ratio": 0.5721455515994405,
+    "mean_greedy_ratio": 0.7369597000967669,
+    "gap_gw_to_bound": 0.11127222560256467,
+    "gap_carvalho_to_bound": 0.30641444840055954,
+    "carvalho_efficiency_vs_gw": 74.5672697042553,
+    "avg_gw_time_ms": 174.3239402770996,
+    "avg_carvalho_time_ms": 111.25750541687012,
+    "speedup_carvalho_vs_gw": 1.566851059694874
+  },
+  "N=200 (M\u00e9dio p=0.03)": {
+    "mean_gw_ratio": 0.7531176604273027,
+    "mean_carvalho_ratio": 0.5746275055408125,
+    "mean_greedy_ratio": 0.7312288486849925,
+    "gap_gw_to_bound": 0.12544233957269735,
+    "gap_carvalho_to_bound": 0.30393249445918746,
+    "carvalho_efficiency_vs_gw": 76.29983043881859,
+    "avg_gw_time_ms": 277.7562141418457,
+    "avg_carvalho_time_ms": 336.1166000366211,
+    "speedup_carvalho_vs_gw": 0.8263686295271329
+  },
+  "N=300 (Esparso p=0.02)": {
+    "mean_gw_ratio": 0.7509647792519515,
+    "mean_carvalho_ratio": 0.5678863703054591,
+    "mean_greedy_ratio": 0.7390512804107123,
+    "gap_gw_to_bound": 0.12759522074804852,
+    "gap_carvalho_to_bound": 0.31067362969454093,
+    "carvalho_efficiency_vs_gw": 75.62090505882973,
+    "avg_gw_time_ms": 348.333215713501,
+    "avg_carvalho_time_ms": 395.1441287994385,
+    "speedup_carvalho_vs_gw": 0.8815345852740419
+  }
+}

@@ -1,0 +1,20 @@
+=== RESULTADOS: EXPERIMENTO 2 (GAT ATENÇÃO VS SPARSE GNN) ===
+Data/Hora: Wed Sep  9 14:58:11 2026
+
+Configuração: N=200, p=0.02 (Esparso)
+  - RANDOM         | Corte Ratio: 48.80% ± 1.85% | Tempo Médio: 3.72 ms
+  - GREEDY         | Corte Ratio: 76.76% ± 0.55% | Tempo Médio: 67.42 ms
+  - SPARSE_GNN     | Corte Ratio: 79.85% ± 1.20% | Tempo Médio: 33.38 ms
+  - GAT_ATTENTION  | Corte Ratio: 61.94% ± 6.42% | Tempo Médio: 1611.76 ms
+
+Configuração: N=200, p=0.05 (Intermediário)
+  - RANDOM         | Corte Ratio: 49.10% ± 0.80% | Tempo Médio: 0.52 ms
+  - GREEDY         | Corte Ratio: 68.02% ± 0.23% | Tempo Médio: 39.09 ms
+  - SPARSE_GNN     | Corte Ratio: 68.10% ± 0.55% | Tempo Médio: 16.59 ms
+  - GAT_ATTENTION  | Corte Ratio: 0.00% ± 0.00% | Tempo Médio: 829.70 ms
+
+Configuração: N=400, p=0.015 (Escala Alta)
+  - RANDOM         | Corte Ratio: 49.65% ± 1.31% | Tempo Médio: 1.22 ms
+  - GREEDY         | Corte Ratio: 72.95% ± 0.37% | Tempo Médio: 109.12 ms
+  - SPARSE_GNN     | Corte Ratio: 74.65% ± 0.51% | Tempo Médio: 20.85 ms
+  - GAT_ATTENTION  | Corte Ratio: 17.37% ± 5.65% | Tempo Médio: 3140.89 ms

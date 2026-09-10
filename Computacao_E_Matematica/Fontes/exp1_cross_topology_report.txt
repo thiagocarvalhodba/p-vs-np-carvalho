@@ -1,0 +1,21 @@
+=== RESULTADOS: EXPERIMENTO 1 (CROSS-TOPOLOGY) ===
+Data/Hora: Wed Sep  9 14:58:36 2026
+N=200 nós | Instâncias por Topologia: 5
+
+Topologia: Erdos-Renyi (Uniforme)
+  - Ganho Médio IA vs Base: +1.60 ± 20.66
+  - Ratio Médio de Corte Base: 53.50%
+  - Ratio Médio de Corte IA:   53.65%
+  - Estratégia Média Predita: Steps=142.0, Noise=0.0238, LR=0.0250
+
+Topologia: Watts-Strogatz (Small-World)
+  - Ganho Médio IA vs Base: +1.40 ± 5.92
+  - Ratio Médio de Corte Base: 53.56%
+  - Ratio Médio de Corte IA:   53.70%
+  - Estratégia Média Predita: Steps=142.0, Noise=0.0238, LR=0.0250
+
+Topologia: Barabási-Albert (Scale-Free)
+  - Ganho Médio IA vs Base: +8.00 ± 20.02
+  - Ratio Médio de Corte Base: 54.67%
+  - Ratio Médio de Corte IA:   55.49%
+  - Estratégia Média Predita: Steps=142.0, Noise=0.0238, LR=0.0250

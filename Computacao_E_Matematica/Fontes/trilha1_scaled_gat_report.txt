@@ -1,0 +1,20 @@
+=== RESULTADOS: TRILHA 1 (SCALED DOT-PRODUCT GAT) ===
+Data/Hora: Wed Sep  9 15:07:54 2026
+
+Cenário: Esparso (N=200, p=0.02)
+  - GAT Antigo (Local Softmax):    51.52%
+  - Novo Scaled GAT (Multi-Head):  65.82%
+  - Ganho Líquido da Cura:        +14.31 p.p.
+  - Latência Média de Inferência: 165.31 ms
+
+Cenário: Denso / Crítico (N=200, p=0.05)
+  - GAT Antigo (Local Softmax):    0.00%
+  - Novo Scaled GAT (Multi-Head):  41.27%
+  - Ganho Líquido da Cura:        +41.27 p.p.
+  - Latência Média de Inferência: 146.57 ms
+
+Cenário: Escala Média (N=300, p=0.03)
+  - GAT Antigo (Local Softmax):    0.00%
+  - Novo Scaled GAT (Multi-Head):  43.75%
+  - Ganho Líquido da Cura:        +43.75 p.p.
+  - Latência Média de Inferência: 118.62 ms

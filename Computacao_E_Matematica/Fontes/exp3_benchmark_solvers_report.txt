@@ -1,0 +1,26 @@
+=== RESULTADOS: EXPERIMENTO 3 (BENCHMARK ESTATÍSTICO) ===
+Data/Hora: Wed Sep  9 14:58:13 2026
+
+Cenário: N=100, p=0.05
+  - Random:            49.10%
+  - Greedy:            74.20%
+  - Base Laplaciano:   59.96%
+  - MetaGNN Carvalho:  60.69%
+  - Ganho Médio da IA: +1.83 arestas
+  - Taxa de Vitória IA vs Base: 66.7%
+
+Cenário: N=200, p=0.03
+  - Random:            51.46%
+  - Greedy:            72.23%
+  - Base Laplaciano:   57.65%
+  - MetaGNN Carvalho:  58.98%
+  - Ganho Médio da IA: +8.50 arestas
+  - Taxa de Vitória IA vs Base: 66.7%
+
+Cenário: N=300, p=0.02
+  - Random:            49.96%
+  - Greedy:            72.88%
+  - Base Laplaciano:   58.59%
+  - MetaGNN Carvalho:  58.19%
+  - Ganho Médio da IA: -4.33 arestas
+  - Taxa de Vitória IA vs Base: 50.0%

@@ -1,0 +1,26 @@
+=== RESULTADOS: OPÇÃO 1 (MAX-3-SAT NO LIMIAR CRÍTICO DE COOK-LEVIN) ===
+Data/Hora: Thu Sep 10 07:45:40 2026
+
+Cenário: N=50 variáveis (m=213 cláusulas)
+  - Random Assignment (Teórico 87.5%):  85.73%
+  - WalkSAT Clássico:                   99.15%
+  - Solver Contínuo Base (Fixo):        98.97%
+  - SATMetaGNN Carvalho (IA):           99.25%
+  - Ganho Líquido de Cláusulas (IA):    +0.60 cláusulas
+  - Taxa de Vitória IA vs Base:         40.0%
+
+Cenário: N=100 variáveis (m=426 cláusulas)
+  - Random Assignment (Teórico 87.5%):  87.75%
+  - WalkSAT Clássico:                   99.44%
+  - Solver Contínuo Base (Fixo):        98.69%
+  - SATMetaGNN Carvalho (IA):           98.92%
+  - Ganho Líquido de Cláusulas (IA):    +1.00 cláusulas
+  - Taxa de Vitória IA vs Base:         60.0%
+
+Cenário: N=150 variáveis (m=639 cláusulas)
+  - Random Assignment (Teórico 87.5%):  87.67%
+  - WalkSAT Clássico:                   99.12%
+  - Solver Contínuo Base (Fixo):        98.40%
+  - SATMetaGNN Carvalho (IA):           98.44%
+  - Ganho Líquido de Cláusulas (IA):    +0.20 cláusulas
+  - Taxa de Vitória IA vs Base:         60.0%

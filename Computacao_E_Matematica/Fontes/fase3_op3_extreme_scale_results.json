@@ -1,0 +1,32 @@
+{
+  "N=2.000 n\u00f3s (Espa\u00e7o 10^602)": {
+    "num_nodes": 2000,
+    "mean_edges": 7978,
+    "mean_random_ratio": 0.25003138459023266,
+    "mean_greedy_ratio": 0.2823071893759504,
+    "mean_carvalho_ratio": 0.34476715749065884,
+    "mean_solve_time_sec": 1.4487093289693196,
+    "mean_memory_mb": 0.2511088053385417,
+    "throughput_edges_per_sec": 5506.970819105532
+  },
+  "N=5.000 n\u00f3s (Espa\u00e7o 10^1505)": {
+    "num_nodes": 5000,
+    "mean_edges": 19977,
+    "mean_random_ratio": 0.2519850073198515,
+    "mean_greedy_ratio": 0.2762069282508344,
+    "mean_carvalho_ratio": 0.343806332660105,
+    "mean_solve_time_sec": 0.3997357686360677,
+    "mean_memory_mb": 0.6288960774739584,
+    "throughput_edges_per_sec": 49975.5127447394
+  },
+  "N=10.000 n\u00f3s (Espa\u00e7o 10^3010)": {
+    "num_nodes": 10000,
+    "mean_edges": 39975,
+    "mean_random_ratio": 0.2479572942432946,
+    "mean_greedy_ratio": 0.280407398396362,
+    "mean_carvalho_ratio": 0.3437234020423669,
+    "mean_solve_time_sec": 0.7949268023173014,
+    "mean_memory_mb": 1.2582194010416667,
+    "throughput_edges_per_sec": 50287.648980344304
+  }
+}

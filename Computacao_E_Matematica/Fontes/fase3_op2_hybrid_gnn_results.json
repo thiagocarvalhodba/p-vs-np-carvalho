@@ -1,0 +1,29 @@
+{
+  "N=200, p=0.02 (Esparso)": {
+    "mean_hybrid_ratio": 0.7386005394960924,
+    "mean_sparse_ratio": 0.8000649040694074,
+    "mean_greedy_ratio": 0.7735693733900441,
+    "hybrid_vs_sparse_gain": -0.061464364573315056,
+    "hybrid_vs_greedy_gain": -0.03496883389395167,
+    "avg_latency_ms": 265.82865715026855,
+    "surpassed_80_percent": false
+  },
+  "N=200, p=0.05 (Intermedi\u00e1rio)": {
+    "mean_hybrid_ratio": 0.6629718395401534,
+    "mean_sparse_ratio": 0.6891937677808337,
+    "mean_greedy_ratio": 0.6867974364896268,
+    "hybrid_vs_sparse_gain": -0.02622192824068037,
+    "hybrid_vs_greedy_gain": -0.023825596949473393,
+    "avg_latency_ms": 226.904296875,
+    "surpassed_80_percent": false
+  },
+  "N=400, p=0.015 (Alta Escala)": {
+    "mean_hybrid_ratio": 0.6980670729348447,
+    "mean_sparse_ratio": 0.7490090627767783,
+    "mean_greedy_ratio": 0.7367700955646994,
+    "hybrid_vs_sparse_gain": -0.050941989841933544,
+    "hybrid_vs_greedy_gain": -0.0387030226298547,
+    "avg_latency_ms": 311.4940643310547,
+    "surpassed_80_percent": false
+  }
+}

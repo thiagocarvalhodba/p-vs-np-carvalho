@@ -1,0 +1,80 @@
+{
+  "N=200, p=0.02 (Esparso)": {
+    "random": {
+      "mean_cut": 194.4,
+      "mean_ratio": 0.4879861327491521,
+      "std_ratio": 0.018479965095985776,
+      "avg_time_ms": 3.7224292755126953
+    },
+    "greedy": {
+      "mean_cut": 305.6,
+      "mean_ratio": 0.7675862732318509,
+      "std_ratio": 0.005462886442530972,
+      "avg_time_ms": 67.41781234741211
+    },
+    "sparse_gnn": {
+      "mean_cut": 317.8,
+      "mean_ratio": 0.7984819218137371,
+      "std_ratio": 0.01199125796008746,
+      "avg_time_ms": 33.38136672973633
+    },
+    "gat_attention": {
+      "mean_cut": 246.6,
+      "mean_ratio": 0.6194160084939972,
+      "std_ratio": 0.06416274466253864,
+      "avg_time_ms": 1611.7634296417236
+    }
+  },
+  "N=200, p=0.05 (Intermedi\u00e1rio)": {
+    "random": {
+      "mean_cut": 501.6,
+      "mean_ratio": 0.49100650808900426,
+      "std_ratio": 0.00800248592049945,
+      "avg_time_ms": 0.5218505859375
+    },
+    "greedy": {
+      "mean_cut": 694.8,
+      "mean_ratio": 0.6802402339450933,
+      "std_ratio": 0.0023094137789624568,
+      "avg_time_ms": 39.09292221069336
+    },
+    "sparse_gnn": {
+      "mean_cut": 695.6,
+      "mean_ratio": 0.6809998197069465,
+      "std_ratio": 0.005540200988037068,
+      "avg_time_ms": 16.594791412353516
+    },
+    "gat_attention": {
+      "mean_cut": 0.0,
+      "mean_ratio": 0.0,
+      "std_ratio": 0.0,
+      "avg_time_ms": 829.6951770782471
+    }
+  },
+  "N=400, p=0.015 (Escala Alta)": {
+    "random": {
+      "mean_cut": 599.0,
+      "mean_ratio": 0.49647601114348533,
+      "std_ratio": 0.01309434763966188,
+      "avg_time_ms": 1.215982437133789
+    },
+    "greedy": {
+      "mean_cut": 880.2,
+      "mean_ratio": 0.7294762295260385,
+      "std_ratio": 0.0036890583871391513,
+      "avg_time_ms": 109.11598205566406
+    },
+    "sparse_gnn": {
+      "mean_cut": 900.8,
+      "mean_ratio": 0.7465203769568898,
+      "std_ratio": 0.005061962001135377,
+      "avg_time_ms": 20.853853225708008
+    },
+    "gat_attention": {
+      "mean_cut": 209.2,
+      "mean_ratio": 0.17366207893774704,
+      "std_ratio": 0.05652075580109806,
+      "avg_time_ms": 3140.894317626953
+    }
+  }
+}

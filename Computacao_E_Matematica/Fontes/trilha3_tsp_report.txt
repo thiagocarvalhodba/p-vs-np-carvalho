@@ -1,0 +1,32 @@
+=== RESULTADOS: TRILHA 3 (GENERALIZAÇÃO UNIVERSAL PARA TSP) ===
+Data/Hora: Wed Sep  9 15:07:22 2026
+
+Cenário: N=30 cidades
+  - Random Tour:                14.56
+  - Nearest Neighbor (Gulosa):  5.81
+  - Base Annealing (Fixo):      5.84
+  - MetaGNN Carvalho (IA):      6.21
+  - Redução Médio de Rota (IA): -0.36 unidades
+  - Taxa de Vitória IA vs Base: 20.0%
+  - Redução vs Rota Aleatória:  57.37%
+  - Temperatura Média Predita:  0.719 | Passos: 715
+
+Cenário: N=60 cidades
+  - Random Tour:                32.34
+  - Nearest Neighbor (Gulosa):  7.52
+  - Base Annealing (Fixo):      13.72
+  - MetaGNN Carvalho (IA):      13.89
+  - Redução Médio de Rota (IA): -0.17 unidades
+  - Taxa de Vitória IA vs Base: 40.0%
+  - Redução vs Rota Aleatória:  57.05%
+  - Temperatura Média Predita:  0.721 | Passos: 717
+
+Cenário: N=100 cidades
+  - Random Tour:                51.07
+  - Nearest Neighbor (Gulosa):  9.62
+  - Base Annealing (Fixo):      26.86
+  - MetaGNN Carvalho (IA):      25.34
+  - Redução Médio de Rota (IA): +1.52 unidades
+  - Taxa de Vitória IA vs Base: 80.0%
+  - Redução vs Rota Aleatória:  50.38%
+  - Temperatura Média Predita:  0.721 | Passos: 718

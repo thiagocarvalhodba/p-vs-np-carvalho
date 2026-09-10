@@ -1,0 +1,20 @@
+# Python byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.env
+ENV/
+
+# System / OS files
+Thumbs.db
+.DS_Store
+*.tmp
+*.log
+
+# Marp temporary cache
+.marp/

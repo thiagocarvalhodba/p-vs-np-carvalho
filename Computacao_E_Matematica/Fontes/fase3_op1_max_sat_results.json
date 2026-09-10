@@ -1,0 +1,29 @@
+{
+  "N=50 vari\u00e1veis (m=213 cl\u00e1usulas)": {
+    "mean_random_ratio": 0.8572769953051644,
+    "mean_walksat_ratio": 0.9915492957746478,
+    "mean_base_ratio": 0.9896713615023474,
+    "mean_ia_ratio": 0.9924882629107981,
+    "mean_gain_clauses": 0.6,
+    "ia_win_rate_vs_base": 40.0,
+    "ia_satisfaction_percent": 99.24882629107981
+  },
+  "N=100 vari\u00e1veis (m=426 cl\u00e1usulas)": {
+    "mean_random_ratio": 0.8774647887323944,
+    "mean_walksat_ratio": 0.9943661971830986,
+    "mean_base_ratio": 0.9868544600938967,
+    "mean_ia_ratio": 0.9892018779342722,
+    "mean_gain_clauses": 1.0,
+    "ia_win_rate_vs_base": 60.0,
+    "ia_satisfaction_percent": 98.92018779342722
+  },
+  "N=150 vari\u00e1veis (m=639 cl\u00e1usulas)": {
+    "mean_random_ratio": 0.8766823161189359,
+    "mean_walksat_ratio": 0.9912363067292645,
+    "mean_base_ratio": 0.984037558685446,
+    "mean_ia_ratio": 0.9843505477308294,
+    "mean_gain_clauses": 0.2,
+    "ia_win_rate_vs_base": 60.0,
+    "ia_satisfaction_percent": 98.43505477308294
+  }
+}

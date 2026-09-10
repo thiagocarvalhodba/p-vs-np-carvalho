@@ -1,0 +1,27 @@
+=== RESULTADOS: TRILHA 2 (GOEMANS-WILLIAMSON VS CARVALHO NCO) ===
+Data/Hora: Wed Sep  9 15:07:24 2026
+Limite Teórico Ótimo UGC (α_GW): 87.856%
+
+Escala: N=100 (Denso p=0.06)
+  - Goemans-Williamson (SDP):        76.73% (Tempo: 174.3 ms)
+  - Meta-Heurística Carvalho (NCO):   57.21% (Tempo: 111.3 ms)
+  - Heurística Greedy:                73.70%
+  - Eficiência Carvalho em Relação ao GW: 74.57%
+  - Speedup de Tempo (Carvalho vs GW):    1.57x mais rápido
+  - Gap até o Limite Analítico UGC:       30.64 p.p.
+
+Escala: N=200 (Médio p=0.03)
+  - Goemans-Williamson (SDP):        75.31% (Tempo: 277.8 ms)
+  - Meta-Heurística Carvalho (NCO):   57.46% (Tempo: 336.1 ms)
+  - Heurística Greedy:                73.12%
+  - Eficiência Carvalho em Relação ao GW: 76.30%
+  - Speedup de Tempo (Carvalho vs GW):    0.83x mais rápido
+  - Gap até o Limite Analítico UGC:       30.39 p.p.
+
+Escala: N=300 (Esparso p=0.02)
+  - Goemans-Williamson (SDP):        75.10% (Tempo: 348.3 ms)
+  - Meta-Heurística Carvalho (NCO):   56.79% (Tempo: 395.1 ms)
+  - Heurística Greedy:                73.91%
+  - Eficiência Carvalho em Relação ao GW: 75.62%
+  - Speedup de Tempo (Carvalho vs GW):    0.88x mais rápido
+  - Gap até o Limite Analítico UGC:       31.07 p.p.

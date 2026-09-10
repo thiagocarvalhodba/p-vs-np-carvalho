@@ -1,0 +1,23 @@
+=== RESULTADOS: OPÇÃO 2 (HIBRIDIZAÇÃO ESPECTRAL + ATENÇÃO) ===
+Data/Hora: Thu Sep 10 07:42:04 2026
+
+Cenário: N=200, p=0.02 (Esparso)
+  - Modelo Híbrido Carvalho:     73.86% (Latência: 265.8 ms)
+  - SparseGNN Pura:              80.01%
+  - Heurística Greedy:           77.36%
+  - Ganho Líquido vs Greedy:     -3.50 p.p.
+  - Rompeu a barreira dos 80%?:   Em consolidação
+
+Cenário: N=200, p=0.05 (Intermediário)
+  - Modelo Híbrido Carvalho:     66.30% (Latência: 226.9 ms)
+  - SparseGNN Pura:              68.92%
+  - Heurística Greedy:           68.68%
+  - Ganho Líquido vs Greedy:     -2.38 p.p.
+  - Rompeu a barreira dos 80%?:   Em consolidação
+
+Cenário: N=400, p=0.015 (Alta Escala)
+  - Modelo Híbrido Carvalho:     69.81% (Latência: 311.5 ms)
+  - SparseGNN Pura:              74.90%
+  - Heurística Greedy:           73.68%
+  - Ganho Líquido vs Greedy:     -3.87 p.p.
+  - Rompeu a barreira dos 80%?:   Em consolidação
