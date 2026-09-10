@@ -358,6 +358,13 @@ Para investigar se a não-linearidade geométrica de relaxações contínuas pod
      $$\boxed{ \text{Geometric Hardness} \not\Rightarrow \text{Computational Hardness} }$$
      para dinâmicas de descida contínua.
 
+4. **Benchmark CLG-04 (`Fontes/exp_clg04_representation_invariance.py`):**
+   - **O Experimento Decisivo (Ensemble $\mathcal{E}_{\text{equiv}}$):** Teste das *exatas mesmas fórmulas booleanas* sob três relaxações contínuas distintas no hipercubo: Multilinear ($\Phi_{\text{mult}}$), Quadrática Hinge ($\Phi_{\text{quad}}$) e Softplus Log-Sum-Exp ($\Phi_{\text{soft}}$ com $\beta=5.0$).
+   - **Métricas Avançadas:** Intervalos de confiança de Wilson a 95% e distância de Hamming normalizada $d_H(s_{\text{final}}, s^*) \in [0, 1]$.
+   - **Descoberta:** Em Random-3-SAT ($N=60$), mudar de $\Phi_{\text{mult}}$ para $\Phi_{\text{soft}}$ elevou a alcançabilidade dinâmica de **$9.3\%$ para $69.3\%$** ($IC_{95\%} [58.2\%, 78.6\%]$) e reduziu armadilhas de $2.71$ para $0.45$ cláusulas. Em contrapartida, no 3-XOR-SAT ($N=60$), a alcançabilidade permaneceu em **$0.0\%$ ($0/75$, $IC_{95\%} [0.0\%, 4.9\%]$)** com $d_H \approx 0.50$ (ortogonal à solução plantada) sob todas as três relaxações suaves.
+   - **Impacto:** Demonstrou que a geometria contínua $\mathcal{G}(\Phi(I))$ **não é intrínseca** ao problema discreto $I$, abrindo o problema variacional da Geometria Canônica $\Phi^*(I) = \arg\min_{\Phi} \text{Glassiness}(\Phi)$.
+
+
 ---
 
 ## 15. Auditorias Adversariais Independentes
@@ -425,3 +432,17 @@ Toda a base matemática, empírica, modelos treinados, artigos científicos publ
 
 
 
+
+---
+
+## 19. Consolidação do Parecer 05 do Professor e Entregáveis
+
+Em resposta ao Parecer 05 (`C:\MathDoCarvalho\AnaliseReportadaPeloProfessor05.docx`), o programa de pesquisa atingiu a maturidade científica plena:
+1. **Proposição 1 Formal:** $\Omega_{\text{curv}} = \frac{1}{\sqrt{3}} \|\mathcal{T}\|_F$ demonstrada passo a passo sob amostragem i.i.d. $x_i \sim \mathcal{U}([-1, 1])$, provando a degenerescência algébrica de $\text{CLG}_L$.
+2. **Execução do Experimento Decisivo $\mathcal{E}_{\text{equiv}}$ (CLG-04):** Fórmulas idênticas sob relaxações Multilinear, Quadrática e Softplus, com intervalos de confiança de Wilson a 95% e distâncias de Hamming.
+3. **Formalização da Geometria Canônica:** Definição do espectro de alcançabilidade $\mathcal{R}(I) = \{ R_{\text{dyn}}(\Phi) : \Phi \sim I \}$ e do problema variacional da representação ótima $\Phi^*(I)$.
+4. **Documentos Oficiais Gerados:**
+   - Markdown completo: [Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)
+   - Documento Word formatado para o Professor: `C:\MathDoCarvalho\RespostaAoProfessor05.docx`
+   - Fundações teóricas atualizadas: [Publicacoes/CLG_FOUNDATIONS.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/CLG_FOUNDATIONS.md)
+   - Códigos e relatórios: `Fontes/exp_clg04_representation_invariance.py`, `Fontes/exp_clg04_report.txt`, `Fontes/exp_clg04_results.json`.

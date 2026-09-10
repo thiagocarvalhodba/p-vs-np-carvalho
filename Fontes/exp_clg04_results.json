@@ -1,0 +1,134 @@
+{
+  "N_30": {
+    "3-XOR-SAT (Classe P)": {
+      "multilinear": {
+        "reachability_pct": 0.0,
+        "ci_95_pct": [
+          0.0,
+          4.872365402770864
+        ],
+        "mean_trap_severity": 4.706666666666666,
+        "mean_hamming_dist": 0.49288888888888893,
+        "success_fraction": "0/75"
+      },
+      "quadratic": {
+        "reachability_pct": 1.3333333333333335,
+        "ci_95_pct": [
+          0.23575578553256468,
+          7.173346539831077
+        ],
+        "mean_trap_severity": 3.519047619047619,
+        "mean_hamming_dist": 0.48711111111111105,
+        "success_fraction": "1/75"
+      },
+      "softplus": {
+        "reachability_pct": 0.0,
+        "ci_95_pct": [
+          0.0,
+          4.872365402770864
+        ],
+        "mean_trap_severity": 6.293333333333334,
+        "mean_hamming_dist": 0.4995555555555555,
+        "success_fraction": "0/75"
+      }
+    },
+    "Random-3-SAT (NP-C)": {
+      "multilinear": {
+        "reachability_pct": 9.333333333333334,
+        "ci_95_pct": [
+          4.5948588008290185,
+          18.03466506009128
+        ],
+        "mean_trap_severity": 1.9331535131535134,
+        "mean_hamming_dist": 0.28444444444444444,
+        "success_fraction": "7/75"
+      },
+      "quadratic": {
+        "reachability_pct": 14.666666666666666,
+        "ci_95_pct": [
+          8.39172653208596,
+          24.38474501920545
+        ],
+        "mean_trap_severity": 3.036596736596737,
+        "mean_hamming_dist": 0.36088888888888887,
+        "success_fraction": "11/75"
+      },
+      "softplus": {
+        "reachability_pct": 38.666666666666664,
+        "ci_95_pct": [
+          28.455235848356086,
+          49.98250030960531
+        ],
+        "mean_trap_severity": 0.8933333333333333,
+        "mean_hamming_dist": 0.2031111111111111,
+        "success_fraction": "29/75"
+      }
+    }
+  },
+  "N_60": {
+    "3-XOR-SAT (Classe P)": {
+      "multilinear": {
+        "reachability_pct": 0.0,
+        "ci_95_pct": [
+          0.0,
+          4.872365402770864
+        ],
+        "mean_trap_severity": 8.906666666666666,
+        "mean_hamming_dist": 0.48244444444444456,
+        "success_fraction": "0/75"
+      },
+      "quadratic": {
+        "reachability_pct": 0.0,
+        "ci_95_pct": [
+          0.0,
+          4.872365402770864
+        ],
+        "mean_trap_severity": 7.306666666666667,
+        "mean_hamming_dist": 0.49777777777777776,
+        "success_fraction": "0/75"
+      },
+      "softplus": {
+        "reachability_pct": 0.0,
+        "ci_95_pct": [
+          0.0,
+          4.872365402770864
+        ],
+        "mean_trap_severity": 12.893333333333334,
+        "mean_hamming_dist": 0.5,
+        "success_fraction": "0/75"
+      }
+    },
+    "Random-3-SAT (NP-C)": {
+      "multilinear": {
+        "reachability_pct": 9.333333333333334,
+        "ci_95_pct": [
+          4.5948588008290185,
+          18.03466506009128
+        ],
+        "mean_trap_severity": 2.7125274725274724,
+        "mean_hamming_dist": 0.2951111111111111,
+        "success_fraction": "7/75"
+      },
+      "quadratic": {
+        "reachability_pct": 4.0,
+        "ci_95_pct": [
+          1.3696091726373962,
+          11.1129669979118
+        ],
+        "mean_trap_severity": 3.7495238095238093,
+        "mean_hamming_dist": 0.3744444444444444,
+        "success_fraction": "3/75"
+      },
+      "softplus": {
+        "reachability_pct": 69.33333333333334,
+        "ci_95_pct": [
+          58.16956875684364,
+          78.61311662075163
+        ],
+        "mean_trap_severity": 0.45,
+        "mean_hamming_dist": 0.22622222222222224,
+        "success_fraction": "52/75"
+      }
+    }
+  }
+}

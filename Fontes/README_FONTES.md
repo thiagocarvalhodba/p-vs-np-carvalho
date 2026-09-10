@@ -132,3 +132,31 @@ pip install torch numpy scipy matplotlib networkx
 
 ## 5. Garantia de Integridade e Validação
 Todos os scripts presentes nesta pasta foram executados, depurados contra anomalias numéricas (divisões por zero, gradientes nulos ou vazamentos de memória) e validados em sistema operacional Windows com backends PyTorch CPU e CUDA.
+
+---
+
+## 6. Suíte Experimental CLG (Computational Landscape Geometry)
+
+A suíte CLG investiga a interface entre problemas de satisfatibilidade booleana, relaxações contínuas no hipercubo $[-1, 1]^N$ e a estabilidade dinâmica de métodos de otimização contínua:
+
+1. **`clg_framework.py`**:
+   - Motor analítico central que unifica amostragem estocástica no hipercubo, cálculo de Hessiana, norma do tensor cúbico $\mathcal{T} = \nabla^3 \Phi$, simulação de Langevin com gradiente e métricas de aprisionamento.
+
+2. **`exp_clg01_curvature_benchmark.py`**:
+   - Benchmark inicial confrontando 2-SAT (Classe P) e 3-SAT (NP-C), mapeando a dispersão estática da curvatura $\Omega_{\text{curv}}$.
+
+3. **`exp_clg02_degree_control_benchmark.py`**:
+   - Experimento de controle de grau $\deg=3$ (Horn-3-SAT vs Random-3-SAT vs Equi-3-SAT), isolando o grau algébrico da navegabilidade dinâmica das bacias.
+
+4. **`exp_clg03_xorsat_and_ogp.py`**:
+   - O teste canônico do 3-XOR-SAT como controle de fogo: sistemas lineares sobre $\text{GF}(2)$ solúveis em $\mathcal{O}(N^3)$ por eliminação gaussiana confrontados com a relaxação contínua no hipercubo.
+
+5. **`exp_clg04_representation_invariance.py`**:
+   - **O Experimento Decisivo (Ensemble $\mathcal{E}_{\text{equiv}}$):** Avalia as *mesmas fórmulas lógicas* sob três relaxações contínuas distintas:
+     - Multilinear: $\Phi_{\text{mult}}(x) = \sum_c \prod_{j \in c} \frac{1 - \sigma_j x_j}{2}$
+     - Quadrática Hinge: $\Phi_{\text{quad}}(x) = \sum_c [\max(0, 1 - \sum_j \frac{1 + \sigma_j x_j}{2})]^2$
+     - Softplus Log-Sum-Exp: $\Phi_{\text{soft}}(x) = \sum_c \frac{1}{\beta} \ln(1 + \exp(\beta(1 - \sum_j \frac{1 + \sigma_j x_j}{2})))$
+   - Relata alcançabilidade dinâmica $R_{\text{dyn}}$ com **Intervalos de Confiança de Wilson a 95%** e **Distância de Hamming normalizada** $d_H(s_{\text{final}}, s^*) \in [0, 1]$.
+
+6. **`generate_response_docs.py`**:
+   - Gerador automatizado dos documentos de resposta técnica formal para o Professor e banca examinadora (Markdown e DOCX estilizado).

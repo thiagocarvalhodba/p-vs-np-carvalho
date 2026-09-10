@@ -1,0 +1,35 @@
+==========================================================================================
+RELATÓRIO EXPERIMENTAL CLG-04: INVARIÂNCIA DE REPRESENTAÇÃO (ENSEMBLE E_equiv)
+Autor: Thiago Carvalho (2026)
+==========================================================================================
+
+RESUMO DOS ACHADOS:
+1. Para a MESMA instância lógica booleana, a mudança na representação contínua
+   (Multilinear vs Quadrática Hinge vs Softplus) altera a topologia de atração.
+2. A dificuldade geométrica observada não é um invariante intrínseco do problema computacional,
+   mas uma propriedade conjunta da tríade: (Problema I, Mapa de Relaxação Phi, Dinâmica D).
+3. Intervalos de Confiança Binomial (Wilson 95%) substituem afirmações categóricas de '0%'.
+
+TABELA COMPARATIVA CONSOLIDADA:
+
+--- ESCALA N = 30 VARIÁVEIS ---
+Problema               | Representação  | Reachability (IC 95%)      | Severidade Armadilha | Dist. Hamming
+---------------------------------------------------------------------------------------------------------
+3-XOR-SAT (Classe P)   | multilinear    | 0.0% [0.0%, 4.9%]          |  4.71 cláusulas         | 0.493
+3-XOR-SAT (Classe P)   | quadratic      | 1.3% [0.2%, 7.2%]          |  3.52 cláusulas         | 0.487
+3-XOR-SAT (Classe P)   | softplus       | 0.0% [0.0%, 4.9%]          |  6.29 cláusulas         | 0.500
+Random-3-SAT (NP-C)    | multilinear    | 9.3% [4.6%, 18.0%]         |  1.93 cláusulas         | 0.284
+Random-3-SAT (NP-C)    | quadratic      | 14.7% [8.4%, 24.4%]        |  3.04 cláusulas         | 0.361
+Random-3-SAT (NP-C)    | softplus       | 38.7% [28.5%, 50.0%]       |  0.89 cláusulas         | 0.203
+
+--- ESCALA N = 60 VARIÁVEIS ---
+Problema               | Representação  | Reachability (IC 95%)      | Severidade Armadilha | Dist. Hamming
+---------------------------------------------------------------------------------------------------------
+3-XOR-SAT (Classe P)   | multilinear    | 0.0% [0.0%, 4.9%]          |  8.91 cláusulas         | 0.482
+3-XOR-SAT (Classe P)   | quadratic      | 0.0% [0.0%, 4.9%]          |  7.31 cláusulas         | 0.498
+3-XOR-SAT (Classe P)   | softplus       | 0.0% [0.0%, 4.9%]          | 12.89 cláusulas         | 0.500
+Random-3-SAT (NP-C)    | multilinear    | 9.3% [4.6%, 18.0%]         |  2.71 cláusulas         | 0.295
+Random-3-SAT (NP-C)    | quadratic      | 4.0% [1.4%, 11.1%]         |  3.75 cláusulas         | 0.374
+Random-3-SAT (NP-C)    | softplus       | 69.3% [58.2%, 78.6%]       |  0.45 cláusulas         | 0.226
+
+==========================================================================================
