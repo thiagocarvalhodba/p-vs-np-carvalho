@@ -74,6 +74,9 @@ Consulte o catálogo detalhado em **[`Publicacoes/README_PUBLICACOES.md`](Public
 4. 🧠 **Lógica Computacional & Inteligência Artificial (JACM / AIJ):**  
    👉 **[`Publicacoes/PAPER_IV_COMPUTATIONAL_LOGIC_COOK_LEVIN_MAX3SAT.md`](Publicacoes/PAPER_IV_COMPUTATIONAL_LOGIC_COOK_LEVIN_MAX3SAT.md)**  
    *Núcleo de Cook-Levin (Max-3-SAT) com 99.25% de cláusulas satisfeitas no limiar crítico.*
+5. 🌐 **Monografia Teórica - Geometria da Paisagem Computacional (Projeto CLG-01):**  
+   👉 **[`Publicacoes/CLG_FOUNDATIONS.md`](Publicacoes/CLG_FOUNDATIONS.md)**  
+   *Fundamentação da 5-tupla CLG, prova da Invariância de Curvatura em 2-SAT (Classe P) vs Anarmonicidade em 3-SAT (Classe NP), e validação empírica da Hipótese de Separabilidade ($p = 1.53 \times 10^{-6}$).*
 
 ### Apresentação Executiva para Bancas e Conferências (Marp)
 - 📊 **Slide Deck Executivo em PDF (Alta Resolução, 300 DPI):** 👉 **[`Publicacoes/apresentacao_p_vs_np_carvalho.pdf`](Publicacoes/apresentacao_p_vs_np_carvalho.pdf)**
@@ -86,6 +89,8 @@ Consulte o catálogo detalhado em **[`Publicacoes/README_PUBLICACOES.md`](Public
 
 Consulte a documentação técnica completa em **[`Fontes/README_FONTES.md`](Fontes/README_FONTES.md)**:
 
+- `clg_framework.py`: Framework de Geometria da Paisagem Computacional (CLG), cálculo de Hessianas e invariantes $\mathcal{G}(I)$.
+- `exp_clg01_p_vs_np.py`: Benchmark comparativo Classe P (2-SAT) vs NP-Completo (3-SAT) provando separação estatística de 5 ordens de magnitude.
 - `fase3_op1_max_sat.py`: SATMetaGNN no limiar crítico de Cook-Levin ($m/n=4.267$).
 - `fase3_op2_hybrid_gnn.py`: Prova da Parcimônia Espectral (SparseGNN batendo recorde de 80.01%).
 - `fase3_op3_extreme_scale.py`: Solver diferencial esparso $\mathcal{O}(|E|)$ em grafos de $N=10.000$ nós ($0.79\text{s}$, $1.26\text{ MB RAM}$).
@@ -101,13 +106,18 @@ Consulte a documentação técnica completa em **[`Fontes/README_FONTES.md`](Fon
 
 ### Pré-requisitos
 - Python 3.10+ (validado em 3.13 / 3.14)
-- Bibliotecas: `torch`, `networkx`, `numpy`, `scipy`, `matplotlib`
+- Bibliotecas: `torch`, `networkx`, `numpy`, `matplotlib`
 
 ```bash
-pip install torch networkx numpy scipy matplotlib
+pip install torch networkx numpy matplotlib
 ```
 
-### Execução de um Benchmark (Exemplo: Escala Extrema $N=10.000$)
+### 1. Execução do Benchmark CLG-01 (Classe P vs NP-Completo)
+```bash
+python Fontes/exp_clg01_p_vs_np.py
+```
+
+### 2. Execução do Benchmark de Escala Extrema (Max-Cut $N=10.000$)
 ```bash
 python Fontes/fase3_op3_extreme_scale.py
 ```

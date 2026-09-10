@@ -43,7 +43,12 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Arquivo:** [PAPER_IV_COMPUTATIONAL_LOGIC_COOK_LEVIN_MAX3SAT.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/PAPER_IV_COMPUTATIONAL_LOGIC_COOK_LEVIN_MAX3SAT.md)
    - **Título:** *Continuous Differentiable Relaxation of the Cook-Levin Satisfiability Core: Meta-Governed Neural Message Passing across the Critical Phase Transition ($m/n \approx 4.267$)*
    - **Periódico Alvo:** *Journal of the ACM (JACM)* / *Artificial Intelligence (AIJ)*
-   - **Contribuições:** Formulação contínua e diferenciável do núcleo da NP-completude (redução de Cook-Levin). A `SATMetaGNN` em grafo bipartido de fatores alcançou **$99.25\%$ de satisfação de cláusulas** no ponto crítico de transição de fase ($m/n \approx 4.267$), superando com folga o limite de inaproximabilidade de Håstad ($87.5\%$).
+   - **Contribuições:** Formulação contínua e diferenciável do núcleo da NP-completude (redução de Cook-Levin). A `SATMetaGNN` em grafo bipartido de fatores alcançou **$99.25\%$ de satisfação de cláusulas** no ponto crítico de transição de fase ($m/n \approx 4.267$).
+
+5. 🌐 **Monografia Teórica de Fronteira - Geometria da Paisagem Computacional (Projeto CLG-01):**
+   - **Arquivo:** [CLG_FOUNDATIONS.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/CLG_FOUNDATIONS.md)
+   - **Título:** *Computational Landscape Geometry (CLG): Mathematical Foundations and Negative Controls for the P versus NP Boundary*
+   - **Contribuições:** Fundamentação da 5-tupla $\mathcal{L}(I)$, prova analítica do Teorema da Curvatura Constante em 2-SAT (Classe P, $\nabla_x \mathcal{H} \equiv 0$) versus Proliferação Dinâmica de Curvatura Anarmônica em 3-SAT (Classe NP, $\nabla_x \mathcal{H} \neq 0$), e validação estatística da Hipótese de Separabilidade com gap de 5 ordens de magnitude ($p = 1.53 \times 10^{-6}$).
 
 ---
 

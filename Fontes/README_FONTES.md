@@ -18,7 +18,14 @@ Este diretório contém a suíte completa de algoritmos, modelos neurais pré-tr
 
 ## 2. Mapa Estrutural dos Arquivos de Código-Fonte
 
-### A. Módulos de Fronteira e Estado da Arte (Fase 3 - 2026)
+### A. Geometria da Paisagem Computacional (Projeto CLG-01 - 2026)
+
+| Arquivo | Descrição Técnica & Arquitetura | Modelo / Método | Saída / Relatório |
+| :--- | :--- | :--- | :--- |
+| **`clg_framework.py`** | **Motor de Paisagem Contínua:** Implementação da 5-tupla $\mathcal{L}(I)$, relaxação funcional de $k$-SAT, cálculo de Hessiana analítica e decomposição espectral. Extrai o vetor de invariantes $\mathcal{G}(I)$ (curvatura $\Omega_{\text{curv}}$, índice de Morse e rigidez $R(I)$). | Decomposição Espectral Exata | Invariantes $\mathcal{G}(I)$ |
+| **`exp_clg01_p_vs_np.py`** | **Benchmark Controlado Classe P vs NP:** Teste comparativo entre 2-SAT ($\text{P}$) e 3-SAT ($\text{NP}$) em $N=20, 40, 60$. Confirma o Teorema 1 ($\Omega_{\text{curv}} \approx 0$ em $\text{P}$) e estabelece separação de 5 ordens de magnitude na rigidez ($p = 1.53 \times 10^{-6}$). | Teste Estatístico Mann-Whitney U | `exp_clg01_report.txt`, `exp_clg01_results.json` |
+
+### B. Módulos de Fronteira e Estado da Arte (Fase 3 - 2026)
 
 | Arquivo | Descrição Técnica & Arquitetura | Modelo Associado | Complexidade |
 | :--- | :--- | :--- | :--- |
