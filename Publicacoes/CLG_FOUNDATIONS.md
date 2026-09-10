@@ -1,4 +1,4 @@
-# Computational Landscape Geometry (CLG): Continuous Relaxations, Algorithmic Phase Transitions, and The Overlap Gap Property
+# Computational Landscape Geometry: Why Glassiness Does Not Imply Computational Hardness
 
 **Author:** Thiago Carvalho  
 **Affiliation:** Carvalho Labs for Optimization and Computational Complexity, Vitória, ES, Brazil  
@@ -17,14 +17,16 @@
 
 For decades, theoretical computer science has evaluated computational complexity through discrete, worst-case Turing reductions (Cook-Levin, Karp). While fundamental, this discrete lens obscures the geometric and thermodynamic topography that continuous relaxation algorithms (gradient descent, Langevin diffusions, interior-point methods, and Graph Neural Networks) actually encounter.
 
-**Project CLG (Computational Landscape Geometry)** establishes a formal mathematical and computational bridge:
-$$\text{Discrete Combinatorial Instance } I \;\xrightarrow{\quad}\; \text{Continuous Landscape } \mathcal{L}(I) \;\xrightarrow{\quad}\; \text{Topological Basin Dynamics } \mathcal{D}(I)$$
+**Project CLG (Computational Landscape Geometry)** investigates the interface between discrete constraint satisfaction problems, continuous multilinear relaxations, and algorithmic stability:
+$$\text{Discrete Combinatorial Instance } I \;\xrightarrow{\quad}\; \text{Continuous Relaxation } \mathcal{L}(I) \;\xrightarrow{\quad}\; \text{Algorithmic Dynamics } \mathcal{D}(I)$$
 
-### The Scientific Trajectory and Epistemological Evolution:
+### The Scientific Trajectory and Epistemological Maturation:
 1. **Initial Hypothesis (CLG-01):** We hypothesized that static differential curvature (Hessian dispersion $\Omega_{\text{curv}}$) could intrinsically separate Class P (2-SAT) from Class NP-Complete (3-SAT).
-2. **The Degree Confounder (CLG-02):** By strictly controlling the algebraic degree at $\deg=3$ across both classes (Horn-3-SAT in P vs Random-3-SAT in NP-C), we proved that static local curvature is an algebraic identity measuring polynomial degree ($\Omega_{\text{curv}} = \frac{1}{\sqrt{3}} \|\mathcal{T}\|_F$), rather than Turing complexity. However, **dynamical basin reachability** ($100\%$ vs $6\%$) revealed a profound topological phase transition.
-3. **The Definitive Counterexample and Theoretical Resolution (CLG-03):** Testing **3-XOR-SAT** (linear parity systems over $\text{GF}(2)$) resolved the foundational question. 3-XOR-SAT is solvable in $\mathcal{O}(N^3)$ via Gaussian Elimination (strictly in **Class P**), yet its continuous multilinear relaxation is a pure 3-spin Sherrington-Kirkpatrick spin glass with **$0.0\%$ gradient reachability and severe metastable trapping**.
-4. **The Mature Theorem:** Continuous Landscape Geometry does **not** separate P from NP. It characterizes the fundamental boundary between **Continuous Gradient Tractability (Continuous-P)** and **Glassy Hardness (Overlap Gap Property - OGP)**, illuminating why abstract algebraic algorithms in P bypass the physical barriers of differential geometry.
+2. **The Degree Confounder (CLG-02):** By controlling algebraic degree at $\deg=3$ across classes (Horn-3-SAT in P vs Random-3-SAT in NP-C), we proved that static local curvature is an algebraic identity measuring polynomial degree ($\Omega_{\text{curv}} = \frac{1}{\sqrt{3}} \|\mathcal{T}\|_F$), rather than Turing complexity. However, **dynamical basin reachability** ($100\%$ vs $6\%$) revealed a sharp transition in global basin navigability.
+3. **The Definitive Counterexample and Resolution (CLG-03):** Testing **3-XOR-SAT** (linear parity systems over $\text{GF}(2)$) resolved the foundational question. 3-XOR-SAT is solvable in $\mathcal{O}(N^3)$ via Gaussian Elimination (strictly in **Class P**), yet its continuous multilinear relaxation on the hypercube $[-1, 1]^N$ exhibits severe glassy fragmentation with **$0.0\%$ gradient reachability and persistent metastable trapping**.
+4. **The Foundational Theorem:** The local differential geometry of multilinear relaxations is **not** an invariant of computational complexity:
+   $$\boxed{ \text{Geometric Hardness} \not\Rightarrow \text{Computational Hardness} }$$
+   for continuous gradient dynamics. Continuous relaxations characterize the boundary between **instances favorable to continuous flows** and **instances with glassy clustering**, illuminating why abstract algebraic algorithms in P succeed where differential physics fails.
 
 ---
 
@@ -94,50 +96,65 @@ At the satisfiability threshold $\alpha_c \approx 4.267$:
 To test whether basin reachability separates Class P from NP, we turn to **3-XOR-SAT (Linear Systems over $\text{GF}(2)$)**:
 $$x_{i_1} \oplus x_{i_2} \oplus x_{i_3} = b_j \pmod 2$$
 
-### 5.1 The Theoretical Contrast
-1. **Computational Complexity:** Strictly in **Class P**. Gaussian Elimination over $\text{GF}(2)$ determines satisfiability and produces an exact solution in deterministic $\mathcal{O}(M \cdot N^2) \le \mathcal{O}(N^3)$ operations.
-2. **Continuous Energy Landscape:** Expanding each parity equation into 4 3-CNF clauses yields a multilinear Hamiltonian identical to the **3-spin spherical Sherrington-Kirkpatrick spin glass model**. Above $\alpha_d \approx 0.918$, the state space undergoes 1-step Replica Symmetry Breaking (1-RSB) and exhibits the **Overlap Gap Property (OGP)** with extensive free energy barriers.
+### 5.1 The Theoretical Setting & Hypercube Clarification
+1. **Computational Complexity:** Strictly in **Class P**. Gaussian Elimination over $\text{GF}(2)$ determines satisfiability and produces an exact solution with an $\mathcal{O}(M \cdot N^2) \le \mathcal{O}(N^3)$ upper bound.
+2. **Continuous Energy Landscape on $[-1, 1]^N$:** The Boolean formulation of 3-XORSAT possesses a natural connection to 3-spin glass Hamiltonians; we investigate here the geometry of our multilinear relaxation on the continuous hypercube $[-1, 1]^N$, which must not be identified automatically with the spherical $p$-spin model (which imposes the spherical constraint $\sum_i x_i^2 = N$). The statistical mechanics literature (Ricci-Tersenghi, *Science* 330, 2010 — *"Being Glassy Without Being Hard to Solve"*) establishes that random XORSAT exhibits glassy phase fragmentation while remaining solvable by linear algebra.
 
-### 5.2 Empirical Results of Project CLG-03 (Planted Satisfiable Ensembles)
+### 5.2 Formal Definition of Landscape Metrics
+To avoid generic terminology, we formalize the evaluation metrics:
+- **Discrete Residual Energy ($E_{\text{disc}}$):** The number of unsatisfied clauses evaluated at the rounded configuration $s = \text{sign}(x) \in \{-1, +1\}^N$.
+- **Continuous Residual Energy ($E_{\text{cont}}$):** The scalar potential value $\Phi(x_{\text{final}})$.
+- **Dynamical Basin Reachability ($R_{\text{dyn}}$):** The fraction of multi-start trajectories achieving $E_{\text{disc}} = 0$:
+  $$R_{\text{dyn}} = \frac{1}{K} \sum_{k=1}^K \mathbf{1}_{\{E_{\text{disc}}(x_{\text{final}}^{(k)}) = 0\}}$$
+- **Local Trap Severity ($\bar{E}_{\text{trap}}$):** The conditional expectation of violated clauses given failure:
+  $$\bar{E}_{\text{trap}} = \mathbb{E}\left[ E_{\text{disc}}(x_{\text{final}}) \;\middle|\; E_{\text{disc}} > 0 \right]$$
 
-| Problem Family | Turing Class | Algebraic Degree | Classical P-Algorithm | Continuous Reachability ($R_{\text{dyn}}$) | Mean Metastable Traps ($\rho_{\text{trap}}$) |
+### 5.3 Empirical Results of Project CLG-03 (Proof-of-Concept Ensembles)
+
+| Problem Family | Turing Class | Algebraic Degree | Classical P-Algorithm | Continuous Reachability ($R_{\text{dyn}}$) | Local Trap Severity ($\bar{E}_{\text{trap}}$) |
 | :--- | :---: | :---: | :--- | :---: | :---: |
 | **Planted 3-XOR-SAT ($N=30$)** | **Class P** | **3** | **Gauss GF(2): 100.0% (3.62 ms)** | **0.0% (Total Failure)** | **4.77 clauses** |
 | Planted Random-3-SAT ($N=30$) | NP-Complete | 3 | NP-Hard Worst-Case | 25.3% | 1.49 clauses |
-| Horn-3-SAT Controlled ($N=30$) | Class P | 3 | Unit Propagation $\mathcal{O}(M)$ | 18.7% | 1.96 clauses |
+| Horn-3-SAT Structured ($N=30$) | Class P | 3 | Unit Propagation $\mathcal{O}(M)$ | 18.7% | 1.96 clauses |
 | **Planted 3-XOR-SAT ($N=60$)** | **Class P** | **3** | **Gauss GF(2): 100.0% (4.86 ms)** | **0.0% (Total Failure)** | **8.81 clauses** |
 | Planted Random-3-SAT ($N=60$) | NP-Complete | 3 | NP-Hard Worst-Case | 10.7% | 2.75 clauses |
-| Horn-3-SAT Controlled ($N=60$) | Class P | 3 | Unit Propagation $\mathcal{O}(M)$ | 0.0% | 2.71 clauses |
+| Horn-3-SAT Structured ($N=60$) | Class P | 3 | Unit Propagation $\mathcal{O}(M)$ | 0.0% | 2.71 clauses |
 
-### 5.3 Theoretical Consequence
-As established by Ricci-Tersenghi (*Science* 330, 2010 — *"Being Glassy Without Being Hard to Solve"*), 3-XOR-SAT exhibits severe glassy fragmentation while remaining in Class P.
-In fact, under continuous relaxation, **3-XOR-SAT has lower reachability ($0.0\%$) and higher trap density ($8.81$) than NP-Complete 3-SAT**!
-
-**Theorem 3 (Non-Equivalence of Continuous Navigability and Polynomial Complexity):**  
-*The absence of metastable energy traps in continuous relaxation is neither a necessary nor a sufficient condition for membership in Class P. Specifically:*
-$$\text{Class P} \not\subset \{I \in \mathcal{I} : R_{\text{dyn}}(\mathcal{L}(I)) > 0\}$$
+### 5.4 Theoretical Consequence: Geometric Hardness $\not\Rightarrow$ Computational Hardness
+Under the continuous multilinear relaxation, **3-XOR-SAT (in P) has lower reachability ($0.0\%$) and higher trap severity ($8.81$) than NP-Complete 3-SAT**.
+This empirically falsifies the claim that continuous landscape navigability is an invariant of computational complexity:
+$$\boxed{ \text{Geometric Hardness} \not\Rightarrow \text{Computational Hardness} }$$
+for continuous gradient dynamics.
 
 ---
 
-## 6. The Overlap Gap Property (OGP) & The Limits of Graph Neural Networks
+## 6. The Three-Tier Architecture: $\text{CLG}_L$, $\text{CLG}_G$, and $\text{CLG}_A$
 
-The failure of continuous relaxations on 3-XOR-SAT is not a limitation of our specific optimizer; it is a manifestation of the **Overlap Gap Property (OGP)** (Gamarnik & Sudan 2014, Gamarnik 2021):
+To resolve previous conceptual ambiguities, we formalize the three operational levels of Computational Landscape Geometry:
 
 ```
-                                  CLASS P
-                                     │
-            ┌────────────────────────┴────────────────────────┐
-            ▼                                                 ▼
-     P-CONTINUOUS (Smooth / Monotone)                P-ALGEBRAIC (Glassy in P)
-     - 2-SAT, Horn-SAT, Max-Flow                     - 3-XOR-SAT, Parity Systems GF(2)
-     - Connected basin funnel                        - Shattered Gibbs state / OGP
-     - Solvable by Gradient / GNNs                   - Gradient & GNNs provably fail (0% reach)
-     - Aligned with continuous physics               - Solvable by Gaussian Elimination
+                            THE CLG THREE-TIER TRIAD
+                                       │
+         ┌─────────────────────────────┼─────────────────────────────┐
+         ▼                             ▼                             ▼
+      CLG-L                          CLG-G                         CLG-A
+(Local Differential)           (Global Landscape)          (Algorithmic Dynamics)
+- Hessian H(x)                 - Basins of attraction      - Stability of GNNs
+- Spectrum and trace           - Free energy barriers      - Langevin diffusions
+- Curvature dispersion         - Solution overlap q(x, y)  - Local algorithm limits
+- Tensor T = grad^3 Phi        - Glassy clustering         - Abstract algebra vs. Flow
+[Falsified as complexity       [Connects to statistical    [Limits of low-depth GNNs
+ invariant: Omega = sigma||T||] physics and OGP]            via shattered spaces]
 ```
+
+### Operational Distinction Among Families in Class P:
+Rather than postulating ungrounded complexity sub-classes, we characterize problem instances by their algorithmic compatibility:
+- **P-Families favorable to continuous dynamics:** Formulas (e.g., 2-SAT and monotone Horn systems) whose gradient fields preserve partial orders or effective convexity, enabling local methods to converge.
+- **P-Families with algebraic structures uncaptured by continuous flow:** Formulas (e.g., 3-XOR-SAT) whose continuous embedding shatters into dense local minima, but whose algebraic representation over $\mathbb{F}_2$ is efficiently solvable by Gaussian elimination. The algebraic solver operates on a structural representation fundamentally different from the metric topology explored by continuous gradient dynamics.
 
 ### Formal Implications for Neural Combinatorial Optimization (NCO):
-1. **Low-Depth GNN Barrier:** Any Graph Neural Network with message-passing depth $\mathcal{O}(1)$ and bounded width functions as a local distributed algorithm. When an instance exhibits OGP, valid solutions are separated by Hamming distance $\Theta(N)$ with no intermediate states. Consequently, **no low-depth GNN can solve glassy CSPs (even those in P) with high probability**.
-2. **The Superiority of Abstract Algebra:** Gaussian elimination computes global parity constraints across cycles of length $\mathcal{O}(N)$ instantaneously via linear algebra over $\text{GF}(2)$, operating completely outside the differential topology of $\mathbb{R}^N$.
+1. **Low-Depth GNN Barrier:** When an instance exhibits clustering or Overlap Gap Property (OGP), valid solutions are separated by extensive Hamming distances. Local message-passing GNNs of depth $\mathcal{O}(1)$ cannot coordinate global parity across long cycles, leading to optimization stagnation.
+2. **Algebraic Decoupling:** Linear algebra over $\mathbb{F}_2$ computes non-local cycle parities without traversing continuous energy barriers.
 
 ---
 
@@ -148,6 +165,12 @@ The failure of continuous relaxations on 3-XOR-SAT is not a limitation of our sp
 | **CLG-01** | Static Hessian curvature in 2-SAT vs 3-SAT. | Demonstrated 5 orders of magnitude gap ($p = 1.53 \times 10^{-6}$), but confounded by polynomial degree ($\deg=2$ vs $\deg=3$). |
 | **CLG-02** | Algebraic degree control ($\deg=3$ fixed across P and NP). | Proved static curvature $\Omega_{\text{curv}}$ measures degree, while dynamical reachability separates basin structures ($100\%$ vs $6\%$). |
 | **CLG-03** | Canonical 3-XOR-SAT test with planted satisfiability. | **Definitive resolution:** Proved that continuous gradient descent suffers complete collapse ($0.0\%$ reachability) on 3-XOR-SAT in P, while Gauss in $\text{GF}(2)$ solves it in $4.86\text{ ms}$. Refuted naive P vs NP separability. |
+
+### 7.1 Protocol for Eliminating Planting Bias Across Scale Curves
+To transition beyond proof-of-concept scales ($N=30, 60$) to asymptotic scaling curves $R_{\text{dyn}}(N)$ across $N \in \{50, 100, 200, 400, 800\}$, three independent ensembles are deployed:
+1. **$\mathcal{E}_{\text{random|SAT}}$ (Random SAT conditioned on SAT):** Uniform ensembles at the critical threshold $\alpha_c$ filtered via complete DPLL/CDCL solvers (CaDiCaL/kissat), eliminating planting bias.
+2. **$\mathcal{E}_{\text{planted}}$ (Planted SAT):** Ensembles with constructive ground states $s^*$, used to track metric Hamming distances $\text{dist}(x, s^*)$.
+3. **$\mathcal{E}_{\text{controlled}}$ (Unique / Structured Horn & XOR):** Non-singular systems over $\mathbb{F}_2$ and acyclic/monotone Horn formulas with unambiguous solution sets.
 
 ---
 
