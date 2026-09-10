@@ -5,6 +5,15 @@
 **Ambiente:** Python 3.13 / 3.14 | PyTorch | CPU/CUDA  
 **Diretório do Projeto:** `C:\MathDoCarvalho\P_NP`  
 
+> [!IMPORTANT]
+> ### 🛡️ AVISO DE PROPRIEDADE INTELECTUAL E DIREITOS AUTORAIS
+> **Copyright © 2026 Thiago Carvalho. Todos os direitos reservados.**
+> 
+> Todo o arcabouço científico, analítico e computacional aqui apresentado é de **propriedade intelectual exclusiva de Thiago Carvalho**.
+> É estritamente proibida a cópia, reprodução, redistribuição, modificação ou uso comercial/industrial sem autorização prévia por escrito do autor.
+> O acesso neste repositório destina-se unicamente à leitura e avaliação científica pessoal por pares acadêmicos.
+> Termos completos em: [LICENSE](../LICENSE).
+
 ---
 
 ## Sobre o Projeto

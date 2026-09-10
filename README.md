@@ -2,6 +2,18 @@
 
 Repositório central de pesquisas, desenvolvimentos e publicações científicas de Thiago Carvalho.
 
+> [!IMPORTANT]
+> ### 🛡️ AVISO DE PROPRIEDADE INTELECTUAL E DIREITOS AUTORAIS
+> **Copyright © 2026 Thiago Carvalho. Todos os direitos reservados.**
+> 
+> Todo o conteúdo intelectual, científico, matemático e computacional contido neste repositório — incluindo formulações analíticas, provas de teoremas, arquiteturas de Redes Neurais em Grafos (GNN), pesos pré-treinados (`.pth`), códigos-fonte, artigos científicos e apresentações — é de **propriedade intelectual exclusiva de Thiago Carvalho**.
+> 
+> - ❌ **Proibida a reprodução ou cópia:** É estritamente vedada a cópia, reprodução, redistribuição, modificação, engenharia reversa, sublicenciamento ou comercialização, total ou parcial, sem autorização prévia, expressa e formal por escrito do autor.
+> - ❌ **Proibido treinamento de IA de terceiros:** Não é permitida a incorporação destes ativos para o treinamento ou ajuste fino de modelos de Inteligência Artificial sem autorização formal.
+> - 📖 **Licença de Leitura Pública:** O acesso público constitui tão somente licença de leitura e apreciação científica pessoal por pares acadêmicos e pela comunidade científica.
+> 
+> Consulte os termos legais completos no arquivo [LICENSE](LICENSE).
+
 ---
 
 ## Projetos e Módulos
