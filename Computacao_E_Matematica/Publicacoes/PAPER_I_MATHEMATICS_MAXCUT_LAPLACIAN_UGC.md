@@ -28,24 +28,34 @@ In this work, we prove that an autonomous Graph Neural Network computed in stric
 
 Let $G = (V, E)$ be a simple, connected, undirected, unweighted graph with vertex set $V = \{1, 2, \dots, N\}$ and edge set $E \subseteq V \times V$, with $|V| = N$ and $|E| = M$. The Maximum Cut problem (**Max-Cut**) seeks a 2-partition of $V$ into disjoint subsets $(S, V \setminus S)$ maximizing the number of cross-partition edges:
 
-$$\text{Max-Cut}(G) = \max_{S \subseteq V} |E(S, V \setminus S)| \tag{1}$$
+$$
+\text{Max-Cut}(G) = \max_{S \subseteq V} |E(S, V \setminus S)| \qquad \text{(1)}
+$$
 
 Expressing partition membership as a discrete spin vector $s \in \{-1, +1\}^N$, where $s_i = +1$ if $i \in S$ and $s_i = -1$ if $i \in V \setminus S$, equation (1) admits the equivalent quadratic formulation:
 
-$$\text{Cut}(s) = \frac{1}{4} \sum_{(i,j) \in E} (1 - s_i s_j) \tag{2}$$
+$$
+\text{Cut}(s) = \frac{1}{4} \sum_{(i,j) \in E} (1 - s_i s_j) \qquad \text{(2)}
+$$
 
 Let $A \in \{0, 1\}^{N \times N}$ denote the symmetric adjacency matrix of $G$, and $D = \text{diag}(d_1, \dots, d_N)$ the diagonal degree matrix, where $d_i = \sum_{j=1}^N A_{ij}$. The unnormalized Combinatorial Laplacian matrix $L \in \mathbb{R}^{N \times N}$ is defined by:
 
-$$L = D - A \tag{3}$$
+$$
+L = D - A \qquad \text{(3)}
+$$
 
 By elementary linear algebra, equation (2) is identically expressed as the quadratic form:
 
-$$\text{Cut}(s) = \frac{1}{4} s^T L s \tag{4}$$
+$$
+\text{Cut}(s) = \frac{1}{4} s^T L s \qquad \text{(4)}
+$$
 
 ### 1.1 The Complexity Barrier and The Unique Games Conjecture (UGC)
 Max-Cut is NP-complete (Karp, 1972). In 1995, Goemans and Williamson introduced their landmark Semidefinite Programming (SDP) relaxation, embedding discrete spins $s_i \in \{-1, 1\}$ as unit vectors $v_i \in S^{N-1}$ on the hypersphere, solved via interior point algorithms and rounded by a uniform random hyperplane $r \sim \mathcal{N}(0, I_N)$:
 
-$$\alpha_{\text{GW}} = \min_{0 \le \theta \le \pi} \frac{\frac{1}{\pi} \theta}{\frac{1}{2}(1 - \cos \theta)} = \frac{2}{\pi} \min_{0 \le \theta \le \pi} \frac{\theta}{1 - \cos \theta} \approx 0.878567 \tag{5}$$
+$$
+\alpha_{\text{GW}} = \min_{0 \le \theta \le \pi} \frac{\frac{1}{\pi} \theta}{\frac{1}{2}(1 - \cos \theta)} = \frac{2}{\pi} \min_{0 \le \theta \le \pi} \frac{\theta}{1 - \cos \theta} \approx 0.878567 \qquad \text{(5)}
+$$
 
 Under Khot's **Unique Games Conjecture (UGC)** (Khot, 2002; Khot et al., 2007), obtaining any polynomial-time approximation ratio strictly exceeding $\alpha_{\text{GW}} + \epsilon$ for any $\epsilon > 0$ is NP-hard. 
 
@@ -58,18 +68,24 @@ While theoretically optimal, SDP solvers scale as $\mathcal{O}(N^{3.5})$ or $\ma
 ### 2.1 Hyperbolic Relaxation and Gradient Dynamics
 To circumvent the NP-hard discrete domain $\{-1, +1\}^N$, we introduce a smooth continuous embedding vector $x \in \mathbb{R}^N$ under the hyperbolic tangent activation:
 
-$$s(x) = \tanh(x) = \left[ \tanh(x_1), \dots, \tanh(x_N) \right]^T \in (-1, 1)^N \tag{6}$$
+$$
+s(x) = \tanh(x) = \left[ \tanh(x_1), \dots, \tanh(x_N) \right]^T \in (-1, 1)^N \qquad \text{(6)}
+$$
 
 The continuous cut objective to be maximized is given by:
 
-$$f(x) = \frac{1}{4} \tanh(x)^T L \tanh(x) \tag{7}$$
+$$
+f(x) = \frac{1}{4} \tanh(x)^T L \tanh(x) \qquad \text{(7)}
+$$
 
 Equivalently, we define the non-convex continuous loss function $\mathcal{L}_{\text{cont}}(x) = -f(x)$.
 
 #### Lemma 1 (Analytical Gradient)
 *The gradient of $\mathcal{L}_{\text{cont}}(x)$ with respect to $x \in \mathbb{R}^N$ is given by:*
 
-$$\nabla_x \mathcal{L}_{\text{cont}}(x) = -\frac{1}{2} \left( \mathbf{1}_N - \tanh^2(x) \right) \odot (L \tanh(x)) \tag{8}$$
+$$
+\nabla_x \mathcal{L}_{\text{cont}}(x) = -\frac{1}{2} \left( \mathbf{1}_N - \tanh^2(x) \right) \odot (L \tanh(x)) \qquad \text{(8)}
+$$
 
 *where $\odot$ denotes the Hadamard (element-wise) product and $\mathbf{1}_N$ is the vector of all ones.*
 
@@ -78,7 +94,9 @@ $$\nabla_x \mathcal{L}_{\text{cont}}(x) = -\frac{1}{2} \left( \mathbf{1}_N - \ta
 #### Proposition 1 (Hessian Matrix and Curvature)
 *The Hessian matrix $H(x) = \nabla_x^2 \mathcal{L}_{\text{cont}}(x) \in \mathbb{R}^{N \times N}$ is given by:*
 
-$$H(x) = -\frac{1}{2} \text{diag}(\mathbf{1} - s^2) \cdot L \cdot \text{diag}(\mathbf{1} - s^2) + \text{diag}\left( s \odot (\mathbf{1} - s^2) \odot (L s) \right) \tag{9}$$
+$$
+H(x) = -\frac{1}{2} \text{diag}(\mathbf{1} - s^2) \cdot L \cdot \text{diag}(\mathbf{1} - s^2) + \text{diag}\left( s \odot (\mathbf{1} - s^2) \odot (L s) \right) \qquad \text{(9)}
+$$
 
 *where $s = \tanh(x)$ and $s^2 = s \odot s$.*
 
@@ -94,12 +112,12 @@ To steer the gradient flow through this non-convex landscape, we deploy the `Met
 
 ### 3.1 Spectral Convolutions and Strategy Readout
 1. **Node Feature Initialization:** Each vertex is initialized with scalar bias:
-   $$h_i^{(0)} = \sigma(W_{\text{init}} \mathbf{1} + b_{\text{init}}) \in \mathbb{R}^{d}, \quad d=64 \tag{10}$$
+   $$h_i^{(0)} = \sigma(W_{\text{init}} \mathbf{1} + b_{\text{init}}) \in \mathbb{R}^{d}, \quad d=64 \qquad \text{(10)}$$
 2. **Relational Message Passing (Depth $K=4$):**
-   $$h_i^{(k+1)} = h_i^{(k)} + \frac{1}{N} \sum_{j=1}^N \text{MLP}\left([h_i^{(k)} \,\|\, h_j^{(k)} \,\|\, A_{ij}]\right) \tag{11}$$
+   $$h_i^{(k+1)} = h_i^{(k)} + \frac{1}{N} \sum_{j=1}^N \text{MLP}\left([h_i^{(k)} \,\|\, h_j^{(k)} \,\|\, A_{ij}]\right) \qquad \text{(11)}$$
 3. **Global Strategy Head:**
-   $$\bar{h} = \frac{1}{N} \sum_{i=1}^N h_i^{(K)} \tag{12}$$
-   $$\pi(A) = \sigma\left( W_2 \cdot \text{ReLU}(W_1 \bar{h} + b_1) + b_2 \right) \in (0, 1)^3 \tag{13}$$
+   $$\bar{h} = \frac{1}{N} \sum_{i=1}^N h_i^{(K)} \qquad \text{(12)}$$
+   $$\pi(A) = \sigma\left( W_2 \cdot \text{ReLU}(W_1 \bar{h} + b_1) + b_2 \right) \in (0, 1)^3 \qquad \text{(13)}$$
 
 The parameter policy vector $\pi = [p_{\text{steps}}, p_{\text{noise}}, p_{\text{lr}}]^T$ defines the optimization trajectory:
 - **Optimization Horizon ($T$):** $T = \text{round}(80 + 150 \cdot p_{\text{steps}})$
@@ -109,11 +127,15 @@ The parameter policy vector $\pi = [p_{\text{steps}}, p_{\text{noise}}, p_{\text
 ### 3.2 Stochastic Langevin Annealing Dynamics
 The continuous parameter vector $x^{(t)}$ evolves according to:
 
-$$x^{(t+1)} = x^{(t)} - \alpha \cdot \text{Adam}\left(\nabla_x \mathcal{L}_{\text{cont}}(x^{(t)})\right) + \eta \left(1 - \frac{t}{T}\right) \xi^{(t)}, \quad \xi^{(t)} \sim \mathcal{N}(0, I_N) \tag{14}$$
+$$
+x^{(t+1)} = x^{(t)} - \alpha \cdot \text{Adam}\left(\nabla_x \mathcal{L}_{\text{cont}}(x^{(t)})\right) + \eta \left(1 - \frac{t}{T}\right) \xi^{(t)}, \quad \xi^{(t)} \sim \mathcal{N}(0, I_N) \qquad \text{(14)}
+$$
 
 The discrete cut is recovered at $t = T$ via the signum projection:
 
-$$s_{\text{bin}} = \text{sign}(\tanh(x^{(T)})) \in \{-1, +1\}^N \tag{15}$$
+$$
+s_{\text{bin}} = \text{sign}(\tanh(x^{(T)})) \in \{-1, +1\}^N \qquad \text{(15)}
+$$
 
 ---
 
@@ -126,15 +148,21 @@ A critical discovery of our research program is the dramatic performance surge w
 
 *Proof.* Consider vertex $j \in \mathcal{N}(h)$. The $j$-th entry of $L \tanh(x)$ is:
 
-$$(L \tanh(x))_j = d_j \tanh(x_j) - \sum_{k \in \mathcal{N}(j)} \tanh(x_k) = d_j \tanh(x_j) - \tanh(x_h) - \sum_{k \in \mathcal{N}(j) \setminus \{h\}} \tanh(x_k) \tag{16}$$
+$$
+(L \tanh(x))_j = d_j \tanh(x_j) - \sum_{k \in \mathcal{N}(j)} \tanh(x_k) = d_j \tanh(x_j) - \tanh(x_h) - \sum_{k \in \mathcal{N}(j) \setminus \{h\}} \tanh(x_k) \qquad \text{(16)}
+$$
 
 From equation (8), the gradient update for $x_j$ satisfies:
 
-$$\frac{\partial \mathcal{L}_{\text{cont}}}{\partial x_j} = -\frac{1}{2}(1 - \tanh^2(x_j))\left[ d_j \tanh(x_j) - \tanh(x_h) - \sum_{k \in \mathcal{N}(j) \setminus \{h\}} \tanh(x_k) \right] \tag{17}$$
+$$
+\frac{\partial \mathcal{L}_{\text{cont}}}{\partial x_j} = -\frac{1}{2}(1 - \tanh^2(x_j))\left[ d_j \tanh(x_j) - \tanh(x_h) - \sum_{k \in \mathcal{N}(j) \setminus \{h\}} \tanh(x_k) \right] \qquad \text{(17)}
+$$
 
 When $|x_h|$ grows large such that $\tanh(x_h) \to \pm 1$, the hub exerts a constant directional drift of magnitude $\pm \frac{1}{2}(1 - \tanh^2(x_j))$ on all its $d_h$ neighbors. Conversely, for the hub $h$:
 
-$$(L \tanh(x))_h = d_h \tanh(x_h) - \sum_{k \in \mathcal{N}(h)} \tanh(x_k) \tag{18}$$
+$$
+(L \tanh(x))_h = d_h \tanh(x_h) - \sum_{k \in \mathcal{N}(h)} \tanh(x_k) \qquad \text{(18)}
+$$
 
 The restoring force scaling with $d_h$ drives $|\tanh(x_h)| \to 1$ exponentially faster than peripheral vertices with $d_j \ll d_h$. Therefore, the relaxation phase transitions into a hierarchical bifurcation:
 1. Hub vertices freeze their spin state at step $t \ll T$.
@@ -156,9 +184,13 @@ The restoring force scaling with $d_h$ drives $|\tanh(x_h)| \to 1$ exponentially
 
 To establish the theoretical positioning of the Carvalho Meta-Heuristic relative to Khot's UGC threshold, we implemented the Goemans-Williamson SDP via Burer-Monteiro hyperspherical factorization ($d=16$ unit vectors) with 10 random hyperplanes, tested across multiple graph scales:
 
-$$\text{Efficiency} = \frac{\text{Cut}_{\text{Carvalho}}}{\text{Cut}_{\text{GW}}} \times 100\% \tag{19}$$
+$$
+\text{Efficiency} = \frac{\text{Cut}_{\text{Carvalho}}}{\text{Cut}_{\text{GW}}} \times 100\% \qquad \text{(19)}
+$$
 
-$$\text{UGC Gap} = \alpha_{\text{GW}} - \frac{\text{Cut}_{\text{Carvalho}}}{|E|} \tag{20}$$
+$$
+\text{UGC Gap} = \alpha_{\text{GW}} - \frac{\text{Cut}_{\text{Carvalho}}}{|E|} \qquad \text{(20)}
+$$
 
 | Graph Instance | Goemans-Williamson (SDP) | Carvalho Meta-Heuristic (NCO) | Greedy 1-Flip Search | Efficiency vs. GW | Asymptotic UGC Gap |
 | :--- | :---: | :---: | :---: | :---: | :---: |
