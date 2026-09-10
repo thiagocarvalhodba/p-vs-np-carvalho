@@ -319,3 +319,40 @@ def generate_random_3sat(n: int, alpha: float, seed: Optional[int] = None) -> CN
         signs = [random.choice([-1.0, 1.0]) for _ in range(3)]
         clauses.append((vars_chosen, signs))
     return CNFInstance(n, 3, clauses, problem_family="Random-3-SAT", language_class="NP-Complete")
+
+
+def generate_random_3xorsat(n: int, alpha: float, seed: Optional[int] = None) -> CNFInstance:
+    """
+    Group 4: Random 3-XOR-SAT / Parity Equations (Language: Class P, Degree: 3)
+    Each equation is x_i1 (+) x_i2 (+) x_i3 = b (mod 2).
+    In Boolean CNF, each parity equation expands into exactly 4 clauses of degree 3.
+    Theoretical Complexity: Solvable in O(N^3) by Gaussian Elimination over GF(2) (strictly in Class P).
+    Continuous Landscape: Forms a dense 3-spin Sherrington-Kirkpatrick spin glass with 
+    exponential proliferation of metastable local minima (Kac-Rice), demonstrating that
+    continuous gradient descent cannot emulate global algebraic Gaussian elimination!
+    """
+    if seed is not None:
+        random.seed(seed)
+        torch.manual_seed(seed)
+    num_equations = max(1, int(round(alpha * n)))
+    clauses = []
+    for _ in range(num_equations):
+        vars_chosen = random.sample(range(n), 3)
+        b = random.choice([0, 1])
+        # A parity equation x1 (+) x2 (+) x3 = b expands to 4 CNF clauses
+        # Truth table: parity is violated when sum(vars) = 1 - b (mod 2)
+        # Signs in CNFInstance: +1 means literal is positive (x_i), -1 means negative (not x_i)
+        # An assignment s in {-1, 1}^3 satisfies a clause if exists j with s_j == sign_j.
+        for s1 in [-1.0, 1.0]:
+            for s2 in [-1.0, 1.0]:
+                for s3 in [-1.0, 1.0]:
+                    # Map sign {-1, 1} to boolean {0, 1}: +1 -> True (1), -1 -> False (0)
+                    b1 = 1 if s1 > 0 else 0
+                    b2 = 1 if s2 > 0 else 0
+                    b3 = 1 if s3 > 0 else 0
+                    # If this boolean combination violates the equation, add the rejecting clause
+                    if (b1 ^ b2 ^ b3) != b:
+                        # Rejecting clause has opposite signs
+                        clauses.append((vars_chosen, [-s1, -s2, -s3]))
+    return CNFInstance(n, 3, clauses, problem_family="3-XOR-SAT", language_class="P")
+
