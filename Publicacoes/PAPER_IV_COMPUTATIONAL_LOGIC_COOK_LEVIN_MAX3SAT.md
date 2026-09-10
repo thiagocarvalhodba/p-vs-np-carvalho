@@ -2,24 +2,24 @@
 
 **Author:** Thiago Carvalho  
 **Affiliation:** Independent Research in Mathematical Optimization and Computational Intelligence, Vitória, ES, Brazil  
-**Target Journal:** *Journal of the ACM (JACM)* / *Artificial Intelligence (AIJ)*  
+**Target Journal / Conference:** *Artificial Intelligence (AIJ)* / *Journal of Machine Learning Research (JMLR)* / *Advances in Neural Information Processing Systems (NeurIPS)*  
 **Code & Data Repository:** [Project Core Engine](file:///C:/MathDoCarvalho/P_NP/)  
-**Keywords:** 3-SAT, Cook-Levin Theorem, Computational Complexity, Phase Transition, Continuous Relaxation, Factor Graphs, Graph Neural Networks, Spin Glasses, Survey Propagation.
+**Keywords:** 3-SAT, Cook-Levin Theorem, Computational Complexity, Phase Transition, Continuous Relaxation, Factor Graphs, Graph Neural Networks, Spin Glasses, Overlap Gap Property.
 
 ---
 
 ## Abstract
 
-The Cook-Levin Theorem (1971) established the Boolean Satisfiability problem (SAT) as the foundational archetype of NP-completeness, demonstrating that every decision problem in the complexity class NP admits a deterministic polynomial-time reduction to Conjunctive Normal Form (CNF) satisfiability. Among random $k$-SAT ensembles, random 3-SAT exhibits a sharp computational phase transition at the critical clause-to-variable ratio $\alpha_c = m/n \approx 4.267$. At this critical threshold, the combinatorial solution space shatters into an exponential number of disconnected, metastable clusters (1-step Replica Symmetry Breaking), rendering classical backtracking (DPLL, CDCL) and stochastic local search (WalkSAT) prone to exponential latency blowups or entrapment in frozen local minima. Furthermore, by Håstad's optimal inapproximability theorem, approximating Max-3-SAT within a factor of $7/8 + \epsilon \approx 87.5\% + \epsilon$ is NP-hard for any $\epsilon > 0$.
+The Cook-Levin Theorem (1971) established the Boolean Satisfiability problem (SAT) as the foundational archetype of NP-completeness, demonstrating that every decision problem in the complexity class NP admits a deterministic polynomial-time reduction to Conjunctive Normal Form (CNF) satisfiability. Among random $k$-SAT ensembles, random 3-SAT exhibits a sharp computational phase transition at the critical clause-to-variable ratio $\alpha_c = m/n \approx 4.267$. At this critical threshold, the combinatorial solution space shatters into an exponential number of disconnected, metastable clusters (1-step Replica Symmetry Breaking), rendering classical backtracking (DPLL, CDCL) and stochastic local search (WalkSAT) prone to exponential latency blowups or entrapment in frozen local minima. Furthermore, while Håstad's optimal inapproximability theorem establishes that achieving a worst-case approximation factor of $7/8 + \epsilon \approx 87.5\% + \epsilon$ for Max-3-SAT is NP-hard, average-case instances near $\alpha_c$ demand algorithms capable of traversing shattered energy landscapes with dense metastable traps.
 
 In this paper, we introduce a continuous, fully differentiable relaxation of the Cook-Levin core. We embed the discrete Boolean hypercube $\{-1, +1\}^n \hookrightarrow [-1, +1]^n$ via hyperbolic tangent activations, defining an exact multilinear penalty potential $\mathcal{L}_{\text{SAT}}(v) \in \mathbb{R}^+$ that measures the continuous violation probability over arbitrary CNF formulas. To navigate the rugged, non-convex loss landscape across $\alpha_c$, we design **SATMetaGNN**, a bipartite factor graph neural network that processes literal occurrence topologies $(d_i^+, d_i^-)$ and adaptively governs continuous descent step sizes, thermal noise perturbations, and trajectory annealing schedules.
 
 We benchmark our method on random 3-SAT instances at the exact Cook-Levin algorithmic barrier ($m/n = 4.26$, $N \in \{50, 100, 150\}$ variables, $m \in \{213, 426, 639\}$ clauses). Our empirical findings demonstrate:
-1. **Clause Satisfaction Rates**: Reaching an average satisfaction of **$99.25\%$ at $N=50$**, **$98.92\%$ at $N=100$**, and **$98.44\%$ at $N=150$**, shattering Håstad's classical randomized barrier ($87.5\%$) by more than $+11.7$ percentage points.
+1. **High Clause Satisfaction Under Continuous Relaxation**: Reaching an average satisfaction of **$99.25\%$ at $N=50$**, **$98.92\%$ at $N=100$**, and **$98.44\%$ at $N=150$**, outperforming uniform random assignment ($87.5\%$) by up to $+11.7$ percentage points and approaching the satisfiability envelope near the critical threshold.
 2. **Meta-Governed Superiority**: SATMetaGNN defeats static continuous gradient solvers in $60.0\%$ of instances, achieving positive net clause satisfaction gains across all dimensional tiers.
 3. **Escaping Metastable Clusters**: Non-equilibrium Langevin gradient noise $\sigma(t) = \sigma_0 (1 - t/T)$ injected into the continuous manifold enables the optimizer to tunnel through high-energy Hamming barriers where discrete flip heuristics stagnate.
 
-Our results demonstrate that continuous factor graph relaxations provide a mathematically rigorous, scalable pathway for near-satisfiability optimization at the theoretical threshold of computational intractability.
+Our results demonstrate that continuous factor graph relaxations provide a mathematically sound, scalable pathway for near-satisfiability heuristic optimization at the threshold of computational intractability, while elucidating the physical barriers imposed by the Overlap Gap Property (OGP).
 
 ---
 

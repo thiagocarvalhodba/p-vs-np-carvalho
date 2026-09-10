@@ -206,11 +206,29 @@ Avaliação direta no limiar crítico de transição de fase ($\alpha = m/n \app
 
 ---
 
-## 10. Conclusão & Próximos Passos
+## 10. Geometria da Paisagem (CLG) & O Teste do 3-XOR-SAT
+
+Auditoria teórica rigorosa sobre os **limites da otimização contínua e de GNNs**:
+
+* **O Experimento Canônico (CLG-03):** Teste com instâncias de **3-XOR-SAT** ($\text{GF}(2)$):
+  * **Na Teoria (Classe P):** Solvível em $\mathcal{O}(N^3)$ por **Eliminação Gaussiana em $\text{GF}(2)$**.
+  * **Na Geometria Contínua:** Relaxação gera vidro de spin ($p$-spin) com armadilhas densas.
+
+| Instância ($N=60, \deg=3$) | Algoritmo Algébrico em P | Alcançabilidade Contínua | Armadilhas Metaestáveis |
+| :--- | :---: | :---: | :---: |
+| **3-XOR-SAT (Classe P)** | **Gauss GF(2): 100% (4.86 ms)** | **0.0% (Colapso Total)** | **8.81 cláusulas** |
+| Planted 3-SAT (NP-Completo) | NP-Difícil (Pior Caso) | 10.7% | 2.75 cláusulas |
+
+* **A Tese Madura:** A Otimização Contínua **não separa P de NP**. Ela mapeia a barreira entre **P-Contínuo** (Horn/2-SAT) e **Dureza Vítrea (Overlap Gap Property - OGP)**, provando por que a Álgebra em P supera a física diferencial.
+
+---
+
+## 11. Conclusão & Reposicionamento Estratégico
 
 1. **A IA como Governadora, não Oráculo:** A inferência neural em tempo polinomial guia os hiperparâmetros de convergência sem cair em armadilhas combinatórias.
-2. **Parcimônia Espectral:** Convoluções esparsas amortecidas superam a complexidade de atenção densa para partição de grafos.
-3. **Escalação Demonstrada:** Solvers viáveis em computação convencional com consumo de megabytes em instâncias de até $10.000$ nós.
+2. **Parcimônia Espectral & Escala:** Convoluções esparsas batem o recorde histórico de **80.01%** de corte e resolvem **$N=10.000$ nós em $0.79\text{s}$** com apenas **$1.26\text{ MB}$**.
+3. **Respeito Estrito à Teoria:** Sem overclaiming na Unique Games Conjecture (UGC) e com o cancelamento de alegações ingênuas de P vs NP em matemática pura.
+4. **Alvos de Publicação:** Papers I & II submetidos a **SIAM J. Optimization / IEEE TPAMI**, e Paper IV / Teoria de Limites de GNNs para **NeurIPS / JMLR**.
 
 ---
 
