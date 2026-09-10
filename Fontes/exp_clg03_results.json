@@ -1,0 +1,46 @@
+{
+  "N_30": {
+    "3-XOR-SAT": {
+      "language_class": "P",
+      "degree": 3,
+      "gf2_solve_time_ms": 3.624040001886897,
+      "gf2_success_rate": 100.0,
+      "continuous_reachability": 0.0,
+      "continuous_mean_trap": 4.773333333333333
+    },
+    "Planted-3-SAT": {
+      "language_class": "NP-Complete",
+      "degree": 3,
+      "continuous_reachability": 25.33333333333333,
+      "continuous_mean_trap": 1.4936263736263737
+    },
+    "Horn-3-SAT": {
+      "language_class": "P",
+      "degree": 3,
+      "continuous_reachability": 18.666666666666668,
+      "continuous_mean_trap": 1.9600000000000002
+    }
+  },
+  "N_60": {
+    "3-XOR-SAT": {
+      "language_class": "P",
+      "degree": 3,
+      "gf2_solve_time_ms": 4.856119997566566,
+      "gf2_success_rate": 100.0,
+      "continuous_reachability": 0.0,
+      "continuous_mean_trap": 8.813333333333334
+    },
+    "Planted-3-SAT": {
+      "language_class": "NP-Complete",
+      "degree": 3,
+      "continuous_reachability": 10.666666666666666,
+      "continuous_mean_trap": 2.753839493839494
+    },
+    "Horn-3-SAT": {
+      "language_class": "P",
+      "degree": 3,
+      "continuous_reachability": 0.0,
+      "continuous_mean_trap": 2.7066666666666666
+    }
+  }
+}

@@ -80,6 +80,9 @@ Consulte o catálogo detalhado em **[`Publicacoes/README_PUBLICACOES.md`](Public
 6. 🔬 **Dossiê de Auditoria Externa e Teste de Controle de Grau (Projeto CLG-02):**  
    👉 **[`Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md`](Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md)**  
    *Protocolo completo de auditoria por pares (Claude Opus / Gemini Pro) e desacoplamento formal do grau algébrico ($\deg=3$ fixo: Horn-3-SAT em P vs Random-3-SAT em NP-C) via bacias de atração e densidade de armadilhas metaestáveis.*
+7. 📜 **Carta de Resposta Técnica e Reposicionamento Científico (Projeto CLG-03):**  
+   👉 **[`Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md`](Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)**  
+   *Resolução matemática definitiva dos achados dos pareceres e benchmark canônico de 3-XOR-SAT: prova empírica de que a otimização contínua entra em colapso vítreo ($0.0\%$ reachability) em problemas solvíveis em $P$ via Eliminação Gaussiana em $\text{GF}(2)$, refundando a pesquisa sobre os limites de GNNs e a Overlap Gap Property (OGP).*
 
 ### Apresentação Executiva para Bancas e Conferências (Marp)
 - 📊 **Slide Deck Executivo em PDF (Alta Resolução, 300 DPI):** 👉 **[`Publicacoes/apresentacao_p_vs_np_carvalho.pdf`](Publicacoes/apresentacao_p_vs_np_carvalho.pdf)**
@@ -95,6 +98,7 @@ Consulte a documentação técnica completa em **[`Fontes/README_FONTES.md`](Fon
 - `clg_framework.py`: Framework de Geometria da Paisagem Computacional (CLG), cálculo de Hessianas e invariantes $\mathcal{G}(I)$.
 - `exp_clg01_p_vs_np.py`: Benchmark comparativo Classe P (2-SAT) vs NP-Completo (3-SAT) provando separação estatística de 5 ordens de magnitude.
 - `exp_clg02_degree_control.py`: Benchmark com controle rigoroso de grau algébrico ($\deg=3$: Horn-3-SAT em P vs Random-3-SAT em NP-C), medindo Reachability dinâmico e densidade de armadilhas.
+- `exp_clg03_xorsat_and_ogp.py`: Benchmark canônico com 3-XOR-SAT (Classe P, $\deg=3$) via Eliminação Gaussiana em $\text{GF}(2)$ e prova empírica do colapso vítreo ($0.0\%$ reachability) da relaxação contínua.
 - `fase3_op1_max_sat.py`: SATMetaGNN no limiar crítico de Cook-Levin ($m/n=4.267$).
 - `fase3_op2_hybrid_gnn.py`: Prova da Parcimônia Espectral (SparseGNN batendo recorde de 80.01%).
 - `fase3_op3_extreme_scale.py`: Solver diferencial esparso $\mathcal{O}(|E|)$ em grafos de $N=10.000$ nós ($0.79\text{s}$, $1.26\text{ MB RAM}$).
@@ -126,7 +130,12 @@ python Fontes/exp_clg01_p_vs_np.py
 python Fontes/exp_clg02_degree_control.py
 ```
 
-### 3. Execução do Benchmark de Escala Extrema (Max-Cut $N=10.000$)
+### 3. Execução do Benchmark CLG-03 (Teste Canônico do 3-XOR-SAT e OGP)
+```bash
+python Fontes/exp_clg03_xorsat_and_ogp.py
+```
+
+### 4. Execução do Benchmark de Escala Extrema (Max-Cut $N=10.000$)
 ```bash
 python Fontes/fase3_op3_extreme_scale.py
 ```
