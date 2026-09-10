@@ -106,6 +106,16 @@ where the continuous clause violation margin is defined by:
 g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2} = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j\right).
 \end{equation}
 
+\begin{definition}[Admissible 3-CNF Formulas]
+\label{def:admissible}
+A 3-CNF formula $F$ is called \textbf{admissible} if it satisfies:
+\begin{enumerate}
+    \item \textbf{(H1 - Non-Tautology):} No clause contains both a literal and its negation ($\ell_j \neq \neg \ell_k$).
+    \item \textbf{(H2 - Variable Connectivity):} Every variable $x_i$ appears in at least one clause ($\deg(x_i) \geq 1$).
+    \item \textbf{(H3 - Non-Constant Discrete Energy):} The discrete clause error $E_{\rm disc}(s)$ is not identically constant on $\{-1, +1\}^N$, ensuring the existence of at least one violating assignment ($E_{\rm disc}(s^*) \geq 1$).
+\end{enumerate}
+\end{definition}
+
 ---
 
 \section{Theorem 1: The Central Fractional Box \& The LP Integrality Gap}
@@ -123,7 +133,7 @@ For the quadratic hinge relaxation $\Phi_{\rm quad}$, if $g_c(x) \leq 0$ for all
 
 \begin{theorem}[The Central Fractional Box Theorem]
 \label{thm:central_box}
-For any non-trivial 3-CNF formula $F$ over $N$ variables, the spurious critical set of the quadratic hinge relaxation contains the open central hypercube $\mathcal{U}_N = (-1/3, 1/3)^N$. Consequently, its Lebesgue measure satisfies:
+For any admissible 3-CNF formula $F$ over $N$ variables, the spurious critical set of the quadratic hinge relaxation contains the open central hypercube $\mathcal{U}_N = (-1/3, 1/3)^N$. Consequently, its Lebesgue measure satisfies:
 \begin{equation}
 \mu(\mathcal{C}_0(\Phi_{\rm quad})) \geq \left(\frac{1}{3}\right)^N > 0.
 \end{equation}
@@ -144,7 +154,7 @@ g_c(x) = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j\right) < -\frac
 \end{equation}
 Since this inequality is strictly independent of the indices and signs of the literals, $g_c(x) < 0$ holds \textit{simultaneously for all $M$ clauses in $F$}. By Lemma~\ref{lem:inactivity}, $\Phi_{\rm quad}(x) \equiv 0$ and $\nabla \Phi_{\rm quad}(x) \equiv \mathbf{0}$ on all of $\mathcal{U}_N$.
 
-Since $F$ is non-trivial, there exists at least one discrete Boolean assignment $s^* \in \{-1, +1\}^N$ violating at least one clause ($E_{\rm disc}(s^*) \geq 1$). The associated open orthant $\Omega_{s^*} = \mathcal{U}_N \cap \{x \mid \text{sign}(x) = s^*\}$ has measure $\mu(\Omega_{s^*}) = (1/3)^N > 0$. For all $x \in \Omega_{s^*}$, $\nabla \Phi_{\rm quad}(x) = \mathbf{0}$ and $E_{\rm disc}(\text{sign}(x)) \geq 1$. For UNSAT formulas, all $2^N$ orthants satisfy this condition, proving the theorem.
+By (H3), there exists at least one discrete Boolean assignment $s^* \in \{-1, +1\}^N$ violating at least one clause ($E_{\rm disc}(s^*) \geq 1$). The associated open orthant $\Omega_{s^*} = \mathcal{U}_N \cap \{x \mid \text{sign}(x) = s^*\}$ has measure $\mu(\Omega_{s^*}) = (1/3)^N > 0$. For all $x \in \Omega_{s^*}$, $\nabla \Phi_{\rm quad}(x) = \mathbf{0}$ and $E_{\rm disc}(\text{sign}(x)) \geq 1$. For UNSAT formulas, all $2^N$ orthants satisfy this condition, proving the theorem.
 \end{proof}
 
 \begin{figure}[htbp]
@@ -158,22 +168,32 @@ Since $F$ is non-trivial, there exists at least one discrete Boolean assignment 
 Under the linear coordinate mapping $y_i = (1 + x_i)/2 \in [0, 1]$, the condition $g_c(x) \leq 0$ is algebraically isomorphic to the primal constraint $\sum_{j \in c} z_j \geq 1$ of the canonical Linear Programming (LP) relaxation of 3-SAT. At the origin $x=\mathbf{0}$ ($y_i = 1/2$), every 3-literal clause satisfies $\sum z_j = 1.5$, producing an exact \textbf{fractional slack of $0.5$}. The flat plateau of Theorem~\ref{thm:central_box} is the exact continuous dynamical expression of \textbf{H{\aa}stad's 7/8 inapproximability barrier} \cite{hastad2001optimal}: LP relaxations satisfy 100\% of clauses at the fractional center, completely blinding first-order gradient methods to discrete combinatorial inconsistencies.
 \end{remark}
 
+\begin{remark}[Asymptotic Drift Flow and Inscribed Core]
+\label{rem:drift_flow}
+While $\mu(\mathcal{U}_N) \geq (1/3)^N$ vanishes exponentially as $N \to \infty$, the hypercube $\mathcal{U}_N$ represents merely the strictly inscribed central core of the full LP feasible polytope $\mathcal{P}_{\rm LP} = \{x \in [-1, 1]^N \mid \forall c, g_c(x) \leq 0\}$, throughout which $\Phi_{\rm quad} \equiv 0$ and $\nabla \Phi_{\rm quad} \equiv \mathbf{0}$.
+In random 3-SAT ensembles near the critical threshold $\alpha_c$, statistical symmetry of literal polarities induces a net inward restoring drift field outside $\mathcal{P}_{\rm LP}$:
+\begin{equation}
+\mathbb{E}_F \left[ -\nabla_i \Phi_{\rm quad}(x) \right] \approx -\kappa(\alpha) x_i \quad (\kappa(\alpha) > 0).
+\end{equation}
+This drift field funnels trajectories originating in the periphery of $[-1, 1]^N$ directly toward $\mathcal{P}_{\rm LP}$. Trajectories freeze permanently upon hitting the boundary $\max_c g_c(x) \leq 0$, explaining why the empirical spurious attractor mass satisfies $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \approx 0.96$ at $N=60$ despite $\mu(\mathcal{U}_N) \to 0$.
+\end{remark}
+
 ---
 
 \section{Theorem 2: Lebesgue Measure Zero of Critical Sets in Analytic Relaxations}
 
 \begin{theorem}[Measure Zero of Critical Sets]
 \label{thm:measure_zero}
-For any non-trivial 3-CNF formula $F$, the critical zero-sets of the multilinear and Softplus relaxations have Lebesgue measure strictly zero:
+For any admissible 3-CNF formula $F$, the critical zero-sets of the multilinear and Softplus relaxations have Lebesgue measure strictly zero:
 \begin{equation}
 \mu(\mathcal{C}_0(\Phi_{\rm mult})) = 0 \quad\text{and}\quad \mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-\textbf{Case 1: Multilinear ($\Phi_{\rm mult}$).} The potential $\Phi_{\rm mult}(x)$ is a polynomial in $\mathbb{R}[x_1, \dots, x_N]$. Since $F$ is non-trivial, $\Phi_{\rm mult}$ is not a constant function. By elementary multivariate algebra, a polynomial is constant if and only if all its partial derivatives vanish identically. Hence, there exists an index $k \in \{1, \dots, N\}$ such that $P_k(x) = \partial_k \Phi_{\rm mult}(x) \not\equiv 0$. By the Real Polynomial Root Measure Lemma \cite{okamoto1973distinctness, caron2005zero}, the zero set $Z(P_k) = \{x \in \mathbb{R}^N \mid P_k(x) = 0\}$ of a non-zero real polynomial has Lebesgue measure zero: $\mu(Z(P_k)) = 0$. Since $\text{Crit}(\Phi_{\rm mult}) \subseteq Z(P_k)$, it follows that $\mu(\mathcal{C}_0(\Phi_{\rm mult})) \leq \mu(Z(P_k)) = 0$.
+\textbf{Case 1: Multilinear ($\Phi_{\rm mult}$).} The potential $\Phi_{\rm mult}(x)$ is a polynomial in $\mathbb{R}[x_1, \dots, x_N]$. By (H3), $E_{\rm disc}(s)$ is not identically constant on $\{-1, +1\}^N$. Since $\Phi_{\rm mult}|_{\{-1, +1\}^N} = E_{\rm disc}$, the polynomial $\Phi_{\rm mult}$ cannot be constant on $\mathbb{R}^N$. By elementary multivariate algebra, a polynomial is constant if and only if all its partial derivatives vanish identically. Hence, there exists an index $k \in \{1, \dots, N\}$ such that $P_k(x) = \partial_k \Phi_{\rm mult}(x) \not\equiv 0$. By the Real Polynomial Root Measure Lemma \cite{okamoto1973distinctness, caron2005zero}, the zero set $Z(P_k) = \{x \in \mathbb{R}^N \mid P_k(x) = 0\}$ of a non-zero real polynomial has Lebesgue measure zero: $\mu(Z(P_k)) = 0$. Since $\text{Crit}(\Phi_{\rm mult}) \subseteq Z(P_k)$, it follows that $\mu(\mathcal{C}_0(\Phi_{\rm mult})) \leq \mu(Z(P_k)) = 0$.
 
-\textbf{Case 2: Softplus ($\Phi_{\rm soft}$).} The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on the connected domain $\mathbb{R}^N$. Since $\Phi_{\rm soft} \not\equiv \text{const}$, there exists $k$ such that $\partial_k \Phi_{\rm soft} \not\equiv 0$. By the Identity Theorem for Real Analytic Functions \cite{krantz2002primer}, the zero set of a non-identically zero real analytic function has Lebesgue measure zero: $\mu(Z(\partial_k \Phi_{\rm soft})) = 0$. Hence $\mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0$.
+\textbf{Case 2: Softplus ($\Phi_{\rm soft}$).} The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on the connected domain $\mathbb{R}^N$. Since $\Phi_{\rm soft} \not\equiv \text{const}$, there exists $k$ such that $\partial_k \Phi_{\rm soft} \not\equiv 0$. By the Identity Theorem for Real Analytic Functions \cite{krantz2002primer}, the zero set of a non-identically zero real analytic function on a connected domain has Lebesgue measure zero: $\mu(Z(\partial_k \Phi_{\rm soft})) = 0$. Hence $\mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0$.
 \end{proof}
 
 ---
@@ -182,7 +202,7 @@ For any non-trivial 3-CNF formula $F$, the critical zero-sets of the multilinear
 
 \begin{theorem}[The Harmonic Saddle Theorem]
 \label{thm:harmonic}
-For any 3-CNF formula $F$ satisfying standard non-tautology conditions, the multilinear potential $\Phi_{\rm mult}$ has identically vanishing Laplacian everywhere on $\mathbb{R}^N$:
+For any 3-CNF formula $F$ satisfying (H1), the multilinear potential $\Phi_{\rm mult}$ has identically vanishing Laplacian everywhere on $\mathbb{R}^N$:
 \begin{equation}
 \Delta \Phi_{\rm mult}(x) = \text{Tr}(\nabla^2 \Phi_{\rm mult}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^N.
 \end{equation}
@@ -190,14 +210,14 @@ Consequently, $\Phi_{\rm mult}$ is a \textbf{harmonic function} on $\mathbb{R}^N
 \end{theorem}
 
 \begin{proof}
-For any 3-SAT clause $c = (\ell_1 \lor \ell_2 \lor \ell_3)$, the variables are distinct. The clause term $\phi_c(x) = \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}$ is of degree at most 1 in each coordinate $x_i$. Differentiating twice with respect to the same variable:
+For any 3-SAT clause $c = (\ell_1 \lor \ell_2 \lor \ell_3)$, the variables are distinct by (H1). The clause term $\phi_c(x) = \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}$ is of degree at most 1 in each coordinate $x_i$. Differentiating twice with respect to the same variable:
 \begin{equation}
 \frac{\partial^2 \phi_c}{\partial x_i^2}(x) \equiv 0, \quad \forall i \in \{1, \dots, N\} \implies \Delta \Phi_{\rm mult}(x) = \sum_{i=1}^N \frac{\partial^2 \Phi_{\rm mult}}{\partial x_i^2}(x) = \sum_{i=1}^N 0 \equiv 0.
 \end{equation}
 \end{proof}
 
 \begin{corollary}[Total Absence of Interior Minima]
-By the \textbf{Strong Minimum Principle for Harmonic Functions} \cite{courant1962methods, evans2010partial}, a non-constant harmonic function on a connected open domain cannot achieve a local minimum (strict or degenerate) at any interior point. Moreover, along any coordinate axis, the restriction $t \mapsto \Phi_{\rm mult}(x^* + t e_i)$ is strictly affine ($a + bt$), so all higher-order derivatives vanish ($\frac{\partial^p \Phi}{\partial x_i^p} \equiv 0$ for $p \geq 2$). Thus, \textbf{$\Phi_{\rm mult}$ possesses NO local minima in $\text{int}(\mathcal{X})$}. Every isolated interior critical point is strictly a \textbf{saddle point} with Morse index $1 \leq m \leq N-1$.
+By the \textbf{Strong Minimum Principle for Harmonic Functions} \cite{courant1962methods, evans2010partial}, a non-constant harmonic function on a connected open domain cannot achieve a local minimum (strict or degenerate) at any interior point. Moreover, along any coordinate axis, the restriction $t \mapsto \Phi_{\rm mult}(x^* + t e_i)$ is strictly affine ($a + bt$), so all higher-order derivatives vanish ($\frac{\partial^p \Phi}{\partial x_i^p} \equiv 0$ for $p \geq 2$). Thus, \textbf{$\Phi_{\rm mult}$ possesses NO local minima in $\text{int}(\mathcal{X})$}. Every non-degenerate interior critical point is strictly a \textbf{saddle point} with Morse index $1 \leq m \leq N-1$. More generally, any interior critical point possesses strictly descending directions in every open neighborhood.
 \end{corollary}
 
 \begin{figure}[htbp]
@@ -213,13 +233,13 @@ By the \textbf{Strong Minimum Principle for Harmonic Functions} \cite{courant196
 
 \begin{theorem}[The Vertex Confinement Theorem]
 \label{thm:vertex_confinement}
-Under the projected gradient flow on the compact hypercube $\mathcal{X} = [-1, 1]^N$, \textbf{every local minimum of $\Phi_{\rm mult}$ is confined exclusively to the $2^N$ discrete vertices $\{-1, +1\}^N$} (faces of dimension $d=0$).
+Under the projected gradient flow on the compact hypercube $\mathcal{X} = [-1, 1]^N$, \textbf{every isolated local minimum of $\Phi_{\rm mult}$ is confined exclusively to the $2^N$ discrete vertices $\{-1, +1\}^N$} (faces of dimension $d=0$).
 \end{theorem}
 
 \begin{proof}
 The hypercube $\mathcal{X}$ is stratified into open faces $\mathcal{F}$ of dimension $d \in \{0, 1, \dots, N\}$. For any face $\mathcal{F}$ of intermediate dimension $2 \leq d < N$, fixing the $N-d$ boundary coordinates ($x_k = \pm 1$) preserves multilinearity in the remaining $d$ free variables. The intrinsic Laplacian on the face vanishes identically: $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$. By the Strong Minimum Principle, no local minimum can reside in the relative interior of any face of dimension $d \geq 2$.
 
-Along the edges ($d=1$), the restricted potential is strictly linear ($a + bt$), which attains its extrema exclusively at the boundary endpoints $t = \pm 1$. Therefore, all local attractors of the projected dynamical flow are strictly localized at the zero-dimensional vertices $\{-1, +1\}^N$.
+Along the edges ($d=1$), the restricted potential is strictly linear ($a + bt$), which attains its extrema exclusively at the boundary endpoints $t = \pm 1$. Therefore, all isolated local attractors of the projected dynamical flow are strictly localized at the zero-dimensional vertices $\{-1, +1\}^N$.
 \end{proof}
 
 ---
@@ -248,6 +268,11 @@ z^T \nabla^2 \Phi_{\rm soft}(x) z = \sum_{c=1}^M w_c(x) (v_c^T z)^2 \geq 0, \qua
 \end{equation}
 Thus, $\Phi_{\rm soft}$ contains no directions of negative curvature in unconstrained space, converting the landscape into a navigable convex funnel.
 \end{proof}
+
+\begin{remark}[Convexity vs. Discrete Integrality Gap]
+\label{rem:convex_gap}
+Although $\Phi_{\rm soft}$ is globally positive semidefinite ($\nabla^2 \Phi_{\rm soft} \succeq 0$), this does not imply polynomial-time tractability of discrete 3-SAT. The unconstrained continuous minimizer $x^* = \arg\min \Phi_{\rm soft}(x)$ is inherently fractional, situated near $\mathbf{0}$ for balanced formulas where $\Phi_{\rm soft}(\mathbf{0}) \approx \frac{M}{\beta}\ln(1 + e^{-\beta/2})$. Because continuous minimization does not commute with discrete rounding ($\min_s E_{\rm disc}(s) \neq \text{round}(\min_x \Phi_{\rm soft}(x))$), rounding the continuous minimizer incurs the combinatorial integrality gap. Forcing continuous minimizers to discrete vertices requires $\beta \to \infty$, which triggers the exponential curvature collapse, algorithmic stiffness ($L_\beta = \Theta(\beta)$), and floating-point underflow formalized in Theorem~\ref{thm:bifurcation}.
+\end{remark}
 
 \begin{figure}[htbp]
 \centering
@@ -280,9 +305,9 @@ In the central box $\mathcal{U}_N$, where $g_c(x) \leq -\delta < 0$:
 
 We formalize the distinction between static critical set geometry and asymptotic flow convergence.
 Let $\mathcal{S}_{\rm spur}(\Phi) \equiv \{ x^* \in \mathcal{X} \mid \Pi_{T_{\mathcal{X}}(x^*)}(-\nabla \Phi(x^*)) = \mathbf{0}, E_{\rm disc}(\text{sign}(x^*)) > 0 \}$.
-We define the \textbf{Spurious Attractor Mass} as:
+We define the \textbf{Spurious Attractor Mass} via the $\omega$-limit set as:
 \begin{equation}
-\mathcal{M}_{\rm spur}(\Phi) \equiv \mu\left( \left\{ x_0 \in \mathcal{X} \;\middle|\; \lim_{t \to \infty} X(t; x_0) \in \mathcal{S}_{\rm spur}(\Phi) \right\} \right).
+\mathcal{M}_{\rm spur}(\Phi) \equiv \mu\left( \left\{ x_0 \in \mathcal{X} \;\middle|\; \omega(x_0) \subseteq \mathcal{S}_{\rm spur}(\Phi) \right\} \right).
 \end{equation}
 
 \begin{table}[htbp]
