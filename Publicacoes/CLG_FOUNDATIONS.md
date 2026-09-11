@@ -232,28 +232,32 @@ $$\mu(\mathcal{C}_0(\Phi_{\text{mult}})) = \mu(\{ x \in \mathcal{X} \mid \nabla 
 #### Theorem 3 (Harmonicity and Total Absence of Interior Minima in Multilinear Relaxations):
 *For any non-trivial 3-CNF formula, the multilinear potential $\Phi_{\text{mult}}$ has identically vanishing Laplacian:*
 $$\Delta \Phi_{\text{mult}}(x) = \text{Tr}(\nabla^2 \Phi_{\text{mult}}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^N$$
-*By the **Strong Minimum Principle for Harmonic Functions** (Courant & Hilbert), $\Phi_{\text{mult}}$ admits NO local minimum (strict or degenerate) in the interior $\text{int}(\mathcal{X})$. Every isolated interior critical point is strictly a **saddle point** with Morse index $1 \le m \le N-1$.*
+*By the **Strong Minimum Principle for Harmonic Functions** (Courant & Hilbert), $\Phi_{\text{mult}}$ admits NO local minimum (strict or degenerate) in the interior $\text{int}(\mathcal{X})$. Every isolated interior critical point is strictly a **saddle point** with Morse index $1 \le m \le N-1$, and for any degenerate critical point $x^*$, $\forall \varepsilon > 0, \exists y \in \mathcal{X}, \|y - x^*\| < \varepsilon : \Phi(y) < \Phi(x^*)$.*
 
-#### Theorem 4 (Dynamic Stratification and Strict Confinement of Attractors to Discrete Vertices):
-*Under the projected gradient flow on the compact hypercube $[-1, 1]^N$, all local attractors of $\Phi_{\text{mult}}$ are confined **exclusively to the $2^N$ discrete vertices $\{-1, +1\}^N$** (faces of dimension $d=0$). On any intermediate face of dimension $d \ge 2$, the intrinsic Laplacian vanishes ($\Delta_{\mathcal{F}} \Phi \equiv 0$), forbidding face-interior minima. On edges ($d=1$), non-neutral edges push flows to endpoints, while neutral edges ($b_i=0$) have vanishing curvature $\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$ and transverse instability under (H4), precluding interior asymptotic Lyapunov stability.*
+#### Theorem 4A & Corollary 4B (Geometric Vertex Confinement and Dynamic Lyapunov Stability):
+- **Theorem 4A (Geometric):** *Under (H1), (H3') and the boundary non-degeneracy condition (H4), every local minimum of $\Phi_{\text{mult}}$ on the compact hypercube $[-1, 1]^N$ resides strictly at a discrete vertex $\{-1, +1\}^N$ (faces of dimension $d=0$), since $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$ on all faces $d \ge 2$ and $b_i \ne 0$ on all edges $d=1$.*
+- **Corollary 4B (Dynamic):** *Under the projected gradient flow $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{mult}}(x))$, taking the energy as a Lyapunov function $V(x) = \Phi_{\text{mult}}(x)$ yields $\dot{V} = -\|\Pi(-\nabla \Phi)\|^2 \le 0$. By LaSalle's Invariance Principle, every isolated asymptotically stable equilibrium is strictly a discrete vertex.*
 
-#### Theorem 5 (Global Semidefinite Convexity of Softplus & Absence of Hyperbolic Saddles):
-*The full Hessian of the unconstrained Softplus relaxation factors as $\nabla^2 \Phi_{\text{soft}}(x) = V^T W(x) V$ and is globally positive semidefinite:*
-$$\nabla^2 \Phi_{\text{soft}}(x) = \sum_{c=1}^M \beta \sigma(\beta g_c(x))(1 - \sigma(\beta g_c(x))) v_c v_c^T \succeq 0, \quad \forall x \in \mathbb{R}^N$$
-*Consequently, $\ker(\nabla^2 \Phi_{\text{soft}}) = \ker(V)$, and $\Phi_{\text{soft}}$ is strictly convex on $\mathbb{R}^N$ whenever $\text{rank}(V) = N$. It breaks the harmonic saddle condition of the multilinear form, eliminating hyperbolic saddles.*
+#### Theorem 5 (Global Convexity and Spectral Condition Number of Softplus):
+*The full Hessian of the unconstrained Softplus relaxation factors as $\nabla^2 \Phi_{\text{soft}}(x) = V^T W(x) V \succeq 0$ and $\ker(\nabla^2 \Phi) = \ker(V)$. When $\text{rank}(V) = N$, $\Phi_{\text{soft}}$ is strictly convex on $\mathbb{R}^N$. Furthermore, the spectral condition number satisfies:*
+$$\kappa(\nabla^2 \Phi_{\text{soft}}(x)) \le \left(\frac{\lambda_{\max}(W(x))}{\lambda_{\min}(W(x))}\right) \cdot \kappa(V^T V) = \kappa(W(x)) \cdot \kappa(V^T V)$$
+*connecting the thermal activation profile of Softplus directly to the spectral geometry of the formula's clause-incidence graph.*
 
-#### Theorem 6 (Lipschitz Conditioning, Gershgorin Bounds, and Numerical Underflow):
-*The gradient of $\Phi_{\text{soft}}$ has Lipschitz constant bounded tightly by Gershgorin's theorem:*
+#### Theorem 6 (Lipschitz Conditioning of the Gradient Field and Numerical Underflow):
+*The gradient of $\Phi_{\text{soft}}$ has Lipschitz constant $L_\beta \equiv \sup \|\nabla^2 \Phi\|_2$ bounded tightly by Gershgorin's theorem:*
 $$\frac{3}{16}\beta \le L_\beta \le \frac{3 d_{\max}}{16}\beta \implies L_\beta = \Theta(\beta)$$
 *In the zero-temperature limit $\beta \to \infty$, for any $x \in \mathcal{U}_N(\rho)$ ($\rho < 1/3$), the gradient undergoes exponential numerical underflow:*
 $$\|\nabla \Phi_{\text{soft}}(x)\|_\infty \le \frac{M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}, \quad \|\nabla \Phi_{\text{soft}}(x)\|_2 \le \frac{\sqrt{3}M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}$$
 *Underflow occurs at $\beta \approx 175$ (FP32) and $\beta \approx 1417$ (FP64), recovering the static flat plateau of the Hinge relaxation.*
 
-#### Theorem 7.1 / Proposition 7.2 (Dynamical Flow Separation and Limiting Reachability):
-*The four-level hierarchy ($\Phi \to \mathcal{C}_{\text{spur}} \to \mathcal{S}_{\text{spur}} \to \mathcal{B}_{\text{spur}} \to \mathcal{M}_{\text{spur}}$) establishes:*
-1. *For $\Phi_{\text{quad}}$, $\mathcal{M}_{\text{spur}} \ge (1/3)^N > 0$ plus drift flow into the LP polytope, causing $96\%$ stagnation ($R_{\text{dyn}} \approx 4\%$).*
-2. *For $\Phi_{\text{mult}}$, interior saddles have stable manifolds of measure zero, but the combinatorial basin of spurious boundary vertices dominates the hypercube ($\mathcal{M}_{\text{spur}} \approx 0.94$, $R_{\text{dyn}} \approx 6\%$).*
-3. *For $\Phi_{\text{soft}}$, global convexity and strictly positive curvature contract spurious basins, boosting reachability up to $69.3\%$. Yet on rigid parity systems (3-XOR-SAT), NP-hardness and symmetry preserve glassy collapse ($R_{\text{dyn}} \approx 0\%$), rigorously decoupling continuous differential geometry from Turing complexity.*
+#### Theorem 7A & Theorem 7B (Constructive Spurious Basin Mass & Universal Centripetal Contraction):
+- **Theorem 7A (Constructive Symmetric Family):** *For the family $F_N$ with all $M = \binom{N}{3}$ negative clauses, the open domain $A_N = (1/3, 1)^N$ of volume $\text{Vol}(A_N) = (2/3)^N > 0$ has constant Hessian $H_N \succ 0$ and closed-form ODE solution $u(t) = \exp(-t H_N) u(0) \to \mathbf{0}$, rigorously proving that $A_N \subseteq \mathcal{B}_{\text{spur}}(\Phi_{\text{quad}}) \implies \mathcal{M}_{\text{spur}} \ge (2/3)^N > 0$.*
+- **Theorem 7B (Universal Centripetal Contraction of Hinge):** *For any 3-CNF formula and any active point, $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < -\sum_{c \in \text{act}} g_c(x) < 0$, making $\|x(t)\|_2^2$ a strict Lyapunov function. For all UNSAT formulas, 100% of the hypercube belongs to the spurious basin: $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \equiv 1$.*
+
+#### Central Conjecture of the CLG-R Program (Asymptotic Dynamic Separation):
+*For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ above clustering ($\alpha > \alpha_d$), under projected gradient flow $\mathcal{D}_{\text{proj}}$:*
+$$\lim_{N \to \infty} \mathbb{P}_{F \sim \mathcal{E}(N, \alpha)}\left( \mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}, \mathcal{D}_{\text{proj}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}, \mathcal{D}_{\text{proj}}) \ge c(\alpha) \right) = 1$$
+*for some universal constant $c(\alpha) > 0$. On rigid parity systems (3-XOR-SAT in P), continuous gradient flows suffer total collapse ($R_{\text{dyn}} = 0\%$), rigorously decoupling continuous differential geometry from Turing complexity.*
 
 
 ---
