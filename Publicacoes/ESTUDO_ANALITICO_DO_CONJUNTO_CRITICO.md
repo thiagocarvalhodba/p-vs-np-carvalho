@@ -55,8 +55,9 @@ $$g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2} = -\frac{1}{2} \l
 > $$\mathcal{U}_N = \left( -\frac{1}{3}, \, \frac{1}{3} \right)^N \subset \text{int}(\mathcal{X})$$
 > *satisfaz $g_c(x) < 0$ para todas as $M$ cláusulas simultaneamente. Consequentemente:*
 > $$\Phi_{\text{quad}}(x) \equiv 0 \quad\text{e}\quad \nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}, \quad \forall x \in \mathcal{U}_N$$
-> *O conjunto de gradiente nulo $Z(\nabla \Phi_{\text{quad}})$ contém $\mathcal{U}_N$, satisfazendo $\mu(Z(\nabla \Phi_{\text{quad}})) \ge (2/3)^N > 0$. O conjunto crítico espúrio satisfaz:*
-> $$\mu(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0 \quad (\ge (2/3)^N \text{ para fórmulas UNSAT})$$
+> *Em medida de Lebesgue euclidiana padrão em $\mathbb{R}^N$, o conjunto de gradiente nulo satisfaz $\text{Vol}(Z(\nabla \Phi_{\text{quad}})) \ge \text{Vol}(\mathcal{U}_N) = (2/3)^N$ (correspondendo a uma fração normalizada $\ge (1/3)^N$ do hipercubo $[-1, 1]^N$). O conjunto crítico espúrio satisfaz:*
+> $$\text{Vol}(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0 \quad \left(\text{medida normalizada } \mu_{\text{norm}} \ge \left(\frac{1}{6}\right)^N\right)$$
+> *(e $\text{Vol} \ge (2/3)^N$, medida normalizada $\ge (1/3)^N$, para fórmulas UNSAT).*
 
 ### Demonstração Construtiva:
 1. Para todo $x \in \mathcal{U}_N$, $|x_i| < 1/3$ para todo $i$.
@@ -65,7 +66,7 @@ $$g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2} = -\frac{1}{2} \l
 3. Substituindo na função de violação:
    $$g_c(x) = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j \right) < -\frac{1}{2}(1 - 1) = 0$$
 4. Como todos os termos do Hinge são zero, $\Phi_{\text{quad}}(x) \equiv 0$ e $\nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}$ em todo o aberto $\mathcal{U}_N$.
-5. Sob (H3'), existe ao menos um ortante violador de cláusula com volume $\mu = (1/3)^N > 0$. Para UNSAT, todos os $2^N$ ortantes violam cláusulas, cobrindo o volume $(2/3)^N$. $\blacksquare$
+5. Sob (H3'), existe ao menos um ortante violador de cláusula discreta com volume euclidiano $\text{Vol} = (1/3)^N > 0$ (fração normalizada $(1/6)^N$). Para UNSAT, todas as $2^N$ atribuições violam cláusulas, cobrindo todo o aberto $\mathcal{U}_N$ com volume euclidiano $(2/3)^N$ (fração normalizada $(1/3)^N$). $\blacksquare$
 
 ### 3.1 Significado e Relação com Relaxações Convexas
 A condição $g_c(x) \le 0$ expressa que a relaxação fracionária padrão de 3-SAT sobre $y \in [0, 1]^N$ ($y_i = \frac{1+x_i}{2}$) satisfaz $\sum_{j \in c} z_j \ge 1$. No centro $x=\mathbf{0}$ ($y_i = 1/2$), a soma atinge $\sum z_j = 1.5$, gerando uma **folga geométrica estrita de $0.5$**.

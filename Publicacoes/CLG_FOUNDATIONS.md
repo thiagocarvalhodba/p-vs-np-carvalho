@@ -220,8 +220,8 @@ To move beyond empirical observation, we establish the **exact analytical founda
 
 #### Theorem 1 (Universal Spurious Flat Plateaus in Quadratic Hinge & Linear Relaxation Slack):
 *For any non-trivial 3-CNF formula $F$ over $N$ variables, the spurious critical set $\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}}) = \{ x \in \text{int}(\mathcal{X}) \mid \nabla \Phi_{\text{quad}}(x) = \mathbf{0}, E_{\text{disc}}(\text{sign}(x)) > 0 \}$ contains the central fractional open hypercube:*
-$$\mathcal{U}_N = \left(-\frac{1}{3}, \, \frac{1}{3}\right)^N \implies \mu(Z(\nabla \Phi_{\text{quad}})) \ge \left(\frac{2}{3}\right)^N, \quad \mu(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left(\frac{1}{3}\right)^N > 0$$
-*(and $\ge (2/3)^N > 0$ for unsatisfiable formulas).*  
+$$\mathcal{U}_N = \left(-\frac{1}{3}, \, \frac{1}{3}\right)^N \implies \text{Vol}(Z(\nabla \Phi_{\text{quad}})) \ge \left(\frac{2}{3}\right)^N, \quad \text{Vol}(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left(\frac{1}{3}\right)^N > 0$$
+*(with normalized measure $\mu_{\text{norm}}(\mathcal{U}_N) \ge (1/3)^N$ and $\ge (2/3)^N$ standard volume for unsatisfiable formulas).*  
 *Proof Sketch.* For any clause $c = (\ell_1 \lor \ell_2 \lor \ell_3)$, in $\mathcal{U}_N$ we have $\sum_{j \in c} \sigma_j^{(c)} x_j > -3(1/3) = -1$, which forces violation $g_c(x) = -\frac{1}{2}(1 + \sum \sigma_j x_j) < 0$ strictly for all $M$ clauses simultaneously. Hence $\Phi_{\text{quad}} \equiv 0$ and $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$ identically. This plateau is the **geometric manifestation of the interior fractional slack (0.5) of the canonical Linear Programming (LP) relaxation**: the relaxation satisfies 100% of clauses fractionally with slack $0.5$ at $x=\mathbf{0}$, blinding the gradient flow to discrete violations.
 
 #### Theorem 2 (Lebesgue Measure of Singular Sets and Walsh-Fourier Non-Triviality):
