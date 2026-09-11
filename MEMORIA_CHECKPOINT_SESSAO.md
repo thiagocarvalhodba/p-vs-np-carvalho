@@ -97,7 +97,40 @@
 ## 4. Resultados Empíricos do Protocolo Pré-Registrado (`PROTOCOLO.md`)
 
 Executado com Euler projetado puro ($\eta=0.01$, semente `20260911`), sem artifícios:
-- **Horn Monótono:** $\rho_{\text{mult}} = 0.0015$ [IC 95%: 0.0003, 0.0030] vs $\rho_{\text{quad}} = 0.1272$ [IC 95%: 0.1183, 0.1358] $\implies$ Teorema 9 confirmado!
-- **3-SAT Subcrítico ($\alpha=0.12$):** $\rho_{\text{mult}} = 0.0000$ [IC 95%: 0.0000, 0.0000] vs $\rho_{\text{quad}} = 0.0756$ [IC 95%: 0.0567, 0.0944] $\implies$ Teorema 10 confirmado!
-- **3-SAT Plantado ($\alpha=4.26$):** $\Delta \rho = \rho_{\text{quad}} - \rho_{\text{mult}} = 0.1026$ [IC 95%: 0.0990, 0.1063] $\implies$ Exclui zero com $p < 10^{-15}$, suportando fortemente a Conjectura Central!
+- **Horn Monótono:** $\rho_{\text{mult}} = 0.0015$ [IC 95%: 0.0003, 0.0030] vs $\rho_{\text{quad}} = 0.1272$ [IC 95%: 0.1183, 0.1358] $\implies$ Resultados consistentes com a previsão do Teorema 9!
+- **3-SAT Subcrítico ($\alpha=0.12$):** $\rho_{\text{mult}} = 0.0000$ [IC 95%: 0.0000, 0.0000] vs $\rho_{\text{quad}} = 0.0756$ [IC 95%: 0.0567, 0.0944] $\implies$ Resultados consistentes com a previsão do Teorema 10!
+- **3-SAT Plantado ($\alpha=4.26$):** $\Delta \rho = \rho_{\text{quad}} - \rho_{\text{mult}} = 0.1026$ [IC 95%: 0.0990, 0.1063] $\implies$ Exclui zero com significância estatística estrita, suportando a Conjectura Central!
 - **3-XOR-SAT ($\alpha=0.90$):** $R_{\text{dyn}} = 1/25$ (4.0%) [IC Wilson: 0.7%, 19.5%] $\implies$ Colapso vítreo de gradiente confirmado, blindagem contra overclaiming em P vs NP intacta!
+
+---
+
+## 5. Resolução Integral do Parecer nº 12 do Professor (11/09/2026)
+
+O professor enviou o **Parecer nº 12** (`AnaliseReportadaPeloProfessor12.docx`), validando categoricamente a maioria dos resultados da Versão 4.0 (T1, T2, T3, T5, T6, T7B, 3-XOR-SAT e o bootstrap por instâncias) e lançando quatro ataques analíticos profundos (Ataques A, B, C e D):
+
+1. **Ataque A — Teorema 8 e Desigualdade de Jensen (Volume do Politopo LP):**
+   - **Objeção:** As cláusulas compartilham coordenadas $x$. A probabilidade de inatividade pontual $p(x) = \mathbb{P}_c(g_c(x) \le 0)$ não é uniforme no espaço (vale $1.0$ em $\mathcal{U}_N$ e $7/8$ nos vértices). Logo, $\mathbb{E}[\mu(Z)] = \int [p(x)]^M dx/2^N \ne (5/6)^M$.
+   - **Auditoria Numérica:** Teste computacional exato para $N=3$ em malha de $10^6$ pontos confirmou que $\mathbb{E}[\mu(Z)] > (5/6)^M$ (ex.: $M=2 \implies 0.70315 > 0.69444$; $M=3 \implies 0.60094 > 0.57870$).
+   - **Resolução:** Pela desigualdade de Jensen ($t \mapsto t^M$ convexa), $(5/6)^{\alpha N}$ foi corrigido formalmente de "igualdade exata" para **Cota Inferior Analítica Estrita de Jensen**:
+     $$\mathbb{E}[\mu_{\text{norm}}(Z)] \ge \left(\frac{5}{6}\right)^{\alpha N} = \exp(-N \alpha \ln(6/5)) > 0, \quad \text{e} \quad \mathbb{E}[\mu(Z)] \ge (1/3)^N$$
+     Isso fortalece a tese: o politopo LP $Z$ retém um volume ainda maior do que previsto, blindando o Teorema 10.
+
+2. **Ataque B — Teorema 9 e Cooperatividade de Hirsch em Horn:**
+   - **Objeção:** Em cláusulas com múltiplos corpos (ex.: $x_j \land x_k \to x_i$), as derivadas cruzadas entre pares de corpos concorrentes podem ser negativas ($J_{jk} = -\partial^2 P_c / \partial x_j \partial x_k \le 0$).
+   - **Resolução:** Delimitação do Teorema 9 à classe canônica de **Horn Monótono Linear / Redes de Implicação Unitária Acíclicas** ($x_j \to x_i$, i.e. $\neg x_j \lor x_i$), onde não há corpos concorrentes. Para toda cláusula linear, $J_{ij} = +1/4 \ge 0$ identicamente em todo o hipercubo, garantindo a condição estrita de cooperatividade de Hirsch (1985) e convergência ao modelo mínimo satisfatível com $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1)$.
+
+3. **Ataque C — Teorema 10 e Aplicação de Lee et al. (2016):**
+   - **Objeção:** O teorema de Lee et al. garante que o gradiente descendente evita selas estritas, mas é preciso provar que a dinâmica atinge uma solução e não outro ponto crítico.
+   - **Resolução:** Demonstração completa dos 5 elos: (i) hipergrafo decompõe-se em árvores para $\alpha < 1/6$; (ii) indução das folhas para a raiz prova ausência de mínimos discretos com $E_{\text{disc}} > 0$; (iii) Teorema 4A′ garante ausência de mínimos locais positivos em faces; (iv) todos os pontos críticos com energia positiva são selas estritas ($\lambda_{\min}(\nabla^2 \Phi) < 0$); (v) Lee et al. (2016) garante convergência quase certa para os únicos atratores sobreviventes: os vértices com $E_{\text{disc}} = 0$.
+
+4. **Ataque D — Teorema 7B e Fechamento de LaSalle:**
+   - Demonstração rigorosa de que qualquer equilíbrio projetado no bordo $\partial \mathcal{X}$ fora de $Z$ exigiria $\langle -\nabla \Phi_{\text{quad}}(x^*), x^* \rangle \ge 0$, contradizendo frontalmente a identidade centrípeta $\langle -\nabla \Phi_{\text{quad}}, x \rangle < 0$. Pelo Princípio de Invariância de LaSalle no compacto $\mathcal{X} = [-1, 1]^N$, todas as trajetórias convergem estritamente para $Z$.
+
+5. **Entregáveis da Análise 12 Concluídos:**
+   - `Publicacoes/RespostaAoProfessor_Analise12.md` e `.docx` (e na raiz `C:\MathDoCarvalho\`).
+   - `Publicacoes/MensagemParaOAvaliador12.docx` (e na raiz).
+   - `Publicacoes/MENSAGEM_ATUALIZACAO_AVALIADOR_V4.md` (e na raiz).
+   - Manuscritos `CLG_FOUNDATIONS_ARXIV.tex`, `ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md` e `Publicacoes/arxiv_package.zip` 100% atualizados.
+   - 26/26 testes unitários no Pytest aprovados.
+   - Commit `d64733d` sincronizado no GitHub (`origin/master`).
+
