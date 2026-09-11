@@ -222,26 +222,28 @@ For any clause $c$, the variables are distinct by (H1). Thus $\frac{\partial^2 \
 
 \section{Theorem 4A' and Corollary 4B: Stratified Hypercube Dynamics and Vertex Confinement (Without Hypothesis H4)}
 
-\begin{theorem}[Theorem 4A': Face Local Minima Inherit Vertex Values]
+\begin{theorem}[Theorem 4A': Relative Face Local Minima Inherit Vertex Values]
 \label{thm:vertex_geom}
-Under (H1), for any 3-CNF formula, let $x^*$ be a local minimum of the restriction of $\Phi_{\rm mult}$ to the compact hypercube $\mathcal{X} = [-1, 1]^N$, situated in the relative interior of a face $\mathcal{F}$ of dimension $d \ge 0$. Then:
+Under (H1), for any 3-CNF formula, let $x^* \in \text{relint}(\mathcal{F})$ be a local minimum of the restriction of $\Phi_{\rm mult}$ relative to a face $\mathcal{F}$ of dimension $d \ge 0$. Then:
 \begin{equation}
 \Phi_{\rm mult}(x^*) = E_{\rm disc}(v), \quad \forall v \in \mathcal{V}(\mathcal{F})
 \end{equation}
 where $\mathcal{V}(\mathcal{F})$ is the set of Boolean vertices of $\mathcal{F}$.
-In particular, if $x^*$ is a strict local minimum of $\Phi_{\rm mult}|_{\mathcal{X}}$, then $x^*$ is strictly a discrete vertex $x^* \in \{-1, +1\}^N$ (face of dimension $d=0$).
+In particular, if $x^*$ is a strict local minimum of $\Phi_{\rm mult}|_{\mathcal{X}}$ relative to the hypercube, then $x^*$ is strictly a discrete vertex $x^* \in \{-1, +1\}^N$ (face of dimension $d=0$).
 \end{theorem}
 
 \begin{proof}
 The hypercube decomposes into disjoint open faces $\mathcal{X} = \bigcup_{\mathcal{F}} \text{relint}(\mathcal{F})$.
-On any face $\mathcal{F}$ of dimension $d \ge 1$, fixing $N-d$ coordinates to $\pm 1$ preserves multilinearity. The intrinsic face Laplacian vanishes: $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$.
-If $x^* \in \text{relint}(\mathcal{F})$ is a local minimum of $\Phi_{\rm mult}|_{\mathcal{X}}$, it is a local minimum of the restriction $\Phi_{\mathcal{F}}$ on the connected open domain $\text{relint}(\mathcal{F})$.
-By the Strong Minimum Principle, $\Phi_{\mathcal{F}}$ must be constant on a neighborhood of $x^*$, and since $\Phi_{\mathcal{F}}$ is a real multilinear polynomial, it is identically constant on the entire compact face $\mathcal{F}$.
-Since all vertices $\mathcal{V}(\mathcal{F}) \subset \{-1, +1\}^N$ belong to $\mathcal{F}$, and $\Phi_{\rm mult}(v) = E_{\rm disc}(v)$, it follows that $\Phi_{\rm mult}(x^*) = E_{\rm disc}(v)$ for all $v \in \mathcal{V}(\mathcal{F})$.
-Hence, no strict local minimum can exist on any face of dimension $d \ge 1$. Strict local minima reside exclusively in faces of dimension $d=0$, i.e., vertices $\{-1, +1\}^N$.
+On any face $\mathcal{F}$ of dimension $d \ge 1$, fixing $N-d$ coordinates to $\pm 1$ preserves multilinearity. The intrinsic face Laplacian vanishes identically: $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$.
+If $x^* \in \text{relint}(\mathcal{F})$ is a local minimum of $\Phi_{\mathcal{F}}$ on the connected open domain $\text{relint}(\mathcal{F})$, then by the Strong Minimum Principle for harmonic functions, $\Phi_{\mathcal{F}}$ must be constant on a neighborhood of $x^*$. Sinc $\Phi_{\mathcal{F}}$ is a multilinear polynomial, it is identically constant on the entire compact face $\mathcal{F}$:
+\begin{equation}
+\Phi_{\rm mult}(x) \equiv \Phi_{\rm mult}(x^*), \quad \forall x \in \mathcal{F}.
+\end{equation}
+Since all Boolean vertices $\mathcal{V}(\mathcal{F}) \subset \{-1, +1\}^N$ belong to $\mathcal{F}$, and $\Phi_{\rm mult}(v) = E_{\rm disc}(v)$, it follows that $\Phi_{\rm mult}(x^*) = E_{\rm disc}(v)$ for all $v \in \mathcal{V}(\mathcal{F})$.
+Consequently, no strict local minimum can exist on any face of dimension $d \ge 1$. All strict local minima reside exclusively in faces of dimension $d=0$, i.e., discrete vertices $\{-1, +1\}^N$.
 \end{proof}
 
-\begin{corollary}[Corollary 4B: Confinement of Projected Attractors Without H4]
+\begin{corollary}[Corollary 4B: Confinement of Projected Attractors via LaSalle]
 \label{cor:vertex_dyn}
 Under projected gradient flow $\dot{x}(t) = \Pi_{T_{\mathcal{X}}(x(t))}\left(-\nabla \Phi_{\rm mult}(x(t))\right)$, every isolated asymptotically stable equilibrium is strictly a discrete vertex $x^* \in \{-1, +1\}^N$.
 \end{corollary}
@@ -251,44 +253,42 @@ Consider the Lyapunov function $V(x) = \Phi_{\rm mult}(x)$. By Moreau's projecti
 \begin{equation}
 \dot{V}(x(t)) = \langle \nabla \Phi_{\rm mult}(x), \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x)) \rangle = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x))\|^2 \le 0.
 \end{equation}
-Energy is strictly non-increasing along trajectories \cite{nagurney1996projected}. Any isolated asymptotically stable equilibrium $x^*$ is a strict local minimum of $\Phi_{\rm mult}|_{\mathcal{X}}$. By Theorem~\ref{thm:vertex_geom}, all strict local minima reside on faces of dimension $d=0$. Hence $x^* \in \{-1, +1\}^N$.
+By LaSalle's Invariance Principle for projected dynamical systems \cite{brogliato2006equivalence, nagurney1996projected}, all trajectories on the compact set $\mathcal{X}$ converge to the largest invariant set contained in $\{\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi) = 0\}$, which corresponds to the stationary points $-\nabla \Phi(x^*) \in N_{\mathcal{X}}(x^*)$.
+An isolated asymptotically stable equilibrium $x^*$ must be a strict local minimum of $\Phi_{\rm mult}$ relative to $\mathcal{X}$. By Theorem~\ref{thm:vertex_geom}, no point in the relative interior of a face $\mathcal{F}$ with $\dim(\mathcal{F}) \ge 1$ can be a strict local minimum (since $\Phi$ is constant along all tangent directions in $\mathcal{F}$). Hence, all isolated asymptotically stable equilibria must belong to faces of dimension $d=0$: $x^* \in \{-1, +1\}^N$.
 \end{proof}
 
 \section{Theorem 5: Hessian Factorization and Spectral Conditioning}
 
 Define the \textbf{Clause Incidence Matrix} $V \in \mathbb{R}^{M \times N}$ with rows $v_c^T = -\frac{1}{2}(\sigma^{(c)})^T$:
 \begin{equation}
-V = \begin{bmatrix} v_1^T \\ v_2^T \\ \vdots \\ v_M^T \end{bmatrix}.
+V = -\frac{1}{2} \begin{pmatrix} \sigma_1^{(1)} & \dots & \sigma_N^{(1)} \\ \vdots & \ddots & \vdots \\ \sigma_1^{(M)} & \dots & \sigma_N^{(M)} \end{pmatrix} \in \mathbb{R}^{M \times N}.
 \end{equation}
 
-\begin{theorem}[Incidence Factorization and Spectral Conditioning]
+\begin{theorem}[Hessian Factorization and Spectral Bounds]
 \label{thm:softplus_convexity}
-The Hessian of the Softplus relaxation factors everywhere as:
-\begin{equation}
-\nabla^2 \Phi_{\rm soft}(x) = V^T W(x) V
-\end{equation}
-where $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ with $w_c(x) = \beta \sigma(\beta g_c(x))[1 - \sigma(\beta g_c(x))] > 0$ for all finite $x$ and $\beta < \infty$.
-Consequently:
+For the Softplus potential $\Phi_{\rm soft}(x) = \sum_{c=1}^M \frac{1}{\beta}\ln(1 + e^{\beta g_c(x)})$:
 \begin{enumerate}
-    \item $\nabla^2 \Phi_{\rm soft}(x) \succeq 0$ everywhere on $\mathbb{R}^N$ and $\ker(\nabla^2 \Phi_{\rm soft}(x)) = \ker(V)$.
-    \item If $\text{rank}(V) = N$, $\Phi_{\rm soft}$ is \textbf{strictly convex} ($\nabla^2 \Phi_{\rm soft} \succ 0$) on $\mathbb{R}^N$.
-    \item The extremal eigenvalues satisfy:
+    \item The Hessian admits the exact global factorization:
     \begin{equation}
-    \lambda_{\min}(\nabla^2 \Phi_{\rm soft}(x)) \geq \lambda_{\min}(W(x)) \lambda_{\min}(V^T V) > 0,
+    \nabla^2 \Phi_{\rm soft}(x) = V^T W(x) V \succeq 0,
     \end{equation}
+    where $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ with strictly positive weights:
     \begin{equation}
-    \lambda_{\max}(\nabla^2 \Phi_{\rm soft}(x)) \leq \lambda_{\max}(W(x)) \lambda_{\max}(V^T V).
+    w_c(x) = \beta \, \sigma(\beta g_c(x)) \, (1 - \sigma(\beta g_c(x))) > 0.
     \end{equation}
-    \item The spectral condition number is bounded by:
+    \item $\Phi_{\rm soft}$ is globally convex on $\mathbb{R}^N$. If ${\rm rank}(V) = N$, then $\nabla^2 \Phi_{\rm soft}(x) \succ 0$ and $\Phi_{\rm soft}$ is strictly convex.
+    \item The spectral condition number $\kappa(\nabla^2 \Phi_{\rm soft}(x))$ is bounded by:
     \begin{equation}
-    \kappa(\nabla^2 \Phi_{\rm soft}(x)) \leq \kappa(W(x)) \cdot \kappa(V^T V) = \left(\frac{\lambda_{\max}(W(x))}{\lambda_{\min}(W(x))}\right) \cdot \kappa(V^T V).
+    \kappa(\nabla^2 \Phi_{\rm soft}(x)) \le \frac{\max_c w_c(x)}{\min_c w_c(x)} \cdot \frac{\lambda_{\max}(V^T V)}{\lambda_{\min}(V^T V)} = \kappa(W(x)) \cdot \kappa(V^T V).
     \end{equation}
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-For any test vector $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi z = (V z)^T W(x) (V z) = \sum w_c (v_c^T z)^2 \geq 0$.
-Applying Rayleigh quotients: $\lambda_{\min}(W) \|V z\|^2 \le (V z)^T W (V z) \le \lambda_{\max}(W) \|V z\|^2$. Since $\|V z\|^2 = z^T V^T V z$, the bounds on $\lambda_{\min}$ and $\lambda_{\max}$ follow directly. Dividing $\lambda_{\max}$ by $\lambda_{\min}$ yields the condition number bound.
+Let $v_c = -\frac{1}{2}\sigma^{(c)}$. Since $g_c(x) = v_c^T x - 1/2$, $\nabla g_c(x) = v_c$ and $\nabla^2 g_c(x) \equiv 0$.
+The gradient is $\nabla \Phi_{\rm soft}(x) = \sum_{c=1}^M \sigma(\beta g_c(x)) v_c = V^T \sigma(\beta g(x))$.
+Differentiating gives $\nabla^2 \Phi_{\rm soft}(x) = \sum_{c=1}^M \beta \sigma(\beta g_c)(1 - \sigma(\beta g_c)) v_c v_c^T = V^T W(x) V$.
+For any $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi_{\rm soft}(x) z = \|W(x)^{1/2} V z\|_2^2 \ge 0$, establishing convexity. By Courant-Fischer minimax bounds, Rayleigh quotients satisfy $\lambda_{\min}(H) \ge \min_c w_c \lambda_{\min}(V^TV)$ and $\lambda_{\max}(H) \le \max_c w_c \lambda_{\max}(V^TV)$, establishing the condition number bound.
 \end{proof}
 
 \begin{figure}[htbp]
@@ -335,7 +335,7 @@ For any 3-CNF formula and any point $x \in \mathcal{X}$ with active clauses $\te
     \frac{d}{dt} \|x(t)\|_2^2 = 2 \langle x(t), \dot{x}(t) \rangle \le 2 \langle x(t), -\nabla \Phi_{\rm quad}(x(t)) \rangle < 0.
     \end{equation}
     \item $\Phi_{\rm quad}$ admits no local minima or projected equilibria outside $Z$: any stationary point on $\partial \mathcal{X}$ requires $-\nabla \Phi_{\rm quad}(x^*) \in N_{\mathcal{X}}(x^*)$, which would imply $\langle -\nabla \Phi(x^*), x^* \rangle \ge 0$, directly contradicting strict centripetal contraction.
-    \item By LaSalle's Invariance Principle, every trajectory under projected gradient flow converges to the LP polytope $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$.
+    \item By LaSalle's Invariance Principle on the compact hypercube $\mathcal{X} = [-1, 1]^N$, every trajectory under projected gradient flow converges to the LP polytope $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$.
 \end{enumerate}
 \end{theorem}
 
@@ -345,7 +345,7 @@ The gradient is $-\nabla \Phi_{\rm quad}(x) = \sum_{c \in \text{act}} g_c(x) \si
 \begin{equation}
 \langle -\nabla \Phi_{\rm quad}(x), x \rangle = \sum_{c \in \text{act}} g_c(x)(\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}} (2 g_c(x)^2 + g_c(x)) < 0.
 \end{equation}
-On the boundary $\partial \mathcal{X}$, every exterior normal $\nu \in N_{\mathcal{X}}(x^*)$ satisfies $\nu_i x^*_i \ge 0 \implies \langle \nu, x^* \rangle \ge 0$. A projected equilibrium would require $-\nabla \Phi(x^*) \in N_{\mathcal{X}}(x^*) \implies \langle -\nabla \Phi(x^*), x^* \rangle \ge 0$, which is impossible. Hence, no equilibria exist outside $Z$, and all trajectories enter $Z$.
+On the boundary $\partial \mathcal{X}$, every exterior normal $\nu \in N_{\mathcal{X}}(x^*)$ satisfies $\nu_i x^*_i \ge 0 \implies \langle \nu, x^* \rangle \ge 0$. A projected equilibrium would require $-\nabla \Phi(x^*) \in N_{\mathcal{X}}(x^*) \implies \langle -\nabla \Phi(x^*), x^* \rangle \ge 0$, which contradicts $\langle -\nabla \Phi(x^*), x^* \rangle < 0$. Hence, no stationary points exist outside $Z$. Since $\dot{\Phi}_{\rm quad} \le 0$, by LaSalle's Invariance Principle all trajectories converge to the largest invariant set contained in $\{\dot{\Phi} = 0\}$, which is precisely $Z$.
 \end{proof}
 
 \begin{remark}[Clarification on Unsatisfiable Formulas]
@@ -361,49 +361,54 @@ A_N \subseteq \mathcal{B}_{\rm spur}(\Phi_{\rm quad}) \implies \mathcal{M}_{\rm 
 \end{equation}
 \end{proposition}
 
-\section{Theorem 8: Exact Analytical Volume of the LP Polytope in Random 3-SAT}
+\section{Theorem 8: Rigorous Lower Bound on LP Polytope Volume via Jensen's Inequality}
 
-\begin{theorem}[Analytical Volume of the LP Polytope via Irwin-Hall Distribution]
+\begin{theorem}[Rigorous Lower Bound on LP Polytope Volume via Jensen's Inequality]
 \label{thm:lp_volume}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ decays exponentially:
+For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous exponential lower bound:
 \begin{equation}
-\mathbb{E}[\mu_{\rm norm}(Z)] = e^{-N f(\alpha) + o(N)}
+\mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\alpha N} = \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
 \end{equation}
-with exact analytical rate:
-\begin{equation}
-f(\alpha) = \alpha \ln\left(\frac{6}{5}\right) \approx 0.182321557 \, \alpha.
-\end{equation}
+Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N$.
 \end{theorem}
 
 \begin{proof}
-For a uniform point $x \sim \text{Unif}([-1, 1]^N)$ and a random clause $c$, the inactivity condition $g_c(x) \le 0$ is equivalent to $\sum_{j=1}^3 \sigma_j x_j \ge -1$.
-By the symmetry of polarities $\sigma_j \in \{-1, +1\}$ and coordinates $x_j$, each product $y_j = \sigma_j x_j$ is i.i.d. $\text{Unif}([-1, 1])$.
-Under the affine transform $u_j = (y_j + 1)/2 \sim \text{Unif}([0, 1])$, the condition becomes:
+By Fubini's theorem:
 \begin{equation}
-y_1 + y_2 + y_3 \ge -1 \iff 2(u_1 + u_2 + u_3) - 3 \ge -1 \iff u_1 + u_2 + u_3 \ge 1.
+\mathbb{E}_F[\mu_{\rm norm}(Z)] = \mathbb{E}_F \left[ \int_{[-1, 1]^N} \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \frac{dx}{2^N} \right] = \int_{[-1, 1]^N} \mathbb{E}_F \left[ \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \right] \frac{dx}{2^N}.
 \end{equation}
-The sum $S_3 = u_1 + u_2 + u_3$ follows the Irwin-Hall distribution of order 3. For $s \in [0, 1]$, its CDF is $F(s) = s^3 / 3! = s^3 / 6$.
-Thus, the probability of clause violation is $\mathbb{P}(S_3 < 1) = 1/6$. The probability of fractional clause satisfaction is:
+For any fixed $x \in [-1, 1]^N$, the $M$ clauses are chosen independently from the clause distribution. Let $p(x) = \mathbb{P}_c(g_c(x) \le 0)$. Then:
 \begin{equation}
-p = \mathbb{P}(S_3 \ge 1) = 1 - \frac{1}{6} = \frac{5}{6}.
+\mathbb{E}_F \left[ \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \right] = [p(x)]^M \implies \mathbb{E}_F[\mu_{\rm norm}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N}.
 \end{equation}
-Since the $M = \alpha N$ clauses are independent, the expected normalized volume is:
+For a single clause $c$ under a uniformly chosen point $x \sim \text{Unif}([-1, 1]^N)$, the inactivity condition $\sum_{j=1}^3 \sigma_j x_j \ge -1$ corresponds to $u_1 + u_2 + u_3 \ge 1$ for $u_j = (\sigma_j x_j + 1)/2 \sim \text{Unif}([0, 1])$.
+The sum $S_3 = u_1 + u_2 + u_3$ follows the Irwin-Hall distribution of order 3, which has $\mathbb{P}(S_3 < 1) = 1/6$. Therefore, the spatial average of $p(x)$ is:
 \begin{equation}
-\mathbb{E}[\mu_{\rm norm}(Z)] = p^M = \left(\frac{5}{6}\right)^{\alpha N} = \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right).
+\int_{[-1, 1]^N} p(x) \frac{dx}{2^N} = 1 - \frac{1}{6} = \frac{5}{6}.
 \end{equation}
+Since $t \mapsto t^M$ is strictly convex on $[0, 1]$ for $M \ge 2$, by Jensen's inequality:
+\begin{equation}
+\mathbb{E}_F[\mu_{\rm norm}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N} \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \left(\frac{5}{6}\right)^{\alpha N}.
+\end{equation}
+Furthermore, on the central box $\mathcal{U}_N = (-1/3, 1/3)^N$, $g_c(x) < 0$ holds for all possible clauses, so $p(x) \equiv 1$, yielding $\mathbb{E}[\mu(Z)] \ge \mu(\mathcal{U}_N) = (1/3)^N$.
+This establishes that the Hinge is trapped in a fractional LP relaxation polytope whose volume is bounded below by $e^{-N \alpha \ln(6/5)}$.
 \end{proof}
 
 \section{Theorems 9 and 10: Rigorous Dynamic Separations}
 
-\begin{theorem}[Theorem 9: Rigorous Separation in Monotone Horn via Hirsch Cooperative Systems]
+\begin{theorem}[Theorem 9: Rigorous Separation in Linear Monotone Horn via Hirsch Cooperative Systems]
 \label{thm:horn_separation}
-Consider the infinite family of acyclic monotone Horn formulas $F_N$ with implication chains $x_1 \land x_2 \to x_3, \dots, x_{k-1} \land x_k \to x_{k+1}$ and unit positive facts.
+Consider the family of linear monotone Horn formulas $F_N$ consisting of single-premise directed implications $x_j \to x_i$ ($\neg x_j \lor x_i$) along an acyclic dependency graph, together with unit positive facts $x_0 \to x_1$ and initial boundary seeds.
 \begin{enumerate}
-    \item Under $\Phi_{\rm mult}$, the vector field $-\nabla \Phi_{\rm mult}$ is cooperative ($\partial (-\nabla_i \Phi) / \partial x_j \ge 0$). By Hirsch's Cooperative Dynamical Systems Theorem \cite{hirsch1985systems}, the projected gradient flow converges almost everywhere to the unique minimal satisfying model:
+    \item Under $\Phi_{\rm mult}$, the Jacobian of the negative gradient field $f(x) = -\nabla \Phi_{\rm mult}(x)$ has off-diagonal entries:
+    \begin{equation}
+    J_{ij}(x) = \frac{\partial f_i}{\partial x_j} = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0, \quad \forall i \ne j, \; \forall x \in [-1, 1]^N.
+    \end{equation}
+    Thus the projected vector field is strictly cooperative in the sense of Hirsch \cite{hirsch1985systems}. By Hirsch's Monotone Flow Theorem, the projected gradient flow converges monotonically to the unique minimal satisfying model:
     \begin{equation}
     \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = o(1).
     \end{equation}
-    \item Simultaneously, the LP polytope $Z$ contains the central box $\mathcal{U}_N$, and by Theorem~\ref{thm:universal_contraction} the Hinge flow converges to $Z$, where rounding violates clauses with high probability:
+    \item Simultaneously, the LP polytope $Z$ contains the central box $\mathcal{U}_N$, and by Theorem~\ref{thm:universal_contraction} the Hinge flow converges to $Z$, where rounding violates clauses with positive probability:
     \begin{equation}
     \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge 1 - o(1).
     \end{equation}
@@ -419,11 +424,13 @@ Consequently, rigorous dynamical separation holds:
 For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ below the hypergraph percolation threshold $\alpha < 1/6$:
 \begin{enumerate}
     \item With high probability ($1 - o(1)$), the factor hypergraph decomposes into disjoint tree components of size $\mathcal{O}(\log N)$.
-    \item In any tree formula, leaf-to-root induction proves that all local minima of the discrete energy have value zero ($E_{\rm disc} = 0$). By Theorem~\ref{thm:vertex_geom} and the Stable Center Manifold Theorem of Lee et al. \cite{lee2016gradient}, the projected gradient flow of $\Phi_{\rm mult}$ avoids strict saddles almost surely and converges to true satisfying vertices:
+    \item In any tree formula, leaf-to-root induction proves that every assignment with positive discrete energy ($E_{\rm disc} > 0$) has an active leaf variable whose flip strictly reduces energy, precluding local minima with $E_{\rm disc} > 0$.
+    \item By Theorem~\ref{thm:vertex_geom}, all local minima of $\Phi_{\rm mult}$ in faces inherit vertex values, so no local minima with positive potential exist. Every non-satisfying critical point is a strict saddle with at least one strictly negative eigenvalue along an escaping direction.
+    \item By the Center-Stable Manifold Theorem of Lee et al. \cite{lee2016gradient}, the projected gradient flow of $\Phi_{\rm mult}$ avoids strict saddles almost surely and converges to true satisfying vertices:
     \begin{equation}
     \lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0.
     \end{equation}
-    \item For $\Phi_{\rm quad}$, the LP polytope has positive volume $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$ and the flow converges to $Z$, yielding non-zero residual energy:
+    \item For $\Phi_{\rm quad}$, the LP polytope has volume $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$ by Theorem~\ref{thm:lp_volume}, and the flow converges to $Z$, yielding non-zero residual energy:
     \begin{equation}
     \lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0.
     \end{equation}

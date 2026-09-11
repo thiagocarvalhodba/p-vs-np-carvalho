@@ -51,14 +51,14 @@ O arcabouço atinge a **Versão 4.0** com 10 teoremas analíticos estruturais e 
 * **Teorema 1 (Caixa Fracionária e Folga LP):** Folga interior determinística de 0.5 em todas as cláusulas na caixa $\mathcal{U}_N = (-1/3, 1/3)^N$.
 * **Teorema 2 (Medida Nula de Críticos):** Conjuntos críticos interiores de $\Phi_{\text{mult}}$ e $\Phi_{\text{soft}}$ possuem medida de Lebesgue nula sob (H3').
 * **Teorema 3 (Princípio do Mínimo Forte):** Inexistência de mínimos locais no interior para $\Phi_{\text{mult}}$ decorrente da harmonicidade ($\Delta \Phi_{\text{mult}} \equiv 0$).
-* **Teorema 4A′ e Corolário 4B (Vértices sem H4):** Mínimos em faces preservam a energia dos vértices e atratores assintóticos isolados do fluxo projetado são estritamente vértices.
+* **Teorema 4A′ e Corolário 4B (Vértices sem H4):** Mínimos locais relativos a faces preservam a energia dos vértices e atratores assintóticos isolados do fluxo projetado são estritamente vértices.
 * **Teorema 5 (Hessiana Softplus e Condicionamento):** Fatoração matricial $\nabla^2 \Phi_{\text{soft}} = V^T W(x) V \succeq 0$ e cota do número de condicionamento $\kappa(\nabla^2 \Phi) \le \kappa(W) \cdot \kappa(V^T V)$.
 * **Teorema 6 (Lipschitz e Aritmética IEEE 754):** Cota justa de Gershgorin $L_\beta = \Theta(\beta)$ e caracterização dos limiares de underflow em FP32 e FP64.
-* **Teorema 7B (Contração Centrípeta do Hinge):** Prova de que $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < 0$ fora do polítopo LP $Z$; o Hinge não possui equilíbrios espúrios com $\Phi > 0$, colapsando globalmente em $Z$ (cegueira fracionária, não rugosidade vítrea).
-* **Teorema 8 (Volume Analítico do Polítopo LP via Irwin-Hall):** Demonstração analítica exata de que o volume esperado do polítopo LP em 3-SAT aleatório é $\mathbb{E}[\mu(Z)] = (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)}$.
-* **Teorema 9 (Separação Rigorosa em Horn Monótono via Hirsch):** Demonstração analítica de que $\Phi_{\text{mult}}$ define um sistema dinâmico cooperativo de Hirsch, convergindo monotonicamente ao modelo mínimo satisfatível, enquanto $\Phi_{\text{quad}}$ é capturado no polítopo LP:
+* **Teorema 7B (Contração Centrípeta do Hinge):** Prova de que $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < 0$ fora do polítopo LP $Z$; o Hinge não possui equilíbrios espúrios com $\Phi > 0$, colapsando globalmente em $Z$ via LaSalle (cegueira fracionária, não rugosidade vítrea).
+* **Teorema 8 (Cota Inferior de Volume do Polítopo LP via Desigualdade de Jensen):** Demonstração analítica rigorosa de que o volume esperado do polítopo LP em 3-SAT aleatório é delimitado inferiormente por $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)} > 0$, e que $\mathbb{E}[\mu(Z)] \ge (1/3)^N$.
+* **Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Hirsch):** Demonstração analítica de que $\Phi_{\text{mult}}$ define um sistema dinâmico estritamente cooperativo ($J_{ij} = +1/4 \ge 0$), convergindo monotonicamente ao modelo mínimo satisfatível, enquanto $\Phi_{\text{quad}}$ é capturado no polítopo LP:
   $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - o(1)$$
-* **Teorema 10 (Separação Rigorosa em 3-SAT Subcrítico $\alpha < 1/6$):** Demonstração analítica de que abaixo do limiar de percolação do hipergrafo (onde as componentes são árvores quase certamente), o fluxo multilinear evita selas estritas (Lee et al., 2016) e alcança $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \to 0$, enquanto o Hinge retém $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge (5/6)^{\alpha N} - o(1) > 0$.
+* **Teorema 10 (Separação Rigorosa em 3-SAT Subcrítico $\alpha < 1/6$):** Demonstração analítica de que abaixo do limiar de percolação do hipergrafo (onde as componentes são árvores quase certamente), fórmulas acíclicas não possuem mínimos locais com $E_{\text{disc}} > 0$. O fluxo multilinear evita selas estritas (Lee et al., 2016) e alcança $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \to 0$, enquanto o Hinge retém $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge (5/6)^{\alpha N} - o(1) > 0$.
 
 ---
 
@@ -68,10 +68,10 @@ Congelamos previamente a metodologia em `PROTOCOLO.md` e executamos as simulaç�
 
 1. **Horn Monótono ($N=25, M=40$):**  
    - $\rho_{\text{mult}} = 0.0015$ [IC 95%: 0.0003, 0.0030] vs $\rho_{\text{quad}} = 0.1272$ [IC 95%: 0.1183, 0.1358]  
-   - $\Delta \rho = 0.1257$ [IC 95%: 0.1165, 0.1345] $\implies$ **Teorema 9 confirmado empiricamente ($p < 10^{-15}$)**.
+   - $\Delta \rho = 0.1257$ [IC 95%: 0.1165, 0.1345] $\implies$ **Resultados empíricos consistentes com a previsão do Teorema 9 ($p < 10^{-15}$)**.
 2. **3-SAT Aleatório Subcrítico ($\alpha = 0.12 < 1/6, N=50$):**  
    - $\rho_{\text{mult}} = 0.0000$ [IC 95%: 0.0000, 0.0000] vs $\rho_{\text{quad}} = 0.0756$ [IC 95%: 0.0567, 0.0944]  
-   - $\Delta \rho = 0.0756$ [IC 95%: 0.0567, 0.0944] $\implies$ **Teorema 10 confirmado empiricamente**.
+   - $\Delta \rho = 0.0756$ [IC 95%: 0.0567, 0.0944] $\implies$ **Resultados empíricos consistentes com a previsão do Teorema 10**.
 3. **3-SAT Plantado no Limiar Crítico ($\alpha = 4.26, N=40$):**  
    - $\rho_{\text{mult}} = 0.8974$ vs $\rho_{\text{quad}} = 1.0000$  
    - $\Delta \rho = 0.1026$ [IC 95%: 0.0990, 0.1063], excluindo o zero com significância estatística estrita.

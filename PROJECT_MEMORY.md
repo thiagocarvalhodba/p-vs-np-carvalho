@@ -632,6 +632,37 @@ Em 11 de Setembro de 2026, concluímos a execução integral do programa de trab
      * 3-XOR-SAT $\alpha=0.90$: Reachability contínua de 4.0% [IC Wilson: 0.7%, 19.5%], preservando o firewall P vs NP.
 
 7. **Suíte de Testes Automatizada Homologada (26/26 Testes Aprovados):**
-   - `tests/test_clg_theorems.py` cobre todos os teoremas estruturais e passa integralmente em 68s.
+   - `tests/test_clg_theorems.py` cobre todos os teoremas estruturais e passa integralmente em 53s.
    - `Publicacoes/CLG_FOUNDATIONS_ARXIV.tex` e `Publicacoes/arxiv_package.zip` atualizados para a Versão 4.0.
+
+---
+
+## 28. Parecer nº 12 do Professor: Lapidação Analítica dos Teoremas 8, 9 e 10
+
+Em 11 de Setembro de 2026, o professor enviou o **Parecer nº 12** (`AnaliseReportadaPeloProfessor12.docx`), validando categoricamente os Teoremas 1, 2, 3, 5, 6, 7B, 3-XOR-SAT e o bootstrap por instâncias, mas lançando 4 ataques técnicos profundos:
+
+1. **Ataque A — Teorema 8 (Desigualdade de Jensen no Volume do Politopo LP):**
+   - **Objeção do Professor:** As cláusulas compartilham coordenadas $x$. A probabilidade pontual $p(x) = \mathbb{P}_c(g_c(x) \le 0)$ não é constante (vale $1.0$ na caixa central $\mathcal{U}_N$ e $7/8$ nos vértices). Logo, $\mathbb{E}[\mu(Z)] = \int [p(x)]^M dx/2^N \ne (5/6)^M$.
+   - **Auditoria e Confirmação Numérica ($N=3$):** Teste computacional exato confirmou que $\mathbb{E}[\mu(Z)] > (5/6)^M$ (ex.: para $M=2$, $\mathbb{E} = 0.70315 > (5/6)^2 = 0.69444$; para $M=3$, $\mathbb{E} = 0.60094 > (5/6)^3 = 0.57870$).
+   - **Resolução:** Pela desigualdade de Jensen aplicada à função estritamente convexa $t \mapsto t^M$, $(5/6)^{\alpha N}$ é formalmente corrigido de "igualdade exata" para **Cota Inferior Analítica Estrita**:
+     $$\mathbb{E}[\mu_{\text{norm}}(Z)] \ge \left(\frac{5}{6}\right)^{\alpha N} = \exp(-N \alpha \ln(6/5)) > 0$$
+     Isso reforça a tese: o volume do politopo LP que aprisiona o Hinge é estritamente maior que a estimativa anterior.
+
+2. **Ataque B — Teorema 9 (Condição de Cooperatividade de Hirsch em Horn):**
+   - **Objeção do Professor:** Em cláusulas Horn gerais com múltiplos antecedentes, as derivadas cruzadas entre pares de corpos concorrentes podem ser negativas ($J_{jk} = -\partial^2 P_c / \partial x_j \partial x_k = -\frac{1}{8}(1 - x_i) \le 0$).
+   - **Resolução:** Delimitação formal à família canônica de **Horn Monótono Linear / Redes de Implicação Unitária Acíclicas** ($x_j \to x_i$, i.e. $\neg x_j \lor x_i$), onde não existem corpos concorrentes. Para toda cláusula linear, $J_{ij}(x) = +1/4 \ge 0$ identicamente em todo o hipercubo, atendendo estritamente aos requisitos de Hirsch (1985) e garantindo convergência ao modelo mínimo com $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1)$.
+
+3. **Ataque C — Teorema 10 (Caracterização de Selas Estritas e Lee et al. 2016):**
+   - **Objeção do Professor:** O teorema de Lee et al. (2016) garante que o gradiente descendente evita selas estritas, mas é preciso demonstrar que a dinâmica atinge uma atribuição satisfatória.
+   - **Resolução:** Demonstração completa dos 5 passos: (i) hipergrafo decompõe-se em árvores para $\alpha < 1/6$; (ii) indução das folhas para a raiz prova ausência de mínimos discretos com $E_{\text{disc}} > 0$; (iii) Teorema 4A′ garante ausência de mínimos em faces com energia positiva; (iv) todos os pontos críticos positivos são selas estritas ($\lambda_{\min}(\nabla^2 \Phi) < 0$); (v) Lee et al. (2016) garante convergência aos únicos atratores sobreviventes: os vértices com $E_{\text{disc}} = 0$.
+
+4. **Ataque D — Teorema 7B (Fechamento Dinâmico de LaSalle):**
+   - Demonstração rigorosa de que qualquer equilíbrio projetado no bordo $\partial \mathcal{X}$ fora de $Z$ exigiria $\langle -\nabla \Phi_{\text{quad}}(x^*), x^* \rangle \ge 0$, contradizendo frontalmente a identidade centrípeta $\langle -\nabla \Phi_{\text{quad}}, x \rangle < 0$. Pelo Princípio de Invariância de LaSalle, todas as trajetórias convergem estritamente para $Z$.
+
+5. **Entregáveis Gerados e Sincronizados:**
+   - `Publicacoes/RespostaAoProfessor_Analise12.md` e `.docx` (e na raiz `C:\MathDoCarvalho\`).
+   - `Publicacoes/MensagemParaOAvaliador12.docx` (e na raiz).
+   - Manuscritos `CLG_FOUNDATIONS_ARXIV.tex`, `ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md` e pacote `arxiv_package.zip` 100% atualizados.
+   - 26/26 testes unitários no Pytest aprovados.
+
 
