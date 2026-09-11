@@ -55,8 +55,8 @@ $$g_c(x) = 1 - \sum_{j \in c} \frac{1 + \sigma_j^{(c)} x_j}{2} = -\frac{1}{2} \l
 > $$\mathcal{U}_N = \left( -\frac{1}{3}, \, \frac{1}{3} \right)^N \subset \text{int}(\mathcal{X})$$
 > *satisfaz $g_c(x) < 0$ para todas as $M$ cláusulas simultaneamente. Consequentemente:*
 > $$\Phi_{\text{quad}}(x) \equiv 0 \quad\text{e}\quad \nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}, \quad \forall x \in \mathcal{U}_N$$
-> *Portanto, o conjunto crítico espúrio possui medida de Lebesgue estritamente positiva:*
-> $$\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0 \quad (\ge (2/3)^N \text{ para fórmulas UNSAT})$$
+> *O conjunto de gradiente nulo $Z(\nabla \Phi_{\text{quad}})$ contém $\mathcal{U}_N$, satisfazendo $\mu(Z(\nabla \Phi_{\text{quad}})) \ge (2/3)^N > 0$. O conjunto crítico espúrio satisfaz:*
+> $$\mu(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left( \frac{1}{3} \right)^N > 0 \quad (\ge (2/3)^N \text{ para fórmulas UNSAT})$$
 
 ### Demonstração Construtiva:
 1. Para todo $x \in \mathcal{U}_N$, $|x_i| < 1/3$ para todo $i$.
@@ -90,7 +90,7 @@ Fora da caixa $\mathcal{U}_N$, a distribuição de cláusulas cancela forças op
    Pelo **Lema de Okamoto (1973)** (zeros de polinômios multivariados reais não-nulos), $\mu(Z(P_k)) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{mult}})) = 0$.
 
 2. **Caso Softplus ($\Phi_{\text{soft}}$):**  
-   $\Phi_{\text{soft}}(x)$ é real analítica ($\mathcal{C}^\omega$) em $\mathbb{R}^N$. Sob (H3'), $\Phi_{\text{soft}} \not\equiv \text{const}$, logo existe $k$ com $\partial_k \Phi_{\text{soft}} \not\equiv 0$. Pelo **Teorema da Identidade para Funções Analíticas Reais** (Krantz & Parks, 2002), o conjunto de zeros de uma função analítica não-trivial em domínio conexo possui medida de Lebesgue zero: $\mu(Z(\partial_k \Phi_{\text{soft}})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$. $\blacksquare$
+   $\Phi_{\text{soft}}(x)$ é real analítica ($\mathcal{C}^\omega$) em $\mathbb{R}^N$. Pelo Teorema 5, seu Laplaciano satisfaz $\Delta \Phi_{\text{soft}}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0$ em todo $\mathbb{R}^N$ para $M \ge 1$. Sendo estritamente subharmônica, $\Phi_{\text{soft}}$ é incondicionalmente não-constante ($\Phi_{\text{soft}} \not\equiv \text{const}$). Logo existe $k$ com $\partial_k \Phi_{\text{soft}} \not\equiv 0$. Pelo **Teorema da Identidade para Funções Analíticas Reais** (Krantz & Parks, 2002), o conjunto de zeros de uma função analítica não-trivial em domínio conexo possui medida de Lebesgue zero: $\mu(Z(\partial_k \Phi_{\text{soft}})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$. $\blacksquare$
 
 ---
 
@@ -129,8 +129,8 @@ Pelo Princípio do Mínimo Forte, nenhum mínimo local pode residir no interior 
 Para qualquer aresta unidimensional $E_i$ ao longo da coordenada livre $x_i \in [-1, 1]$, com as demais coordenadas fixadas em $s_{-i} \in \{-1, +1\}^{N-1}$, a restrição é estritamente afim:
 $$f(x_i) = a + b_i(s_{-i}) x_i, \quad b_i(s_{-i}) = \frac{\partial \Phi_{\text{mult}}}{\partial x_i}\Big|_{x_{-i} = s_{-i}}$$
 - Se $b_i \ne 0$, a função afim não admite pontos críticos no interior $(-1, 1)$, atingindo seu mínimo estritamente em um dos extremos $x_i = \pm 1$ (vértices).
-- Arestas com $b_i = 0$ (arestas neutras) possuem valor constante $f(x_i) \equiv a$. Pela hipótese de transversabilidade (H4), a força projetada normal ao longo das direções transversais não é uniformemente atratora em toda a extensão do segmento aberto, instabilizando o interior da aresta.
-Portanto, todos os atratores estáveis do fluxo projetado residem exclusivamente nos vértices $\{-1, +1\}^N$. $\blacksquare$
+- Arestas com $b_i = 0$ (arestas neutras) possuem valor constante $f(x_i) \equiv a$. A derivada segunda pura tangencial anula-se identicamente ($\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$), gerando força restauradora nula ($\dot{x}_i \equiv 0$), o que impossibilita a estabilidade assintótica de Lyapunov para qualquer ponto em $\text{relint}(E_i)$. Além disso, sob (H4), a força normal $\partial_k \Phi(x_i, s_{-i}) = \alpha_k + \beta_{k,i} x_i$ varia ao longo do segmento para ao menos uma direção vizinha $k \ne i$, induzindo instabilidade transversal e expelindo as trajetórias para faces adjacentes.
+Portanto, todos os atratores locais estáveis do fluxo projetado residem exclusivamente nos vértices $\{-1, +1\}^N$. $\blacksquare$
 
 ---
 
@@ -165,7 +165,7 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 > 1. *A constante de Lipschitz satisfaz a escala exata $L_\beta = \Theta(\beta)$, admitindo as cotas:*
 >    $$\frac{3}{16} \beta \le L_\beta \le \frac{3 d_{\max}}{16} \beta$$
 > 2. *Na subcaixa de contração central $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ com $\rho < 1/3$ (por exemplo, para $\rho = 1/6$, $g_c(x) \le -1/4$), o gradiente sofre subfluxo numérico exponencial:*
->    $$\|\nabla \Phi_{\text{soft}}(x)\| \le \frac{M}{2} e^{-\beta (1 - 3\rho)/2}$$
+>    $$\|\nabla \Phi_{\text{soft}}(x)\|_\infty \le \frac{M}{2} e^{-\beta (1 - 3\rho)/2} \quad\text{e}\quad \|\nabla \Phi_{\text{soft}}(x)\|_2 \le \frac{\sqrt{3} M}{2} e^{-\beta (1 - 3\rho)/2}$$
 > 3. *Para $x = \mathbf{0}$ ($g_c = -1/2$), o fator sigmoidal atinge regimes de subnormal/flush-to-zero:*
 >    - *Em FP32: normal para $\beta \approx 175$, subnormal/zero absoluto para $\beta \approx 207$.*
 >    - *Em FP64: normal para $\beta \approx 1417$, subnormal/zero absoluto para $\beta \approx 1489$.*

@@ -50,21 +50,19 @@ Hessian Factorization, and Asymptotic Dynamic Separation}}
 \begin{abstract}
 We establish the analytical foundations of Computational Landscape Geometry and Representation (CLG-R) across continuous relaxations of Boolean 3-SAT on the compact hypercube $\mathcal{X} = [-1, 1]^N$.
 We formulate the theory across four hierarchical levels: static critical set geometry ($\mathcal{C}_{\rm spur}$), local stratified stability ($\mathcal{S}_{\rm spur}$), basin topology ($\mathcal{B}_{\rm spur}$), and asymptotic dynamic attractor mass ($\mathcal{M}_{\rm spur}$).
-First, we prove the \textbf{Central Fractional Box Theorem}: for any non-trivial 3-CNF formula $F$, the Quadratic Hinge relaxation possesses an open central plateau $\mathcal{U}_N = (-1/3, 1/3)^N$ where the potential and gradient vanish identically, yielding strictly positive Lebesgue measure $\mu(\mathcal{C}_0) \geq (1/3)^N > 0$ ($\geq (2/3)^N$ for UNSAT), representing the exact continuous geometric manifestation of canonical Linear Programming (LP) fractional interior slack ($0.5$).
-Second, via Walsh-Fourier expansion on the Boolean hypercube, Okamoto's Real Polynomial Lemma, and the Real Analytic Identity Theorem, we prove that under structural non-degeneracy (H3') the multilinear and Softplus relaxations have zero critical measure: $\mu(\mathcal{C}_0) = 0$.
+First, we prove the \textbf{Central Fractional Box Theorem}: for any non-trivial 3-CNF formula $F$, the Quadratic Hinge relaxation possesses an open central plateau $\mathcal{U}_N = (-1/3, 1/3)^N$ where the potential and gradient vanish identically, yielding zero-gradient measure $\mu(Z(\nabla \Phi_{\rm quad})) \ge (2/3)^N$ and spurious measure $\mu(\mathcal{C}_{\rm spur}) \geq (1/3)^N > 0$ ($\geq (2/3)^N$ for UNSAT), representing the exact continuous geometric manifestation of canonical Linear Programming (LP) fractional interior slack ($0.5$).
+Second, via Walsh-Fourier expansion on the Boolean hypercube, Okamoto's Real Polynomial Lemma, and strict subharmonicity ($\Delta \Phi_{\rm soft} > 0$), we prove that the multilinear and Softplus relaxations have zero critical measure: $\mu(\mathcal{C}_0) = 0$.
 Third, we prove the \textbf{Harmonic Saddle Theorem}: the multilinear potential has identically vanishing Laplacian ($\Delta \Phi_{\rm mult} \equiv 0$), forbidding interior local minima by the Strong Minimum Principle and constraining every interior critical point to a Morse saddle ($1 \le m \le N-1$).
-Fourth, via stratified boundary dynamics on hypercube faces $\mathcal{F}$ ($d \ge 1$), we prove that all isolated stable local attractors of the projected gradient flow are confined to the $2^N$ discrete vertices $\{-1, +1\}^N$.
+Fourth, via stratified boundary dynamics on hypercube faces $\mathcal{F}$ ($d \ge 1$), we prove that all isolated stable local attractors of the projected gradient flow are confined strictly to the $2^N$ discrete vertices $\{-1, +1\}^N$.
 Fifth, we demonstrate that the Softplus Hessian factors as $\nabla^2 \Phi_{\rm soft}(x) = V^T W(x) V \succeq 0$, establishing global convexity with $\ker(\nabla^2 \Phi) = \ker(V)$ and strict convexity whenever $\text{rank}(V) = N$. We show why this does not imply $\text{P} = \text{NP}$, citing the glassy collapse of 3-XOR-SAT ($R_{\rm dyn} = 0.0\%$).
-Sixth, for $\beta \to \infty$, we establish the exact Lipschitz scaling $\frac{3}{16}\beta \le L_\beta \le \frac{3 d_{\max}}{16}\beta$ alongside uniform sub-box floating-point underflow scales in IEEE 754 precision (FP32 and FP64).
-Finally, we state the \textbf{CLG-R Dynamic Separation Principle}, proving that equivalent discrete instances exhibit provably separated asymptotic reachabilities under distinct continuous geometries.
+Sixth, for $\beta \to \infty$, we establish the exact sharp Lipschitz sandwich $\frac{3}{16}\beta \le L_\beta \le \frac{3 d_{\max}}{16}\beta$ alongside uniform sub-box floating-point underflow scales in IEEE 754 precision (FP32 and FP64).
+Finally, we state the \textbf{CLG-R Dynamic Separation Principles}, proving that equivalent discrete instances exhibit provably separated asymptotic reachabilities under distinct continuous geometries.
 \end{abstract}
 
 \noindent\textbf{Keywords:} Computational Complexity, Continuous Relaxation, 3-SAT, Harmonic Functions, Morse Theory, Stratified Flow, Softplus Convexity, Integrality Gap, Walsh-Fourier Analysis.
 
 \tableofcontents
 \newpage
-
----
 
 \section{Introduction and Problem Formulation}
 
@@ -83,8 +81,6 @@ We operate under standard regularity hypotheses:
     \item \textbf{(H3' - Non-Degeneracy):} The formula $F$ is not isotropically balanced across all $2^N$ assignments, ensuring that $\Phi_{\rm mult} \not\equiv \text{const}$ on $\mathbb{R}^N$.
     \item \textbf{(H4 - Edge Transversality):} Along any 1D edge, the multilinear restriction is not identically constant across all boundary configurations.
 \end{itemize}
-
----
 
 \section{The Four Structural Levels of CLG-R}
 
@@ -115,8 +111,6 @@ To resolve classical paradoxes between static differential geometry and dynamica
 A static critical set of measure zero ($\mu(\mathcal{C}_{\rm spur}) = 0$) does \textbf{not} imply dynamic reachability. Stable zero-dimensional attractors (isolated vertices) possess full-dimensional basins of attraction, yielding $\mathcal{M}_{\rm spur} > 0$.
 \end{remark}
 
----
-
 \section{Theorem 1: Central Fractional Box and Linear Relaxation Slack}
 
 \begin{lemma}[Simultaneous Clause Inactivity]
@@ -126,11 +120,12 @@ If $g_c(x) \leq 0$ for all $c \in \{1, \dots, M\}$, then $\Phi_{\rm quad}(x) \eq
 
 \begin{theorem}[The Central Fractional Box Theorem]
 \label{thm:central_box}
-For any 3-CNF formula $F$ satisfying (H1)--(H3'), the spurious critical set of the quadratic hinge relaxation contains the open central hypercube $\mathcal{U}_N = (-1/3, 1/3)^N$. Consequently:
+For any 3-CNF formula $F$ satisfying (H1)--(H3'), the zero-gradient set $Z(\nabla \Phi_{\rm quad}) \equiv \{x \in {\rm int}(\mathcal{X}) \mid \nabla \Phi_{\rm quad}(x) = \mathbf{0}\}$ contains the open central hypercube $\mathcal{U}_N = (-1/3, 1/3)^N$, yielding $\mu(Z(\nabla \Phi_{\rm quad})) \ge (2/3)^N$.
+Consequently, the spurious critical set $\mathcal{C}_{\rm spur}(\Phi_{\rm quad}) \equiv Z(\nabla \Phi_{\rm quad}) \cap \{x \mid E_{\rm disc}({\rm sign}(x)) > 0\}$ contains all clause-violating orthants within $\mathcal{U}_N$, satisfying:
 \begin{equation}
-\mu(\mathcal{C}_0(\Phi_{\rm quad})) \geq \left(\frac{1}{3}\right)^N > 0.
+\mu(\mathcal{C}_{\rm spur}(\Phi_{\rm quad})) \geq \left(\frac{1}{3}\right)^N > 0,
 \end{equation}
-For any unsatisfiable (UNSAT) formula, $\mu(\mathcal{C}_0(\Phi_{\rm quad})) \geq \mu(\mathcal{U}_N) = (2/3)^N > 0$.
+and $\mu(\mathcal{C}_{\rm spur}(\Phi_{\rm quad})) \geq \mu(\mathcal{U}_N) = (2/3)^N > 0$ for any unsatisfiable (UNSAT) formula.
 \end{theorem}
 
 \begin{proof}
@@ -159,8 +154,6 @@ Outside $\mathcal{U}_N$, statistical cancellation of clause polarities induces a
 \label{fig:central_box}
 \end{figure}
 
----
-
 \section{Theorem 2: Measure Zero of Critical Sets in Analytic Relaxations}
 
 \begin{theorem}[Measure Zero of Critical Sets under (H3')]
@@ -177,16 +170,14 @@ The multilinear extension $\Phi_{\rm mult}(x) = \sum_{S \subseteq [N]} \widehat{
 \begin{equation}
 \sum_{S \ne \emptyset} \widehat{\Phi}(S)^2 = \text{Var}_{s \sim \mathcal{U}(\{-1, 1\}^N)} [E_{\rm disc}(s)].
 \end{equation}
-For any satisfiable formula with $M \geq 1$, there exists a satisfying assignment $s^*$ with $E_{\rm disc}(s^*) = 0$ and at least one non-satisfying assignment with $E_{\rm disc} \geq 1$. Hence $\text{Var}(E_{\rm disc}) > 0$, ensuring that $\Phi_{\rm mult}$ is non-constant.
+For any satisfiable formula with $M \geq 1$, there exists a satisfying assignment $s^*$ with $E_{\rm disc}(s^*) = 0$ and at least one non-satisfying assignment with $E_{\rm disc} \geq 1$. Hence $\text{Var}(E_{\rm disc}) > 0$, ensuring that $\Phi_{\rm mult}$ is unconditionally non-constant.
 Therefore, there exists an index $k \in \{1, \dots, N\}$ such that $P_k(x) \equiv \partial_k \Phi_{\rm mult}(x) \not\equiv 0$.
 By Okamoto's Lemma \cite{okamoto1973distinctness, caron2005zero}, the zero set $Z(P_k) = \{x \in \mathbb{R}^N \mid P_k(x) = 0\}$ has Lebesgue measure zero: $\mu(Z(P_k)) = 0$.
 Since $\mathcal{C}_0(\Phi_{\rm mult}) \subseteq Z(\nabla \Phi_{\rm mult}) \subseteq Z(P_k)$, it follows that $\mu(\mathcal{C}_0(\Phi_{\rm mult})) = 0$.
 
 \textbf{Case 2: Softplus ($\Phi_{\rm soft}$).}
-The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on the connected domain $\mathbb{R}^N$. Under (H3'), $\Phi_{\rm soft} \not\equiv \text{const}$, so there exists $k$ with $\partial_k \Phi_{\rm soft} \not\equiv 0$. By the Identity Theorem for Real Analytic Functions \cite{krantz2002primer}, $\mu(Z(\partial_k \Phi_{\rm soft})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0$.
+The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on $\mathbb{R}^N$. By Theorem~\ref{thm:softplus_convexity}, its Laplacian satisfies $\Delta \Phi_{\rm soft}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0$ everywhere on $\mathbb{R}^N$ for any formula with $M \ge 1$. Being strictly subharmonic, $\Phi_{\rm soft}$ is unconditionally non-constant ($\Phi_{\rm soft} \not\equiv \text{const}$). Hence there exists an index $k$ with $\partial_k \Phi_{\rm soft} \not\equiv 0$. By the Identity Theorem for Real Analytic Functions \cite{krantz2002primer}, the zero set of a non-trivial real analytic function on a connected domain has measure zero: $\mu(Z(\partial_k \Phi_{\rm soft})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0$.
 \end{proof}
-
----
 
 \section{Theorem 3: Harmonic Multilinear Landscapes \& Saddle Confinement}
 
@@ -217,8 +208,6 @@ By the \textbf{Strong Minimum Principle for Harmonic Functions} \cite{courant196
 \label{fig:harmonic}
 \end{figure}
 
----
-
 \section{Theorem 4: Stratified Boundary Dynamics and Vertex Confinement}
 
 \begin{theorem}[Stratified Attractor Confinement Theorem]
@@ -234,12 +223,10 @@ no stable local attractor resides in the relative interior of any face of dimens
 The hypercube $\mathcal{X} = [-1, 1]^N$ is stratified into faces $\mathcal{F}$ of dimension $d \in \{0, 1, \dots, N\}$.
 \begin{enumerate}
     \item \textbf{Faces of dimension $d \ge 2$:} Fixing $N-d$ boundary coordinates ($x_k = \pm 1$) preserves multilinearity in the remaining $d$ free variables. The intrinsic face Laplacian vanishes: $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$. By the Strong Minimum Principle, no local minimum can reside in $\text{relint}(\mathcal{F})$.
-    \item \textbf{Edges ($d=1$):} Along any 1D edge $E_i$, the restriction is affine: $f(x_i) = a + b_i x_i$. If $b_i \neq 0$, the function is strictly monotonic, attaining extrema only at endpoints $x_i = \pm 1$. For neutral edges ($b_i = 0$), the pure second derivative vanishes identically: $\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$. Hence, tangential perturbations experience zero restoring force ($\dot{x}_i \equiv 0$), precluding asymptotic Lyapunov stability for any point in $\text{relint}(E_i)$.
+    \item \textbf{Edges ($d=1$):} Along any 1D edge $E_i$, the restriction is affine: $f(x_i) = a + b_i x_i$. If $b_i \neq 0$, the function is strictly monotonic, attaining extrema only at endpoints $x_i = \pm 1$. For neutral edges ($b_i = 0$), the pure second derivative vanishes identically ($\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$), yielding zero tangential restoring force ($\dot{x}_i \equiv 0$) which precludes asymptotic Lyapunov stability. Furthermore, under (H4), the normal force $\partial_k \Phi(x_i, s_{-i}) = \alpha_k + \beta_{k,i} x_i$ varies non-trivially along the segment for at least one adjacent direction $k \ne i$, inducing transverse instability and expelling trajectories into adjacent faces.
 \end{enumerate}
-Therefore, all isolated stable local attractors are confined to the zero-dimensional vertices $\{-1, +1\}^N$.
+Therefore, all isolated stable local attractors are confined strictly to the zero-dimensional vertices $\{-1, +1\}^N$.
 \end{proof}
-
----
 
 \section{Theorem 5: Hessian Factorization and Incidence Rank Convexity}
 
@@ -286,8 +273,6 @@ Furthermore, on 3-XOR-SAT (which is in P via Gaussian elimination over $\mathbb{
 \label{fig:softplus}
 \end{figure}
 
----
-
 \section{Theorem 6: Thermodynamic Bifurcation, Lipschitz Bounds \& Underflow}
 
 \begin{theorem}[Lipschitz Scaling and Uniform Sub-box Underflow]
@@ -300,7 +285,7 @@ For the Softplus relaxation as $\beta \to \infty$:
     \end{equation}
     \item \textbf{Uniform Sub-box Underflow:} On the contracted sub-box $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ with $\rho < 1/3$ (e.g., $\rho = 1/6 \implies g_c(x) \leq -1/4$), the gradient vanishes exponentially:
     \begin{equation}
-    \|\nabla \Phi_{\rm soft}(x)\| \leq \frac{M}{2} e^{-\beta(1 - 3\rho)/2}.
+    \|\nabla \Phi_{\rm soft}(x)\|_\infty \leq \frac{M}{2} e^{-\beta(1 - 3\rho)/2} \quad\text{and}\quad \|\nabla \Phi_{\rm soft}(x)\|_2 \leq \frac{\sqrt{3} M}{2} e^{-\beta(1 - 3\rho)/2}.
     \end{equation}
     \item \textbf{Floating-Point Precision Thresholds:} At the origin $x = \mathbf{0}$ ($g_c = -1/2$), the sigmoidal factor enters IEEE 754 precision limits:
     \begin{itemize}
@@ -313,10 +298,8 @@ For the Softplus relaxation as $\beta \to \infty$:
 \begin{proof}
 Upper bound: Since $w_c(x) \le \beta/4$ and for each row of $V^T V$ the Gershgorin row sum satisfies $(V^T V)_{ii} + \sum_{j \ne i} |(V^T V)_{ij}| \le \frac{d_i}{4} + \frac{d_i}{2} \le \frac{3 d_{\max}}{4}$, we have $\|V^T V\|_2 \le \frac{3 d_{\max}}{4}$. Thus, $\|\nabla^2 \Phi_{\rm soft}\|_2 \le \frac{\beta}{4} \cdot \frac{3 d_{\max}}{4} = \frac{3 d_{\max}}{16} \beta$.
 Lower bound: at any active clause boundary $g_c(x_0) = 0$, $\sigma(0)(1-\sigma(0)) = 1/4$, giving $w_c(x_0) = \beta/4$. Taking unit vector $u = v_c / \|v_c\|_2$ with $\|v_c\|_2^2 = 3/4$, we obtain $u^T \nabla^2 \Phi(x_0) u \ge \frac{\beta}{4} \times \frac{3}{4} = \frac{3}{16} \beta$.
-Underflow thresholds follow directly from IEEE 754 exponents: $2^{-126}$ and $2^{-149}$ for FP32; $2^{-1022}$ and $2^{-1074}$ for FP64.
+Underflow thresholds follow directly from IEEE 754 machine exponents: $2^{-126}$ and $2^{-149}$ for FP32; $2^{-1022}$ and $2^{-1074}$ for FP64.
 \end{proof}
-
----
 
 \section{Dynamic Separation Principles}
 
@@ -339,20 +322,18 @@ For $\Phi_{\rm quad}$, the central box $\mathcal{U}_N$ has measure $\geq (1/3)^N
 For $\Phi_{\rm mult}$, the central origin is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$) and strictly unstable, expelling trajectories outward toward discrete boundary vertices where non-spurious basins retain non-vanishing measure ($R_{\rm dyn} > 0$).
 \end{proof}
 
----
-
 \section{Summary Synthesis}
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 2.0).}}
+\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 2.0 Final).}}
 \begin{tabular}{@{}llll@{}}
 \toprule
 \textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
 \midrule
 \textbf{Regularity} & $\mathcal{C}^1$ (piecewise quadratic) & $\mathcal{C}^\infty$ (polynomial) & $\mathcal{C}^\omega$ (real analytic) \\
-\textbf{Critical Measure $\mu(\mathcal{C}_0)$} & $> 0$ (Plateau $\geq (1/3)^N$) & $= 0$ (Okamoto via Fourier) & $= 0$ (Analytic Identity) \\
+\textbf{Critical Measure $\mu(\mathcal{C}_0)$} & $> 0$ (Plateau $\geq (1/3)^N$) & $= 0$ (Okamoto via Fourier) & $= 0$ (Strict Subharmonicity) \\
 \textbf{Laplacian $\Delta\Phi$} & $\equiv 0$ on $\mathcal{U}_N$ (Degenerate) & $\equiv 0$ on $\mathbb{R}^N$ (Harmonic) & $\text{Tr}(V^T W V) > 0$ \\
 \textbf{Attractors} & Open interior plateaus & Strictly Vertices $\{-1, 1\}^N$ & Unique unconstrained minimizer if $\text{rank}(V)=N$ \\
 \textbf{Hessian} & Null rank on $\mathcal{U}_N$ & Zero diagonal & $V^T W(x) V \succeq 0$ (Rank equals $\text{rank}(V)$) \\
@@ -374,4 +355,4 @@ We have developed a comprehensive mathematical foundation for continuous relaxat
 with open(tex_path, "w", encoding="utf-8") as f:
     f.write(tex_content)
 
-print(f"Versao 2.0 refinada do LaTeX gerada com sucesso em: {tex_path}")
+print(f"Versao final diamante do LaTeX gerada com sucesso em: {tex_path}")

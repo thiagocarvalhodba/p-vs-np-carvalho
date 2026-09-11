@@ -218,30 +218,42 @@ where finding $\Phi^*(I)$ may itself be computationally as hard as solving $I$.
 
 To move beyond empirical observation, we establish the **exact analytical foundations** governing the three continuous relaxations on the hypercube $\mathcal{X} = [-1, 1]^N$:
 
-#### Theorem 2 (Universal Spurious Flat Plateaus in Quadratic Hinge & The LP Integrality Gap):
-*For any non-trivial 3-CNF formula $F$ over $N$ variables, the spurious critical set $\mathcal{C}_0(\Phi_{\text{quad}}) = \{ x \in \text{int}(\mathcal{X}) \mid \nabla \Phi_{\text{quad}}(x) = \mathbf{0}, E_{\text{disc}}(\text{sign}(x)) > 0 \}$ contains the central fractional open hypercube:*
-$$\mathcal{U}_N = \left(-\frac{1}{3}, \, \frac{1}{3}\right)^N \implies \mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge \left(\frac{1}{3}\right)^N > 0$$
+#### Theorem 1 (Universal Spurious Flat Plateaus in Quadratic Hinge & Linear Relaxation Slack):
+*For any non-trivial 3-CNF formula $F$ over $N$ variables, the spurious critical set $\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}}) = \{ x \in \text{int}(\mathcal{X}) \mid \nabla \Phi_{\text{quad}}(x) = \mathbf{0}, E_{\text{disc}}(\text{sign}(x)) > 0 \}$ contains the central fractional open hypercube:*
+$$\mathcal{U}_N = \left(-\frac{1}{3}, \, \frac{1}{3}\right)^N \implies \mu(Z(\nabla \Phi_{\text{quad}})) \ge \left(\frac{2}{3}\right)^N, \quad \mu(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left(\frac{1}{3}\right)^N > 0$$
 *(and $\ge (2/3)^N > 0$ for unsatisfiable formulas).*  
 *Proof Sketch.* For any clause $c = (\ell_1 \lor \ell_2 \lor \ell_3)$, in $\mathcal{U}_N$ we have $\sum_{j \in c} \sigma_j^{(c)} x_j > -3(1/3) = -1$, which forces violation $g_c(x) = -\frac{1}{2}(1 + \sum \sigma_j x_j) < 0$ strictly for all $M$ clauses simultaneously. Hence $\Phi_{\text{quad}} \equiv 0$ and $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$ identically. This plateau is the **geometric manifestation of the interior fractional slack (0.5) of the canonical Linear Programming (LP) relaxation**: the relaxation satisfies 100% of clauses fractionally with slack $0.5$ at $x=\mathbf{0}$, blinding the gradient flow to discrete violations.
+
+#### Theorem 2 (Lebesgue Measure of Singular Sets and Walsh-Fourier Non-Triviality):
+*Under hypotheses (H1)-(H3'), the multilinear potential $\Phi_{\text{mult}}$ is non-constant ($\text{Var}(E_{\text{disc}}) > 0$ via Walsh-Fourier expansion), real-analytic, and the set of singular points has zero Lebesgue measure:*
+$$\mu(\mathcal{C}_0(\Phi_{\text{mult}})) = \mu(\{ x \in \mathcal{X} \mid \nabla \Phi_{\text{mult}}(x) = \mathbf{0} \}) = 0$$
+*For the Softplus relaxation, strict subharmonicity $\Delta \Phi_{\text{soft}}(x) = \frac{3}{4}\sum_{c=1}^M w_c(x) > 0$ unconditionally guarantees non-constancy and $\mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$.*
 
 #### Theorem 3 (Harmonicity and Total Absence of Interior Minima in Multilinear Relaxations):
 *For any non-trivial 3-CNF formula, the multilinear potential $\Phi_{\text{mult}}$ has identically vanishing Laplacian:*
 $$\Delta \Phi_{\text{mult}}(x) = \text{Tr}(\nabla^2 \Phi_{\text{mult}}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^N$$
 *By the **Strong Minimum Principle for Harmonic Functions** (Courant & Hilbert), $\Phi_{\text{mult}}$ admits NO local minimum (strict or degenerate) in the interior $\text{int}(\mathcal{X})$. Every isolated interior critical point is strictly a **saddle point** with Morse index $1 \le m \le N-1$.*
 
-#### Theorem 4 (Strict Vertex Confinement of Multilinear Attractors):
-*Under the projected gradient flow on the compact hypercube $[-1, 1]^N$, all local minima of $\Phi_{\text{mult}}$ are confined **exclusively to the $2^N$ discrete vertices $\{-1, +1\}^N$** (faces of dimension $d=0$). On any intermediate face of dimension $d \ge 2$, the intrinsic Laplacian vanishes ($\Delta_{\mathcal{F}} \Phi \equiv 0$), forbidding face-interior minima.*
+#### Theorem 4 (Dynamic Stratification and Strict Confinement of Attractors to Discrete Vertices):
+*Under the projected gradient flow on the compact hypercube $[-1, 1]^N$, all local attractors of $\Phi_{\text{mult}}$ are confined **exclusively to the $2^N$ discrete vertices $\{-1, +1\}^N$** (faces of dimension $d=0$). On any intermediate face of dimension $d \ge 2$, the intrinsic Laplacian vanishes ($\Delta_{\mathcal{F}} \Phi \equiv 0$), forbidding face-interior minima. On edges ($d=1$), non-neutral edges push flows to endpoints, while neutral edges ($b_i=0$) have vanishing curvature $\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$ and transverse instability under (H4), precluding interior asymptotic Lyapunov stability.*
 
 #### Theorem 5 (Global Semidefinite Convexity of Softplus & Absence of Hyperbolic Saddles):
 *The full Hessian of the unconstrained Softplus relaxation factors as $\nabla^2 \Phi_{\text{soft}}(x) = V^T W(x) V$ and is globally positive semidefinite:*
 $$\nabla^2 \Phi_{\text{soft}}(x) = \sum_{c=1}^M \beta \sigma(\beta g_c(x))(1 - \sigma(\beta g_c(x))) v_c v_c^T \succeq 0, \quad \forall x \in \mathbb{R}^N$$
 *Consequently, $\ker(\nabla^2 \Phi_{\text{soft}}) = \ker(V)$, and $\Phi_{\text{soft}}$ is strictly convex on $\mathbb{R}^N$ whenever $\text{rank}(V) = N$. It breaks the harmonic saddle condition of the multilinear form, eliminating hyperbolic saddles.*
 
-#### Theorem 6 (Dynamical Flow Accessibility and Spurious Attractor Mass):
-*Let $\mathcal{M}_{\text{spur}}(\Phi) \equiv \mu(\{ x_0 \in \mathcal{X} \mid \lim_{t \to \infty} X(t; x_0) \in \mathcal{S}_{\text{spur}}(\Phi) \})$.*
+#### Theorem 6 (Lipschitz Conditioning, Gershgorin Bounds, and Numerical Underflow):
+*The gradient of $\Phi_{\text{soft}}$ has Lipschitz constant bounded tightly by Gershgorin's theorem:*
+$$\frac{3}{16}\beta \le L_\beta \le \frac{3 d_{\max}}{16}\beta \implies L_\beta = \Theta(\beta)$$
+*In the zero-temperature limit $\beta \to \infty$, for any $x \in \mathcal{U}_N(\rho)$ ($\rho < 1/3$), the gradient undergoes exponential numerical underflow:*
+$$\|\nabla \Phi_{\text{soft}}(x)\|_\infty \le \frac{M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}, \quad \|\nabla \Phi_{\text{soft}}(x)\|_2 \le \frac{\sqrt{3}M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}$$
+*Underflow occurs at $\beta \approx 175$ (FP32) and $\beta \approx 1417$ (FP64), recovering the static flat plateau of the Hinge relaxation.*
+
+#### Theorem 7.1 / Proposition 7.2 (Dynamical Flow Separation and Limiting Reachability):
+*The four-level hierarchy ($\Phi \to \mathcal{C}_{\text{spur}} \to \mathcal{S}_{\text{spur}} \to \mathcal{B}_{\text{spur}} \to \mathcal{M}_{\text{spur}}$) establishes:*
 1. *For $\Phi_{\text{quad}}$, $\mathcal{M}_{\text{spur}} \ge (1/3)^N > 0$ plus drift flow into the LP polytope, causing $96\%$ stagnation ($R_{\text{dyn}} \approx 4\%$).*
 2. *For $\Phi_{\text{mult}}$, interior saddles have stable manifolds of measure zero, but the combinatorial basin of spurious boundary vertices dominates the hypercube ($\mathcal{M}_{\text{spur}} \approx 0.94$, $R_{\text{dyn}} \approx 6\%$).*
-3. *For $\Phi_{\text{soft}}$, global convexity and strictly positive curvature contract spurious basins, boosting reachability up to $69.3\%$. Yet on rigid parity systems (3-XOR-SAT), NP-hardness and symmetry preserve glassy collapse ($R_{\text{dyn}} \approx 0\%$), rigorously obeying the fundamental limits of computation.*
+3. *For $\Phi_{\text{soft}}$, global convexity and strictly positive curvature contract spurious basins, boosting reachability up to $69.3\%$. Yet on rigid parity systems (3-XOR-SAT), NP-hardness and symmetry preserve glassy collapse ($R_{\text{dyn}} \approx 0\%$), rigorously decoupling continuous differential geometry from Turing complexity.*
 
 
 ---

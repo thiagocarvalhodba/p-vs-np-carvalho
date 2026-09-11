@@ -25,8 +25,10 @@ Concordamos plenamente: o fato de a origem $x=\mathbf{0}$ (onde $y_i = 1/2$) sat
 - **Novo Título:** *Teorema da Caixa Fracionária Central e Folga Geométrica da Relaxação Linear*.
 - **Enunciado:**
   $$\mathcal{U}_N = (-1/3, 1/3)^N \subset \text{int}(\mathcal{X})$$
-  Para todo $x \in \mathcal{U}_N$, temos $g_c(x) < 0$ para todas as $M$ cláusulas simultaneamente, implicando $\Phi_{\text{quad}}(x) \equiv 0$ e $\nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}$. Logo, $\mu(\mathcal{C}_0(\Phi_{\text{quad}})) \ge (1/3)^N > 0$ (e $\ge (2/3)^N$ para fórmulas UNSAT).
-- **Interpretação Precisa:** O platô $\mathcal{U}_N$ é a manifestação contínua da folga interior da relaxação fracionária padrão de 3-SAT. Criamos uma seção dedicada discutindo a relação entre relaxações convexas e cotas de inaproximabilidade combinatória.
+  Para todo $x \in \mathcal{U}_N$, temos $g_c(x) < 0$ para todas as $M$ cláusulas simultaneamente, implicando $\Phi_{\text{quad}}(x) \equiv 0$ e $\nabla \Phi_{\text{quad}}(x) \equiv \mathbf{0}$. Logo:
+  $$\mu(Z(\nabla \Phi_{\text{quad}})) \ge \left(\frac{2}{3}\right)^N, \qquad \mu(\mathcal{C}_{\text{spur}}(\Phi_{\text{quad}})) \ge \left(\frac{1}{3}\right)^N > 0$$
+  *(e $\ge (2/3)^N$ para fórmulas UNSAT).*
+- **Interpretação Precisa:** O platô $\mathcal{U}_N$ é a manifestação contínua da folga interior estrita (0.5) da relaxação fracionária padrão (LP) de 3-SAT em $x=\mathbf{0}$ ($\sum z_j = 1.5$ vs $\ge 1.0$), reforçada pelo campo centrípeto $\mathbb{E}[-\nabla \Phi_{\text{quad}}] \approx -\kappa x$. Desacoplamos formalmente esse fenômeno interior do Teorema PCP de Inaproximabilidade 7/8 de Håstad (2001) para MAX-3-SAT combinatório.
 
 ---
 
@@ -38,6 +40,7 @@ O contraexemplo das 8 cláusulas completas sobre 3 variáveis ($x_1 \lor x_2 \lo
 ### Correção Adotada (H3'):
 Substituímos a hipótese H3 anterior pela condição estrutural de **Não-Degenerescência da Extensão Contínua**:
 - **Hipótese (H3'):** *A fórmula $F$ é não-balanceada isotropicamente, ou seja, o polinômio multilinear associado não é identicamente constante em $\mathbb{R}^N$ ($\Phi_{\text{mult}} \not\equiv \text{const}$).*
+- **Fundamentação via Análise de Walsh-Fourier no Hipercubo Booleano:** Pela identidade de Parseval, $\sum_{S \ne \emptyset} \widehat{\Phi}(S)^2 = \text{Var}(E_{\text{disc}})$. Para qualquer fórmula SAT satisfatível com $M \ge 1$, $\text{Var}(E_{\text{disc}}) > 0$, o que assegura que (H3') é atendida incondicionalmente para toda instância satisfatível.
 
 ### Demonstração Blindada:
 Como $\Phi_{\text{mult}}(x)$ é um polinômio multilinear real não-constante sob (H3'), existe pelo menos um índice $k \in \{1, \dots, N\}$ tal que a derivada parcial não é identicamente nula:
@@ -46,7 +49,10 @@ O conjunto crítico de gradiente nulo é subconjunto do conjunto de zeros dessa 
 $$\mathcal{C}_0(\Phi_{\text{mult}}) \subseteq Z(\nabla \Phi_{\text{mult}}) \subseteq Z(P_k) = \{ x \in \mathbb{R}^N \mid P_k(x) = 0 \}$$
 Pelo **Lema de Okamoto (1973)** (ou Geometria Algébrica Real clássica), o conjunto de zeros de um polinômio real não-nulo possui medida de Lebesgue zero em $\mathbb{R}^N$:
 $$\mu(Z(P_k)) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\text{mult}})) = 0$$
-Para a relaxação Softplus, como $\Phi_{\text{soft}} \in \mathcal{C}^\omega(\mathbb{R}^N)$ (analítica real em domínio conexo), pelo **Teorema da Identidade para Funções Analíticas Reais** (Krantz & Parks, 2002), se $\Phi_{\text{soft}} \not\equiv \text{const}$, o conjunto de zeros de qualquer $\partial_k \Phi_{\text{soft}} \not\equiv 0$ tem medida zero:
+
+Para a relaxação Softplus, a sub-harmonicidade estrita:
+$$\Delta \Phi_{\text{soft}}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0, \quad \forall x \in \mathbb{R}^N, \; \forall M \ge 1$$
+assegura incondicionalmente que $\Phi_{\text{soft}}$ é não-constante. Como $\Phi_{\text{soft}} \in \mathcal{C}^\omega(\mathbb{R}^N)$ (analítica real em domínio conexo), pelo **Teorema da Identidade para Funções Analíticas Reais** (Krantz & Parks, 2002), o conjunto de zeros de qualquer $\partial_k \Phi_{\text{soft}} \not\equiv 0$ tem medida zero:
 $$\mu(\mathcal{C}_0(\Phi_{\text{soft}})) = 0$$
 *Q.E.D.*
 
@@ -79,13 +85,11 @@ Uma aresta $E_i$ ao longo da coordenada livre $x_i \in [-1, 1]$ com vértices $v
 $$f(x_i) = a + b_i(s_{-i}) x_i, \quad b_i(s_{-i}) = \frac{\partial \Phi_{\text{mult}}}{\partial x_i}\Big|_{x_{-i} = s_{-i}}$$
 O coeficiente $b_i(s_{-i})$ é exatamente o impacto líquido na cláusula da alternância de $x_i$.
 - **Caso $b_i \ne 0$:** A função linear atinge seu mínimo estritamente em um dos extremos $x_i = \pm 1$ (os vértices da aresta).
-- **Caso $b_i = 0$ (Aresta Neutra):** A aresta é constante. Contudo, sob o fluxo de gradiente projetado:
-  $$\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{mult}}(x))$$
-  um ponto $x \in \text{int}(E_i)$ é um atrator estável se e somente se as forças transversais apontarem estritamente para fora do domínio, ou seja, se $-\text{sign}(s_k) \partial_k \Phi_{\text{mult}}(x) \ge 0$ para todos os $k \ne i$.
+- **Caso $b_i = 0$ (Aresta Neutra):** A aresta é constante. Contudo, a derivada pura tangencial anula-se identicamente ($\frac{\partial^2 \Phi}{\partial x_i^2} \equiv 0$), acarretando força restauradora nula ($\dot{x}_i \equiv 0$), o que impossibilita a estabilidade assintótica no sentido de Lyapunov para qualquer ponto interior da aresta. Adicionalmente, sob a hipótese de transversabilidade (H4), a força normal varia linearmente ao longo do segmento, induzindo instabilidade transversal que expele o fluxo para os extremos ou faces adjacentes.
 
 Definimos a **Condição de Não-Degenerescência de Aresta (H4)**:
 *Para todo vértice $s \in \{-1, +1\}^N$ e toda coordenada $i$, a restrição da energia discreta satisfaz $E_{\text{disc}}(s) \ne E_{\text{disc}}(s \oplus e_i)$ para pelo menos uma cláusula incidente, exceto se $x_i$ for variável desconectada.*
-Sob (H4), o conjunto de atratores locais isolados do fluxo de gradiente projetado coincide estritamente com os **vértices discretos $\{-1, +1\}^N$**.
+Sob (H4), o conjunto de atratores locais assintoticamente estáveis do fluxo de gradiente projetado coincide estritamente com os **vértices discretos $\{-1, +1\}^N$**.
 
 ---
 
@@ -123,6 +127,8 @@ Reconhecemos que na fronteira de $\mathcal{U}_N$, $g_c(x) \to 0^-$. Para garanti
 $$\mathcal{U}_N(\rho) \equiv (-\rho, \rho)^N$$
 Para todo $x \in \mathcal{U}_N(\rho)$, temos a cota uniforme estrita:
 $$g_c(x) \le -\frac{1}{2}(1 - 3\rho) < 0$$
+que acarreta decaimento exponencial simultâneo em ambas as normas:
+$$\|\nabla \Phi_{\text{soft}}(x)\|_\infty \le \frac{M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}, \qquad \|\nabla \Phi_{\text{soft}}(x)\|_2 \le \frac{\sqrt{3} M}{2} e^{-\frac{\beta}{2}(1 - 3\rho)}$$
 Para $\rho = 1/6$, $g_c(x) \le -1/4$. Na origem ($x=\mathbf{0}$), $g_c(\mathbf{0}) = -1/2$.
 
 ### 6.3. Escalas Numéricas de Precisão IEEE 754
