@@ -2,7 +2,7 @@
 
 **Destinatário:** Prezado Professor e Comitê de Avaliação  
 **Autor:** Thiago Carvalho  
-**Data:** 10 de Setembro de 2026  
+**Data:** 11 de Setembro de 2026  
 **Repositório GitHub:** [https://github.com/thiagocarvalhodba/p-vs-np-carvalho](https://github.com/thiagocarvalhodba/p-vs-np-carvalho)  
 **Assunto:** Acolhimento Integral do Parecer nº 11, Versão 3.0 dos Teoremas 1 a 6, Teoremas Construtivos 7A e 7B, e Formulação da Conjectura Central CLG-R  
 
