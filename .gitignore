@@ -24,6 +24,5 @@ Thumbs.db
 print*.png
 prin*.png
 rules*.png
-
-
-
+# Pytest cache
+.pytest_cache/

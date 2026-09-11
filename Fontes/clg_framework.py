@@ -356,3 +356,281 @@ def generate_random_3xorsat(n: int, alpha: float, seed: Optional[int] = None) ->
                         clauses.append((vars_chosen, [-s1, -s2, -s3]))
     return CNFInstance(n, 3, clauses, problem_family="3-XOR-SAT", language_class="P")
 
+
+# ==============================================================================
+# RIGOROUS CLG-R RELAXATION AND CONTINUOUS FLOW ENGINE
+# ==============================================================================
+
+class Relaxation:
+    """
+    Implements the three canonical continuous relaxations of 3-SAT on [-1, 1]^N:
+      1. Quadratic Hinge: Phi_quad(x) = sum_c max(0, g_c(x))^2
+      2. Multilinear Harmonics: Phi_mult(x) = sum_c prod_{j in c} (1 - sigma_{c,j} * x_j)/2
+      3. Softplus Convex: Phi_soft(x) = (1/beta) * sum_c ln(1 + exp(beta * g_c(x)))
+    
+    Includes closed-form gradients, Hessians, and pure projected Euler gradient flow.
+    """
+    def __init__(self, num_vars: int, clauses: List[Tuple[List[int], List[float]]]):
+        self.num_vars = num_vars
+        self.num_clauses = len(clauses)
+        self.clauses = clauses
+        
+        # Build dense polarity matrix S of shape (M, N)
+        self.S = np.zeros((self.num_clauses, self.num_vars), dtype=np.float64)
+        for c, (vs, ss) in enumerate(clauses):
+            for v, s in zip(vs, ss):
+                self.S[c, v] = float(s)
+                
+        # Incidence matrix V = -0.5 * S
+        self.V = -0.5 * self.S
+        
+        # Fast vectorized indexing for 3-SAT instances
+        self.is_3sat = (self.num_clauses > 0) and all(len(c[0]) == 3 for c in clauses)
+        if self.is_3sat:
+            self.V0 = np.array([c[0][0] for c in clauses], dtype=np.int64)
+            self.V1 = np.array([c[0][1] for c in clauses], dtype=np.int64)
+            self.V2 = np.array([c[0][2] for c in clauses], dtype=np.int64)
+            self.S0 = np.array([c[1][0] for c in clauses], dtype=np.float64)
+            self.S1 = np.array([c[1][1] for c in clauses], dtype=np.float64)
+            self.S2 = np.array([c[1][2] for c in clauses], dtype=np.float64)
+
+    def g(self, x: np.ndarray) -> np.ndarray:
+        """Affine clause violation function: g_c(x) = -0.5 * (1 + S_c . x)."""
+        return -0.5 * (1.0 + self.S @ x)
+
+    # 1. Quadratic Hinge
+    def phi_quad(self, x: np.ndarray) -> float:
+        gc = self.g(x)
+        return float(np.sum(np.maximum(0.0, gc) ** 2))
+
+    def grad_quad(self, x: np.ndarray) -> np.ndarray:
+        if self.is_3sat:
+            gc = -0.5 * (1.0 + x[self.V0] * self.S0 + x[self.V1] * self.S1 + x[self.V2] * self.S2)
+            act = gc > 0
+            out = np.zeros_like(x, dtype=np.float64)
+            if np.any(act):
+                np.add.at(out, self.V0[act], -gc[act] * self.S0[act])
+                np.add.at(out, self.V1[act], -gc[act] * self.S1[act])
+                np.add.at(out, self.V2[act], -gc[act] * self.S2[act])
+            return out
+        gc = self.g(x)
+        act = gc > 0
+        if not np.any(act):
+            return np.zeros_like(x)
+        return (2.0 * gc[act]) @ (-0.5 * self.S[act])
+
+    # 2. Multilinear Harmonics
+    def phi_mult(self, x: np.ndarray) -> float:
+        if self.is_3sat:
+            u0 = (1.0 - self.S0 * x[self.V0]) * 0.5
+            u1 = (1.0 - self.S1 * x[self.V1]) * 0.5
+            u2 = (1.0 - self.S2 * x[self.V2]) * 0.5
+            return float(np.sum(u0 * u1 * u2))
+        factors = np.where(self.S != 0, (1.0 - self.S * x) / 2.0, 1.0)
+        return float(np.sum(np.prod(factors, axis=1)))
+
+    def grad_mult(self, x: np.ndarray) -> np.ndarray:
+        if self.is_3sat:
+            u0 = (1.0 - self.S0 * x[self.V0]) * 0.5
+            u1 = (1.0 - self.S1 * x[self.V1]) * 0.5
+            u2 = (1.0 - self.S2 * x[self.V2]) * 0.5
+            out = np.zeros_like(x, dtype=np.float64)
+            np.add.at(out, self.V0, (-self.S0 * 0.5) * (u1 * u2))
+            np.add.at(out, self.V1, (-self.S1 * 0.5) * (u0 * u2))
+            np.add.at(out, self.V2, (-self.S2 * 0.5) * (u0 * u1))
+            return out
+        out = np.zeros_like(x, dtype=np.float64)
+        for c in range(self.num_clauses):
+            vs = np.nonzero(self.S[c])[0]
+            for i in vs:
+                others = [j for j in vs if j != i]
+                term = (-self.S[c, i] / 2.0) * np.prod([(1.0 - self.S[c, j] * x[j]) / 2.0 for j in others])
+                out[i] += term
+        return out
+
+    # 3. Softplus Convex
+    def phi_soft(self, x: np.ndarray, beta: float = 5.0) -> float:
+        gc = self.g(x)
+        return float(np.sum(np.logaddexp(0.0, beta * gc)) / beta)
+
+    def grad_soft(self, x: np.ndarray, beta: float = 5.0) -> np.ndarray:
+        gc = self.g(x)
+        s = 1.0 / (1.0 + np.exp(-np.clip(beta * gc, -500.0, 500.0)))
+        return s @ self.V
+
+    def hess_soft(self, x: np.ndarray, beta: float = 5.0) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        gc = self.g(x)
+        s = 1.0 / (1.0 + np.exp(-np.clip(beta * gc, -500.0, 500.0)))
+        W = beta * s * (1.0 - s)
+        H = self.V.T @ (W[:, None] * self.V)
+        return H, self.V, W
+
+    # Discrete Energy Evaluation
+    def discrete_energy(self, spin_state: np.ndarray) -> int:
+        """Vectorized discrete clause violation count for spin configuration s in {-1, +1}^N."""
+        s = np.asarray(spin_state, dtype=np.float64)
+        if self.is_3sat:
+            violated = (s[self.V0] * self.S0 < 0) & (s[self.V1] * self.S1 < 0) & (s[self.V2] * self.S2 < 0)
+            return int(np.sum(violated))
+        violated = np.all(self.S * s < 0, axis=1)
+        return int(np.sum(violated))
+
+    # Pure Projected Gradient Descent (No box penalty, no Adam)
+    def projected_gradient_descent(
+        self,
+        x0: np.ndarray,
+        representation: str = "mult",
+        eta: float = 0.01,
+        T: float = 40.0,
+        beta: float = 5.0,
+        tol: float = 1e-10
+    ) -> Tuple[np.ndarray, float, int]:
+        """
+        Pure projected Euler flow on [-1, 1]^N:
+          x_{t+1} = clip(x_t - eta * grad_Phi(x_t), -1.0, 1.0)
+        """
+        x = np.clip(x0.copy().astype(np.float64), -1.0, 1.0)
+        steps = int(round(T / eta))
+        
+        for step in range(steps):
+            if representation == "quad":
+                grad = self.grad_quad(x)
+            elif representation == "mult":
+                grad = self.grad_mult(x)
+            elif representation == "soft":
+                grad = self.grad_soft(x, beta=beta)
+            else:
+                raise ValueError(f"Unknown representation: {representation}")
+                
+            x_new = np.clip(x - eta * grad, -1.0, 1.0)
+            if np.linalg.norm(grad) < tol or np.max(np.abs(x_new - x)) < 1e-8:
+                x = x_new
+                break
+            x = x_new
+            
+        final_energy = self.phi_mult(x) if representation == "mult" else (
+            self.phi_quad(x) if representation == "quad" else self.phi_soft(x, beta=beta)
+        )
+        return x, final_energy, step + 1
+
+
+class ErcseyRavaszToroczkaiDynamics:
+    """
+    Deterministic Continuous-Time SAT Solver with Auxiliary Variables.
+    Reference: Ercsey-Ravasz & Toroczkai, Nature Physics 7, 966-970 (2011).
+    
+    Equations:
+      s_i in [-1, 1],  a_m >= 1
+      K_m(s) = prod_{j in m} (1 - S_{mj} * s_j) / 2
+      ds_i/dt = - sum_m 2 * a_m * K_m * (dK_m / ds_i)
+      da_m/dt = a_m * K_m
+    """
+    def __init__(self, num_vars: int, clauses: List[Tuple[List[int], List[float]]]):
+        self.num_vars = num_vars
+        self.num_clauses = len(clauses)
+        self.clauses = clauses
+        self.S = np.zeros((self.num_clauses, self.num_vars), dtype=np.float64)
+        for c, (vs, ss) in enumerate(clauses):
+            for v, s in zip(vs, ss):
+                self.S[c, v] = float(s)
+                
+        self.is_3sat = (self.num_clauses > 0) and all(len(c[0]) == 3 for c in clauses)
+        if self.is_3sat:
+            self.V0 = np.array([c[0][0] for c in clauses], dtype=np.int64)
+            self.V1 = np.array([c[0][1] for c in clauses], dtype=np.int64)
+            self.V2 = np.array([c[0][2] for c in clauses], dtype=np.int64)
+            self.S0 = np.array([c[1][0] for c in clauses], dtype=np.float64)
+            self.S1 = np.array([c[1][1] for c in clauses], dtype=np.float64)
+            self.S2 = np.array([c[1][2] for c in clauses], dtype=np.float64)
+
+    def solve(
+        self,
+        s0: Optional[np.ndarray] = None,
+        dt: float = 0.02,
+        max_time: float = 30.0,
+        tol: float = 1e-4
+    ) -> Tuple[np.ndarray, bool, float]:
+        n, m = self.num_vars, self.num_clauses
+        if s0 is None:
+            s = np.random.uniform(-0.9, 0.9, n)
+        else:
+            s = np.clip(s0.copy(), -1.0, 1.0)
+            
+        a = np.ones(m, dtype=np.float64)
+        t = 0.0
+        
+        while t < max_time:
+            if self.is_3sat:
+                u0 = (1.0 - self.S0 * s[self.V0]) * 0.5
+                u1 = (1.0 - self.S1 * s[self.V1]) * 0.5
+                u2 = (1.0 - self.S2 * s[self.V2]) * 0.5
+                K = u0 * u1 * u2
+                if np.all(K < tol):
+                    return s, True, t
+                w = -2.0 * a * K
+                ds = np.zeros(n, dtype=np.float64)
+                np.add.at(ds, self.V0, w * ((-self.S0 * 0.5) * (u1 * u2)))
+                np.add.at(ds, self.V1, w * ((-self.S1 * 0.5) * (u0 * u2)))
+                np.add.at(ds, self.V2, w * ((-self.S2 * 0.5) * (u0 * u1)))
+            else:
+                factors = np.where(self.S != 0, (1.0 - self.S * s) / 2.0, 1.0)
+                K = np.prod(factors, axis=1)
+                if np.all(K < tol):
+                    return s, True, t
+                ds = np.zeros(n, dtype=np.float64)
+                for c in range(m):
+                    if K[c] > 1e-12:
+                        vs = np.nonzero(self.S[c])[0]
+                        for i in vs:
+                            others = [j for j in vs if j != i]
+                            dK_dsi = (-self.S[c, i] / 2.0) * np.prod([(1.0 - self.S[c, j] * s[j]) / 2.0 for j in others])
+                            ds[i] += -2.0 * a[c] * K[c] * dK_dsi
+                        
+            s = np.clip(s + dt * ds, -1.0, 1.0)
+            a = np.clip(a + dt * (a * K), 1.0, 1e7)
+            t += dt
+            
+        return s, False, t
+
+
+# ==============================================================================
+# STATISTICAL ROBUSTNESS AND CONFIDENCE INTERVAL UTILITIES
+# ==============================================================================
+
+def wilson_score_interval(successes: int, total: int, confidence: float = 0.95) -> Tuple[float, float]:
+    """Computes exact Wilson score confidence interval for binomial proportion."""
+    if total == 0:
+        return 0.0, 1.0
+    z = 1.95996  # 95% confidence
+    p_hat = successes / total
+    denom = 1.0 + (z ** 2) / total
+    center = (p_hat + (z ** 2) / (2.0 * total)) / denom
+    margin = (z / denom) * math.sqrt((p_hat * (1.0 - p_hat) / total) + (z ** 2) / (4.0 * (total ** 2)))
+    lower = max(0.0, center - margin)
+    upper = min(1.0, center + margin)
+    return lower, upper
+
+
+def bootstrap_instance_ci(
+    values: List[float],
+    num_resamples: int = 2000,
+    confidence: float = 0.95,
+    seed: int = 42
+) -> Tuple[float, float, float]:
+    """Computes non-parametric bootstrap confidence interval across instances."""
+    arr = np.asarray(values, dtype=np.float64)
+    if len(arr) == 0:
+        return 0.0, 0.0, 0.0
+    rng = np.random.default_rng(seed)
+    n = len(arr)
+    mean_val = float(np.mean(arr))
+    boot_means = np.empty(num_resamples)
+    for b in range(num_resamples):
+        sample = rng.choice(arr, size=n, replace=True)
+        boot_means[b] = np.mean(sample)
+    alpha = (1.0 - confidence) / 2.0
+    lower = float(np.percentile(boot_means, 100.0 * alpha))
+    upper = float(np.percentile(boot_means, 100.0 * (1.0 - alpha)))
+    return mean_val, lower, upper
+
+

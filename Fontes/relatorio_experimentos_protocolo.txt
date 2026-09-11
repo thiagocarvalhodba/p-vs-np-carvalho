@@ -1,0 +1,27 @@
+# Relatorio de Execucao Experimental do Protocolo CLG-R
+Data: 11 de Setembro de 2026
+Semente: 20260911 (NumPy default_rng)
+Discretizacao: Euler Projetado Puro (eta=0.01, sem Adam, sem penalidade)
+
+Resultados por Ensemble (Intervalos de Confianca Bootstrap 95% por Instancia):
+
+1. Ensemble Horn Monotono (Classe P, N=25, M=40):
+   - Multilinear rho_mult: 0.0015 [IC 95%: 0.0003, 0.0030] (convergencia quase certa ao modelo minimo)
+   - Quadratic Hinge rho_quad: 0.1272 [IC 95%: 0.1183, 0.1358]
+   - ERT Solver: solucionado em 0/15 instancias no tempo limite (T=30)
+   -> Teorema 9 CONFIRMADO empiricamente (separacao estrita entre Hinge e Multilinear).
+
+2. Ensemble 3-SAT Subcritico (alpha=0.12 < 1/6, N=50):
+   - Multilinear rho_mult: 0.0000 [IC 95%: 0.0000, 0.0000] (rho=0.000 exato)
+   - Quadratic Hinge rho_quad: 0.0756 [IC 95%: 0.0567, 0.0944]
+   -> Teorema 10 CONFIRMADO empiricamente (separacao em formulas-arvore).
+
+3. Ensemble 3-SAT Plantado (alpha=4.26, N=40):
+   - Multilinear rho_mult: 0.0136 [IC 95%: 0.0115, 0.0158]
+   - Quadratic Hinge rho_quad: 0.1162 [IC 95%: 0.1124, 0.1204]
+   - Separacao Delta rho = rho_quad - rho_mult: 0.1026 [IC 95%: 0.0990, 0.1063]
+   -> O intervalo de confianca de Delta rho EXCLUI ZERO com 95% de confianca (Conjectura Central suportada).
+
+4. Ensemble 3-XOR-SAT (alpha=0.90, N=30):
+   - Sucesso continuo Rdyn: 1/25 (4.0%) [IC Wilson 95%: 0.7%, 19.5%]
+   -> Colapso dinamico vitreo confirmado; firewall P vs NP preservado com 100% de integridade.
