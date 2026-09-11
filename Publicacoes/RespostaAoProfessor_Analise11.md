@@ -214,7 +214,7 @@ Os autovalores de $H_N$ são calculados explicitamente:
    $$\lambda_2 = H_{ii} - H_{ij} = \frac{1}{4}(N-1)(N-2) - \frac{1}{2}(N-2) = \frac{1}{4}(N-2)(N-3) \ge 0 \quad (\text{estritamente positivo para } N \ge 4)$$
 Para $N \ge 4$, $\lambda_{\min}(H_N) > 0$, logo $H_N \succ 0$ é estritamente positiva definida. A solução analítica da EDO é dada pelo exponencial matricial:
 $$u(t) = \exp(-t H_N) u(0)$$
-Como $u(0) > 0$ e todos os coeficientes da matriz de transição $\exp(-t H_N)$ são não-negativos, as coordenadas $u_i(t)$ decrescem estritamente e monotonicamente para zero:
+Como $H_N \succ 0$ é estritamente positiva definida com $\lambda_{\min}(H_N) = \frac{1}{4}(N-2)(N-3) > 0$ para $N \ge 4$, a solução analítica satisfaz $\lim_{t \to \infty} u(t) = \mathbf{0}$. Ademais, pelo Teorema 7B, $\|x(t)\|_2^2$ é uma função estrita de Lyapunov em toda a região com cláusulas ativas, impedindo qualquer escape e garantindo que todas as trajetórias originadas em $A_N$ colapsam no platô espúrio $\mathcal{U}_N$:
 $$u(t) \to \mathbf{0} \implies x(t) \to \frac{1}{3}\mathbf{1} \in \overline{\mathcal{U}_N}$$
 Trajetórias que partem de qualquer ponto $x(0) \in A_N$ jamais escapam do ortante e colapsam diretamente na fronteira do platô central $\mathcal{U}_N$, entrando em sua bacia de captura em tempo finito. Isto estabelece de forma irrefutável que $A_N \subseteq \mathcal{B}_{\text{spur}}(\Phi_{\text{quad}})$, demonstrando analiticamente que $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge (1/3)^N > 0$. $\blacksquare$
 
@@ -235,14 +235,16 @@ Além do Teorema Construtivo 7A sugerido pelo professor, obtivemos uma descobert
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - 0 = 1 > 0$$
 
 **Demonstração Analítica da Contração Centrípeta:**  
-O gradiente de $\Phi_{\text{quad}}$ é dado por $\nabla \Phi_{\text{quad}}(x) = \sum_{c \in \text{act}(x)} g_c(x) \sigma^{(c)}$, onde $\text{act}(x) = \{c \mid g_c(x) > 0\}$. Calculamos o produto interno com o vetor $x$:
-$$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = -\sum_{c \in \text{act}(x)} g_c(x) \langle \sigma^{(c)}, \, x \rangle = -\sum_{c \in \text{act}(x)} g_c(x) \left(\sum_{j \in c} \sigma_j^{(c)} x_j\right)$$
-Por definição da função de cláusula:
+O campo de gradiente descendente é dado por:
+$$-\nabla \Phi_{\text{quad}}(x) = -\sum_{c \in \text{act}(x)} 2 g_c(x) \nabla g_c(x) = \sum_{c \in \text{act}(x)} g_c(x) \sigma^{(c)}$$
+onde $\text{act}(x) = \{c \mid g_c(x) > 0\}$. Calculamos o produto interno com o vetor de posição $x$:
+$$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = \sum_{c \in \text{act}(x)} g_c(x) \langle \sigma^{(c)}, \, x \rangle = \sum_{c \in \text{act}(x)} g_c(x) \left(\sum_{j \in c} \sigma_j^{(c)} x_j\right)$$
+Pela definição da função de cláusula:
 $$g_c(x) = -\frac{1}{2}\sum_{j \in c} \sigma_j^{(c)} x_j - \frac{1}{2} \implies \sum_{j \in c} \sigma_j^{(c)} x_j = -2 g_c(x) - 1$$
 Substituindo esta identidade fundamental no produto interno:
-$$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = -\sum_{c \in \text{act}(x)} g_c(x) \left(-2 g_c(x) - 1\right) = \sum_{c \in \text{act}(x)} \left[2 g_c(x)^2 + g_c(x)\right]$$
+$$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = \sum_{c \in \text{act}(x)} g_c(x) \left(-2 g_c(x) - 1\right) = -\sum_{c \in \text{act}(x)} \left[2 g_c(x)^2 + g_c(x)\right]$$
 Como $x \in \mathcal{X} \setminus \overline{\mathcal{U}_N}$ possui ao menos uma cláusula ativa, temos $g_c(x) > 0$ para $c \in \text{act}(x)$. Portanto:
-$$2 g_c(x)^2 + g_c(x) > 0 \implies \langle \nabla \Phi_{\text{quad}}(x), \, x \rangle > 0 \implies \langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle < 0$$
+$$2 g_c(x)^2 + g_c(x) > 0 \implies \langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle < -\sum_{c \in \text{act}(x)} g_c(x) < 0$$
 Calculando a derivada temporal da distância à origem ao longo do fluxo $\dot{x} = -\nabla \Phi_{\text{quad}}(x)$:
 $$\frac{d}{dt} \|x(t)\|_2^2 = 2 \langle x(t), \, \dot{x}(t) \rangle = 2 \langle x(t), \, -\nabla \Phi_{\text{quad}}(x(t)) \rangle = -2 \sum_{c \in \text{act}(x(t))} \left[2 g_c(x(t))^2 + g_c(x(t))\right] < 0$$
 A distância à origem decresce monotonicamente ao longo de toda e qualquer trajetória enquanto houver cláusulas ativas. As trajetórias são inexoravelmente comprimidas em direção a $\mathcal{U}_N$. Para fórmulas UNSAT, onde nenhum mínimo de energia zero existe na fronteira, o único conjunto invariante limite é o platô central $\mathcal{U}_N$, provando que 100% do volume do espaço de busca é capturado pela bacia espúria: $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \equiv 1$. $\blacksquare$

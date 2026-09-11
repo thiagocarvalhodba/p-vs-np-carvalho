@@ -209,7 +209,10 @@ A passagem rigorosa da geometria local para a massa da bacia de atração $\math
 1. Cláusula ativa $g_c(x) > 0 \iff \sigma^{(c)} \cdot x < -1$.
 2. Gradiente: $-\nabla \Phi_{\text{quad}}(x) = \sum_{c \in \text{act}} g_c(x) \sigma^{(c)}$.
 3. Produto escalar: $\langle -\nabla \Phi, x \rangle = \sum_{c \in \text{act}} g_c(x) (\sigma^{(c)} \cdot x) < -\sum_{c \in \text{act}} g_c(x) < 0$.
-4. Não existem equilíbrios com $\Phi_{\text{quad}} > 0$ nem no interior nem na fronteira. Pelo Princípio de LaSalle, todas as trajetórias convergem para o platô de zero-energia $Z = \{x \mid \Phi_{\text{quad}}(x) = 0\}$.
+4. **Inexistência de Equilíbrios com $\Phi_{\text{quad}} > 0$ (Interior e Fronteira):**
+   - No interior: $-\nabla \Phi_{\text{quad}}(x) = \mathbf{0} \implies \langle -\nabla \Phi, x \rangle = 0$, contradizendo a contração estrita $\langle -\nabla \Phi, x \rangle < 0$.
+   - Na fronteira $\partial \mathcal{X}$: um ponto $x^*$ é equilíbrio projetado se e somente se $-\nabla \Phi_{\text{quad}}(x^*) \in N_{\mathcal{X}}(x^*)$, onde $N_{\mathcal{X}}(x^*)$ é o cone normal exterior do hipercubo $\mathcal{X} = [-1, 1]^N$. Como para qualquer vetor $\nu \in N_{\mathcal{X}}(x^*)$ vale $\nu_i x^*_i \ge 0$, temos $\langle \nu, x^* \rangle \ge 0$. Consequentemente, a condição de equilíbrio projetado exigiria $\langle -\nabla \Phi_{\text{quad}}(x^*), x^* \rangle \ge 0$, o que contradiz frontalmente a cota centrípeta estrita $\langle -\nabla \Phi_{\text{quad}}(x^*), x^* \rangle < 0$.
+   - Conclusão: Não existem pontos de equilíbrio estacionário KKT nem equilíbrios projetados no conjunto $\{\Phi_{\text{quad}} > 0\}$. Pelo Princípio de Invariância de LaSalle, todas as trajetórias convergem para o platô de zero-energia $Z = \{x \in \mathcal{X} \mid \Phi_{\text{quad}}(x) = 0\}$.
 5. Para fórmulas UNSAT, todo o platô $Z$ viola cláusulas booleanas ($E_{\text{disc}} \ge 1$). Logo, $\mathcal{B}_{\text{spur}} = [-1, 1]^N \implies \mathcal{M}_{\text{spur}} \equiv 1$ (100%). $\blacksquare$
 
 ---
