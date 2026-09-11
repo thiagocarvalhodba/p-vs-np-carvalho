@@ -163,7 +163,7 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 > **Teorema 6 (Cotas de Lipschitz e Escalas de Underflow do Softplus).**  
 > *Para a relaxação Softplus, no regime de alta precisão inversa $\beta \to \infty$:*
 > 1. *A constante de Lipschitz satisfaz a escala exata $L_\beta = \Theta(\beta)$, admitindo as cotas:*
->    $$\frac{3}{16} \beta \le L_\beta \le \frac{3 d_{\max}}{4} \beta$$
+>    $$\frac{3}{16} \beta \le L_\beta \le \frac{3 d_{\max}}{16} \beta$$
 > 2. *Na subcaixa de contração central $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ com $\rho < 1/3$ (por exemplo, para $\rho = 1/6$, $g_c(x) \le -1/4$), o gradiente sofre subfluxo numérico exponencial:*
 >    $$\|\nabla \Phi_{\text{soft}}(x)\| \le \frac{M}{2} e^{-\beta (1 - 3\rho)/2}$$
 > 3. *Para $x = \mathbf{0}$ ($g_c = -1/2$), o fator sigmoidal atinge regimes de subnormal/flush-to-zero:*
@@ -171,8 +171,8 @@ Se $\text{rank}(V) = N$, $\ker(V) = \{\mathbf{0}\}$, logo $z^T \nabla^2 \Phi z >
 >    - *Em FP64: normal para $\beta \approx 1417$, subnormal/zero absoluto para $\beta \approx 1489$.*
 
 ### Demonstração:
-- **Cota Superior:** Como $w_c(x) \le \beta/16$, pelo Teorema de Gershgorin, $\|\nabla^2 \Phi_{\text{soft}}\|_2 \le \frac{\beta}{4} \|V^T V\|_2 \le \frac{3 d_{\max}}{4} \beta$.
-- **Cota Inferior:** Seja $x_0$ um ponto em um hiperplano ativo $g_c(x_0) = 0$. Então $\sigma(0)(1-\sigma(0)) = 1/4 \implies w_c(x_0) = \beta/16$. Tomando a direção unitária $u = v_c / \|v_c\|_2$, $u^T \nabla^2 \Phi(x_0) u \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{4} \times \frac{3}{4} = \frac{3}{16} \beta$. Logo, $L_\beta = \Theta(\beta)$. $\blacksquare$
+- **Cota Superior:** Como $w_c(x) \le \beta/4$ e para cada linha da matriz $V^T V$ a soma de Gershgorin satisfaz $(V^T V)_{ii} + \sum_{j \ne i} |(V^T V)_{ij}| \le \frac{d_i}{4} + \frac{d_i}{2} \le \frac{3 d_{\max}}{4}$, temos pelo Teorema dos Círculos de Gershgorin que $\|V^T V\|_2 \le \frac{3 d_{\max}}{4}$. Logo, $\|\nabla^2 \Phi_{\text{soft}}(x)\|_2 \le \max_c w_c(x) \cdot \|V^T V\|_2 \le \frac{\beta}{4} \cdot \frac{3 d_{\max}}{4} = \frac{3 d_{\max}}{16} \beta$.
+- **Cota Inferior:** Seja $x_0$ um ponto em um hiperplano ativo $g_c(x_0) = 0$. Então $\sigma(0)(1-\sigma(0)) = 1/4 \implies w_c(x_0) = \beta/4$. Tomando a direção unitária $u = v_c / \|v_c\|_2$ (onde $\|v_c\|_2^2 = 3 \times (1/2)^2 = 3/4$), temos $u^T \nabla^2 \Phi(x_0) u \ge w_c(x_0) \|v_c\|_2^2 = \frac{\beta}{4} \times \frac{3}{4} = \frac{3}{16} \beta$. Portanto, $\frac{3}{16}\beta \le L_\beta \le \frac{3 d_{\max}}{16}\beta$, demonstrando formalmente $L_\beta = \Theta(\beta)$. $\blacksquare$
 
 ---
 

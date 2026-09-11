@@ -240,7 +240,7 @@ The multilinear product landscape replaces discrete Hamming barriers with contin
 To rigorously understand why SATMetaGNN succeeds where standard gradient descent on quadratic relaxations fails, we ground our empirical findings in the **Computational Landscape Geometry Representation Theorems (CLG-R)** [Carvalho, 2026]:
 
 1. **The Central Fractional Plateau of Hinge Relaxations ($\mu(\mathcal{C}_0) > 0$):**  
-   Standard quadratic hinge relaxations $\Phi_{\text{quad}}(x) = \sum_c [\max(0, g_c(x))]^2$ suffer from an artificial, open interior plateau centered at the origin: $\mathcal{U}_n = (-1/3, 1/3)^n$, where $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$ while $E_{\text{disc}}(\text{sign}(x)) \ge 1$. This is the exact continuous dynamical expression of **Håstad's 7/8 Linear Programming Integrality Gap** [6]: at $x=\mathbf{0}$, fractional assignments satisfy every clause with slack $0.5$, completely halting first-order methods in invalid states.
+   Standard quadratic hinge relaxations $\Phi_{\text{quad}}(x) = \sum_c [\max(0, g_c(x))]^2$ suffer from an artificial, open interior plateau centered at the origin: $\mathcal{U}_n = (-1/3, 1/3)^n$, where $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$ while $E_{\text{disc}}(\text{sign}(x)) \ge 1$. This is the continuous geometric manifestation of the interior fractional slack (0.5) of the canonical Linear Programming (LP) relaxation: at $x=\mathbf{0}$, fractional assignments satisfy every clause with slack $0.5$, completely halting first-order methods in invalid states.
 2. **Harmonicity and Total Absence of Interior Minima in Multilinear Potentials:**  
    For the multilinear relaxation $\mathcal{L}_{\text{SAT}}$, the Laplacian vanishes identically everywhere:
    $$\Delta \mathcal{L}_{\text{SAT}}(x) = \text{Tr}(\nabla^2 \mathcal{L}_{\text{SAT}}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^n$$
@@ -272,7 +272,7 @@ SATMetaGNN bridges this gap by unifying continuous probability relaxations with 
 In this paper, we presented a continuous, fully differentiable formulation of the foundational Cook-Levin NP-complete core:
 1. **Differentiable Clause Potentials**: We formulated the multilinear continuous penalty $\mathcal{L}_{\text{SAT}}(v)$ and derived its analytical gradients.
 2. **Meta-Governed Optimization**: SATMetaGNN demonstrated that bipartite factor graph representations can accurately predict instance-specific Langevin annealing parameters, achieving a **$60\%$ win rate** over static solvers.
-3. **High Clause Satisfaction**: Across all scales at the critical threshold $\alpha_c \approx 4.267$, the framework achieved **$98.44\% - 99.25\%$ clause satisfaction**, comfortably exceeding Håstad's randomized $87.5\%$ threshold.
+3. **High Clause Satisfaction**: Across all scales at the critical threshold $\alpha_c \approx 4.267$, the framework achieved **$98.44\% - 99.25\%$ clause satisfaction**, comfortably exceeding the uniform random assignment baseline of $7/8 = 87.5\%$.
 
 Future research will extend this differentiable continuous formulation to weighted Max-SAT and quantified Boolean formulas (QBF), advancing toward a universal continuous calculus for computational logic.
 
