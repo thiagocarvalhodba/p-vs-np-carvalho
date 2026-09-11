@@ -50,9 +50,9 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Título:** *Computational Landscape Geometry (CLG): Mathematical Foundations and Negative Controls for the P versus NP Boundary*
    - **Contribuições:** Fundamentação da 5-tupla $\mathcal{L}(I)$, prova analítica do Teorema da Curvatura Constante em 2-SAT (Classe P, $\nabla_x \mathcal{H} \equiv 0$) versus Proliferação Dinâmica de Curvatura Anarmônica em 3-SAT (Classe NP, $\nabla_x \mathcal{H} \neq 0$), e validação estatística da Hipótese de Separabilidade com gap de 5 ordens de magnitude ($p = 1.53 \times 10^{-6}$).
 
-6. 📑 **Dossiê de Auditoria Científica Independente para Claude Opus:**
-   - **Arquivo:** [DOSSIE_AUDITORIA_CLAUDE_OPUS.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md)
-   - **Conteúdo:** Prompt de Peer Review sênior (JACM / Annals of Mathematics) e dados dos benchmarks CLG-01 e CLG-02 formatados para auditoria externa cética.
+6. 📑 **Protocolo de Auditoria Científica Independente & Testes Adversariais:**
+   - **Arquivo:** [PROMPT_CLAUDE_CODE_AUDITORIA.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/PROMPT_CLAUDE_CODE_AUDITORIA.md)
+   - **Conteúdo:** Protocolo rigoroso de auditoria por pares (critérios Annals/STOC) e confrontação do framework com modelos de vidros de spin (Franz-Parisi, TAP, Folena-Zamponi e OGP).
 
 7. 📜 **Carta de Resposta Técnica e Reposicionamento Científico (Ao Professor e Banca):**
    - **Arquivo:** [RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)

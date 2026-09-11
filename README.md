@@ -77,9 +77,9 @@ Consulte o catálogo detalhado em **[`Publicacoes/README_PUBLICACOES.md`](Public
 5. 🌐 **Monografia Teórica - Geometria da Paisagem Computacional (Projeto CLG-01):**  
    👉 **[`Publicacoes/CLG_FOUNDATIONS.md`](Publicacoes/CLG_FOUNDATIONS.md)**  
    *Fundamentação da 5-tupla CLG, prova da Invariância de Curvatura em 2-SAT (Classe P) vs Anarmonicidade em 3-SAT (Classe NP), e validação empírica da Hipótese de Separabilidade ($p = 1.53 \times 10^{-6}$).*
-6. 🔬 **Dossiê de Auditoria Externa e Teste de Controle de Grau (Projeto CLG-02):**  
-   👉 **[`Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md`](Publicacoes/DOSSIE_AUDITORIA_CLAUDE_OPUS.md)**  
-   *Protocolo completo de auditoria por pares (Claude Opus / Gemini Pro) e desacoplamento formal do grau algébrico ($\deg=3$ fixo: Horn-3-SAT em P vs Random-3-SAT em NP-C) via bacias de atração e densidade de armadilhas metaestáveis.*
+6. 🔬 **Auditoria Externa e Protocolo de Testes Adversariais (Projeto CLG-02 & Auditoria Independente):**  
+   👉 **[`Publicacoes/PROMPT_CLAUDE_CODE_AUDITORIA.md`](Publicacoes/PROMPT_CLAUDE_CODE_AUDITORIA.md)**  
+   *Protocolo estruturado de auditoria matemática (Annals/STOC criteria), testes formais de invariância de representação e desacoplamento do grau algébrico ($\deg=3$ fixo: Horn-3-SAT em P vs Random-3-SAT em NP-C).*
 7. 📜 **Carta de Resposta Técnica e Reposicionamento Científico (Projeto CLG-03):**  
    👉 **[`Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md`](Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)**  
    *Resolução matemática definitiva dos achados dos pareceres e benchmark canônico de 3-XOR-SAT: prova empírica de que a otimização contínua entra em colapso vítreo ($0.0\%$ reachability) em problemas solvíveis em $P$ via Eliminação Gaussiana em $\text{GF}(2)$, refundando a pesquisa sobre os limites de GNNs e a Overlap Gap Property (OGP).*
