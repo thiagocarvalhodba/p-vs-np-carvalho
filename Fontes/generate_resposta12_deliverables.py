@@ -9,6 +9,7 @@ Gera:
 """
 import os
 import sys
+import re
 import zipfile
 import docx
 from docx.shared import Inches, Pt, RGBColor
@@ -185,7 +186,7 @@ Acolhemos integralmente todos os seus apontamentos:
 
 5. Nomenclatura e Estatística: Ajustamos o Teorema 4A' para "mínimo local relativo à face" e expurgamos a frase "teorema confirmado empiricamente", adotando "resultados empíricos consistentes com a previsão teórica".
 
-Todos os manuscritos LaTeX, estudos analíticos e o pacote arXiv foram atualizados e a suíte com os 26 testes de teoremas passou com 100% de sucesso.
+Todos os manuscritos LaTeX, estudos analíticos e o pacote arXiv foram atualizados e a suíte com os 33 testes de teoremas passou com 100% de sucesso.
 
 Seguem anexas a Resposta Técnica completa e a versão revisada dos documentos.
 
@@ -231,60 +232,232 @@ def build_docx_deliverables():
     p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
     doc_resp.add_paragraph()
 
+    def clean_math_for_docx(txt):
+        txt = txt.replace('$$', '')
+        txt = txt.replace('\\\\', '\\')
+        replacements = [
+            (r'\\mathbb\{E\}_F', '𝔼_F'),
+            (r'\\mathbb\{E\}', '𝔼'),
+            (r'\\mathbb\{P\}_c', 'ℙ_c'),
+            (r'\\mathbb\{P\}', 'ℙ'),
+            (r'\\mathbf\{([^}]+)\}', r'\1'),
+            (r'\\mathbb\{R\}\^N', 'ℝ^N'),
+            (r'\\mathbb\{R\}', 'ℝ'),
+            (r'\\mathbb\{F\}_2', '𝔽₂'),
+            (r'\\mu_\{?\\text\{norm\}\}?', 'μ_norm'),
+            (r'\\mu', 'μ'),
+            (r'\\int_\{?\[-1,\s*1\]\^N\}?', '∫_{[-1, 1]^N}'),
+            (r'\\int', '∫'),
+            (r'\\ge\b|\\geq\b', '≥'),
+            (r'\\le\b|\\leq\b', '≤'),
+            (r'\\ne\b|\\neq\b', '≠'),
+            (r'\\approx', '≈'),
+            (r'\\sim', '~'),
+            (r'\\to', '→'),
+            (r'\\implies', '⟹'),
+            (r'\\iff', '⟺'),
+            (r'\\alpha_d', 'α_d'),
+            (r'\\alpha_c', 'α_c'),
+            (r'\\alpha_s', 'α_s'),
+            (r'\\alpha', 'α'),
+            (r'\\beta', 'β'),
+            (r'\\gamma', 'γ'),
+            (r'\\eta', 'η'),
+            (r'\\lambda_\{?\\text\{min\}\}?', 'λ_min'),
+            (r'\\lambda', 'λ'),
+            (r'\\rho_\{?\\text\{mult\}\}?', 'ρ_mult'),
+            (r'\\rho_\{?\\text\{quad\}\}?', 'ρ_quad'),
+            (r'\\rho', 'ρ'),
+            (r'\\sigma_j\^\{\(c\)\}?', 'σ_j^(c)'),
+            (r'\\sigma\^\{\(c\)\}?', 'σ^(c)'),
+            (r'\\sigma', 'σ'),
+            (r'\\nu_i', 'ν_i'),
+            (r'\\nu', 'ν'),
+            (r'\\Delta', 'Δ'),
+            (r'\\nabla\^2', '∇²'),
+            (r'\\nabla', '∇'),
+            (r'\\Phi_\{?\\text\{mult\}\}?', 'Φ_mult'),
+            (r'\\Phi_\{?\\text\{quad\}\}?', 'Φ_quad'),
+            (r'\\Phi_\{?\\text\{soft\}\}?', 'Φ_soft'),
+            (r'\\Phi', 'Φ'),
+            (r'\\mathcal\{M\}_\{?\\text\{spur\}\}?', 'M_spur'),
+            (r'\\mathcal\{B\}_\{?\\text\{spur\}\}?', 'B_spur'),
+            (r'\\mathcal\{U\}_N', 'U_N'),
+            (r'\\mathcal\{X\}', 'X'),
+            (r'\\mathcal\{F\}', 'F'),
+            (r'\\mathcal\{H\}', 'H'),
+            (r'\\partial\^2 P_c / \\partial x_i \\partial x_j', '∂²P_c / ∂x_i ∂x_j'),
+            (r'\\partial\^2 P_c / \\partial x_j \\partial x_k', '∂²P_c / ∂x_j ∂x_k'),
+            (r'\\partial\^2', '∂²'),
+            (r'\\partial', '∂'),
+            (r'\\lfloor', '⌊'),
+            (r'\\rfloor', '⌋'),
+            (r'\\left\(', '('), (r'\\right\)', ')'),
+            (r'\\left\[', '['), (r'\\right\]', ']'),
+            (r'\\left\\\{', '{'), (r'\\right\\\}', '}'),
+            (r'\\langle', '⟨'), (r'\\rangle', '⟩'),
+            (r'\\frac\{dx\}\{2\^N\}', 'dx/2^N'),
+            (r'\\frac\{1\}\{8\}', '1/8'),
+            (r'\\frac\{1\}\{4\}', '1/4'),
+            (r'\\frac\{5\}\{6\}', '5/6'),
+            (r'\\frac\{1\}\{3\}', '1/3'),
+            (r'\\frac\{1 - x_i\}\{2\}', '(1 - x_i)/2'),
+            (r'\\frac\{1 \+ x_j\}\{2\}', '(1 + x_j)/2'),
+            (r'\\frac\{1 \+ x_k\}\{2\}', '(1 + x_k)/2'),
+            (r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1/\2)'),
+            (r'\\text\{Uniform\}', 'Uniform'),
+            (r'\\text\{act\}', 'act'),
+            (r'\\text\{relint\}', 'relint'),
+            (r'\\text\{sign\}', 'sign'),
+            (r'\\text\{disc\}', 'disc'),
+            (r'\\text\{mult\}', 'mult'),
+            (r'\\text\{quad\}', 'quad'),
+            (r'\\text\{soft\}', 'soft'),
+            (r'\\text\{spur\}', 'spur'),
+            (r'\\text\{folha\}', 'folha'),
+            (r'\\text\{norm\}', 'norm'),
+            (r'\\text\{int\}', 'int'),
+            (r'\\text\{rank\}', 'rank'),
+            (r'\\text\{diag\}', 'diag'),
+            (r'\\text\{Tr\}', 'Tr'),
+            (r'\\text\{Var\}', 'Var'),
+            (r'\\sum_\{c \\in \\text\{act\}\}', '∑_{c ∈ act}'),
+            (r'\\sum_\{act\}', '∑_act'),
+            (r'\\sum', '∑'),
+            (r'\\prod', '∏'),
+            (r'\\in', '∈'),
+            (r'\\notin', '∉'),
+            (r'\\forall', '∀'),
+            (r'\\exists', '∃'),
+            (r'\\dots', '...'),
+            (r'\\blacksquare', '■'),
+            (r'\\cdot', '·'),
+            (r'\\times', '×'),
+            (r'\\neg', '¬'),
+            (r'\\lor', '∨'),
+            (r'\\land', '∧'),
+            (r'\\,', ' '),
+            (r'\\;', ' '),
+            (r'\$([^$]+)\$', r'\1'),
+        ]
+        res = txt
+        for p, r in replacements:
+            res = re.sub(p, r, res)
+        # Limpar excesso de barras ou caracteres de escape LaTeX residuais
+        res = re.sub(r'\\([a-zA-Z]+)', r'\1', res)
+        res = res.replace('\\', '')
+        res = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', res)
+        return res.strip()
+
+    def add_formatted_runs(p, text, font_name="Calibri", font_size=Pt(11), default_bold=False, default_italic=False, default_color=None):
+        parts = re.split(r'(\*\*.*?\*\*)', text)
+        for part in parts:
+            if not part:
+                continue
+            if part.startswith('**') and part.endswith('**') and len(part) >= 4:
+                run_text = part[2:-2]
+                r = p.add_run(run_text)
+                r.bold = True
+            else:
+                r = p.add_run(part)
+                r.bold = default_bold
+            r.font.name = font_name
+            r.font.size = font_size
+            r.italic = default_italic
+            if default_color:
+                r.font.color.rgb = default_color
+
     # Corpo
     lines = RESPOSTA_12_MD.split("\n")
-    for line in lines:
+    i = 0
+    while i < len(lines):
+        line = lines[i]
         if line.startswith("# Resposta Técnica"):
+            i += 1
             continue
         elif line.startswith("## "):
             h = doc_resp.add_paragraph()
-            r = h.add_run(line.replace("## ", "").strip())
-            r.font.name = "Calibri"
-            r.font.size = Pt(15)
-            r.font.bold = True
-            r.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+            add_formatted_runs(h, clean_math_for_docx(line.replace("## ", "").strip()), font_size=Pt(15), default_bold=True, default_color=RGBColor(0x1F, 0x4E, 0x78))
+            i += 1
         elif line.startswith("### "):
             h = doc_resp.add_paragraph()
-            r = h.add_run(line.replace("### ", "").strip())
-            r.font.name = "Calibri"
-            r.font.size = Pt(12.5)
-            r.font.bold = True
-            r.font.color.rgb = RGBColor(0x2F, 0x55, 0x97)
+            add_formatted_runs(h, clean_math_for_docx(line.replace("### ", "").strip()), font_size=Pt(12.5), default_bold=True, default_color=RGBColor(0x2F, 0x55, 0x97))
+            i += 1
         elif line.startswith("> "):
             p = doc_resp.add_paragraph()
             p.paragraph_format.left_indent = Inches(0.4)
-            r = p.add_run(line.replace("> ", "").strip())
-            r.font.name = "Calibri"
-            r.font.size = Pt(10.5)
-            r.font.italic = True
+            add_formatted_runs(p, clean_math_for_docx(line.replace("> ", "").strip()), font_size=Pt(10.5), default_italic=True)
+            i += 1
+        elif line.strip().startswith("$$") and line.strip().endswith("$$") and len(line.strip()) > 4:
+            # Equação destacada / Display Math
+            p = doc_resp.add_paragraph()
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            clean_eq = clean_math_for_docx(line.strip())
+            r = p.add_run(clean_eq)
+            r.font.name = "Cambria Math"
+            r.font.size = Pt(11.5)
+            r.font.bold = True
+            r.font.color.rgb = RGBColor(0x1F, 0x38, 0x64)
+            i += 1
         elif line.strip().startswith("* ") or line.strip().startswith("- "):
             p = doc_resp.add_paragraph(style='List Bullet')
-            clean_txt = line.strip()[2:].strip()
-            r = p.add_run(clean_txt)
-            r.font.name = "Calibri"
-            r.font.size = Pt(11)
-        elif line.strip().startswith("1. ") or line.strip().startswith("2. ") or line.strip().startswith("3. ") or line.strip().startswith("4. ") or line.strip().startswith("5. "):
+            clean_txt = clean_math_for_docx(line.strip()[2:].strip())
+            add_formatted_runs(p, clean_txt, font_size=Pt(11))
+            i += 1
+        elif any(line.strip().startswith(f"{num}. ") for num in range(1, 10)):
             p = doc_resp.add_paragraph(style='List Number')
-            clean_txt = line.strip()[3:].strip()
-            r = p.add_run(clean_txt)
-            r.font.name = "Calibri"
-            r.font.size = Pt(11)
+            num_prefix_len = line.strip().find(". ") + 2
+            clean_txt = clean_math_for_docx(line.strip()[num_prefix_len:].strip())
+            add_formatted_runs(p, clean_txt, font_size=Pt(11))
+            i += 1
         elif line.strip() == "---":
             p = doc_resp.add_paragraph()
             r = p.add_run("―" * 40)
             r.font.color.rgb = RGBColor(0x88, 0x88, 0x88)
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            i += 1
+        elif line.strip().startswith("|") and line.strip().endswith("|"):
+            # Coleta todas as linhas da tabela markdown
+            table_lines = []
+            while i < len(lines) and lines[i].strip().startswith("|") and lines[i].strip().endswith("|"):
+                table_lines.append(lines[i].strip())
+                i += 1
+            # Processar linhas da tabela
+            parsed_rows = []
+            for tl in table_lines:
+                # Pular linhas separadoras (|---|---|)
+                cells = [c.strip() for c in tl.split("|")[1:-1]]
+                if all(re.match(r'^:?-+:?$', c) for c in cells):
+                    continue
+                parsed_rows.append(cells)
+            if parsed_rows:
+                num_cols = max(len(r) for r in parsed_rows)
+                tbl = doc_resp.add_table(rows=len(parsed_rows), cols=num_cols)
+                tbl.style = 'Table Grid'
+                tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+                for r_idx, row_data in enumerate(parsed_rows):
+                    for c_idx, cell_data in enumerate(row_data):
+                        cell = tbl.cell(r_idx, c_idx)
+                        p_cell = cell.paragraphs[0]
+                        p_cell.paragraph_format.space_before = Pt(2)
+                        p_cell.paragraph_format.space_after = Pt(2)
+                        is_hdr = (r_idx == 0)
+                        clean_cell = clean_math_for_docx(cell_data)
+                        add_formatted_runs(p_cell, clean_cell, font_size=Pt(9.5 if not is_hdr else 10), default_bold=is_hdr)
+                doc_resp.add_paragraph() # espaçamento após tabela
         elif line.strip():
             p = doc_resp.add_paragraph()
-            r = p.add_run(line.strip())
-            r.font.name = "Calibri"
-            r.font.size = Pt(11)
+            clean_txt = clean_math_for_docx(line.strip())
+            add_formatted_runs(p, clean_txt, font_size=Pt(11))
+            i += 1
+        else:
+            i += 1
 
     docx_resp_pub = os.path.join(PUB_DIR, "RespostaAoProfessor_Analise12.docx")
     docx_resp_root = os.path.join(ROOT_DIR, "RespostaAoProfessor_Analise12.docx")
     doc_resp.save(docx_resp_pub)
     doc_resp.save(docx_resp_root)
-    print("Salvo: RespostaAoProfessor_Analise12.docx")
+    print("Salvo: RespostaAoProfessor_Analise12.docx com tipografia matemática Unicode limpa!")
 
     # 3. Gerar Mensagem curta para o Professor em DOCX
     doc_msg = docx.Document()
@@ -305,9 +478,8 @@ def build_docx_deliverables():
 
     for par in MENSAGEM_12_TEXTO.split("\n\n"):
         p = doc_msg.add_paragraph()
-        r = p.add_run(par.strip())
-        r.font.name = "Calibri"
-        r.font.size = Pt(11)
+        clean_par = clean_math_for_docx(par.strip())
+        add_formatted_runs(p, clean_par, font_size=Pt(11))
 
     docx_msg_pub = os.path.join(PUB_DIR, "MensagemParaOAvaliador12.docx")
     docx_msg_root = os.path.join(ROOT_DIR, "MensagemParaOAvaliador12.docx")
