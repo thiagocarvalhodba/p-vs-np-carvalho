@@ -263,31 +263,30 @@ Isto estabelece analiticamente que o politopo LP $Z$ retém uma fração exponen
 
 ---
 
-### Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Sistemas Cooperativos de Hirsch)
+### Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Cascatas Cooperativas)
 > **Teorema 9 (Separação Analítica Exata em Fórmulas Horn Monótonas Lineares).**  
-> *Considere a família de fórmulas Horn monótonas lineares $F_N$ com implicações unitárias dirigidas $x_j \to x_i$ ($\neg x_j \lor x_i$) ao longo de um grafo acíclico de dependência, juntamente com fatos unitários positivos $x_0 \to x_1$ e sementes de contorno.*  
+> *Considere a família de fórmulas Horn monótonas lineares $F_N$ com implicações unitárias dirigidas $x_j \to x_i$ ($\neg x_j \lor x_i$) ao longo de um grafo acíclico direcionado (DAG), juntamente com fatos unitários positivos $x_0 \to x_1$.*  
 > *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, os elementos fora da diagonal da Jacobiana do campo $f(x) = -\nabla \Phi_{\text{mult}}(x)$ satisfazem:*
 > $$J_{ij}(x) = \frac{\partial f_i}{\partial x_j} = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0, \quad \forall i \ne j, \; \forall x \in [-1, 1]^N$$
-> *O sistema é estritamente cooperativo no sentido de Hirsch (1985). Pelo Teorema do Fluxo Monótono de Hirsch, o fluxo projetado preserva a ordem parcial do cone positivo e converge monotonicamente para o único modelo mínimo satisfatível:*
+> *Por ser um DAG acíclico, sob ordenação topológica a Jacobiana é estritamente triangular superior, definindo um sistema monótono em cascata (Smith 1995; Sontag 1995). Por indução ao longo da ordenação topológica, a partir de condições iniciais no interior aberto ou na caixa central $\mathcal{U}_N$ (onde $(1+x_j)/2 > 0$), o fluxo converge monotonicamente para o modelo satisfatível:*
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1)$$
-> *2. Simultaneamente, o politopo LP $Z$ contém a caixa central $\mathcal{U}_N$, e pelo Teorema 7B o fluxo do Hinge $\Phi_{\text{quad}}$ converge para $Z$, onde o arredondamento falha com probabilidade positiva:*
-> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge 1 - o(1)$$
-> *Consequentemente, a separação estrita de massas é analiticamente demonstrada para a classe Horn linear:*
+> *2. Simultaneamente, para qualquer cadeia de $K = \Omega(N)$ implicações $x_1 \to x_2 \to \dots \to x_K$, a caixa central $\mathcal{U}_N \subset Z$ possui gradiente identicamente nulo $\nabla \Phi_{\text{quad}} \equiv \mathbf{0}$. Sob arredondamento booleano uniforme $\text{sign}(x)$, cada variável é independentemente $\pm 1$ com probabilidade $1/2$, de modo que a probabilidade de satisfazer simultaneamente todas as $K-1$ cláusulas é $(3/4)^{K-1} \to 0$. Pelo Teorema 7B, todas as trajetórias convergem para $Z$ via LaSalle, impondo violação quase certa no arredondamento:*
+> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge 1 - (3/4)^{K-1} = 1 - o(1)$$
+> *Consequentemente, a separação estrita de massas é analiticamente demonstrada:*
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - o(1)$$
 
 ---
 
-### Teorema 10 (Separação Rigorosa em 3-SAT Aleatório no Regime Subcrítico $\alpha < 1/6$)
-> **Teorema 10 (Separação Dinâmica Subcrítica em 3-SAT Aleatório).**  
-> *Para o ensemble de 3-SAT aleatório $\mathcal{E}(N, \alpha)$ abaixo do limiar de percolação do hipergrafo 3-uniforme ($\alpha < 1/6$):*
-> 1. *Com alta probabilidade ($1 - o(1)$), o hipergrafo de cláusulas se decompõe em componentes conexos disjuntos de tamanho $\mathcal{O}(\log N)$ com topologia de árvore.*
-> 2. *Em qualquer fórmula-árvore, por indução das folhas para a raiz, toda atribuição booleana com energia positiva ($E_{\text{disc}} > 0$) possui ao menos uma variável folha cujo flip reduz estritamente a energia, demonstrando a ausência de mínimos locais booleanos com $E_{\text{disc}} > 0$.*
-> 3. *Pelo Teorema 4A′, todos os mínimos locais da restrição de $\Phi_{\text{mult}}$ a faces herdam os valores dos vértices. Logo, não existem mínimos locais com energia estritamente positiva. Todo ponto crítico não-satisfatível é uma sela estrita com ao menos uma direção de autovalor negativo.*
-> 4. *Pelo Teorema da Variedade Central-Estável para Métodos de Gradiente (Lee, Simchowitz, Jordan & Recht, 2016; Panageas & Piliouras, 2017), o fluxo de gradiente com inicialização uniforme evita a variedade estável de selas estritas quase certamente, convergindo para vértices satisfatíveis:*
+### Teorema 10 (Separação Rigorosa em Hiperárvores Desacopladas e 3-SAT Subcrítico $\alpha < 1/6$)
+> **Teorema 10 (Separação Dinâmica em Hiperárvores Desacopladas e 3-SAT Subcrítico).**  
+> *Seja $\mathcal{H}$ uma hiperfloresta 3-CNF acíclica onde cada cláusula contém ao menos uma variável folha livre (hiperárvores desacopladas), estrutura que domina os componentes conexos de tamanho $\mathcal{O}(\log N)$ em 3-SAT aleatório abaixo do limiar de percolação $\alpha < \alpha_c = 1/6$ (Schmidt-Pruzan & Shamir 1985; Karoński & Łuczak 2002):*
+> 1. *Em qualquer hiperárvore desacoplada, por indução folha-raiz na variável livre de cada cláusula violada, toda atribuição booleana com $E_{\text{disc}} > 0$ admite um flip que reduz estritamente a energia sem afetar nenhuma outra cláusula, demonstrando a ausência de mínimos locais booleanos com $E_{\text{disc}} > 0$.*
+> 2. *Pelo Teorema 4A′, todos os mínimos locais da restrição de $\Phi_{\text{mult}}$ a faces herdam os valores dos vértices. Logo, não existem mínimos locais com energia positiva. Todo ponto crítico não-satisfatível é uma sela estrita ($\lambda_{\min}(\nabla^2 \Phi_{\text{mult}}) < 0$).*
+> 3. *Pelo Teorema da Variedade Central-Estável para Métodos de Gradiente Projetados em Domínios Convexos Compactos (Lee, Panageas et al. 2019; Panageas & Piliouras 2017), o fluxo gradiente projetado evita selas estritas quase certamente, convergindo para vértices satisfatíveis com $E_{\text{disc}} = 0$:*
 >    $$\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$$
-> 5. *Para a relaxação Hinge $\Phi_{\text{quad}}$, o politopo LP possui volume esperado $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$ pelo Teorema 8, e o fluxo converge para $Z$ pelo Teorema 7B, gerando arredondamento espúrio com probabilidade positiva:*
+> 4. *Para a relaxação Hinge $\Phi_{\text{quad}}$, o fluxo converge universalmente pelo Teorema 7B para o politopo LP $Z$, que contém a caixa central $\mathcal{U}_N$ com volume determinístico $\ge (1/3)^N$. Pontos em $\mathcal{U}_N$ sofrem arredondamento booleano descorrelacionado, violando cada cláusula com probabilidade $1/8$, o que impõe:*
 >    $$\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$$
-> *Consequentemente, a separação estrita de energia residual vale universalmente para $\alpha < 1/6$:*
+> *Consequentemente, a separação estrita de energia residual é rigorosamente demonstrada:*
 > $$\rho_{\text{quad}}(\alpha) > \rho_{\text{mult}}(\alpha) = 0$$
 
 ---

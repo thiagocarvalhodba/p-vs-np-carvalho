@@ -56,9 +56,9 @@ O arcabouço atinge a **Versão 4.0** com 10 teoremas analíticos estruturais e 
 * **Teorema 6 (Lipschitz e Aritmética IEEE 754):** Cota justa de Gershgorin $L_\beta = \Theta(\beta)$ e caracterização dos limiares de underflow em FP32 e FP64.
 * **Teorema 7B (Contração Centrípeta do Hinge):** Prova de que $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < 0$ fora do polítopo LP $Z$; o Hinge não possui equilíbrios espúrios com $\Phi > 0$, colapsando globalmente em $Z$ via LaSalle (cegueira fracionária, não rugosidade vítrea).
 * **Teorema 8 (Cota Inferior de Volume do Polítopo LP via Desigualdade de Jensen):** Demonstração analítica rigorosa de que o volume esperado do polítopo LP em 3-SAT aleatório é delimitado inferiormente por $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)} > 0$, e que $\mathbb{E}[\mu(Z)] \ge (1/3)^N$.
-* **Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Hirsch):** Demonstração analítica de que $\Phi_{\text{mult}}$ define um sistema dinâmico estritamente cooperativo ($J_{ij} = +1/4 \ge 0$), convergindo monotonicamente ao modelo mínimo satisfatível, enquanto $\Phi_{\text{quad}}$ é capturado no polítopo LP:
+* **Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Cascatas Cooperativas):** Demonstração analítica de que $\Phi_{\text{mult}}$ define um sistema dinâmico monótono em cascata estritamente cooperativo ($J_{ij} = +1/4 \ge 0$), convergindo ao modelo satisfatível, enquanto $\Phi_{\text{quad}}$ é capturado no polítopo LP com falha quase certa no arredondamento ($(3/4)^{K-1} \to 0$):
   $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - o(1)$$
-* **Teorema 10 (Separação Rigorosa em 3-SAT Subcrítico $\alpha < 1/6$):** Demonstração analítica de que abaixo do limiar de percolação do hipergrafo (onde as componentes são árvores quase certamente), fórmulas acíclicas não possuem mínimos locais com $E_{\text{disc}} > 0$. O fluxo multilinear evita selas estritas (Lee et al., 2016) e alcança $\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \to 0$, enquanto o Hinge retém $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge (5/6)^{\alpha N} - o(1) > 0$.
+* **Teorema 10 (Separação Rigorosa em Hiperárvores Desacopladas e 3-SAT Subcrítico $\alpha < 1/6$):** Demonstração analítica para componentes acíclicos com literais livres abaixo do limiar de percolação $\alpha_c = 1/6$ (Schmidt-Pruzan & Shamir 1985), onde o fluxo multilinear evita selas estritas quase certamente via métodos projetados constrangidos (Lee, Panageas et al. 2019) e alcança $\lim \rho_{\text{mult}}(\alpha) = 0$, enquanto o Hinge retém $\lim \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$.
 
 ---
 
@@ -68,7 +68,7 @@ Congelamos previamente a metodologia em `PROTOCOLO.md` e executamos as simulaç�
 
 1. **Horn Monótono ($N=25, M=40$):**  
    - $\rho_{\text{mult}} = 0.0015$ [IC 95%: 0.0003, 0.0030] vs $\rho_{\text{quad}} = 0.1272$ [IC 95%: 0.1183, 0.1358]  
-   - $\Delta \rho = 0.1257$ [IC 95%: 0.1165, 0.1345] $\implies$ **Resultados empíricos consistentes com a previsão do Teorema 9 ($p < 10^{-15}$)**.
+   - $\Delta \rho = 0.1257$ [IC 95%: 0.1165, 0.1345] $\implies$ **Resultados empíricos consistentes com a previsão do Teorema 9**.
 2. **3-SAT Aleatório Subcrítico ($\alpha = 0.12 < 1/6, N=50$):**  
    - $\rho_{\text{mult}} = 0.0000$ [IC 95%: 0.0000, 0.0000] vs $\rho_{\text{quad}} = 0.0756$ [IC 95%: 0.0567, 0.0944]  
    - $\Delta \rho = 0.0756$ [IC 95%: 0.0567, 0.0944] $\implies$ **Resultados empíricos consistentes com a previsão do Teorema 10**.
@@ -82,7 +82,7 @@ Congelamos previamente a metodologia em `PROTOCOLO.md` e executamos as simulaç�
 
 ### 5. Integridade do Código e Suíte de Testes
 
-- **Suíte de Testes Automatizada (`tests/test_clg_theorems.py`):** **26 de 26 testes aprovados com 100% de sucesso** no Pytest (gradientes por diferenças finitas centrais com erro $< 10^{-6}$, Laplaciano nulo $< 10^{-14}$, Hessiana Softplus $< 10^{-10}$, contração centrípeta $< 10^{-12}$).
+- **Suíte de Testes Automatizada (`tests/`):** **33 de 33 testes aprovados com 100% de sucesso** no Pytest cobrindo exaustivamente os Teoremas 1 a 10 (gradientes por diferenças finitas centrais com erro $< 10^{-6}$, Laplaciano nulo $< 10^{-14}$, Hessiana Softplus $< 10^{-10}$, contração centrípeta $< 10^{-12}$, cota inferior de Jensen e ausência de mínimos espúrios em hiperárvores).
 - **Vetorização Numérica:** Implementada aceleração vetorial via `np.add.at` em `Fontes/clg_framework.py`, reduzindo o tempo de execução da suíte completa de minutos para aproximadamente 60 segundos.
 - **Repositório Git:** Sincronizado e limpo no GitHub (branch `master`), incluindo o pacote LaTeX V4.0 e figuras de alta resolução em `Publicacoes/arxiv_package.zip`.
 
