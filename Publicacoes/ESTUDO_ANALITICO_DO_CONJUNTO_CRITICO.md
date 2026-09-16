@@ -1,8 +1,8 @@
 # Estudo Analítico do Conjunto Crítico e Massa de Bacia Espúria no Framework CLG-R
-**Versão 4.0.1 — Fechamento Analítico e Homologação Definitiva (Parecer 14)**  
+**Versão 4.0.1 — Saneamento Analítico e Auditoria Crítica (Parecer 14)**  
 **Data:** 16 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** 10 Teoremas Provados, 3 Lemas de Fechamento (Bacia do Hinge, Peeling de 2-Núcleos, Strict Saddle), Equivalência Estrita E_proj = Z, Cota Analítica de Jensen e Homologação Total sem Ressalvas.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Quase Fechado; T8 Fechado como Cota Finita; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
 
 ---
 
@@ -278,64 +278,50 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > **Lema 9.1 (Bacia Global de Atração da Relaxação Hinge em Cadeias de Implicação).**  
 > *Considere uma cadeia de implicações lineares de comprimento $K = \Omega(N)$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$), com fato unitário positivo $x_1 = 1$, cujo único modelo satisfatível é $s^* = (+1, \dots, +1)$.*  
 > *Sob o fluxo gradiente contínuo do potencial quadrático Hinge $\dot{x}(t) = -\nabla \Phi_{\text{quad}}(x(t))$:*
-> 1. *O centro de massa espacial é rigorosamente conservado pelo fluxo:*
->    $$\bar{x}(t) = \frac{1}{K} \sum_{k=1}^K x_k(t) \equiv \bar{x}(0) = \frac{1}{K} \sum_{k=1}^K x_k(0)$$
->    *e as trajetórias permanecem confinadas ao interior $(-1, 1)^K$.*
-> 2. *O mapa de fluxo limite assintótico $T: x_0 \mapsto x_\infty$ coincide identicamente com a Projeção Euclidiana Isotônica $\Pi_Z(x_0)$ sobre o cone das restrições ativas $Z = \{x \in \mathbb{R}^K \mid x_1 \le x_2 \le \dots \le x_K\}$, onde a variável de cabeça converge para a média parcial mínima de prefixo:*
->    $$x^*_1 = \min_{1 \le m \le K} \frac{1}{m} \sum_{k=1}^m x_k(0)$$
-> 3. *Sob inicialização uniforme $x_0 \sim \text{Unif}([-1, 1]^K)$, pelo Teorema da Flutuação de Sparre Andersen (1949, 1953), a probabilidade de que todas as médias parciais de prefixo sejam estritamente positivas independe da distribuição simétrica e vale:*
->    $$\mathbb{P}_{x_0 \sim \text{Unif}}\left(x^*_1 > 0\right) = \binom{2K}{K} 2^{-2K} = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right) = \Theta\left(\frac{1}{\sqrt{K}}\right)$$
-> 4. *Consequentemente, definindo a região espúria no politopo linear $\mathcal{R}_K = \{x^* \in Z \mid x^*_1 \le 0\}$ (cujo arredondamento booleano gera $\text{sign}(x^*_1) = -1$, violando imediatamente o fato $x_1 = 1$ e colapsando a cadeia), a massa da bacia de atração espúria global no hipercubo satisfaz:*
->    $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge \mu(T^{-1}(\mathcal{R}_K)) = 1 - \binom{2K}{K} 2^{-2K} = 1 - \mathcal{O}\left(\frac{1}{\sqrt{K}}\right) = 1 - o(1)$$
+> 1. *Cadeia de Implicações Pura (Sem Fatos Unitários):* No caso puramente telescópico sem fatos externos, o centro de massa é conservado: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, e o mapa de fluxo assintótico coincide com a Projeção Euclidiana Isotônica $\Pi_Z(x_0)$ sobre o cone $Z = \{x \in \mathbb{R}^K \mid x_1 \le x_2 \le \dots \le x_K\}$, onde a variável de cabeça converge para $x^*_1 = \min_{1 \le m \le K} \frac{1}{m} \sum_{k=1}^m x_k(0)$.
+> 2. *Expansão de Stirling Exata:* Sob inicialização uniforme $x_0 \sim \text{Unif}([-1, 1]^K)$, pelo Teorema de Sparre Andersen (1949, 1953), a probabilidade de que todas as médias parciais de prefixo sejam estritamente positivas satisfaz:
+>    $$\mathbb{P}_{x_0 \sim \text{Unif}}\left(x^*_1 > 0\right) = \frac{\binom{2K}{K}}{4^K} = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right) = \Theta\left(\frac{1}{\sqrt{K}}\right)$$
+>    e consequentemente $\mathbb{P}(x^*_1 \le 0) = 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1)$.
+> 3. *Falsificação sob Fato Unitário Positivo:* Conforme apontado na auditoria do Parecer nº 14, se um fato unitário $x_1 = 1$ é incorporado ao potencial via penalidade $h(x_1) = [\max(0, (1 - x_1)/2)]^2$, ele injeta uma força externa positiva $-\frac{\partial h}{\partial x_1} = \frac{1 - x_1}{2} > 0$ para $x_1 < 1$, quebrando a conservação da média ($\frac{d}{dt}\sum x_k > 0$). Além disso, o politopo LP colapsa no ponto único $Z = \{(+1, \dots, +1)\}$, e o fluxo Hinge converge para $(+1, \dots, +1)$ com probabilidade 1. Assim, a alegação de que o Hinge falha com probabilidade $1 - o(1)$ nessa cadeia foi falsificada computacional e analiticamente.
 
 ---
 
-### Teorema 9 (Separação Rigorosa em Horn-3-SAT Monótono)
-> **Teorema 9 (Separação Analítica Exata em Horn-3-SAT Monótono).**  
-> *Considere o ensemble canônico de fórmulas Horn-3-SAT monótonas $F_N$ (onde cada cláusula contém no máximo um literal positivo e o modelo de todos falsos $s = (-1, \dots, -1)$ é satisfatível):*  
-> *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, as derivadas cruzadas ao longo das arestas de implicação são estritamente não-negativas: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$, garantindo a cooperatividade estrita de Hirsch (1985). Pela ausência de corpos concorrentes em cláusulas lineares, o fluxo gradiente projetado converge quase universalmente para um modelo satisfatível com energia residual nula:*
+### Teorema 9 (Dinâmica em Horn-3-SAT Monótono — Status Em Aberto)
+> **Teorema 9 (Comportamento Dinâmico em Horn-3-SAT Monótono).**  
+> *Considere o ensemble de fórmulas Horn-3-SAT monótonas $F_N$:*  
+> *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, as derivadas cruzadas ao longo das arestas de implicação são estritamente não-negativas: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$, garantindo a cooperatividade estrita de Hirsch (1985). O fluxo gradiente projetado converge quase universalmente para um modelo satisfatível com energia residual nula:*
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1) \quad (\text{e } \lim_{N \to \infty} \rho_{\text{mult}} = 0)$$
-> *2. Simultaneamente, pelo Lema 9.1, para qualquer cadeia de implicações de comprimento $K = \Omega(N)$, a relaxação quadrática Hinge conserva o centro de massa, converge para a projeção isotônica euclidiana e colapsa a dinâmica no platô espúrio com probabilidade Sparre Andersen:*
-> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1)$$
-> *Consequentemente, a separação estrita de massas de bacia e energia residual é analiticamente demonstrada:*
-> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - o(1)$$
+> *2. Status da Separação Dinâmica: A demonstração analítica exata da bacia espúria $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}})$ para fórmulas Horn gerais com fatos unitários em conflito permanece um **Problema em Aberto**. A prova não pode ser sustentada pelo Lema 9.1 na sua forma original devido ao colapso do politopo $Z$ para $x_1 = 1$.*
 
 ---
 
-### Lema 10.1 (Hiperárvores Subcríticas e Peeling Folha-Raiz via Ausência de 2-Núcleo)
-> **Lema 10.1 (Estrutura Subcrítica de Hiperárvores, Peeling e Ausência de Mínimos Discretos).**  
-> *Para o ensemble de 3-SAT aleatório abaixo do limiar de percolação de hipergrafos $\alpha < \alpha_c = 1/6$:*
-> 1. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core}(H) = \emptyset) = 1 - \mathcal{O}(1/N)$), pois $\alpha_c = 1/6 \approx 0.1667 < \alpha_{\text{core}} \approx 0.8183$.*
-> 2. *O algoritmo de poda sucessiva de folhas (leaf-peeling algorithm) termina eliminando todas as hiperarestas, induzindo uma ordem de eliminação $\pi = (c_1, \dots, c_M)$ onde cada cláusula folha $c_t$ compartilha no máximo 1 vértice com a subestrutura restante e possui pelo menos duas variáveis privadas de grau global 1 (variáveis que aparecem em nenhuma outra cláusula de toda a fórmula).*
-> 3. *Para qualquer valoração booleana discreta $s \in \{-1, +1\}^N$ com $E_{\text{disc}}(s) > 0$, inverter o sinal de uma variável privada de grau global 1 da cláusula violada mais próxima das folhas reduz estritamente a energia:*
->    $$E_{\text{disc}}(s') = E_{\text{disc}}(s) - 1 < E_{\text{disc}}(s)$$
->    *sem violar nenhuma outra cláusula de todo o hipergrafo. Consequentemente, não existe nenhum mínimo local discreto com $E_{\text{disc}} > 0$.*
+### Lema 10.1 (Hiperárvores Subcríticas, Cota de Interseção e Peeling)
+> **Lema 10.1 (Estrutura Subcrítica de Hiperárvores, Cota de Interseção e Peeling).**  
+> *Para o ensemble de 3-SAT aleatório abaixo do limiar $\alpha < \alpha_c = 1/6$:*
+> 1. *O número esperado de pares de cláusulas compartilhando $\ge 2$ variáveis é cotado por $\mathbb{E}[\#\{c \ne c' \mid |c \cap c'| \ge 2\}] \le \binom{M}{2}\frac{18}{N^2} \le 9\alpha^2 < 1/4$.*
+> 2. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), pois $\alpha < 1/6 \ll \alpha_{\text{core}} \approx 0.8183$.*
+> 3. *No regime de hiperfloresta linear ($|c \cap c'| \le 1$), o algoritmo de folha-peeling elimina todas as hiperarestas, provando que toda cláusula folha possui ao menos 2 variáveis privadas de grau global 1. A inversão de uma variável privada de grau 1 reduz estritamente a energia booleana sem violar nenhuma outra cláusula, demonstrando a ausência de mínimos locais booleanos positivos.*
 
 ---
 
-### Lema 10.2 (Strict Saddle Subcrítico via Harmonicidade Multilinear)
-> **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Acoplamento Folha-Pai).**  
-> *Seja $\mathcal{F} \subseteq [-1, 1]^N$ qualquer face do hipercubo de dimensão $d = \dim(\mathcal{F}) \ge 2$, e seja $x^* \in \text{relint}(\mathcal{F})$ um ponto crítico relativo de $\Phi_{\text{mult}}|_{\mathcal{F}}$ ($\nabla_{\mathcal{F}} \Phi_{\text{mult}}(x^*) = \mathbf{0}$) com energia positiva $\Phi_{\text{mult}}(x^*) > 0$.*  
-> *A matriz Hessiana tangencial $\mathcal{H}_{\mathcal{F}}(x^*) = \nabla_{\mathcal{F}}^2 \Phi_{\text{mult}}(x^*)$ satisfaz:*
-> 1. *$\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) \equiv 0$, pois $\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i^2} \equiv 0$ para toda coordenada $x_i$ (harmonicidade multilinear).*
-> 2. *Como $E(x^*) > 0$, existe ao menos uma cláusula violada $c$. Pela aciclicidade da hiperárvore, o acoplamento entre uma variável livre de folha $x_\ell$ e uma variável pai $x_p$ gera uma derivada cruzada não-nula $|H_{\ell p}| = \frac{1}{4}\left(\frac{1 - \sigma_k x^*_k}{2}\right) > 0$.*
-> 3. *Pela nulidade do traço e não-nulidade das entradas fora da diagonal, o menor autovalor é estritamente negativo:*
->    $$\lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) \le -\frac{1}{\sqrt{d(d-1)}} \|\mathcal{H}_{\mathcal{F}}(x^*)\|_F < 0$$
-> *Assim, todo ponto crítico não-satisfatível em qualquer face de dimensão $\ge 2$ é estritamente uma sela estrita (strict saddle); selas planas e mínimos semidefinidos são excluídos.*
+### Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Incidência de Grau 1)
+> **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Não-Nulidade Fora da Diagonal).**  
+> *Seja $\mathcal{F} \subseteq [-1, 1]^N$ qualquer face de dimensão $d \ge 2$, e seja $x^* \in \text{relint}(\mathcal{F})$ um ponto crítico relativo de $\Phi_{\text{mult}}|_{\mathcal{F}}$ com energia positiva $\Phi_{\text{mult}}(x^*) > 0$.*  
+> *A matriz Hessiana tangencial $\mathcal{H}_{\mathcal{F}}(x^*)$ satisfaz:*
+> 1. *$\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) \equiv 0$, decorrente da multilinearidade coordenada a coordenada ($\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i^2} \equiv 0$).*
+> 2. *Para qualquer cláusula violada $c$, existe uma variável de grau global 1 $x_\ell$ acoplada a uma variável interna $x_p$. Como $x_\ell$ incide exclusivamente na cláusula $c$, a derivada cruzada $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{4}\left(\frac{1 - \sigma_k x^*_k}{2}\right) \ne 0$ não sofre cancelamento de nenhuma outra cláusula da fórmula, garantindo $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.*
+> 3. *Toda matriz simétrica com traço nulo e não identicamente nula possui necessariamente ao menos um autovalor estritamente negativo:*
+>    $$\lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) < 0$$
+> *Assim, todo ponto crítico não-satisfatível em faces de dimensão $\ge 2$ é estritamente uma sela estrita, sem dependência de cotas artificiais de Frobenius.*
 
 ---
 
-### Teorema 10 (Separação Rigorosa em 3-SAT Subcrítico $\alpha < 1/6$ via Evasão de Selas Estritas)
-> **Teorema 10 (Separação Dinâmica em 3-SAT Subcrítico $\alpha < 1/6$).**  
-> *Para o ensemble de 3-SAT aleatório $\mathcal{E}(N, \alpha)$ com $\alpha < \alpha_c = 1/6$:*
-> 1. *Pelo Lema 10.1, não existem mínimos locais discretos com $E_{\text{disc}} > 0$.*
-> 2. *Pelo Lema 10.2 e Teorema 4A′, todos os pontos críticos com energia positiva em faces de dimensão $d \ge 2$ são selas estritas ($\lambda_{\min} < 0$).*
-> 3. *Pelo Teorema da Variedade Estável para fluxos projetados em poliedros convexos compactos (Lee et al. 2019; Panageas & Piliouras 2017), o fluxo gradiente projetado de $\Phi_{\text{mult}}$ evita selas estritas para quase toda condição inicial, convergindo para atribuições satisfatíveis:*
->    $$\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$$
-> 4. *Para a relaxação Hinge $\Phi_{\text{quad}}$, o fluxo converge universalmente pelo Teorema 7B para o politopo LP $Z$. Os pontos capturados em $Z$ sofrem arredondamento booleano descorrelacionado, gerando densidade residual estritamente positiva:*
->    $$\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$$
-> *Consequentemente, a separação estrita de energia residual é rigorosamente demonstrada:*
-> $$\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) > \lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$$
+### Teorema 10 (Evasão de Selas Multilineares e Status Subcrítico)
+> **Teorema 10 (Evasão de Selas em $\Phi_{\text{mult}}$ e Status da Separação Subcrítica).**  
+> *Para o ensemble de 3-SAT aleatório com $\alpha < 1/6$:*
+> 1. *Pela estrutura de hiperárvore e Lemas 10.1 e 10.2, todos os pontos críticos com energia positiva em faces de dimensão $d \ge 2$ são selas estritas ($\lambda_{\min} < 0$), e não existem mínimos locais discretos positivos.*
+> 2. *Pelo Teorema da Variedade Estável em compactos convexos (Lee et al. 2019; Panageas & Piliouras 2017), o fluxo projetado de $\Phi_{\text{mult}}$ evita selas estritas para quase toda condição inicial: $\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$.*
+> 3. *Status da Separação com o Hinge: Demonstrar que a densidade residual do Hinge satisfaz $\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$ requer uma análise de bacia dedicada no hipergrafo aleatório (que não decorre diretamente do Teorema 8 nem do Teorema 9). Portanto, a separação completa no regime subcrítico é classificada como **Problema em Aberto / Sob Formalização**.*
 
 ---
 
