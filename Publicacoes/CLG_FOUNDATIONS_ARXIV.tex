@@ -443,28 +443,29 @@ Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = 
 \end{enumerate}
 \end{theorem}
 
-\begin{lemma}[Lemma 10.1: Subcritical Hypertree Peeling and Overlap Bound]
+\begin{lemma}[Lemma 10.1: Subcritical Hypertree Overlap Bound and Peeling --- Partially Closed]
 \label{lem:peeling}
 For random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c = 1/6$:
 \begin{enumerate}
-    \item The expected number of clause pairs sharing $\ge 2$ variables is bounded by:
+    \item The expected number of clause pairs sharing $\ge 2$ variables satisfies the first-moment bound:
     \begin{equation}
     \mathbb{E}\left[\#\{c \ne c' \mid |c \cap c'| \ge 2\}\right] \le \binom{M}{2} \frac{18(N-3)}{N(N-1)(N-2)} \le 9 \alpha^2 < \frac{1}{4}.
     \end{equation}
+    Because $9\alpha^2 = \mathcal{O}(1)$ is a constant independent of $N$ (e.g., $9(0.12)^2 = 0.1296$ at $\alpha = 0.12$), Markov's inequality yields $\mathbb{P}(X \ge 1) \le 9\alpha^2$, but does not imply $\mathbb{P}(X = 0) \to 1$. Therefore, strict linearity across all components is not established a.a.s. by this first moment alone; almost all components are linear hypertrees, but strict global linearity remains conditional.
     \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), since $\alpha < 1/6 \ll \alpha_{\rm core} \approx 0.8183$.
-    \item In the linear hyperforest regime ($|c \cap c'| \le 1$), the leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of global degree 1 (appearing in no other clause of the formula). Flipping a private degree-1 variable of a violated leaf strictly reduces $E_{\rm disc}$ without violating any other clause, establishing the absence of discrete local minima with $E_{\rm disc} > 0$.
+    \item Conditioned on the linear hyperforest structure ($|c \cap c'| \le 1$), the leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of global degree 1 (appearing in no other clause of the formula). Flipping a private degree-1 variable of a violated leaf strictly reduces $E_{\rm disc}$ without violating any other clause, establishing the absence of discrete local minima with $E_{\rm disc} > 0$ under this structural hypothesis.
 \end{enumerate}
 \end{lemma}
 
-\begin{lemma}[Lemma 10.2: Subcritical Strict Saddle Lemma via Spectral Tracelessness]
+\begin{lemma}[Lemma 10.2: Subcritical Strict Saddle Lemma Conditioned on $H_{\rm leaf}$]
 \label{lem:strict_saddle}
 Let $\mathcal{F} \subseteq [-1, 1]^N$ be any face of dimension $d = \dim(\mathcal{F}) \ge 2$, and let $x^* \in \text{relint}(\mathcal{F})$ be a relative critical point of $\Phi_{\rm mult}|_{\mathcal{F}}$ ($\nabla_{\mathcal{F}} \Phi_{\rm mult}(x^*) = \mathbf{0}$) with positive energy $\Phi_{\rm mult}(x^*) > 0$.
-Then the face Hessian $\mathcal{H}_{\mathcal{F}}(x^*) = \nabla^2_{\mathcal{F}} \Phi_{\rm mult}(x^*)$ satisfies:
+Conditioned on the structural leaf hypothesis $H_{\rm leaf}$ (that every violated clause admits a leaf variable $x_\ell$ of global degree 1):
 \begin{enumerate}
     \item $\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) = 0$, identically by coordinate-wise multilinear affinity ($\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i^2} \equiv 0$);
-    \item For any violated clause $c$ at $x^*$, let $x_\ell$ be a private variable of global degree 1 guaranteed by Lemma~\ref{lem:peeling}, and let $x_p$ be an internal variable of $c$. Because $x_\ell$ appears in \textbf{no other clause} of the entire formula, the cross-derivative:
+    \item For any violated clause $c$ at $x^*$, let $x_\ell$ be a private variable of global degree 1, and let $x_p$ be an internal variable of $c$. Because $x_\ell$ appears in \textbf{no other clause} of the entire formula, the cross-derivative:
     \begin{equation}
-    H_{\ell p} = \frac{\partial^2 \Phi_{\rm mult}}{\partial x_\ell \partial x_p}(x^*) = \frac{\sigma_\ell \sigma_p}{4}\left(\frac{1 - \sigma_k x^*_k}{2}\right) \ne 0
+    H_{\ell p} = \frac{\partial^2 \Phi_{\rm mult}}{\partial x_\ell \partial x_p}(x^*) = \frac{\partial^2 P_c}{\partial x_\ell \partial x_p}(x^*) = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0
     \end{equation}
     receives zero contribution from any other clause, precluding cross-cancellation and ensuring $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.
     \item Since $\mathcal{H}_{\mathcal{F}}(x^*)$ is a non-zero symmetric matrix with zero trace, it cannot be positive semidefinite. Consequently, it must possess at least one strictly negative eigenvalue:
@@ -472,16 +473,16 @@ Then the face Hessian $\mathcal{H}_{\mathcal{F}}(x^*) = \nabla^2_{\mathcal{F}} \
     \lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) < 0.
     \end{equation}
 \end{enumerate}
-Thus, every non-satisfying relative critical point in faces of dimension $\ge 2$ is unconditionally a strict saddle; flat saddles and degenerate positive semi-definite saddles are impossible.
+Thus, conditioned on $H_{\rm leaf}$, every non-satisfying relative critical point in faces of dimension $\ge 2$ is a strict saddle; flat saddles and degenerate positive semi-definite saddles are ruled out.
 \end{lemma}
 
-\begin{theorem}[Theorem 10: Multilinear Saddle Avoidance and Subcritical Status]
+\begin{theorem}[Theorem 10: Multilinear Saddle Avoidance and Subcritical Status --- Not Closed]
 \label{thm:subcritical_separation}
 For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$:
 \begin{enumerate}
-    \item Under the linear hyperforest structure, by Lemmata~\ref{lem:peeling} and \ref{lem:strict_saddle}, all non-satisfying relative critical points of $\Phi_{\rm mult}$ in faces of dimension $d \ge 2$ are strict saddles ($\lambda_{\min} < 0$), and no discrete positive local minima exist.
+    \item Under the structural hypothesis $H_{\rm leaf}$, by Lemmata~\ref{lem:peeling} and \ref{lem:strict_saddle}, all non-satisfying relative critical points of $\Phi_{\rm mult}$ in faces of dimension $d \ge 2$ are strict saddles ($\lambda_{\min} < 0$), and no discrete positive local minima exist.
     \item By the constrained Stable Manifold Theorem for projected dynamical systems \cite{lee2019first, panageas2017gradient}, the set of initial conditions converging to strict saddles has Lebesgue measure zero, ensuring almost sure convergence to zero-energy satisfying models: $\lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$.
-    \item \textbf{Status of Hinge Separation:} While Theorem~\ref{thm:universal_contraction} establishes that Hinge trajectories converge to the LP polytope $Z$, proving an analytical lower bound $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0$ requires a standalone subcritical basin analysis (which cannot be inherited from Theorem 8 or Theorem 9). The full dynamical separation in subcritical 3-SAT is therefore classified as \textbf{Open / Under Active Formalization}.
+    \item \textbf{Status of Separation:} While Theorem~\ref{thm:universal_contraction} establishes that Hinge trajectories converge to the LP polytope $Z$, proving an analytical lower bound $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0$ requires a standalone subcritical basin analysis (which cannot be inherited from Theorem 8 or Theorem 9). Consequently, Theorem 10 is classified as \textbf{Not Closed / Under Active Investigation}.
 \end{enumerate}
 \end{theorem}
 
@@ -496,7 +497,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \end{equation}
 \end{conjecture}
 
-\section{Summary Synthesis}
+\section{Summary Synthesis and Formal Status Matrix}
 
 \begin{table}[htbp]
 \centering
@@ -519,16 +520,44 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \label{tab:synthesis}
 \end{table}
 
-\section{Epistemological Firewall: 3-XOR-SAT and P vs NP}
-The CLG-R theory strictly decouples continuous landscape geometry from Turing machine complexity:
+\begin{table}[htbp]
+\centering
+\small
+\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard).}}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Result} & \textbf{Formal Audit Status} \\
+\midrule
+Theorem 1 (Central Box $\mathcal{U}_N$) & \textbf{Closed} (Deterministic, slack $0.5$) \\
+Theorem 2 (Measure Zero Critical Sets) & \textbf{Closed under stated hypotheses} (Fubini / Real Analytic) \\
+Theorem 3 (Harmonicity and Saddles) & \textbf{Closed with hypotheses} (Harmonic, Milnor Curve Selection) \\
+Theorem 4A$'$ (Face Minima without H4) & \textbf{Closed} (Inherited vertex energies) \\
+Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed} (Strict Lyapunov on compact hypercube) \\
+Theorem 5 (Hessian Factorization) & \textbf{Closed with rank/convexity conditions} ($V^T W V \succeq 0$) \\
+Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed with IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
+Theorem 7B (Centripetal Contraction) & \textbf{Near Closed} ($\mathcal{E}_{\rm proj} \equiv Z$, normal cone conventions explicit) \\
+Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional bound} ($\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$) \\
+Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
+Lemma 10.1 (Hypertree Overlap Bound) & \textbf{Partially Closed} ($\mathbb{E}[X] \le 9\alpha^2 = \mathcal{O}(1)$, $2\text{-core} = \emptyset$ a.a.s.) \\
+Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Closed conditionally under structural leaf hypothesis $H_{\rm leaf}$} \\
+Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Not Closed} (Multilinear avoidance closed; Hinge separation open) \\
+Central Conjecture & \textbf{Delimited Conjecture} ($\alpha \in (\alpha_d, \alpha_s)$ / planted ensemble) \\
+Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from $P$ vs $NP$) \\
+\bottomrule
+\end{tabular}
+\label{tab:status_matrix}
+\end{table}
+
+\section{Epistemological Firewall: 3-XOR-SAT and $P$ vs $NP$}
+The CLG-R framework establishes an epistemological firewall against illegitimate inferences from continuous dynamical hardness to Turing machine complexity ($P \ne NP$):
 \begin{itemize}
     \item \textbf{3-XOR-SAT} is solvable in deterministic polynomial time $\mathcal{O}(N^3)$ via Gaussian Elimination over $\mathbb{F}_2$ (strictly in Class $\mathbf{P}$).
     \item However, under continuous gradient descent, 3-XOR-SAT exhibits complete dynamic glassy collapse due to dense $p$-spin metastable state proliferation \cite{ricci2010being, mezard2003two}.
-    \item Therefore, continuous convexity or gradient reachability neither implies nor is implied by Turing solvability.
+    \item Therefore, failure or success of a continuous gradient flow neither implies nor is implied by Turing solvability.
 \end{itemize}
 
 \section{Conclusion}
-We have established the complete analytical foundations of Computational Landscape Geometry and Representation (CLG-R). By demonstrating the Universal Centripetal Contraction Theorem, the Exact Hessian Factorization, the Harmonic Vertex Confinement without boundary degeneracy hypotheses, the Analytical LP Polytope Volume, and rigorous separations in Horn and subcritical random 3-SAT, we explain why continuous relaxations exhibit divergent algorithmic accessibility while strictly adhering to complexity theory barriers.
+We have established the rigorous analytical foundations of Computational Landscape Geometry and Representation (CLG-R). By demonstrating the Universal Centripetal Contraction Theorem, the Exact Hessian Factorization, Harmonic Vertex Confinement without boundary degeneracy hypotheses, the Analytical LP Polytope Volume Bound, and establishing clear epistemological boundaries, we explain why continuous relaxations exhibit divergent algorithmic accessibility while strictly adhering to computational complexity barriers.
 
 \bibliographystyle{plain}
 \bibliography{clg_references}

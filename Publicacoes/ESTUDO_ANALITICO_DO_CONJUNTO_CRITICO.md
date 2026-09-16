@@ -295,33 +295,37 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.1 (Hiperárvores Subcríticas, Cota de Interseção e Peeling)
+### Lema 10.1 (Hiperárvores Subcríticas, Cota de Interseção e Peeling --- Parcialmente Fechado)
 > **Lema 10.1 (Estrutura Subcrítica de Hiperárvores, Cota de Interseção e Peeling).**  
 > *Para o ensemble de 3-SAT aleatório abaixo do limiar $\alpha < \alpha_c = 1/6$:*
-> 1. *O número esperado de pares de cláusulas compartilhando $\ge 2$ variáveis é cotado por $\mathbb{E}[\#\{c \ne c' \mid |c \cap c'| \ge 2\}] \le \binom{M}{2}\frac{18}{N^2} \le 9\alpha^2 < 1/4$.*
+> 1. *O número esperado de pares de cláusulas compartilhando $\ge 2$ variáveis é cotado pelo primeiro momento:*
+>    $$\mathbb{E}[\#\{c \ne c' \mid |c \cap c'| \ge 2\}] \le \binom{M}{2}\frac{18(N-3)}{N(N-1)(N-2)} \le 9\alpha^2 < \frac{1}{4}$$
+>    *Como $9\alpha^2 = \mathcal{O}(1)$ é uma cota constante independente de $N$ (e.g., $9(0.12)^2 = 0.1296$ para $\alpha = 0.12$), a desigualdade de Markov garante $\mathbb{P}(X \ge 1) \le 9\alpha^2$, mas não permite concluir $\mathbb{P}(X = 0) \to 1$. Portanto, a linearidade estrita através de todas as componentes não é uma propriedade a.a.s. decorrente unicamente desse momento; quase todas as componentes são hiperárvores lineares, mas a linearidade global em todo o hipergrafo permanece condicional.*
 > 2. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), pois $\alpha < 1/6 \ll \alpha_{\text{core}} \approx 0.8183$.*
-> 3. *No regime de hiperfloresta linear ($|c \cap c'| \le 1$), o algoritmo de folha-peeling elimina todas as hiperarestas, provando que toda cláusula folha possui ao menos 2 variáveis privadas de grau global 1. A inversão de uma variável privada de grau 1 reduz estritamente a energia booleana sem violar nenhuma outra cláusula, demonstrando a ausência de mínimos locais booleanos positivos.*
+> 3. *Condicionado à estrutura de hiperfloresta linear ($|c \cap c'| \le 1$), o algoritmo de folha-peeling elimina todas as hiperarestas, provando que toda cláusula folha possui ao menos 2 variáveis privadas de grau global 1. A inversão de uma variável privada de grau 1 reduz estritamente a energia booleana sem violar nenhuma outra cláusula, demonstrando a ausência de mínimos locais booleanos positivos sob essa hipótese.*
 
 ---
 
-### Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Incidência de Grau 1)
-> **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Não-Nulidade Fora da Diagonal).**  
+### Lema 10.2 (Strict Saddle Subcrítico Condicionado à Hipótese Estrutural $H_{\text{leaf}}$)
+> **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Incidência Exclusiva de Folha).**  
 > *Seja $\mathcal{F} \subseteq [-1, 1]^N$ qualquer face de dimensão $d \ge 2$, e seja $x^* \in \text{relint}(\mathcal{F})$ um ponto crítico relativo de $\Phi_{\text{mult}}|_{\mathcal{F}}$ com energia positiva $\Phi_{\text{mult}}(x^*) > 0$.*  
-> *A matriz Hessiana tangencial $\mathcal{H}_{\mathcal{F}}(x^*)$ satisfaz:*
+> *Condicionado à hipótese estrutural $H_{\text{leaf}}$ (que toda cláusula violada admite uma variável folha $x_\ell$ de grau global 1):*
 > 1. *$\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) \equiv 0$, decorrente da multilinearidade coordenada a coordenada ($\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i^2} \equiv 0$).*
-> 2. *Para qualquer cláusula violada $c$, existe uma variável de grau global 1 $x_\ell$ acoplada a uma variável interna $x_p$. Como $x_\ell$ incide exclusivamente na cláusula $c$, a derivada cruzada $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{4}\left(\frac{1 - \sigma_k x^*_k}{2}\right) \ne 0$ não sofre cancelamento de nenhuma outra cláusula da fórmula, garantindo $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.*
+> 2. *Para qualquer cláusula violada $c$, existe uma variável de grau global 1 $x_\ell$ acoplada a uma variável interna $x_p$. Como $x_\ell$ incide exclusivamente na cláusula $c$, a derivada cruzada:*
+>    $$H_{\ell p} = \frac{\partial^2 P_c}{\partial x_\ell \partial x_p}(x^*) = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$$
+>    *não sofre cancelamento de nenhuma outra cláusula da fórmula, garantindo $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.*
 > 3. *Toda matriz simétrica com traço nulo e não identicamente nula possui necessariamente ao menos um autovalor estritamente negativo:*
 >    $$\lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) < 0$$
-> *Assim, todo ponto crítico não-satisfatível em faces de dimensão $\ge 2$ é estritamente uma sela estrita, sem dependência de cotas artificiais de Frobenius.*
+> *Assim, condicionado a $H_{\text{leaf}}$, todo ponto crítico não-satisfatível em faces de dimensão $\ge 2$ é estritamente uma sela estrita; selas flat e Hessianas identicamente nulas são rigorosamente eliminadas.*
 
 ---
 
-### Teorema 10 (Evasão de Selas Multilineares e Status Subcrítico)
+### Teorema 10 (Evasão de Selas Multilineares e Status Subcrítico --- Não Fechado)
 > **Teorema 10 (Evasão de Selas em $\Phi_{\text{mult}}$ e Status da Separação Subcrítica).**  
 > *Para o ensemble de 3-SAT aleatório com $\alpha < 1/6$:*
-> 1. *Pela estrutura de hiperárvore e Lemas 10.1 e 10.2, todos os pontos críticos com energia positiva em faces de dimensão $d \ge 2$ são selas estritas ($\lambda_{\min} < 0$), e não existem mínimos locais discretos positivos.*
+> 1. *Sob a hipótese estrutural $H_{\text{leaf}}$, pelos Lemas 10.1 e 10.2, todos os pontos críticos com energia positiva em faces de dimensão $d \ge 2$ são selas estritas ($\lambda_{\min} < 0$), e não existem mínimos locais discretos positivos.*
 > 2. *Pelo Teorema da Variedade Estável em compactos convexos (Lee et al. 2019; Panageas & Piliouras 2017), o fluxo projetado de $\Phi_{\text{mult}}$ evita selas estritas para quase toda condição inicial: $\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$.*
-> 3. *Status da Separação com o Hinge: Demonstrar que a densidade residual do Hinge satisfaz $\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$ requer uma análise de bacia dedicada no hipergrafo aleatório (que não decorre diretamente do Teorema 8 nem do Teorema 9). Portanto, a separação completa no regime subcrítico é classificada como **Problema em Aberto / Sob Formalização**.*
+> 3. *Status da Separação com o Hinge: Demonstrar que a densidade residual do Hinge satisfaz $\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$ requer uma análise de bacia dedicada no hipergrafo aleatório (que não decorre diretamente do Teorema 8 nem do Teorema 9). Portanto, a separação completa no regime subcrítico é formalmente classificada como **🔴 Não Fechado**.*
 
 ---
 
@@ -336,7 +340,29 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ## 12. Firewall Epistemológico: 3-XOR-SAT e P vs NP
 
-A teoria CLG-R reafirma a separação categórica entre topologia contínua e complexidade de Turing:
+A teoria CLG-R estabelece um firewall epistemológico contra inferências de dificuldade dinâmica para $P \ne NP$:
 * **3-XOR-SAT** é solucionável em tempo polinomial determinístico $\mathcal{O}(N^3)$ via Eliminação Gaussiana em $\mathbb{F}_2$ (pertence estritamente a $\mathbf{P}$).
 * Sob qualquer relaxação contínua governada por gradientes métricos, 3-XOR-SAT sofre colapso dinâmico vítreo completo ($R_{\text{dyn}} = 0.0\%$).
-* **Conclusão:** Convexidade contínua ou colapso gradiente não determinam a solvabilidade na Máquina de Turing.
+* **Conclusão Epistemológica:** Dificuldade geométrica ou colapso dinâmico não implicam dificuldade computacional no modelo de Turing ($P \ne NP$).
+
+---
+
+## 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador)
+
+| Resultado | Status de Auditoria | Qualificação Técnica Formal e Limites Analíticos |
+| :--- | :---: | :--- |
+| **T1** (Caixa Central $\mathcal{U}_N$) | 🟢 **Fechado** | Universal determinístico; folga interior 0.5 em toda a caixa. |
+| **T2** (Medida Nula de Críticos) | 🟢 **Fechado** | Sob hipóteses declaradas (Fubini para $\Phi_{\text{mult}}$, analiticidade real para $\Phi_{\text{soft}}$). |
+| **T3** (Harmonicidade e Selas) | 🟢 **Fechado** | Com hipóteses (Princípio do Mínimo Forte e Lema de Seleção de Curvas de Milnor). |
+| **T4A′** (Mínimos em Faces) | 🟢 **Fechado** | Mínimos locais em faces herdam energia de vértices. |
+| **4B** (Confinamento de LaSalle) | 🟢 **Fechado** | Lyapunov estrito no hipercubo compacto; atratores isolados confinados a $\{-1, 1\}^N$. |
+| **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado** | Com condições de posto/convexidade explicitadas ($\text{rank}(V)=N \implies$ estrita convexidade). |
+| **T6** (Lipschitz e Underflow) | 🟢 **Fechado** | Com convenções IEEE 754 explicitadas ($L_\beta = \Theta(\beta)$, limites de flush-to-zero). |
+| **T7B** (Contração Centrípeta e LaSalle) | 🟡 **Quase Fechado** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; convenção de cone normal exterior explicitada. |
+| **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota finita** | $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$ para $N$ finito; decaimento assintótico reconhecido. |
+| **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); mantido aberto para DAGs gerais. |
+| **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcialmente Fechado** | $2\text{-core} = \emptyset$ provado a.a.s.; cota de primeiro momento $9\alpha^2 = \mathcal{O}(1)$ não implica $P(X=0)\to 1$. |
+| **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Fechado sob hipótese $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$. |
+| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Não Fechado** | Evasão de sela provada para $\Phi_{\text{mult}}$; separação analítica com Hinge permanece em aberto. |
+| **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
+| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Separação categórica entre falha dinâmica contínua e complexidade de Turing (sem "absoluto"). |
