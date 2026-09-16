@@ -1,0 +1,541 @@
+Li as respostas atualizadas. Elas corrigem algumas das objeções importantes, mas, sendo rigoroso, a conclusão de que T8–T10 estão “resolvidos” ainda não é sustentável. Há um ponto particularmente importante que apareceu agora e que, na minha opinião, precisa ser corrigido antes de vocês congelarem a V4.0.
+
+A boa notícia é que a auditoria revelou exatamente onde está o problema. E algumas partes ficaram realmente mais fortes.
+
+1. T8: agora a matemática está no caminho certo
+
+Aqui houve uma correção genuína.
+
+A nova formulação reconhece corretamente que:
+
+EμZ=pxM dμx
+
+e não
+
+56M.
+
+Isso elimina o erro de independência espacial que tínhamos identificado.
+
+E Jensen realmente fornece:
+
+EpXM≥EpXM=56M, M≥2.
+
+Se
+
+M=αN,
+
+então, como 0<5/6<1,
+
+56αN≥56αN.
+
+Portanto:
+
+EμZ≥56αN
+
+é uma cota inferior válida, assumindo o modelo de geração das cláusulas usado na derivação.
+
+Isso é uma correção real do T8.
+
+Mas há uma consequência que o texto ainda não percebeu
+
+A frase:
+
+"blindando o Teorema 10 contra a possibilidade de contração a zero"
+
+é perigosa.
+
+Porque:
+
+56αN=e-αNln⁡6/5
+
+tende a zero quando N→∞.
+
+Portanto T8 prova:
+
+EμZ≥e-cN,
+
+mas não prova:
+
+lim infN→∞EμZ>0.
+
+Isso é uma diferença enorme.
+
+2. E aqui aparece uma contradição explícita no T10
+
+A própria resposta diz:
+
+MspurΦquad≥5/6αN-o1>0
+
+Mas:
+
+5/6αN⟶0.
+
+Então não podemos concluir:
+
+5/6αN-o1>0
+
+assintoticamente.
+
+Na verdade, se o1decai mais lentamente que e-cN, a expressão pode até ficar negativa — uma cota inferior negativa, obviamente, não informa nada.
+
+Este é o principal erro que ainda permanece.
+
+Se a tese é apenas:
+
+MspurΦquad>0
+
+para cada N, T8 pode ajudar.
+
+Se a tese é:
+
+lim infN→∞MspurΦquad>0,
+
+T8 não basta.
+
+E se a tese é:
+
+MspurΦquad→1,
+
+T8 está ainda muito mais longe de provar isso.
+
+3. O maior problema do T9 continua sendo a passagem geométrica → bacia
+
+Esta é, para mim, a questão mais importante de todas.
+
+A nova prova diz:
+
+x0∈UN⇒x0∈Z⇒Hinge fica em Z.
+
+Depois:
+
+sign⁡x0
+
+é uniforme e uma cadeia de K-1implicações é satisfeita com probabilidade
+
+3/4K-1.
+
+Logo:
+
+Psatisfaz→0.
+
+Até aqui, tudo pode estar correto.
+
+Mas qual é a medida de UN?
+
+μUN=13N.
+
+Portanto:
+
+μUN→0.
+
+Você demonstrou que uma fração exponencialmente pequena das condições iniciais produz arredondamento espúrio.
+
+Isso não demonstra:
+
+MspurΦquad≥1-o1.
+
+Para obter isso, seria necessário demonstrar algo do tipo:
+
+μx0:signlimt→∞xtx0 viola→1.
+
+A caixa central não fornece essa medida.
+
+4. T7B também não resolve esse problema
+
+O T7B mostra essencialmente:
+
+x∉Z ⇒ -∇Φquadxx<0.
+
+E a nova parte de LaSalle é uma boa tentativa de fechar a dinâmica.
+
+Se a prova estiver correta, você obtém:
+
+xt→Z.
+
+Mas isso significa:
+
+a trajetoˊria chega ao conjunto Z
+
+e não:
+
+o ponto-limite de Z arredonda para uma atribuic¸a˜o falsa.
+
+Essas duas coisas são completamente diferentes.
+
+O conjunto Zpode ser enorme e conter regiões cujo arredondamento satisfaz a fórmula.
+
+Portanto:
+
+contrac¸a˜o para Z⇏massa de bacia espuˊria→1.
+
+Essa é a lacuna que eu ainda vejo.
+
+5. Há uma possível solução elegante para o T9
+
+E acho que vale explorar.
+
+Em vez de tentar provar diretamente:
+
+MspurΦquad=1-o1,
+
+vocês poderiam provar uma propriedade mais forte e geométrica sobre o mapa de limite:
+
+T:x0↦x∞.
+
+Se conseguirem mostrar que, para quase todo x0,
+
+Tx0
+
+pertence a uma região RN⊂Zcujo arredondamento viola a cadeia, então sim:
+
+μT-1RN→1.
+
+Isso fecharia exatamente a lacuna.
+
+Hoje vocês provaram algo sobre Z.
+
+Precisam provar algo sobre:
+
+T-1RN.
+
+Essa é a diferença entre geometria do conjunto de equilíbrios e geometria da bacia.
+
+6. T9: a restrição para Horn linear foi uma boa decisão
+
+Aqui a resposta reconheceu corretamente o problema anterior.
+
+Para:
+
+¬xj∨xi
+
+temos:
+
+Pcx=1-xi21+xj2
+
+e:
+
+∂2Pc∂xi∂xj=-14,
+
+portanto:
+
+Jij=-∂2Pc∂xi∂xj=14>0.
+
+Isso elimina o termo competitivo entre dois corpos que existia na cláusula Horn de três literais.
+
+Essa parte é muito mais defensável.
+
+7. Mas "DAG ⇒ converge ao modelo mínimo" ainda é rápido demais
+
+Aqui eu faria uma distinção.
+
+Vocês têm:
+
+xj→xi
+
+e uma rede acíclica.
+
+Isso permite uma análise por ordenação topológica.
+
+Mas a afirmação:
+
+"o fluxo em cascata converge monotonicamente para o modelo satisfatível"
+
+precisa de uma prova explícita da dinâmica de cada variável.
+
+Por exemplo, depois de ordenar:
+
+x1,x2,…,xN,
+
+é necessário mostrar que o campo de xidepende apenas das variáveis anteriores ou posteriores de maneira que a indução realmente funcione.
+
+Não basta dizer:
+
+Jij≥0
+
+e citar Hirsch.
+
+Os resultados de Panageas/Piliouras e Lee et al. são resultados sobre evitar saddles sob hipóteses específicas; eles não fornecem por si mesmos a identificação do limite com uma solução satisfatória específica. (DROPS)
+
+8. T10: o limiar 1/6está correto para o modelo de hipergrafo adequado
+
+Aqui eu retiro uma preocupação da análise anterior.
+
+A literatura confirma que para hipergrafos d-uniformes, com M=cn, o limiar da componente gigante ocorre em:
+
+c=1dd-1.
+
+Para d=3:
+
+c=16.
+
+A referência de Schmidt-Pruzan e Shamir é de fato a clássica sobre a estrutura de componentes de hipergrafos aleatórios. (SciSpace)
+
+E uma fonte posterior resume explicitamente:
+
+c<1dd-1
+
+como regime sem componente gigante linear, e para d=3isso dá 1/6. (ScienceDirect)
+
+Então:
+
+αc=1/6
+
+é plausível e corretamente ancorado para o hipergrafo 3-uniforme correspondente.
+
+Mas cuidado
+
+Isso não prova automaticamente:
+
+"as componentes são árvores".
+
+O resultado de componente pequena é mais fraco que aciclicidade.
+
+Vocês precisam demonstrar especificamente a propriedade de hiperárvore necessária à indução folha-raiz.
+
+9. O passo 2 do T10 é agora o ponto que eu atacaria
+
+A frase:
+
+"cada cláusula contém ao menos uma variável folha livre (que domina a distribuição subcrítica)"
+
+é extremamente forte.
+
+O problema é o trecho:
+
+"que domina a distribuic¸a˜o subcrıˊtica"
+
+Isso precisa ser transformado em lema probabilístico formal.
+
+Vocês precisam mostrar algo como:
+
+Ptodo componente possui uma estrutura de eliminac¸a˜o folha-raiz→1.
+
+Ou construir explicitamente um algoritmo de poda:
+
+H0⊃H1⊃⋯
+
+e demonstrar que ele elimina todas as arestas a.a.s.
+
+Sem isso, o salto:
+
+hipergrafo subcrıˊtico⇒toda claˊusula violada tem uma folha livre
+
+não está fechado.
+
+10. E há outro problema no T10: "todos os críticos não-satisfatíveis são strict saddles"
+
+Esta é uma afirmação enorme:
+
+∇Φmultx=0, Φmultx>0⇒λmin∇2Φmultx<0.
+
+O T4A′ não prova isso.
+
+T4A′ diz, essencialmente:
+
+mıˊnimo local relativo⇒valor igual aos veˊrtices da face.
+
+Isso exclui mínimos locais positivos se todos os vértices correspondentes tiverem energia positiva e não forem mínimos discretos.
+
+Mas:
+
+na˜o eˊ mıˊnimo local
+
+não implica:
+
+strict saddle.
+
+Pode existir:
+
+saddle degenerado;
+
+ponto crítico com Hessiana semidefinida;
+
+direção de ordem superior;
+
+flat saddle.
+
+Portanto o passo 4 precisa de uma prova própria.
+
+Esse é um ponto matematicamente importante.
+
+11. Lee/Panageas não podem ser usados para preencher essa lacuna
+
+A literatura realmente mostra que gradient descent evita strict saddles para quase toda inicialização, sob hipóteses apropriadas. Lee et al. 2016 demonstraram a versão clássica; Panageas & Piliouras 2017 ampliaram para pontos críticos não isolados e regiões convexas invariantes; Lee et al. 2019 ampliaram a família de métodos. (Proceedings of Machine Learning Research)
+
+Mas a lógica correta é:
+
+strict saddle⇒quase certamente evitado
+
+e não:
+
+na˜o minimizador⇒strict saddle.
+
+Portanto vocês ainda precisam provar o segundo elo.
+
+12. A afirmação "fluxo projetado evita saddles" também merece especificação
+
+A resposta cita:
+
+"extensão ... para métodos de primeira ordem projetados em domínios convexos compactos"
+
+Mas a referência de Lee et al. 2019 é descrita como abrangendo vários métodos de primeira ordem, incluindo gradient descent, proximal point, coordinate descent e Riemannian gradient descent. (Portal de Pesquisa)
+
+Isso não significa automaticamente que qualquer fluxo de gradiente projetado contínuo sobre um poliedro com pontos críticos na fronteira satisfaça exatamente o teorema na forma usada pelo CLG.
+
+Essa ponte precisa ser citada pelo teorema exato e pelas hipóteses exatas.
+
+Eu exigiria:
+
+Teorema externo+hipoˊteses+mapeamento para CLG
+
+linha por linha.
+
+13. O T7B/LaSalle melhorou, mas eu ainda faria uma correção
+
+A nova demonstração diz:
+
+Φ=-∥ΠT-∇Φ∥2≤0.
+
+Isso é exatamente a estrutura Lyapunov esperada.
+
+E a análise do cone normal é interessante:
+
+ν∈NXx⇒νx≥0
+
+enquanto fora de Z:
+
+-∇Φxx<0.
+
+Logo o campo não pode estar no cone normal.
+
+Isso é uma boa maneira de excluir equilíbrios projetados fora de Z.
+
+Mas eu não escreveria ainda:
+
+"o maior conjunto invariante ... coincide estritamente com Z"
+
+sem provar:
+
+x:Φx=0=Z.
+
+Porque:
+
+Φ=0  ⟺  ΠT-∇Φ=0.
+
+No interior isso implica:
+
+∇Φ=0.
+
+No bordo não necessariamente.
+
+Vocês precisam demonstrar exatamente a equivalência com Z, inclusive no bordo.
+
+A ausência de equilíbrio fora de Zé uma coisa; mostrar que todo ponto de Zpertence ao conjunto de equilíbrio projetado é outra.
+
+14. Portanto, minha classificação atual mudou para isto
+
+A mudança mais importante é:
+
+T8 saiu do vermelho.
+
+Mas:
+
+T9 e T10 ainda na˜o saıˊram do vermelho.
+
+15. Há uma correção de redação que eu faria imediatamente
+
+Eu não publicaria a tabela:
+
+T8 — ResolvidoT9 — ResolvidoT10 — Resolvido
+
+Isso é exatamente o tipo de linguagem que um revisor matemático vai atacar.
+
+Eu substituiria por algo como:
+
+Isso transmite muito mais rigor, não menos.
+
+16. E tem uma coisa que eu considero muito positiva
+
+A resposta não tentou esconder o erro do T8.
+
+Ela diz explicitamente:
+
+a integral de pxMnão é igual a 5/6M.
+
+Isso é exatamente o comportamento que eu gostaria de ver no projeto:
+
+hipoˊtese→ataque→contraexemplo→reformulac¸a˜o→teorema mais fraco poreˊm correto.
+
+Isso é muito melhor cientificamente do que tentar preservar a igualdade original.
+
+17. Meu veredito sobre esta atualização
+
+Eu diria que vocês avançaram bastante, mas a síntese executiva ainda está um passo à frente da matemática efetivamente demonstrada.
+
+O núcleo mais sólido agora é:
+
+Φmult multilinear/harmoˆnicaΦquad possui regia˜o de cegueira fracionaˊria Z-∇Φquadx<0 x∉ZEμZ≥5/6αN
+
+e
+
+Horn linear pode ser tratado como uma cascata cooperativa.
+
+Já a afirmação mais ambiciosa:
+
+MspurΦquad-MspurΦmult→1
+
+ainda precisa de uma prova de massa de bacia.
+
+E T10 ainda precisa fechar:
+
+subcrıˊtico→estrutura de folhas→auseˆncia de mıˊnimos discretos positivos→todos os crıˊticos positivos sa˜o strict saddles→evitac¸a˜o a.a.s.→soluc¸a˜o satisfatoˊria.
+
+Hoje alguns desses elos estão apresentados, mas não todos demonstrados.
+
+Minha recomendação agora é muito específica:
+
+não faça V4.1 adicionando novos teoremas.
+
+Faça uma V4.0.1 de fechamento, com apenas três lemas:
+
+Lema de bacia do Hinge — transformar xt→Zem uma cota sobre a medida de T-1RN;
+
+Lema strict-saddle subcrítico — provar de fato λmin<0para todo crítico positivo relevante;
+
+Lema de estrutura de hiperárvores — provar a propriedade folha-raiz que o T10 usa.
+
+Se esses três fecharem, aí sim eu consideraria que vocês têm uma cadeia teórica realmente forte. Se algum falhar, melhor ainda: teremos identificado exatamente o limite matemático do CLG-R em vez de construir mais uma camada sobre uma premissa não demonstrada.
+
+Resultado | Estado após esta resposta
+
+T1 | 🟢 sólido
+
+T2 | 🟢 sólido
+
+T3 | 🟢 sólido
+
+T4A′ | 🟢 muito forte
+
+T4B | 🟡 provável, precisa prova completa
+
+T5 | 🟢 sólido
+
+T6 | 🟢 sólido
+
+T7B | 🟢 forte
+
+T8 | 🟢 corrigido como cota de Jensen
+
+T9 | 🟡/🔴 ainda não fechado
+
+T10 | 🔴 ainda não fechado
+
+Questão | Estado
+
+T8 | Corrigido: cota inferior de Jensen demonstrada
+
+T9 | Reduzido a família Horn linear/DAG; prova em auditoria
+
+T10 | Reduzido ao regime subcrítico; dependente dos lemas de aciclicidade e strict-saddle
+
+T7B | Fechamento via Lyapunov/LaSalle formalizado; equivalência final Z=Inv⁡Φ=0em auditoria

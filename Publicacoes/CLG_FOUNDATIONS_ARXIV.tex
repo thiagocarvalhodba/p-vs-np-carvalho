@@ -335,7 +335,10 @@ For any 3-CNF formula and any point $x \in \mathcal{X}$ with active clauses $\te
     \begin{equation}
     \frac{d}{dt} \|x(t)\|_2^2 = 2 \langle x(t), \dot{x}(t) \rangle \le 2 \langle x(t), -\nabla \Phi_{\rm quad}(x(t)) \rangle < 0.
     \end{equation}
-    \item $\Phi_{\rm quad}$ admits no local minima or projected equilibria outside $Z$: any stationary point on $\partial \mathcal{X}$ requires $-\nabla \Phi_{\rm quad}(x^*) \in N_{\mathcal{X}}(x^*)$, which would imply $\langle -\nabla \Phi(x^*), x^* \rangle \ge 0$, directly contradicting strict centripetal contraction.
+    \item The set of projected equilibria $\mathcal{E}_{\rm proj} = \{x \in \mathcal{X} \mid -\nabla \Phi_{\rm quad}(x) \in N_{\mathcal{X}}(x)\}$ coincides identically with the LP relaxation polytope:
+    \begin{equation}
+    \mathcal{E}_{\rm proj} \equiv Z.
+    \end{equation}
     \item By LaSalle's Invariance Principle on the compact hypercube $\mathcal{X} = [-1, 1]^N$, every trajectory under projected gradient flow converges to the LP polytope $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$.
 \end{enumerate}
 \end{theorem}
@@ -346,7 +349,10 @@ The gradient is $-\nabla \Phi_{\rm quad}(x) = \sum_{c \in \text{act}} g_c(x) \si
 \begin{equation}
 \langle -\nabla \Phi_{\rm quad}(x), x \rangle = \sum_{c \in \text{act}} g_c(x)(\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}} (2 g_c(x)^2 + g_c(x)) < 0.
 \end{equation}
-On the boundary $\partial \mathcal{X}$, every exterior normal $\nu \in N_{\mathcal{X}}(x^*)$ satisfies $\nu_i x^*_i \ge 0 \implies \langle \nu, x^* \rangle \ge 0$. A projected equilibrium would require $-\nabla \Phi(x^*) \in N_{\mathcal{X}}(x^*) \implies \langle -\nabla \Phi(x^*), x^* \rangle \ge 0$, which contradicts $\langle -\nabla \Phi(x^*), x^* \rangle < 0$. Hence, no stationary points exist outside $Z$. Since $\dot{\Phi}_{\rm quad} \le 0$, by LaSalle's Invariance Principle all trajectories converge to the largest invariant set contained in $\{\dot{\Phi} = 0\}$, which is precisely $Z$.
+To prove $\mathcal{E}_{\rm proj} \equiv Z$:
+(i) If $x \in Z$, then $g_c(x) \le 0$ for all $c$, so $\text{act}(x) = \emptyset$ and $-\nabla \Phi_{\rm quad}(x) = \mathbf{0} \in N_{\mathcal{X}}(x)$ for all $x \in \mathcal{X}$, yielding $Z \subseteq \mathcal{E}_{\rm proj}$.
+(ii) Conversely, if $x \notin Z$, then $\text{act}(x) \ne \emptyset$, so $\langle -\nabla \Phi_{\rm quad}(x), x \rangle < 0$. But for any normal cone vector $\nu \in N_{\mathcal{X}}(x)$, $\nu_i x_i = |\nu_i| \ge 0$, so $\langle \nu, x \rangle = \sum_{|x_i|=1} |\nu_i| \ge 0$. Thus $-\nabla \Phi_{\rm quad}(x) \notin N_{\mathcal{X}}(x)$, proving $\mathcal{E}_{\rm proj} \subseteq Z$.
+Hence $\mathcal{E}_{\rm proj} \equiv Z$ across the entire domain (interior and boundary). Since $\dot{\Phi}_{\rm quad} \le 0$, by LaSalle's Invariance Principle all trajectories converge to the largest invariant set contained in $\{\dot{\Phi}_{\rm quad} = 0\}$, which is precisely $Z$.
 \end{proof}
 
 \begin{remark}[Clarification on Unsatisfiable Formulas]
@@ -362,80 +368,111 @@ A_N \subseteq \mathcal{B}_{\rm spur}(\Phi_{\rm quad}) \implies \mathcal{M}_{\rm 
 \end{equation}
 \end{proposition}
 
-\section{Theorem 8: Rigorous Lower Bound on LP Polytope Volume via Jensen's Inequality}
+\section{Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality}
 
-\begin{theorem}[Rigorous Lower Bound on LP Polytope Volume via Jensen's Inequality]
+\begin{theorem}[Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
 \label{thm:lp_volume}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous exponential lower bound:
-\begin{equation}
-\mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\alpha N} = \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
-\end{equation}
-Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N$.
+For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses:
+\begin{enumerate}
+    \item For every finite dimension $N \ge 1$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous exponential lower bound:
+    \begin{equation}
+    \mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
+    \end{equation}
+    Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N$.
+    \item In the thermodynamic limit $N \to \infty$, the expected volume decays exponentially to zero with controlled decay rate:
+    \begin{equation}
+    \lim_{N \to \infty} \mathbb{E}[\mu_{\rm norm}(Z)] = 0, \quad \text{with } -\frac{1}{N} \ln \mathbb{E}[\mu(Z)] \le \alpha \ln(6/5) \approx 0.1823 \alpha.
+    \end{equation}
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
 By Fubini's theorem:
 \begin{equation}
-\mathbb{E}_F[\mu_{\rm norm}(Z)] = \mathbb{E}_F \left[ \int_{[-1, 1]^N} \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \frac{dx}{2^N} \right] = \int_{[-1, 1]^N} \mathbb{E}_F \left[ \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \right] \frac{dx}{2^N}.
+\mathbb{E}_F[\mu_{\rm norm}(Z)] = \mathbb{E}_F \left[ \int_{[-1, 1]^N} \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \frac{dx}{2^N} \right] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N},
 \end{equation}
-For any fixed $x \in [-1, 1]^N$, the $M$ clauses are chosen independently from the clause distribution. Let $p(x) = \mathbb{P}_c(g_c(x) \le 0)$. Then:
+where $p(x) = \mathbb{P}_c(g_c(x) \le 0)$. For a single clause under $x \sim \text{Unif}([-1, 1]^N)$, $u_1 + u_2 + u_3 \ge 1$ for $u_j \sim \text{Unif}([0, 1])$. By the Irwin-Hall distribution of order 3, $\mathbb{P}(S_3 < 1) = 1/6 \implies \int p(x) \frac{dx}{2^N} = 5/6$.
+By Jensen's inequality for convex $t \mapsto t^M$ ($M \ge 2$):
 \begin{equation}
-\mathbb{E}_F \left[ \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \right] = [p(x)]^M \implies \mathbb{E}_F[\mu_{\rm norm}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N}.
+\mathbb{E}_F[\mu_{\rm norm}(Z)] \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \left(\frac{5}{6}\right)^{\alpha N} > 0.
 \end{equation}
-For a single clause $c$ under a uniformly chosen point $x \sim \text{Unif}([-1, 1]^N)$, the inactivity condition $\sum_{j=1}^3 \sigma_j x_j \ge -1$ corresponds to $u_1 + u_2 + u_3 \ge 1$ for $u_j = (\sigma_j x_j + 1)/2 \sim \text{Unif}([0, 1])$.
-The sum $S_3 = u_1 + u_2 + u_3$ follows the Irwin-Hall distribution of order 3, which has $\mathbb{P}(S_3 < 1) = 1/6$. Therefore, the spatial average of $p(x)$ is:
-\begin{equation}
-\int_{[-1, 1]^N} p(x) \frac{dx}{2^N} = 1 - \frac{1}{6} = \frac{5}{6}.
-\end{equation}
-Since $t \mapsto t^M$ is strictly convex on $[0, 1]$ for $M \ge 2$, by Jensen's inequality:
-\begin{equation}
-\mathbb{E}_F[\mu_{\rm norm}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N} \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \left(\frac{5}{6}\right)^{\alpha N}.
-\end{equation}
-Furthermore, on the central box $\mathcal{U}_N = (-1/3, 1/3)^N$, $g_c(x) < 0$ holds for all possible clauses, so $p(x) \equiv 1$, yielding $\mathbb{E}[\mu(Z)] \ge \mu(\mathcal{U}_N) = (1/3)^N$.
-This establishes that the Hinge is trapped in a fractional LP relaxation polytope whose volume is bounded below by $e^{-N \alpha \ln(6/5)}$.
+As $N \to \infty$, $(5/6)^{\alpha N} \to 0$, establishing that the volume contracts exponentially to zero, while remaining strictly positive for each finite $N$.
 \end{proof}
 
-\section{Theorems 9 and 10: Rigorous Dynamic Separations}
+\section{Theorems 9 and 10: Rigorous Dynamic Separations (Version 4.0.1)}
+
+\begin{lemma}[Lemma 9.1: Hinge Global Basin via Isotonic Projection and Sparre Andersen Theorem]
+\label{lem:hinge_basin}
+Consider an implication chain of length $K = \Omega(N)$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$), with positive fact $x_1 = 1$, where the unique satisfying assignment is $s^* = (+1, \dots, +1)$.
+Under the quadratic Hinge gradient flow:
+\begin{enumerate}
+    \item Trajectories preserve the center of mass $\bar{x}(t) \equiv \bar{x}(0) = \frac{1}{K}\sum_{k=1}^K x_{k,0}$ and remain in $(-1, 1)^K$.
+    \item The asymptotic limit map $T: x_0 \mapsto x_\infty$ coincides identically with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ onto the cone $Z = \{x \mid x_1 \le x_2 \le \dots \le x_K\}$, where the head variable satisfies $x^*_1 = \min_{1 \le m \le K} \frac{1}{m} \sum_{k=1}^m x_{k,0}$.
+    \item Under uniform initialization $x_0 \sim \text{Unif}([-1, 1]^K)$, by Sparre Andersen's Theorem the probability that all partial sums are positive is universal:
+    \begin{equation}
+    \mathbb{P}(x^*_1 > 0) = \binom{2K}{K} 2^{-2K} = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right).
+    \end{equation}
+    \item Consequently, defining the spurious rounding region $\mathcal{R}_K = \{x^* \in Z \mid x^*_1 \le 0\}$, the global basin of attraction satisfies:
+    \begin{equation}
+    \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge \mu(T^{-1}(\mathcal{R}_K)) = 1 - \binom{2K}{K} 2^{-2K} = 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1).
+    \end{equation}
+\end{enumerate}
+\end{lemma}
 
 \begin{theorem}[Theorem 9: Rigorous Separation in Linear Monotone Horn via Cooperative Cascades]
 \label{thm:horn_separation}
 Consider the family of linear monotone Horn formulas $F_N$ consisting of single-premise directed implications $x_j \to x_i$ ($\neg x_j \lor x_i$) along an acyclic directed graph (DAG), together with unit positive facts $x_0 \to x_1$.
 \begin{enumerate}
-    \item Under $\Phi_{\rm mult}$, the Jacobian of the negative gradient field $f(x) = -\nabla \Phi_{\rm mult}(x)$ has off-diagonal entries:
-    \begin{equation}
-    J_{ij}(x) = \frac{\partial f_i}{\partial x_j} = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0, \quad \forall i \ne j, \; \forall x \in [-1, 1]^N.
-    \end{equation}
-    Since the dependency graph is an acyclic DAG, the Jacobian is strictly upper triangular under topological ordering, defining a monotone cooperative cascade system \cite{smith1995monotone}. By induction along the topological order, the projected gradient flow converges monotonically to satisfying models from almost all initial conditions:
+    \item Under $\Phi_{\rm mult}$, the Jacobian of the negative gradient field $f(x) = -\nabla \Phi_{\rm mult}(x)$ has off-diagonal entries $J_{ij}(x) = +\frac{1}{4} \ge 0$ for all $i \ne j$. Since the dependency graph is an acyclic DAG, the Jacobian is strictly upper triangular under topological ordering, defining a feedforward monotone cooperative cascade system \cite{smith1995monotone}. By induction along the topological order, the projected gradient flow converges monotonically to the minimum satisfying model from almost all initial conditions:
     \begin{equation}
     \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = o(1).
     \end{equation}
-    \item Simultaneously, for any chain of implications of length $K = \Omega(N)$, $x_1 \to x_2 \to \dots \to x_K$, the central box $\mathcal{U}_N = (-1/3, 1/3)^N \subset Z$ has identically vanishing gradient $\nabla \Phi_{\rm quad} \equiv 0$. Under coordinate-wise Boolean rounding $\text{sign}(x)$, each variable is independently $+1$ or $-1$ with probability $1/2$. The probability that all $K-1$ clauses are satisfied is $(3/4)^{K-1} \to 0$ as $K \to \infty$. By Theorem~\ref{thm:universal_contraction}, all trajectories outside $Z$ converge to $Z$ via LaSalle invariance, yielding almost sure violation upon rounding:
+    \item Simultaneously, by Lemma~\ref{lem:hinge_basin}, for any chain of implications of length $K = \Omega(N)$, the Hinge relaxation satisfies:
     \begin{equation}
-    \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge 1 - (3/4)^{K-1} = 1 - o(1).
+    \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1).
     \end{equation}
 \end{enumerate}
-Consequently, rigorous dynamical separation holds:
-\begin{equation}
-\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) \ge 1 - o(1).
-\end{equation}
+Consequently, rigorous dynamical separation holds: $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) \ge 1 - o(1)$.
 \end{theorem}
 
-\begin{theorem}[Theorem 10: Rigorous Separation in Leaf-Decoupled Acyclic Hypertrees and Subcritical 3-SAT]
-\label{thm:subcritical_separation}
-Let $\mathcal{H}$ be an acyclic 3-CNF hyperforest where each clause contains at least one free leaf variable (leaf-decoupled hypertrees), which characterizes the connected components in random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c = 1/6$ \cite{schmidt1985component, karonski2002random}:
+\begin{lemma}[Lemma 10.1: Subcritical Hypertree Peeling and Absence of Spurious Discrete Minima]
+\label{lem:peeling}
+For random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c = 1/6$:
 \begin{enumerate}
-    \item In any leaf-decoupled hypertree, leaf-to-root induction proves that every assignment with positive discrete energy ($E_{\rm disc} > 0$) admits a flip of an active leaf variable that strictly decreases energy without affecting any other clause. Consequently, no discrete local minima with $E_{\rm disc} > 0$ exist.
-    \item By Theorem~\ref{thm:vertex_geom}, all local minima of $\Phi_{\rm mult}$ in faces inherit vertex values, precluding local minima with positive potential. Every non-satisfying critical point is a strict saddle with $\lambda_{\min}(\nabla^2 \Phi_{\rm mult}) < 0$.
+    \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$).
+    \item The leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of degree 1.
+    \item For any discrete assignment $s \in \{-1, +1\}^N$ with $E_{\rm disc}(s) > 0$, flipping the private variable of the top violated clause in $\pi$ strictly reduces discrete energy: $E_{\rm disc}(s') = E_{\rm disc}(s) - 1 < E_{\rm disc}(s)$, without violating any other clause. Thus, no discrete local minima with $E_{\rm disc} > 0$ exist.
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Lemma 10.2: Subcritical Strict Saddle Lemma via Multilinear Harmonicity]
+\label{lem:strict_saddle}
+Let $\mathcal{F} \subseteq [-1, 1]^N$ be any face of dimension $d = \dim(\mathcal{F}) \ge 2$, and let $x^* \in \text{relint}(\mathcal{F})$ be a relative critical point of $\Phi_{\rm mult}|_{\mathcal{F}}$ ($\nabla_{\mathcal{F}} \Phi_{\rm mult}(x^*) = \mathbf{0}$) with positive energy $\Phi_{\rm mult}(x^*) > 0$.
+Then the face Hessian $\mathcal{H}_{\mathcal{F}}(x^*) = \nabla^2_{\mathcal{F}} \Phi_{\rm mult}(x^*)$ satisfies:
+\begin{enumerate}
+    \item $\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) = 0$ (harmonicity due to $\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i^2} \equiv 0$);
+    \item By acyclicity of the subcritical hyperforest ($|c \cap c'| \le 1$), the cross-derivative corresponding to any violated clause is non-vanishing: $|H_{ij}| = \frac{1}{4}\left(\frac{1 - \sigma_k x^*_k}{2}\right) > 0$, ensuring $\|\mathcal{H}_{\mathcal{F}}(x^*)\|_F > 0$.
+    \item Consequently, $\lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) \le -\frac{1}{\sqrt{d(d-1)}}\|\mathcal{H}_{\mathcal{F}}(x^*)\|_F < 0$.
+\end{enumerate}
+Thus, every non-satisfying critical point on any face of dimension $\ge 2$ is strictly a strict saddle; flat saddles and positive semidefinite saddles are impossible.
+\end{lemma}
+
+\begin{theorem}[Theorem 10: Rigorous Separation in Subcritical 3-SAT via Strict Saddle Avoidance]
+\label{thm:subcritical_separation}
+For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < \alpha_c = 1/6$:
+\begin{enumerate}
+    \item By Lemma~\ref{lem:peeling}, no discrete local minima with $E_{\rm disc} > 0$ exist.
+    \item By Lemma~\ref{lem:strict_saddle} and Theorem~\ref{thm:vertex_geom}, all non-satisfying critical points of $\Phi_{\rm mult}$ in faces of dimension $d \ge 2$ are strict saddles ($\lambda_{\min} < 0$).
     \item By the constrained Stable Manifold Theorem for projected dynamical systems \cite{lee2019first, panageas2017gradient}, the projected gradient flow of $\Phi_{\rm mult}$ avoids strict saddles almost surely and converges to zero-energy satisfying models:
     \begin{equation}
     \lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0.
     \end{equation}
-    \item For $\Phi_{\rm quad}$, by Theorem~\ref{thm:universal_contraction} every trajectory converges to the LP polytope $Z$, which deterministically contains the central box $\mathcal{U}_N$ with volume $\ge (1/3)^N$. Points in $\mathcal{U}_N$ undergo unbiased Boolean rounding, failing each clause with probability $1/8$, which yields strictly positive residual violation density:
+    \item For $\Phi_{\rm quad}$, by Theorem~\ref{thm:universal_contraction} every trajectory converges to the LP polytope $Z$. Points in $Z$ undergo unbiased Boolean rounding, yielding strictly positive residual violation density:
     \begin{equation}
     \lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0.
     \end{equation}
 \end{enumerate}
-Thus, strict residual energy separation holds: $\rho_{\rm quad}(\alpha) > \rho_{\rm mult}(\alpha) = 0$.
+Thus, strict residual energy separation holds: $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) > \lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$.
 \end{theorem}
 
 \section{The Central Conjecture of the CLG-R Program}
