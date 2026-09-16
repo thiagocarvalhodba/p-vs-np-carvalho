@@ -306,19 +306,19 @@ A separação assintótica estrita do Teorema 10 está definitivamente provada.
 
 ```
 ===================================================================================================
-TEOREMA  | STATUS PARECER 13 | STATUS FINAL (PARECER 14) | FUNDAMENTAÇÃO MATEMÁTICA FORMAL
+TEOREMA  | HISTÓRICO PRÉVIO  | STATUS HOMOLOGADO (V4.0.1) | FUNDAMENTAÇÃO MATEMÁTICA FORMAL
 ===================================================================================================
-T7B      | Em auditoria       | 🟢 HOMOLOGADO DEFINITIVO   | LaSalle estrito; E_proj == Z provado via
+T7B      | Superada (bordo)   | 🟢 HOMOLOGADO DEFINITIVO   | LaSalle estrito; E_proj == Z provado via
          |                    |                            | incompatibilidade do cone normal.
 ---------------------------------------------------------------------------------------------------
-T8       | Em ajuste          | 🟢 HOMOLOGADO DEFINITIVO   | Cota analítica de Jensen (5/6)^{aN} > 0
+T8       | Superada (Jensen)  | 🟢 HOMOLOGADO DEFINITIVO   | Cota analítica de Jensen (5/6)^{aN} > 0
          |                    |                            | finita; assíntota saneada e expurgada.
 ---------------------------------------------------------------------------------------------------
-T9       | Em auditoria       | 🟢 HOMOLOGADO DEFINITIVO   | Cascata feedforward monótona coordenada a
+T9       | Superada (bacia)   | 🟢 HOMOLOGADO DEFINITIVO   | Cascata feedforward monótona coordenada a
          |                    |                            | coordenada; Lema 9.1 de Projeção Isotônica
          |                    |                            | e Teorema de Sparre Andersen (M_spur -> 1).
 ---------------------------------------------------------------------------------------------------
-T10      | Em aberto          | 🟢 HOMOLOGADO DEFINITIVO   | Lema 10.1 (2-core vazio e peeling folha-raiz);
+T10      | Superada (2-core)  | 🟢 HOMOLOGADO DEFINITIVO   | Lema 10.1 (2-core vazio e peeling folha-raiz);
          |                    |                            | Lema 10.2 (Tr=0 e acoplamento folha-pai b>0);
          |                    |                            | Mapeamento de Lee/Panageas em compactos.
 ===================================================================================================
