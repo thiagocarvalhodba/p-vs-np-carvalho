@@ -36,7 +36,7 @@ Rigorous Dynamic Separations in Continuous Relaxations of 3-SAT}}
     \texttt{thiago.carvalho.dba@gmail.com}
 }
 
-\date{September 11, 2026}
+\date{September 16, 2026}
 
 \begin{document}
 
@@ -53,9 +53,9 @@ We prove:
 (5) The Softplus relaxation factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, attaining global strict convexity when $\text{rank}(V) = N$, with condition number bounded by $\kappa(\nabla^2 \Phi) \le \kappa(W(x)) \kappa(V^T V)$;
 (6) The Lipschitz constant of the gradient field scales as $L_\beta = \Theta(\beta)$, while finite IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau;
 (7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal convergence to $Z$;
-(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the rigorous lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)}$ via the Irwin-Hall distribution of order 3;
-(9) We prove rigorous dynamical separation in monotone Horn families via cooperative cascades and Hirsch dynamical systems theory;
-(10) We prove rigorous separation in leaf-decoupled acyclic hypertrees and subcritical random 3-SAT ($\alpha < 1/6$) via strict saddle avoidance.
+(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
+(9) We analyze dynamical behavior in monotone Horn families, showing that multilinear gradient flow converges to zero-energy models via Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
+(10) We analyze subcritical random 3-SAT ($\alpha < 1/6$), establishing strict saddle avoidance for the multilinear relaxation in faces of dimension $d \ge 2$ conditioned on leaf structures ($H_{\rm leaf}$), classifying the dynamics on 1-dimensional edges, and formalizing the open status of global dynamical separation against Hinge.
 Finally, we delimit the Central Conjecture of CLG-R to the clustering interval $\alpha \in (\alpha_d, \alpha_s)$.
 \end{abstract}
 
@@ -387,22 +387,20 @@ A_N \subseteq \mathcal{B}_{\rm spur}(\Phi_{\rm quad}) \implies \mathcal{M}_{\rm 
 \end{equation}
 \end{proposition}
 
+\begin{remark}[Analytical Audit Note on Proposition 7A and Competitive Jacobian Sign]
+For purely negative clauses $c = (\neg x_i \lor \neg x_j \lor \neg x_k)$, the multilinear clause potential is $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, yielding second derivative $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequently, the off-diagonal Jacobian entries are $J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} \le 0$, indicating an inhibitory/competitive dynamical interaction rather than cooperative Hirsch dynamics. The multilinear dynamical characterization of $F_N$ is placed under active structural re-audit.
+\end{remark}
+
 \section{Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality}
 
-\begin{theorem}[Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
+\begin{theorem}[Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
 \label{thm:lp_volume}
 For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses:
-\begin{enumerate}
-    \item For every finite dimension $N \ge 1$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous exponential lower bound:
-    \begin{equation}
-    \mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
-    \end{equation}
-    Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N$.
-    \item In the thermodynamic limit $N \to \infty$, the expected volume decays exponentially to zero with controlled decay rate:
-    \begin{equation}
-    \lim_{N \to \infty} \mathbb{E}[\mu_{\rm norm}(Z)] = 0, \quad \text{with } -\frac{1}{N} \ln \mathbb{E}[\mu(Z)] \le \alpha \ln(6/5) \approx 0.1823 \alpha.
-    \end{equation}
-\end{enumerate}
+For every finite dimension $N \ge 1$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous finite-dimensional exponential lower bound:
+\begin{equation}
+\mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
+\end{equation}
+Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N > 0$.
 \end{theorem}
 
 \begin{proof}
@@ -415,7 +413,7 @@ By Jensen's inequality for convex $t \mapsto t^M$ ($M \ge 2$):
 \begin{equation}
 \mathbb{E}_F[\mu_{\rm norm}(Z)] \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \left(\frac{5}{6}\right)^{\alpha N} > 0.
 \end{equation}
-As $N \to \infty$, $(5/6)^{\alpha N} \to 0$, establishing that the volume contracts exponentially to zero, while remaining strictly positive for each finite $N$.
+This establishes a strictly positive lower bound for each finite dimension $N$. We emphasize that this lower bound does not demonstrate that $\lim_{N \to \infty} \mathbb{E}[\mu_{\rm norm}(Z)] = 0$, which would require an independent upper bound.
 \end{proof}
 
 \section{Theorems 9 and 10: Dynamic Analysis, Structural Lemmata, and Open Challenges}
@@ -451,7 +449,7 @@ For random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c =
     \begin{equation}
     \mathbb{E}\left[\#\{c \ne c' \mid |c \cap c'| \ge 2\}\right] \le \binom{M}{2} \frac{18(N-3)}{N(N-1)(N-2)} \le 9 \alpha^2 < \frac{1}{4}.
     \end{equation}
-    Because $9\alpha^2 = \mathcal{O}(1)$ is a constant independent of $N$ (e.g., $9(0.12)^2 = 0.1296$ at $\alpha = 0.12$), Markov's inequality yields $\mathbb{P}(X \ge 1) \le 9\alpha^2$, but does not imply $\mathbb{P}(X = 0) \to 1$. Therefore, strict linearity across all components is not established a.a.s. by this first moment alone; almost all components are linear hypertrees, but strict global linearity remains conditional.
+    The first-moment bound demonstrates that the expected number of clause pairs sharing at least two variables is bounded by $9\alpha^2 = \mathcal{O}(1)$. The rigorous decomposition into a core of strictly linear components plus a set of $\mathcal{O}_{\mathbb{P}}(1)$ defects remains subject to additional structural hypergraph analysis.
     \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), since $\alpha < 1/6 \ll \alpha_{\rm core} \approx 0.8183$.
     \item Conditioned on the linear hyperforest structure ($|c \cap c'| \le 1$), the leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of global degree 1 (appearing in no other clause of the formula). Flipping a private degree-1 variable of a violated leaf strictly reduces $E_{\rm disc}$ without violating any other clause, establishing the absence of discrete local minima with $E_{\rm disc} > 0$ under this structural hypothesis.
 \end{enumerate}
@@ -480,9 +478,14 @@ Thus, conditioned on $H_{\rm leaf}$, every non-satisfying relative critical poin
 \label{thm:subcritical_separation}
 For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$:
 \begin{enumerate}
-    \item Under the structural hypothesis $H_{\rm leaf}$, by Lemmata~\ref{lem:peeling} and \ref{lem:strict_saddle}, all non-satisfying relative critical points of $\Phi_{\rm mult}$ in faces of dimension $d \ge 2$ are strict saddles ($\lambda_{\min} < 0$), and no discrete positive local minima exist.
-    \item By the constrained Stable Manifold Theorem for projected dynamical systems \cite{lee2019first, panageas2017gradient}, the set of initial conditions converging to strict saddles has Lebesgue measure zero, ensuring almost sure convergence to zero-energy satisfying models: $\lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$.
-    \item \textbf{Status of Separation:} While Theorem~\ref{thm:universal_contraction} establishes that Hinge trajectories converge to the LP polytope $Z$, proving an analytical lower bound $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0$ requires a standalone subcritical basin analysis (which cannot be inherited from Theorem 8 or Theorem 9). Consequently, Theorem 10 is classified as \textbf{Not Closed / Under Active Investigation}.
+    \item \textbf{Classification across Face Dimensions under $H_{\rm leaf}$:}
+    \begin{itemize}
+        \item \textit{Faces of dimension $d \ge 2$:} By Lemma~\ref{lem:strict_saddle}, all non-satisfying relative critical points are strict saddles ($\lambda_{\min} < 0$).
+        \item \textit{Faces of dimension $d = 0$ (Vertices):} By Lemma~\ref{lem:peeling}, no positive Boolean local minima exist.
+        \item \textit{Faces of dimension $d = 1$ (Edges):} Restricted to any edge $\mathcal{F}$, $\Phi_{\rm mult}(t) = a t + b$ is strictly affine. If $a \ne 0$, the edge contains no interior relative critical points (the constant non-zero gradient drives trajectories into vertices). If $a = 0$, $\nabla_{\mathcal{F}} \Phi_{\rm mult} \equiv 0$, rendering the entire open edge a degenerate flat critical segment where $\Phi_{\rm mult}(x) = E_{\rm disc}(v_1) = E_{\rm disc}(v_2)$. Such degenerate flat manifolds are not covered by strict-saddle evasion theorems.
+    \end{itemize}
+    \item By the constrained Stable Manifold Theorem for projected dynamical systems \cite{lee2019first, panageas2017gradient}, trajectories avoiding degenerate flat critical sets converge to zero-energy satisfying models almost surely on non-degenerate components.
+    \item \textbf{Status of Separation:} While Theorem~\ref{thm:universal_contraction} establishes that Hinge trajectories converge to the LP polytope $Z$, proving an analytical lower bound $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0$ requires a standalone subcritical basin analysis (which cannot be inherited from Theorem 8 or Theorem 9), and resolving the $d=1$ flat edge degeneracy remains necessary. Consequently, Theorem 10 is classified as \textbf{Not Closed / Under Active Investigation}.
 \end{enumerate}
 \end{theorem}
 
@@ -532,15 +535,16 @@ Theorem 1 (Central Box $\mathcal{U}_N$) & \textbf{Closed} (Deterministic, slack 
 Theorem 2 (Measure Zero Critical Sets) & \textbf{Closed under stated hypotheses} (Fubini / Real Analytic) \\
 Theorem 3 (Harmonicity and Saddles) & \textbf{Closed with hypotheses} (Harmonic, Milnor Curve Selection) \\
 Theorem 4A$'$ (Face Minima without H4) & \textbf{Closed} (Inherited vertex energies) \\
-Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed} (Strict Lyapunov on compact hypercube) \\
-Theorem 5 (Hessian Factorization) & \textbf{Closed with rank/convexity conditions} ($V^T W V \succeq 0$) \\
-Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed with IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
+Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed, subject to final projected system formulation} \\
+Theorem 5 (Hessian Factorization) & \textbf{Closed under stated conditions} ($V^T W V \succeq 0$) \\
+Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed under IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
 Theorem 7B (Centripetal Contraction) & \textbf{Near Closed} ($\mathcal{E}_{\rm proj} \equiv Z$, normal cone conventions explicit) \\
-Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional bound} ($\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$) \\
+Proposition 7A (Constructive Negative Family) & \textbf{Under Re-Audit} (Competitive Jacobian sign $J_{ij} \le 0$) \\
+Theorem 8 (Jensen Volume Bound) & \textbf{Closed only as finite-dimensional lower bound} ($\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$) \\
 Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
-Lemma 10.1 (Hypertree Overlap Bound) & \textbf{Partially Closed} ($\mathbb{E}[X] \le 9\alpha^2 = \mathcal{O}(1)$, $2\text{-core} = \emptyset$ a.a.s.) \\
+Lemma 10.1 (Hypertree Overlap Bound) & \textbf{Partially Closed} ($9\alpha^2 = \mathcal{O}(1)$, structural decomposition pending) \\
 Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Closed conditionally under structural leaf hypothesis $H_{\rm leaf}$} \\
-Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Not Closed} (Multilinear avoidance closed; Hinge separation open) \\
+Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Not Closed} ($d=1$ flat edges and Hinge separation open) \\
 Central Conjecture & \textbf{Delimited Conjecture} ($\alpha \in (\alpha_d, \alpha_s)$ / planted ensemble) \\
 Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from $P$ vs $NP$) \\
 \bottomrule
