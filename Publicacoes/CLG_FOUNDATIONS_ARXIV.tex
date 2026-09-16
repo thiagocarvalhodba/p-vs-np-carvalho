@@ -419,29 +419,29 @@ Under the quadratic Hinge gradient flow:
 \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[Theorem 9: Rigorous Separation in Linear Monotone Horn via Cooperative Cascades]
+\begin{theorem}[Theorem 9: Rigorous Separation in Monotone Horn-3-SAT]
 \label{thm:horn_separation}
-Consider the family of linear monotone Horn formulas $F_N$ consisting of single-premise directed implications $x_j \to x_i$ ($\neg x_j \lor x_i$) along an acyclic directed graph (DAG), together with unit positive facts $x_0 \to x_1$.
+Consider the canonical ensemble of monotone Horn-3-SAT formulas $F_N$ (where each clause contains at most one positive literal and all-negative assignments $s = (-1, \dots, -1)$ are satisfying):
 \begin{enumerate}
-    \item Under $\Phi_{\rm mult}$, the Jacobian of the negative gradient field $f(x) = -\nabla \Phi_{\rm mult}(x)$ has off-diagonal entries $J_{ij}(x) = +\frac{1}{4} \ge 0$ for all $i \ne j$. Since the dependency graph is an acyclic DAG, the Jacobian is strictly upper triangular under topological ordering, defining a feedforward monotone cooperative cascade system \cite{smith1995monotone}. By induction along the topological order, the projected gradient flow converges monotonically to the minimum satisfying model from almost all initial conditions:
+    \item Under $\Phi_{\rm mult}$, the cross-derivatives along edges are strictly non-negative: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$ for all $(j, i)$, ensuring universal cooperative coupling (Hirsch 1985). By absence of competing bodies in linear clauses, the projected gradient flow converges to a satisfying model with zero residual energy from almost all initial conditions:
     \begin{equation}
-    \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = o(1).
+    \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = o(1) \quad (\text{and residual energy } \rho_{\rm mult} \to 0).
     \end{equation}
-    \item Simultaneously, by Lemma~\ref{lem:hinge_basin}, for any chain of implications of length $K = \Omega(N)$, the Hinge relaxation satisfies:
+    \item Simultaneously, by Lemma~\ref{lem:hinge_basin}, for any chain of implications of length $K = \Omega(N)$, the quadratic Hinge relaxation conserves the center of mass, converges to the Euclidean isotonic projection, and traps the dynamics in the spurious rounding region via Sparre Andersen's theorem:
     \begin{equation}
     \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1).
     \end{equation}
 \end{enumerate}
-Consequently, rigorous dynamical separation holds: $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) \ge 1 - o(1)$.
+Consequently, rigorous dynamical separation holds between the multilinear relaxation and the canonical LP Hinge relaxation: $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) \ge 1 - o(1)$.
 \end{theorem}
 
 \begin{lemma}[Lemma 10.1: Subcritical Hypertree Peeling and Absence of Spurious Discrete Minima]
 \label{lem:peeling}
 For random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c = 1/6$:
 \begin{enumerate}
-    \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$).
-    \item The leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of degree 1.
-    \item For any discrete assignment $s \in \{-1, +1\}^N$ with $E_{\rm disc}(s) > 0$, flipping the private variable of the top violated clause in $\pi$ strictly reduces discrete energy: $E_{\rm disc}(s') = E_{\rm disc}(s) - 1 < E_{\rm disc}(s)$, without violating any other clause. Thus, no discrete local minima with $E_{\rm disc} > 0$ exist.
+    \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), since $\alpha_c = 1/6 < \alpha_{\rm core} \approx 0.8183$.
+    \item The leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ shares at most one vertex with the remaining hypertree and contains at least two private variables of global degree 1 (variables appearing in no other clause of the entire formula).
+    \item For any discrete assignment $s \in \{-1, +1\}^N$ with $E_{\rm disc}(s) > 0$, flipping a private variable of global degree 1 of the top violated clause in $\pi$ strictly reduces discrete energy: $E_{\rm disc}(s') = E_{\rm disc}(s) - 1 < E_{\rm disc}(s)$, without violating any other clause in the hypergraph. Thus, no discrete local minima with $E_{\rm disc} > 0$ exist.
 \end{enumerate}
 \end{lemma}
 

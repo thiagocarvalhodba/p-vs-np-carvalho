@@ -290,14 +290,14 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Teorema 9 (Separação Rigorosa em Horn Monótono Linear via Cascatas Cooperativas)
-> **Teorema 9 (Separação Analítica Exata em Fórmulas Horn Monótonas Lineares).**  
-> *Considere a família de fórmulas Horn monótonas lineares $F_N$ com implicações unitárias dirigidas $x_j \to x_i$ ($\neg x_j \lor x_i$) ao longo de um grafo acíclico direcionado (DAG), juntamente com fatos unitários positivos $x_0 \to x_1$.*  
-> *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, os elementos fora da diagonal da Jacobiana do campo $f(x) = -\nabla \Phi_{\text{mult}}(x)$ satisfazem $J_{ij}(x) = +\frac{1}{4} \ge 0$ para todo $i \ne j$. Por ser um DAG acíclico, sob ordenação topológica a Jacobiana é estritamente triangular superior, definindo um sistema monótono em cascata cooperativa alimentada para frente (Smith 1995; Sontag 1995). Por indução ao longo da ordenação topológica, o fluxo projetado converge monotonicamente para o modelo mínimo satisfatível a partir de quase toda condição inicial:*
-> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1)$$
-> *2. Simultaneamente, pelo Lema 9.1, para qualquer cadeia de implicações de comprimento $K = \Omega(N)$, a relaxação Hinge satisfaz:*
+### Teorema 9 (Separação Rigorosa em Horn-3-SAT Monótono)
+> **Teorema 9 (Separação Analítica Exata em Horn-3-SAT Monótono).**  
+> *Considere o ensemble canônico de fórmulas Horn-3-SAT monótonas $F_N$ (onde cada cláusula contém no máximo um literal positivo e o modelo de todos falsos $s = (-1, \dots, -1)$ é satisfatível):*  
+> *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, as derivadas cruzadas ao longo das arestas de implicação são estritamente não-negativas: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$, garantindo a cooperatividade estrita de Hirsch (1985). Pela ausência de corpos concorrentes em cláusulas lineares, o fluxo gradiente projetado converge quase universalmente para um modelo satisfatível com energia residual nula:*
+> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1) \quad (\text{e } \lim_{N \to \infty} \rho_{\text{mult}} = 0)$$
+> *2. Simultaneamente, pelo Lema 9.1, para qualquer cadeia de implicações de comprimento $K = \Omega(N)$, a relaxação quadrática Hinge conserva o centro de massa, converge para a projeção isotônica euclidiana e colapsa a dinâmica no platô espúrio com probabilidade Sparre Andersen:*
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1)$$
-> *Consequentemente, a separação estrita de massas de bacia é analiticamente demonstrada:*
+> *Consequentemente, a separação estrita de massas de bacia e energia residual é analiticamente demonstrada:*
 > $$\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) - \mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) \ge 1 - o(1)$$
 
 ---
@@ -305,12 +305,11 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 ### Lema 10.1 (Hiperárvores Subcríticas e Peeling Folha-Raiz via Ausência de 2-Núcleo)
 > **Lema 10.1 (Estrutura Subcrítica de Hiperárvores, Peeling e Ausência de Mínimos Discretos).**  
 > *Para o ensemble de 3-SAT aleatório abaixo do limiar de percolação de hipergrafos $\alpha < \alpha_c = 1/6$:*
-> 1. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio:*
->    $$\mathbb{P}(2\text{-core}(H) = \emptyset) = 1 - \mathcal{O}(1/N)$$
-> 2. *O algoritmo de poda sucessiva de folhas (leaf-peeling algorithm) termina eliminando todas as hiperarestas, induzindo uma ordem de eliminação $\pi = (c_1, \dots, c_M)$ onde cada cláusula $c_t$ possui ao menos duas variáveis livres de grau 1 na subestrutura.*
-> 3. *Para qualquer valoração booleana discreta $s \in \{-1, +1\}^N$ com $E_{\text{disc}}(s) > 0$, inverter o sinal da variável livre da cláusula violada mais próxima das folhas reduz estritamente a energia:*
+> 1. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core}(H) = \emptyset) = 1 - \mathcal{O}(1/N)$), pois $\alpha_c = 1/6 \approx 0.1667 < \alpha_{\text{core}} \approx 0.8183$.*
+> 2. *O algoritmo de poda sucessiva de folhas (leaf-peeling algorithm) termina eliminando todas as hiperarestas, induzindo uma ordem de eliminação $\pi = (c_1, \dots, c_M)$ onde cada cláusula folha $c_t$ compartilha no máximo 1 vértice com a subestrutura restante e possui pelo menos duas variáveis privadas de grau global 1 (variáveis que aparecem em nenhuma outra cláusula de toda a fórmula).*
+> 3. *Para qualquer valoração booleana discreta $s \in \{-1, +1\}^N$ com $E_{\text{disc}}(s) > 0$, inverter o sinal de uma variável privada de grau global 1 da cláusula violada mais próxima das folhas reduz estritamente a energia:*
 >    $$E_{\text{disc}}(s') = E_{\text{disc}}(s) - 1 < E_{\text{disc}}(s)$$
->    *sem violar nenhuma outra cláusula. Consequentemente, não existe nenhum mínimo local discreto com $E_{\text{disc}} > 0$.*
+>    *sem violar nenhuma outra cláusula de todo o hipergrafo. Consequentemente, não existe nenhum mínimo local discreto com $E_{\text{disc}} > 0$.*
 
 ---
 
