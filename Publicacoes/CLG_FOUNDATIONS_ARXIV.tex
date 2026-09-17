@@ -26,7 +26,7 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 
-\title{\textbf{Computational Landscape Geometry and Representation (CLG-R):\\
+\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.2):\\
 Exact Critical Sets, Harmonic Vertex Confinement, and\\
 Rigorous Dynamic Separations in Continuous Relaxations of 3-SAT}}
 
@@ -36,7 +36,7 @@ Rigorous Dynamic Separations in Continuous Relaxations of 3-SAT}}
     \texttt{thiago.carvalho.dba@gmail.com}
 }
 
-\date{September 16, 2026}
+\date{September 17, 2026}
 
 \begin{document}
 
@@ -378,17 +378,22 @@ Therefore, $\mathcal{E}_{\rm proj} \equiv Z$ holds identically on $\mathcal{X}$.
 For any unsatisfiable (UNSAT) formula, every Boolean vertex satisfies $E_{\rm disc}(s) \ge 1$. Consequently, the spurious basin mass is identically $\mathcal{M}_{\rm spur} \equiv 1$ for all continuous representations ($\Phi_{\rm quad}, \Phi_{\rm mult}, \Phi_{\rm soft}$). The separation $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = 1 - 1 = 0$ is zero for UNSAT. The true divergence occurs on satisfiable instances where $\Phi_{\rm mult}$ finds satisfying vertices while $\Phi_{\rm quad}$ is trapped in the fractional LP polytope $Z$.
 \end{remark}
 
-\begin{proposition}[Proposition 7A: Constructive Family $F_N$ and Spurious Basin Mass]
+\begin{proposition}[Proposition 7A: Jacobian Structure for Purely Negative Clause Families (Under Re-Audit)]
 \label{prop:constructive_basin}
-Let $N \ge 4$. Consider the formula $F_N$ consisting of all $M = \binom{N}{3}$ purely negative clauses.
-Under projected gradient descent, the open domain $A_N = (1/3, 1)^N$ converges to the LP polytope $Z$ with all coordinates remaining non-negative ($x_i(t) \ge 0$), yielding spurious Boolean rounding $\text{sign}(x) = (+1, \dots, +1)$ in 100\% of trajectories:
-\begin{equation}
-A_N \subseteq \mathcal{B}_{\rm spur}(\Phi_{\rm quad}) \implies \mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge \left(\frac{1}{3}\right)^N > 0.
-\end{equation}
+Let $N \ge 4$. Consider the formula $F_N$ consisting of all $M = \binom{N}{3}$ purely negative clauses $c = (\neg x_i \lor \neg x_j \lor \neg x_k)$.
+\begin{enumerate}
+    \item \textbf{Competitive Jacobian Structure:} For the multilinear relaxation $\Phi_{\rm mult}$, each clause potential is $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$. On the hypercube $\mathcal{X} = [-1, 1]^N$, the cross-derivatives satisfy $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequently, the off-diagonal entries of the Jacobian matrix $J(x) = D(-\nabla \Phi_{\rm mult}(x)) = -\nabla^2 \Phi_{\rm mult}(x)$ satisfy:
+    \begin{equation}
+    J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j.
+    \end{equation}
+    The multilinear gradient flow $\dot{x} = -\nabla \Phi_{\rm mult}(x)$ is therefore strictly competitive/inhibitory. It violates the Kamke-M\"uller condition ($J_{ij} \ge 0$) required for cooperative/monotone dynamical systems, precluding any direct invocation of Hirsch's monotone convergence theorems.
+    \item \textbf{Hinge Spurious Basin:} For the quadratic Hinge relaxation $\Phi_{\rm quad}$, the open domain $A_N = (1/3, 1)^N$ converges under projected gradient descent to the LP polytope $Z$ with non-negative coordinates ($x_i(t) \ge 0$), yielding spurious Boolean rounding $\text{sign}(x) = (+1, \dots, +1)$ with positive basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) \ge (1/3)^N > 0$.
+    \item \textbf{Audit Status:} The dynamical characterization of the multilinear flow on $F_N$ is formally suspended under active structural re-audit.
+\end{enumerate}
 \end{proposition}
 
-\begin{remark}[Analytical Audit Note on Proposition 7A and Competitive Jacobian Sign]
-For purely negative clauses $c = (\neg x_i \lor \neg x_j \lor \neg x_k)$, the multilinear clause potential is $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, yielding second derivative $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequently, the off-diagonal Jacobian entries are $J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} \le 0$, indicating an inhibitory/competitive dynamical interaction rather than cooperative Hirsch dynamics. The multilinear dynamical characterization of $F_N$ is placed under active structural re-audit.
+\begin{remark}[Analytical Audit Note on Proposition 7A]
+The derivation confirms that interactions between variables in negative clauses exert mutual competitive suppression ($J_{ij} \le 0$). Analyzing convergence on such competitive systems requires distinct invariant manifold methods rather than order-preserving flows.
 \end{remark}
 
 \section{Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality}
@@ -418,11 +423,11 @@ This establishes a strictly positive lower bound for each finite dimension $N$. 
 
 \section{Theorems 9 and 10: Dynamic Analysis, Structural Lemmata, and Open Challenges}
 
-\begin{lemma}[Lemma 9.1: Isotonic Projection Analysis, Stirling Expansion, and the Unit-Fact Falsification]
+\begin{lemma}[Lemma 9.1: Implication Chain Dynamics, Stirling Expansion, and Unit-Fact Falsification]
 \label{lem:hinge_basin}
 Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$):
 \begin{enumerate}
-    \item \textbf{Pure Implication Chain (No Unit Fact):} In the absence of external facts, the Hinge penalty is purely telescoping: $\Phi_{\rm quad}(x) = \sum_{k=1}^{K-1} \left[\max\left(0, \frac{x_k - x_{k+1}}{2}\right)\right]^2$. Trajectories strictly conserve the center of mass: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, and the asymptotic limit map $T: x_0 \mapsto x_\infty$ coincides with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ onto the cone $Z = \{x \in [-1, 1]^K \mid x_1 \le x_2 \le \dots \le x_K\}$.
+    \item \textbf{Pure Implication Chain (Conservation of Mean vs. Isotonic Limit):} In the absence of external facts, the Hinge penalty is purely telescoping: $\Phi_{\rm quad}(x) = \sum_{k=1}^{K-1} \left[\max\left(0, \frac{x_k - x_{k+1}}{2}\right)\right]^2$. Trajectories strictly conserve the center of mass: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, constraining the dynamics to affine hyperplanes of constant mean. While heuristic and numerical evidence associates the asymptotic state with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ (via Pool Adjacent Violators) onto the cone $Z = \{x \in [-1, 1]^K \mid x_1 \le x_2 \le \dots \le x_K\}$, the rigorous proof that continuous non-smooth Hinge gradient flow trajectories converge identically to $\Pi_Z(x_0)$ constitutes an independent analytical problem and remains open.
     \item \textbf{Exact Stirling Fluctuation Probability:} Under uniform initialization $x_0 \sim \text{Unif}([-1, 1]^K)$, by the Sparre Andersen Theorem for symmetric exchangeable random walks, the probability that the head variable converges to a strictly positive value satisfies the exact asymptotic expansion:
     \begin{equation}
     \mathbb{P}(x^*_1 > 0) = \frac{\binom{2K}{K}}{4^K} = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right) = \Theta\left(\frac{1}{\sqrt{K}}\right).
@@ -436,7 +441,7 @@ Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_
 \label{thm:horn_separation}
 Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = (-1, \dots, -1)$ are satisfying:
 \begin{enumerate}
-    \item While isolated binary implications $\neg x_i \lor x_j$ induce non-negative cross-derivatives ($J_{ij} = +1/4 \ge 0$), general Horn 3-SAT clauses with multiple negative literals induce competing cross-derivatives with $J_{ij}(x) \le 0$ as established in Remark~\ref{prop:constructive_basin}. Consequently, the multilinear gradient flow on general Horn-3-SAT forms a competitive dynamical system, rendering Hirsch's monotone cooperativity theorems directly inapplicable and leaving the global convergence to satisfying models an open problem.
+    \item While isolated binary implications $\neg x_i \lor x_j$ induce non-negative cross-derivatives ($J_{ij} = +1/4 \ge 0$), general Horn 3-SAT clauses with multiple negative literals induce competing cross-derivatives with $J_{ij}(x) \le 0$ as established in Proposition~\ref{prop:constructive_basin}. Consequently, the multilinear gradient flow on general Horn-3-SAT forms a competitive dynamical system, rendering Hirsch's monotone cooperativity theorems directly inapplicable and leaving the global convergence to satisfying models an open problem.
     \item \textbf{Status of Dynamic Separation:} Characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
 \end{enumerate}
 \end{theorem}
@@ -450,7 +455,7 @@ For random 3-SAT below the hypergraph percolation threshold $\alpha < \alpha_c =
     \mathbb{E}\left[\#\{c \ne c' \mid |c \cap c'| \ge 2\}\right] \le \binom{M}{2} \frac{18(N-3)}{N(N-1)(N-2)} \le 9 \alpha^2 < \frac{1}{4}.
     \end{equation}
     The first-moment bound demonstrates that the expected number of clause pairs sharing at least two variables is bounded by $9\alpha^2 = \mathcal{O}(1)$. The rigorous decomposition into a core of strictly linear components plus a set of $\mathcal{O}_{\mathbb{P}}(1)$ defects remains subject to additional structural hypergraph analysis.
-    \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), since $\alpha < 1/6 \ll \alpha_{\rm core} \approx 0.8183$.
+    \item The 2-core of hyperedges is asymptotically almost surely empty ($\mathbb{P}(2\text{-core} = \emptyset) \to 1$ as $N \to \infty$), since $\alpha < 1/6 \ll \alpha_{\rm core} \approx 0.8183$.
     \item Conditioned on the linear hyperforest structure ($|c \cap c'| \le 1$), the leaf-peeling algorithm $\mathcal{A}_{\rm peel}$ terminates, inducing an elimination ordering $\pi = (c_1, \dots, c_M)$ where each leaf clause $c_t$ contains at least two private variables of global degree 1 (appearing in no other clause of the formula). Flipping a private degree-1 variable of a violated leaf strictly reduces $E_{\rm disc}$ without violating any other clause, establishing the absence of discrete local minima with $E_{\rm disc} > 0$ under this structural hypothesis.
 \end{enumerate}
 \end{lemma}
@@ -482,9 +487,9 @@ For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$:
     \begin{itemize}
         \item \textit{Faces of dimension $d \ge 2$:} By Lemma~\ref{lem:strict_saddle}, all non-satisfying relative critical points are strict saddles ($\lambda_{\min} < 0$).
         \item \textit{Faces of dimension $d = 0$ (Vertices):} By Lemma~\ref{lem:peeling}, no positive Boolean local minima exist.
-        \item \textit{Faces of dimension $d = 1$ (Edges):} Restricted to any edge $\mathcal{F}$, $\Phi_{\rm mult}(t) = a t + b$ is strictly affine. If $a \ne 0$, the edge contains no interior relative critical points (the constant non-zero gradient drives trajectories into vertices). If $a = 0$, $\nabla_{\mathcal{F}} \Phi_{\rm mult} \equiv 0$, rendering the entire open edge a degenerate flat critical segment where $\Phi_{\rm mult}(x) = E_{\rm disc}(v_1) = E_{\rm disc}(v_2)$. Such degenerate flat manifolds are not covered by strict-saddle evasion theorems.
+        \item \textit{Faces of dimension $d = 1$ (Edges):} Restricted to any edge $\mathcal{F}$, $\Phi_{\rm mult}(t) = a t + b$ is affine. If $a \ne 0$, the edge contains no interior relative critical points (the constant non-zero gradient drives trajectories into vertices). If $a = 0$, $\nabla_{\mathcal{F}} \Phi_{\rm mult} \equiv 0$, rendering the entire open edge a degenerate flat critical segment where $\Phi_{\rm mult}(x) = E_{\rm disc}(v_1) = E_{\rm disc}(v_2)$. Such degenerate flat manifolds are not covered by strict-saddle evasion theorems.
     \end{itemize}
-    \item By the constrained Stable Manifold Theorem for projected dynamical systems \cite{lee2019first, panageas2017gradient}, trajectories avoiding degenerate flat critical sets converge to zero-energy satisfying models almost surely on non-degenerate components.
+    \item \textbf{Conditional Strict-Saddle Evasion:} On components where all non-satisfying equilibria are strict saddles and there exist no degenerate flat critical manifolds of positive basin measure, standard stable manifold evasion results \cite{lee2019first, panageas2017gradient} imply almost sure evasion of these non-satisfying equilibria. However, establishing that degenerate flat critical segments ($d=1, a=0$) have basin measure zero or transverse instability remains an open problem; hence, concluding almost sure convergence to zero-energy models ($\lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$) is not closed and remains strictly conjectural.
     \item \textbf{Status of Separation:} While Theorem~\ref{thm:universal_contraction} establishes that Hinge trajectories converge to the LP polytope $Z$, proving an analytical lower bound $\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge c(\alpha) > 0$ requires a standalone subcritical basin analysis (which cannot be inherited from Theorem 8 or Theorem 9), and resolving the $d=1$ flat edge degeneracy remains necessary. Consequently, Theorem 10 is classified as \textbf{Not Closed / Under Active Investigation}.
 \end{enumerate}
 \end{theorem}
@@ -505,7 +510,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0 Final).}}
+\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.2 Final).}}
 \begin{tabular}{@{}llll@{}}
 \toprule
 \textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
@@ -526,7 +531,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard).}}
+\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.2).}}
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Result} & \textbf{Formal Audit Status} \\
@@ -539,8 +544,8 @@ Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed, subject to final pro
 Theorem 5 (Hessian Factorization) & \textbf{Closed under stated conditions} ($V^T W V \succeq 0$) \\
 Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed under IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
 Theorem 7B (Centripetal Contraction) & \textbf{Near Closed} ($\mathcal{E}_{\rm proj} \equiv Z$, normal cone conventions explicit) \\
-Proposition 7A (Constructive Negative Family) & \textbf{Under Re-Audit} (Competitive Jacobian sign $J_{ij} \le 0$) \\
-Theorem 8 (Jensen Volume Bound) & \textbf{Closed only as finite-dimensional lower bound} ($\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$) \\
+Proposition 7A (Negative Clause Families) & \textbf{Under Re-Audit} (Competitive Jacobian sign $J_{ij} \le 0$) \\
+Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional lower bound} ($\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$) \\
 Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
 Lemma 10.1 (Hypertree Overlap Bound) & \textbf{Partially Closed} ($9\alpha^2 = \mathcal{O}(1)$, structural decomposition pending) \\
 Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Closed conditionally under structural leaf hypothesis $H_{\rm leaf}$} \\

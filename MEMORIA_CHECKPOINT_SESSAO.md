@@ -1,88 +1,113 @@
-# Checkpoint de Memória da Sessão — Versão 4.0.2 (17/09/2026)
-## Reauditoria Dupla (16 Agentes: Flash vs Pro), Harmonização de Consistência e Homologação Final de `Enviar_17.zip`
+# Checkpoint de Memória da Sessão — Versão 4.0.2 (Pós-Parecer nº 18) (17/09/2026)
+
+## 1. Contexto Geral e Estado Atual do Projeto
+- **Repositório:** `C:\MathDoCarvalho\P_NP` (branch `master`).
+- **Versão Consolidada:** **CLG-R v4.0.2 — Auditoria pós-Pareceres 16 e 18**.
+- **Entrega Final Homologada:** **`Enviar_18.zip`** (gerado na raiz `C:\MathDoCarvalho\Enviar_18.zip` e espelhado em `P_NP/Publicacoes/Enviar_18.zip`).
+- **Data de Referência:** 17 de Setembro de 2026.
+- **Suíte de Testes Automatizada:** **50/50 testes aprovados** (100% de sucesso em 25.04s):
+  - `tests/test_clg_theorems.py`
+  - `tests/test_parecer12_auditoria.py`
+  - `tests/test_parecer13_auditoria.py`
+  - `tests/test_parecer16_auditoria.py`
+  - `tests/test_parecer18_auditoria.py` (adicionado com 5 novos testes)
 
 ---
 
-## 1. Contexto Geral e Estado Atual do Repositório
-- **Diretório de Trabalho:** `C:\MathDoCarvalho\P_NP`
-- **Diretório Raiz:** `C:\MathDoCarvalho`
-- **Data do Checkpoint:** 17 de Setembro de 2026, 09:00 (Horário Local)
-- **Status do Repositório:** Sincronizado e comitado (`git commit 9241b4a`, `origin/master`).
-- **Working Tree:** Totalmente limpo (`working tree clean`).
-- **Suíte de Testes Automatizada:** **45/45 testes aprovados** (`pytest`) com 100% de sucesso (38.20s):
-  - `tests/test_clg_theorems.py`: 26 testes (Teoremas 1 a 7B, diferenciais finitas, Parseval, Irwin-Hall);
-  - `tests/test_parecer12_auditoria.py`: 7 testes (Jensen finito, contração centrípeta, cone normal);
-  - `tests/test_parecer13_auditoria.py`: 8 testes (falsificação Lema 9.1, colapso de politopo, fator de Hessiana);
-  - `tests/test_parecer16_auditoria.py`: 4 testes cirúrgicos (Jacobiano competitivo $J_{ij} \le 0$, Jensen finito sem assíntota zero, arestas $d=1$ afins/flat e cota $9\alpha^2$).
-- **Pacote Final de Envio:** **[`Enviar_17.zip`](file:///C:/MathDoCarvalho/Enviar_17.zip)** (~2.2 MB) atualizado, conferido e regenerado com carimbo de 17/09/2026 tanto na raiz quanto em `P_NP/Publicacoes/`.
+## 2. Síntese do Parecer nº 18 do Professor e Ações Executadas
+
+O Professor auditou o pacote `Enviar_17.zip` e confirmou formalmente que os quatro alvos principais do Parecer 16 foram sanados com sucesso. Concedeu a elevação de status para:
+- **Teorema 8:** Elevado para 🟢 **Fechado como cota inferior finita**.
+- **Lema 10.2:** Elevado para 🟢 **Fechado condicionalmente a $H_{\rm leaf}$**.
+
+Para a homologação definitiva da Versão 4.0.2, o Professor prescreveu 7 ajustes cirúrgicos pontuais, todos implementados integralmente:
+
+1. **Teorema 10 (Item 2 — Evasão Condicional de Selas):**
+   - Eliminada a conclusão direta sobre convergência assintótica $\lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$.
+   - Adotada a redação condicional prescrita pelo Professor: *"Nas componentes em que todos os equilíbrios não-satisfatórios são strict saddles e não existem variedades críticas degeneradas de medida de bacia positiva, os resultados de evasão de strict saddles implicam evasão quase certa desses equilíbrios."*
+   - Explicitado que demonstrar medida de bacia zero ou instabilidade transversal para variedades *flat* ($d=1, a=0$) permanece em aberto.
+   - Status de T10: Inequivocamente mantido como **🔴 NÃO FECHADO**.
+
+2. **Proposição 7A (Estrutura do Jacobiano Competitivo):**
+   - Título retificado em todos os arquivos para:
+     - Português: *"Proposição 7A — Estrutura do Jacobiano na Família de Cláusulas Negativas (em auditoria)"*
+     - Inglês: *"Proposition 7A: Jacobian Structure for Purely Negative Clause Families (Under Re-Audit)"*
+   - Eliminada qualquer menção a "Atração para o Platô Espúrio".
+   - Confirmado o sinal competitivo $J_{ij} \le 0$ ($i \ne j$) decorrente de $\partial^2 P_c / \partial x_i \partial x_j \ge 0$, violando Kamke-Müller e suspendendo a aplicabilidade de Hirsch.
+   - Status: **🟡 REAUDITORIA ABERTA**.
+
+3. **Lema 9.1 (Conservação da Média vs. Projeção Isotônica PAV):**
+   - Separada rigidamente a conservação do centro de massa ($\sum \dot{x}_k = 0$, demonstrada) da caracterização do limite assintótico como a Projeção Euclidiana Isotônica $\Pi_Z(x_0)$ via PAV (assinalada como problema aberto independente).
+   - Mantida e reforçada a demonstração de falsificação do argumento de aprisionamento sob fato unitário positivo $x_1 = 1$ (colapso de $Z$ para singleton).
+   - Expansão de Stirling de 2ª ordem $\Theta(K^{-1/2})$ via Sparre Andersen mantida com exatidão analítica.
+
+4. **Lema 10.1 (Ausência de 2-core):**
+   - Substituída a taxa específica não-demonstrada $\mathcal{O}(1/N)$ pela formulação segura: $\mathbb{P}(2\text{-core} = \emptyset) \to 1$ quando $N \to \infty$ ($1 - o(1)$), fundamentada em $\alpha < 1/6 \ll \alpha_{\rm core} \approx 0.8183$.
+   - Mantida a cota de primeiro momento $\mathbb{E}[X] \le 9\alpha^2 = \mathcal{O}(1)$. Status: **🟡 PARCIAL**.
+
+5. **Terminologia nas Faces $d=1$ (Arestas):**
+   - Substituída a expressão inadequada "estritamente afim" por "é afim" no LaTeX e na monografia, distinguindo os casos $a \ne 0$ (sem pontos críticos interiores) e $a = 0$ (variedade crítica degenerada flat).
+
+6. **Padronização Global do Teorema 8:**
+   - Padronizadas todas as menções à cota de volume LP para $M = \lfloor \alpha N \rfloor$ e $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$.
+
+7. **Unificação da Versão do Framework:**
+   - Padronizada globalmente a denominação: **`CLG-R v4.0.2 — Auditoria pós-Pareceres 16 e 18`** em todos os documentos (`.tex`, `.md`, `.docx`, `.txt`, abstract, README, pacote arXiv e resposta técnica).
 
 ---
 
-## 2. Síntese da Auditoria Massiva Concorrente (16 Agentes Especializados)
+## 3. Matriz Consolidada de Rigor Científico Homologada (Parecer 18)
 
-Nesta sessão, foram executados **16 agentes de auditoria independentes** em duas rodadas:
-1. **Rodada 1 (12 agentes — 6 Gemini 3.8 Flash e 6 Gemini 3.1 Pro):**
-   - **Item 1 (Teorema 8 — Volume LP):** 100% Aprovado. A falácia assintótica foi completamente expurgada; a cota é estritamente finita $\mathbb{E}[\mu(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$. Alerta explícito de que provar $\to 0$ exigiria cota superior independente em aberto. Status: `🟡 Fechado apenas como cota inferior finita`.
-   - **Item 2 (Proposição 7A — Jacobiano):** Cálculo $J_{ij} \le 0$ confirmado; Hirsch inaplicável. **Discrepância detectada:** o LaTeX ainda continha resíduos de "via Hirsch cooperativity" na linha 57 e no Teorema 9.
-   - **Item 3 (Lema 10.1 — Hiperárvores):** 100% Aprovado. Cota $\mathbb{E}[X] \le 9\alpha^2 = \mathcal{O}(1)$ não extrapola a.a.s.; peeling condicionado a $H_{\rm leaf}$. Status: `🟡 Parcial`.
-   - **Item 4 (Faces $d=1$ — Arestas):** 100% Aprovado. Restrição afim $\Phi(t) = at + b$; para $a=0$, variedade crítica degenerada flat ($\nabla \Phi \equiv 0$) não coberta por Lee et al. Status: Lema 10.2 restrito a $d \ge 2$ sob $H_{\rm leaf}$.
-   - **Item 5 (Teorema 10 — Evasão de Selas):** 100% Aprovado. Evasão de strict saddles em $d \ge 2$ não fecha $\rho_{\rm mult}=0$ perante flat $d=1$ e ciclos $\mathcal{O}_{\mathbb{P}}(1)$. Status: `🔴 Não Fechado`.
-   - **Item 6 (Consistência Interna Global):** Mapeou a contradição entre o Remark da Prop 7A e o Abstract/Teorema 9 no LaTeX.
-2. **Ação Corretiva Executada:**
-   - Retificação do Abstract do LaTeX (`CLG_FOUNDATIONS_ARXIV.tex`, linha 57), expurgando "Hirsch cooperativity" e registrando o caráter competitivo ($J_{ij} \le 0$);
-   - Retificação do Teorema 9 (`CLG_FOUNDATIONS_ARXIV.tex`, linhas 438-442), esclarecendo que cláusulas com múltiplos literais negativos geram derivadas concorrentes ($J_{ij} \le 0$), afastando a teoria de Hirsch e mantendo a convergência em aberto;
-   - Ajuste da Tabela 1 (`CLG_FOUNDATIONS_ARXIV.tex`, linha 520) para `Open (T9 Falsified/Open, T10 Not Closed)`;
-   - Harmonização de Teorema 9 na monografia (`ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md`, linha 290);
-   - Atualização do script `Fontes/generate_resposta16_deliverables.py` para gerar automaticamente `Enviar_17.zip` na raiz e em `Publicacoes/`.
-3. **Rodada 2 — Revalidação (4 agentes — 2 Gemini 3.8 Flash e 2 Gemini 3.1 Pro):**
-   - **Item 2 (Prop 7A):** Homologado com louvor por ambos os modelos.
-   - **Item 6 (Consistência Global):** Atestada consistência absoluta e perfeita harmonização entre Abstract, Teoremas, Tabelas 1 e 2, Conclusões e Monografia. Busca textual retornou **zero ocorrências** afirmativas de Hirsch cooperativity ou limites indevidos.
-
----
-
-## 3. Avaliação Comparativa de Modelos (Pro vs. Flash)
-
-* **Gemini 3.1 Pro (High):** Superior em raciocínio matemático abstrato, topologia diferencial e epistemologia. Foi o responsável por articular a quebra da condição de Kamke-Müller, matrizes de Metzler, a estabilidade transversal do cone normal em variedades flat $d=1$ e o impacto dos ciclos $\mathcal{O}_{\mathbb{P}}(1)$ via Teorema 4A'. Redação com vocabulário de *referee* de ponta (STOC/FOCS).
-* **Gemini 3.8 Flash (High):** Superior em velocidade, precisão factual estrita e disciplina de varredura. Foi o responsável por localizar cirurgicamente as linhas exatas em conflito (linha 57, linha 439, linha 520) em segundos, entregando relatórios executivos altamente estruturados.
-* **Conclusão:** A estratégia de **dupla auditoria concorrente (Flash + Pro)** demonstrou ser a configuração ótima de validação científica.
-
----
-
-## 4. Matriz de Rigor Oficial (100% Homologada e Sincronizada)
-
-| Resultado | Status Formal | Qualificação Técnica Formal e Limites Analíticos |
+| Resultado | Status Homologado (Parecer 18) | Fundamentação e Limites Analíticos |
 | :--- | :---: | :--- |
 | **T1** (Caixa Central $\mathcal{U}_N$) | 🟢 **Fechado** | Universal determinístico; folga interior 0.5 em toda a caixa. |
 | **T2** (Medida Nula de Críticos) | 🟢 **Fechado sob hipóteses** | Fubini para $\Phi_{\text{mult}}$; analiticidade real para $\Phi_{\text{soft}}$. |
 | **T3** (Harmonicidade e Selas) | 🟢 **Fechado sob hipóteses** | Princípio do Mínimo Forte e Lema de Seleção de Curvas de Milnor. |
 | **T4A′** (Mínimos em Faces) | 🟢 **Fechado** | Mínimos locais em faces herdam energia de vértices. |
-| **4B** (Confinamento de LaSalle) | 🟢 **Fechado, sujeito à formulação final** | Lyapunov estrito no hipercubo compacto; atratores isolados confinados a $\{-1, 1\}^N$. |
-| **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições declaradas** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
+| **4B** (Confinamento de LaSalle) | 🟡 **Fechado com ressalva** | Lyapunov estrito no hipercubo compacto; atratores em $\{-1, 1\}^N$. |
+| **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções IEEE** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero. |
-| **T7B** (Contração Centrípeta e LaSalle) | 🟡 **Quase fechado** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\langle -\nabla \Phi, x \rangle < 0$ fora de $Z$ vs $\langle \nu, x \rangle \ge 0$ no cone normal. |
-| **T8** (Cota Inferior do Volume LP) | 🟡 **Fechado apenas como cota inferior finita** | $\mathbb{E}[\mu(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ demonstrado para todo $N$ finito; limite assintótico zero retirado. |
-| **T9** (Horn Linear Monótono) | 🔴 **Falsificado / abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); aberto para DAGs gerais; Jacobiano competitivo ($J_{ij} \le 0$). |
-| **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ limita defeitos, mas linearidade universal não é a.a.s. |
-| **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
-| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Não fechado** | Evasão demonstrada para strict saddles ($d \ge 2$); arestas $d=1$ flat e Hinge em aberto. |
-| **Proposição 7A** (Famílias Negativas e Dinâmica) | 🟡 **Precisa de nova auditoria** | Jacobiano é competitivo ($J_{ij} \le 0$), não cooperativo; Hirsch inaplicável na forma original. |
-| **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
-| **Firewall 3-XOR** | 🟢 **Resultado epistemológico** | Separação categórica entre dinâmica contínua e complexidade de Turing (sem termo "absoluto"). |
+| **T7B** (Contração Centrípeta e LaSalle) | 🟡 **Quase Fechado** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; cone normal exterior. |
+| **Proposição 7A** (Estrutura do Jacobiano) | 🟡 **Reauditoria aberta** | Derivada cruzada $\ge 0 \implies J_{ij} \le 0$ (competitivo). Hirsch suspenso. |
+| **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita. |
+| **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$). |
+| **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$. |
+| **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} \ne 0 \implies \lambda_{\min} < 0$. |
+| **Teorema 10** (Separação Subcrítica) | 🔴 **Não Fechado** | Formulação condicional; arestas flat $d=1$ e separação com Hinge abertas. |
+| **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
+| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Separação categórica entre dinâmica contínua e complexidade de Turing. |
 
 ---
 
-## 5. Entregáveis Atualizados e Prontos para Envio
+## 4. Histórico da Bancada de Validação (8 Subagentes — Parecer 18)
 
-1. **[`Enviar_17.zip`](file:///C:/MathDoCarvalho/Enviar_17.zip)** (Raiz e `P_NP/Publicacoes/`): Pacote completo pronto contendo todos os 8 documentos harmonizados;
-2. **[`MensagemParaOAvaliador16.txt`](file:///C:/MathDoCarvalho/MensagemParaOAvaliador16.txt)** e **[`MensagemParaOAvaliador16.docx`](file:///C:/MathDoCarvalho/MensagemParaOAvaliador16.docx)**;
-3. **[`RespostaAoProfessor_Analise16.md`](file:///C:/MathDoCarvalho/RespostaAoProfessor_Analise16.md)** e **[`RespostaAoProfessor_Analise16.docx`](file:///C:/MathDoCarvalho/RespostaAoProfessor_Analise16.docx)**;
-4. **[`PARECER_16_AUDITORIA_CRITICA_PROFESSOR.md`](file:///C:/MathDoCarvalho/PARECER_16_AUDITORIA_CRITICA_PROFESSOR.md)**;
-5. **[`ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md`](file:///C:/MathDoCarvalho/P_NP/Publicacoes/ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md)**;
-6. **[`CLG_FOUNDATIONS_ARXIV.tex`](file:///C:/MathDoCarvalho/P_NP/Publicacoes/CLG_FOUNDATIONS_ARXIV.tex)** e **[`arxiv_package.zip`](file:///C:/MathDoCarvalho/P_NP/Publicacoes/arxiv_package.zip)**.
+Em conformidade com as diretrizes do usuário, 8 subagentes independentes (duplas Flash + Pro) foram disparados para auditar os artefatos corrigidos:
+
+1. **Item 1: Teorema 10 (Evasão Condicional vs. $\rho_{\rm mult} \to 0$):**
+   - Agente Flash (`2093ffc2-413d-48e9-a429-7f337de63162`): **100% Conforme** — confirmou a eliminação da conclusão assintótica direta, a adoção literal da condicionalidade, a permanência de T10 como NÃO FECHADO e a remoção de "strictly affine".
+   - Agente Pro (`66e347a0-2bda-4b1a-80c2-3465283df85d`): **Aprovado com Excelência** — confirmou a impossibilidade de aplicar Lee et al. a variedades flat degeneradas ($d=1, a=0$) e validou a proteção total contra saltos lógicos.
+
+2. **Item 2: Proposição 7A (Estrutura do Jacobiano Competitivo):**
+   - Agente Flash (`ab1c44e8-6882-4cb8-a76a-58276311c639`): **100% Conforme** — atestou o novo título, a eliminação de "Atração para Platô Espúrio", o sinal competitivo $J_{ij} \le 0$ e o status "Reauditoria aberta".
+   - Agente Pro (`bd98d25a-6b13-4065-9287-2e63491dfe4e`): **Aprovado com Rigor Máximo** — detalhou a falha de Hirsch para sistemas competitivos que não preservam ordem no tempo futuro e confirmou a higienização total de heranças cooperativas.
+
+3. **Item 3: Lema 9.1 (Conservação da Média vs. Projeção Isotônica PAV):**
+   - Agente Flash (`83760d36-8fa6-42fa-af5a-28ec008986fc`): **Aprovado com Distinção** — verificou a separação estrita da conservação da soma, a integração da falsificação sob fato unitário e a exatidão da expansão de Stirling $\Theta(K^{-1/2})$.
+   - Agente Pro (`29e42ad3-ca19-4339-b9a2-a58bb508732f`): **Aprovado com Louvor** — explicou sob análise convexa por que fluxos não-suaves por partes não coincidem trivialmente com projeções métricas proximais e elogiou a maturidade epistemológica do texto.
+
+4. **Item 4: Consistência Global e Versão 4.0.2:**
+   - Agente Flash (`05afb851-b67a-4dd5-bf02-b19e75d05a32`): **100% Homologado sem Ressalvas** — varreu todos os 5 quesitos e confirmou ausência de versão 4.0.1, padronização de $(5/6)^{\lfloor \alpha N \rfloor}$ e espelhamento fiel da Matriz 18.
+   - Agente Pro (`f242a2e9-25a5-4bed-99bf-21e54d52c525`): **Integralmente Homologado** — atestou que o risco de overclaiming foi virtualmente zerado e recomendou a submissão externa em padrão STOC/FOCS.
 
 ---
 
-## 6. Ponto de Parada e Retomada
-- **Status:** **100% Finalizado, Auditado, Testado e Congelado.**
-- **Próximo Passo:** O usuário enviará o pacote `Enviar_17.zip` e/ou a mensagem ao Professor/Avaliador e aguardará o retorno formal (potencial Parecer nº 17).
-- Quando retornar, basta disponibilizar o novo retorno para processamento com a bancada analítica.
+## 5. Arquivos e Entregáveis no Pacote `Enviar_18.zip`
+
+1. **`PARECER_18_AUDITORIA_CRITICA_PROFESSOR.md`**: Transcrição integral com fórmulas do Parecer nº 18.
+2. **`RespostaAoProfessor_Analise18.md`**: Relatório técnico analítico detalhando a resolução dos 7 pontos.
+3. **`RespostaAoProfessor_Analise18.docx`**: Versão formatada em Word para o avaliador.
+4. **`MensagemParaOAvaliador18.docx`**: Carta executiva formal de encaminhamento.
+5. **`MensagemParaOAvaliador18.txt`**: Versão em texto puro para comunicação rápida.
+6. **`ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md`**: Monografia revisada (Versão 4.0.2).
+7. **`CLG_FOUNDATIONS_ARXIV.tex`**: Manuscrito LaTeX completo (Versão 4.0.2, data 17 de Setembro de 2026).
+8. **`arxiv_package.zip`**: Pacote TeX compilável atualizado com fontes, figuras e referências.

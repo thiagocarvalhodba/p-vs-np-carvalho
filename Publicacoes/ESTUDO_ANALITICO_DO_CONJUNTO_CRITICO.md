@@ -1,8 +1,8 @@
 # Estudo Analítico do Conjunto Crítico e Massa de Bacia Espúria no Framework CLG-R
-**Versão 4.0.1 — Saneamento Analítico e Auditoria Crítica (Parecer 14)**  
-**Data:** 16 de Setembro de 2026  
+**Versão 4.0.2 — Auditoria pós-Pareceres 16 e 18 (Homologação de Fechamento)**  
+**Data:** 17 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Quase Fechado; T8 Fechado como Cota Finita; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Quase Fechado; T8 Fechado como Cota Finita; Lema 10.2 Fechado sob $H_{\rm leaf}$; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
 
 ---
 
@@ -241,23 +241,25 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-> **Proposição 7A (Família Construtiva $F_N$ e Atração para o Platô Espúrio --- 🟡 Precisa de Nova Auditoria).**  
+> **Proposição 7A (Estrutura do Jacobiano na Família de Cláusulas Negativas --- 🟡 Em Auditoria).**  
 > *Seja $N \ge 4$. Considere a fórmula 3-CNF $F_N$ formada por todas as $M = \binom{N}{3}$ cláusulas exclusivamente negativas: $\mathcal{C} = \{ (\neg x_i \lor \neg x_j \lor \neg x_k) \mid 1 \le i < j < k \le N \}$.*  
-> *1. O politopo linear $Z$ contém a caixa central $\mathcal{U}_N$, com volume normalizado $\mu_{\text{norm}}(Z) \ge (1/3)^N > 0$.*  
-> *2. O fluxo projetado $\dot{x} = -\nabla \Phi_{\text{quad}}(x)$ atrai o ortante $A_N = (1/3, 1)^N$ para o politopo $Z$ mantendo coordenadas positivas, produzindo arredondamento booleano violador $\text{sign}(x) = (+1, \dots, +1)$ em 100% das trajetórias:*
+> *1. Estrutura do Jacobiano Competitivo:* Para o potencial multilinear $\Phi_{\text{mult}}$, cada cláusula tem potencial $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, cuja derivada cruzada no hipercubo $\mathcal{X} = [-1, 1]^N$ é $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequentemente, as entradas fora da diagonal do Jacobiano dinâmico $J(x) = D(-\nabla \Phi_{\text{mult}}(x)) = -\nabla^2 \Phi_{\text{mult}}(x)$ satisfazem:
+> $$J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j$$
+> O sistema contínuo é estritamente **competitivo/inibitório**, violando a condição de Kamke-Müller ($J_{ij} \ge 0$) necessária para sistemas cooperativos de Hirsch. Teoremas de convergência monótona não se aplicam diretamente.  
+> *2. Bacia Espúria do Hinge:* O fluxo projetado $\dot{x} = -\nabla \Phi_{\text{quad}}(x)$ atrai o ortante $A_N = (1/3, 1)^N$ para o politopo $Z$ mantendo coordenadas positivas, produzindo arredondamento booleano violador $\text{sign}(x) = (+1, \dots, +1)$ em 100% das trajetórias:
 > $$A_N \subseteq \mathcal{B}_{\text{spur}}(\Phi_{\text{quad}}) \implies \mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge \left(\frac{1}{3}\right)^N > 0$$
-> *Ressalva Analítica da Auditoria 16:* Para cláusulas puramente negativas, o potencial multilinear é $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, donde $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequentemente, o Jacobiano dinâmico é $J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} \le 0$ (competitivo/inibitório), e não cooperativo ($J_{ij} \ge 0$). A extensão multilinear para $F_N$ permanece suspensa para re-auditoria analítica completa.
+> *3. Status Formal:* A caracterização dinâmica multilinear de $F_N$ permanece formalmente suspensa sob re-auditoria analítica estrutural.
 
 ---
 
-## 10. Novos Teoremas Matemáticos Estruturais (Versão 4.0.2 de Fechamento)
+### 10. Novos Teoremas Matemáticos Estruturais (Versão 4.0.2 de Fechamento)
 
 ### Teorema 8 (Cota Inferior de Volume do Politopo LP via Desigualdade de Jensen --- Dimensão Finita)
 > **Teorema 8 (Cota Inferior de Volume do Politopo LP Aleatório em Dimensão Finita via Jensen).**  
 > *Para o ensemble padrão de fórmulas aleatórias de 3-SAT $\mathcal{E}(N, \alpha)$ com $M = \lfloor \alpha N \rfloor$ cláusulas independentes, o volume normalizado esperado do politopo linear $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfaz a cota inferior analítica estrita para qualquer dimensão finita $N$:*
-> $$\mathbb{E}[\mu_{\text{norm}}(Z)] \ge \left(\frac{5}{6}\right)^{\alpha N} = \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0$$
+> $$\mathbb{E}[\mu_{\text{norm}}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0$$
 > *Ademais, $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge \mu_{\text{norm}}(\mathcal{U}_N) = (1/3)^N > 0$.*  
-> *(Nota de Rigor da Auditoria 16: Esta cota inferior estritamente positiva para dimensão finita não demonstra que $\lim_{N \to \infty} \mathbb{E}[\mu_{\text{norm}}(Z)] = 0$, o que exigiria uma cota superior independente).*
+> *(Nota de Rigor da Auditoria 16/18: Esta cota inferior estritamente positiva para dimensão finita não demonstra que $\lim_{N \to \infty} \mathbb{E}[\mu_{\text{norm}}(Z)] = 0$, o que exigiria uma cota superior independente).*
 
 ### Demonstração:
 1. Pelo Teorema de Fubini, a expectativa do volume sob a distribuição aleatória das fórmulas é:
@@ -268,19 +270,19 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 4. A soma $S_3 = u_1 + u_2 + u_3$ segue a distribuição de Irwin-Hall de ordem 3, cuja CDF em $s=1$ vale $\mathbb{P}(S_3 < 1) = \frac{1^3}{3!} = \frac{1}{6}$. Portanto, a média espacial de $p(x)$ é exatamente:
    $$\int_{[-1, 1]^N} p(x) \frac{dx}{2^N} = 1 - \frac{1}{6} = \frac{5}{6}$$
 5. Como a função $t \mapsto t^M$ é estritamente convexa em $[0, 1]$ para $M \ge 2$, pela **Desigualdade de Jensen**:
-   $$\mathbb{E}_F[\mu_{\text{norm}}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N} \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M \ge \left(\frac{5}{6}\right)^{\alpha N} > 0$$
+   $$\mathbb{E}_F[\mu_{\text{norm}}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N} \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} > 0$$
 6. Além disso, no interior da caixa central $\mathcal{U}_N = (-1/3, 1/3)^N$, toda cláusula possível tem $g_c(x) < 0$, de modo que $p(x) \equiv 1$ em $\mathcal{U}_N$, fornecendo $\mathbb{E}[\mu(Z)] \ge \mu(\mathcal{U}_N) = (1/3)^N$. $\blacksquare$
 
 ---
 
-### Lema 9.1 (Bacia Global do Hinge via Regressão Isotônica e Falsificação sob Fato Unitário)
+### Lema 9.1 (Bacia Global do Hinge em Cadeias de Implicação e Falsificação sob Fato Unitário)
 > **Lema 9.1 (Bacia Global de Atração da Relaxação Hinge em Cadeias de Implicação).**  
 > *Considere uma cadeia de implicações lineares de comprimento $K = \Omega(N)$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$):*  
-> 1. *Cadeia de Implicações Pura (Sem Fatos Unitários):* No caso puramente telescópico sem fatos externos, o centro de massa é conservado: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, e o mapa de fluxo assintótico coincide com a Projeção Euclidiana Isotônica $\Pi_Z(x_0)$ sobre o cone $Z = \{x \in \mathbb{R}^K \mid x_1 \le x_2 \le \dots \le x_K\}$, onde a variável de cabeça converge para $x^*_1 = \min_{1 \le m \le K} \frac{1}{m} \sum_{k=1}^m x_k(0)$.
+> 1. *Cadeia Pura (Conservação da Média vs. Limite Isotônico):* No caso puramente telescópico sem fatos externos, o centro de massa é conservado: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, confinando a trajetória a hiperplanos afins. Embora a heurística do algoritmo PAV e dados numéricos sugiram que o ponto limite seja a Projeção Euclidiana Isotônica $\Pi_Z(x_0)$ sobre o cone $Z = \{x \in \mathbb{R}^K \mid x_1 \le x_2 \le \dots \le x_K\}$, a prova rigorosa dessa equivalência geométrica permanece um problema analítico aberto independente.
 > 2. *Expansão de Stirling Exata:* Sob inicialização uniforme $x_0 \sim \text{Unif}([-1, 1]^K)$, pelo Teorema de Sparre Andersen (1949, 1953), a probabilidade de que todas as médias parciais de prefixo sejam estritamente positivas satisfaz:
 >    $$\mathbb{P}_{x_0 \sim \text{Unif}}\left(x^*_1 > 0\right) = \frac{\binom{2K}{K}}{4^K} = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right) = \Theta\left(\frac{1}{\sqrt{K}}\right)$$
 >    e consequentemente $\mathbb{P}(x^*_1 \le 0) = 1 - \mathcal{O}(1/\sqrt{K}) = 1 - o(1)$.
-> 3. *Falsificação sob Fato Unitário Positivo:* Conforme apontado na auditoria do Parecer nº 14, se um fato unitário $x_1 = 1$ é incorporado ao potencial via penalidade $h(x_1) = [\max(0, (1 - x_1)/2)]^2$, ele injeta uma força externa positiva $-\frac{\partial h}{\partial x_1} = \frac{1 - x_1}{2} > 0$ para $x_1 < 1$, quebrando a conservação da média ($\frac{d}{dt}\sum x_k > 0$). Além disso, o politopo LP colapsa no ponto único $Z = \{(+1, \dots, +1)\}$, e o fluxo Hinge converge para $(+1, \dots, +1)$ com probabilidade 1. Assim, a alegação de que o Hinge falha com probabilidade $1 - o(1)$ nessa cadeia foi falsificada computacional e analiticamente.
+> 3. *Falsificação sob Fato Unitário Positivo:* Se um fato unitário $x_1 = 1$ é incorporado ao potencial via penalidade $h(x_1) = [\max(0, (1 - x_1)/2)]^2$, ele injeta uma força externa positiva $-\frac{\partial h}{\partial x_1} = \frac{1 - x_1}{2} > 0$ para $x_1 < 1$, quebrando a conservação da média ($\frac{d}{dt}\sum x_k > 0$). Além disso, o politopo LP colapsa no ponto único $Z = \{(+1, \dots, +1)\}$, e o fluxo Hinge converge para $(+1, \dots, +1)$ com probabilidade 1. Assim, a alegação de que o Hinge falha com probabilidade $1 - o(1)$ nessa cadeia com fato unitário foi falsificada computacional e analiticamente.
 
 ---
 
@@ -298,7 +300,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > 1. *O número esperado de pares de cláusulas compartilhando $\ge 2$ variáveis é cotado pelo primeiro momento:*
 >    $$\mathbb{E}[\#\{c \ne c' \mid |c \cap c'| \ge 2\}] \le \binom{M}{2}\frac{18(N-3)}{N(N-1)(N-2)} \le 9\alpha^2 < \frac{1}{4}$$
 >    *A cota de primeiro momento demonstra que o número esperado de pares de cláusulas com interseção de pelo menos duas variáveis é cotado por $9\alpha^2 = \mathcal{O}(1)$. A decomposição rigorosa em um núcleo de componentes lineares mais um conjunto de defeitos $\mathcal{O}_{\mathbb{P}}(1)$ permanece sujeita a uma análise estrutural adicional.*
-> 2. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core} = \emptyset) = 1 - \mathcal{O}(1/N)$), pois $\alpha < 1/6 \ll \alpha_{\text{core}} \approx 0.8183$.*
+> 2. *O 2-núcleo (2-core) de hiperarestas é assintoticamente quase certamente vazio ($\mathbb{P}(2\text{-core} = \emptyset) \to 1$ quando $N \to \infty$), pois $\alpha < 1/6 \ll \alpha_{\text{core}} \approx 0.8183$.*
 > 3. *Condicionado à estrutura de hiperfloresta linear ($|c \cap c'| \le 1$), o algoritmo de folha-peeling elimina todas as hiperarestas, provando que toda cláusula folha possui ao menos 2 variáveis privadas de grau global 1. A inversão de uma variável privada de grau 1 reduz estritamente a energia booleana sem violar nenhuma outra cláusula, demonstrando a ausência de mínimos locais booleanos positivos sob essa hipótese.*
 
 ---
@@ -323,8 +325,8 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > 1. *Classificação por Dimensão de Face sob $H_{\text{leaf}}$:*
 >    - *Faces de dimensão $d \ge 2$:* Todos os pontos críticos com energia positiva são selas estritas ($\lambda_{\min} < 0$), pelo Lema 10.2.
 >    - *Faces de dimensão $d = 0$ (Vértices):* Não existem mínimos locais booleanos com energia positiva, pelo Lema 10.1.
->    - *Faces de dimensão $d = 1$ (Arestas):* Em qualquer aresta, $\Phi_{\text{mult}}(t) = at + b$ é estritamente afim. Se $a \ne 0$, não existem pontos críticos no interior da aresta. Se $a = 0$, a aresta inteira é crítica ($\nabla_{\mathcal{F}}\Phi \equiv 0$), constituindo uma variedade crítica flat degenerada com $\Phi(x) = E_{\rm disc}(v_1) = E_{\rm disc}(v_2)$, que não é coberta por teoremas padrão de escape de selas estritas.
-> 2. *Pelo Teorema da Variedade Estável em compactos convexos (Lee et al. 2019; Panageas & Piliouras 2017), o fluxo projetado de $\Phi_{\text{mult}}$ evita selas estritas em componentes não-degeneradas: $\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$.*
+>    - *Faces de dimensão $d = 1$ (Arestas):* Em qualquer aresta, $\Phi_{\text{mult}}(t) = at + b$ é afim. Se $a \ne 0$, não existem pontos críticos no interior da aresta. Se $a = 0$, a aresta inteira é crítica ($\nabla_{\mathcal{F}}\Phi \equiv 0$), constituindo uma variedade crítica flat degenerada com $\Phi(x) = E_{\rm disc}(v_1) = E_{\rm disc}(v_2)$, que não é coberta por teoremas padrão de escape de selas estritas.
+> 2. *Evasão Condicional de Selas:* Nas componentes em que todos os equilíbrios não-satisfatórios são strict saddles e não existem variedades críticas degeneradas de medida de bacia positiva, os resultados clássicos de variedade estável (Lee et al. 2019) implicam a evasão quase certa desses equilíbrios. Contudo, demonstrar que as variedades flat ($d=1, a=0$) possuem bacia de medida nula ou instabilidade transversal permanece um problema aberto; portanto, o fechamento assintótico $\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0$ permanece não fechado e estritamente conjectural.
 > 3. *Status da Separação com o Hinge:* Demonstrar que a densidade residual do Hinge satisfaz $\lim_{N \to \infty} \rho_{\text{quad}}(\alpha) \ge c(\alpha) > 0$ requer uma análise de bacia dedicada no hipergrafo aleatório (que não decorre diretamente do Teorema 8 nem do Teorema 9), e a resolução da degenerescência em $d=1$ permanece em aberto. Portanto, a separação completa no regime subcrítico é formalmente classificada como **🔴 Não Fechado**.
 
 ---
@@ -347,23 +349,23 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 
 ---
 
-## 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Parecer 16)
+### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Parecer 18 / Versão 4.0.2)
 
-| Resultado | Status de Auditoria (Parecer 16) | Qualificação Técnica Formal e Limites Analíticos |
+| Resultado | Status de Auditoria (Parecer 18) | Qualificação Técnica Formal e Limites Analíticos |
 | :--- | :---: | :--- |
 | **T1** (Caixa Central $\mathcal{U}_N$) | 🟢 **Fechado** | Universal determinístico; folga interior 0.5 em toda a caixa. |
 | **T2** (Medida Nula de Críticos) | 🟢 **Fechado sob hipóteses** | Fubini para $\Phi_{\text{mult}}$; analiticidade real para $\Phi_{\text{soft}}$. |
 | **T3** (Harmonicidade e Selas) | 🟢 **Fechado sob hipóteses** | Princípio do Mínimo Forte e Lema de Seleção de Curvas de Milnor. |
 | **T4A′** (Mínimos em Faces) | 🟢 **Fechado** | Mínimos locais em faces herdam energia de vértices. |
-| **4B** (Confinamento de LaSalle) | 🟢 **Fechado, sujeito à formulação final** | Lyapunov estrito no hipercubo compacto; atratores isolados confinados a $\{-1, 1\}^N$. |
+| **4B** (Confinamento de LaSalle) | 🟡 **Fechado com ressalva sobre formulação dinâmica** | Lyapunov estrito no hipercubo compacto; atratores isolados confinados a $\{-1, 1\}^N$. |
 | **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições declaradas** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções IEEE** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero. |
 | **T7B** (Contração Centrípeta e LaSalle) | 🟡 **Quase Fechado** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; convenção de cone normal exterior explicitada. |
-| **Proposição 7A** (Família Negativa Construtiva) | 🟡 **Precisa de nova auditoria** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo). |
-| **T8** (Cota de Jensen no Volume LP) | 🟡 **Fechado apenas como cota inferior finita** | $\mathbb{E}[\mu(Z)] \ge (5/6)^{\alpha N} > 0$ em dimensão finita; sem inferência assintótica a zero. |
+| **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟡 **Reauditoria aberta** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo). |
+| **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
 | **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); em aberto para DAGs gerais. |
 | **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ não implica $P(X=0)\to 1$. |
-| **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$. |
+| **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$. |
 | **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Não Fechado** | Lacuna em arestas $d=1$ (flat manifolds) e separação com Hinge em aberto. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
 | **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Separação categórica entre dinâmica contínua e complexidade de Turing (sem "absoluto"). |
