@@ -287,8 +287,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 ### Teorema 9 (Dinâmica em Horn-3-SAT Monótono — Status Falsificado / Abandonado)
 > **Teorema 9 (Comportamento Dinâmico em Horn-3-SAT Monótono).**  
 > *Considere o ensemble de fórmulas Horn-3-SAT monótonas $F_N$:*  
-> *1. Sob a extensão multilinear $\Phi_{\text{mult}}$, as derivadas cruzadas ao longo das arestas de implicação são estritamente não-negativas: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$, garantindo a cooperatividade estrita de Hirsch (1985). O fluxo gradiente projetado converge quase universalmente para um modelo satisfatível com energia residual nula:*
-> $$\mathcal{M}_{\text{spur}}(\Phi_{\text{mult}}) = o(1) \quad (\text{e } \lim_{N \to \infty} \rho_{\text{mult}} = 0)$$
+> *1. Embora implicações binárias isoladas $\neg x_i \lor x_j$ induzam derivadas cruzadas não-negativas ($J_{ij} = +1/4 \ge 0$), cláusulas Horn gerais com múltiplos literais negativos induzem derivadas cruzadas concorrentes com $J_{ij}(x) \le 0$ (como demonstrado na Proposição 7A). Consequentemente, a dinâmica multilinear em Horn-3-SAT geral forma um sistema competitivo, tornando os teoremas de cooperatividade monótona de Hirsch diretamente inaplicáveis e mantendo a convergência global a modelos satisfatíveis como um problema em aberto.*  
 > *2. Status da Separação Dinâmica: A demonstração analítica exata da bacia espúria $\mathcal{M}_{\text{spur}}(\Phi_{\text{quad}})$ para fórmulas Horn gerais com fatos unitários em conflito permanece um **Problema em Aberto**. A prova original via Lema 9.1 foi formalmente falsificada e abandonada devido ao colapso do politopo $Z$ para $x_1 = 1$.*
 
 ---

@@ -53,8 +53,8 @@ We prove:
 (5) The Softplus relaxation factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, attaining global strict convexity when $\text{rank}(V) = N$, with condition number bounded by $\kappa(\nabla^2 \Phi) \le \kappa(W(x)) \kappa(V^T V)$;
 (6) The Lipschitz constant of the gradient field scales as $L_\beta = \Theta(\beta)$, while finite IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau;
 (7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal convergence to $Z$;
-(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\alpha N} = e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
-(9) We analyze dynamical behavior in monotone Horn families, showing that multilinear gradient flow converges to zero-energy models via Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
+(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
+(9) We analyze dynamical behavior in monotone Horn families, identifying the competitive Jacobian sign ($J_{ij} \le 0$) in negative clause interactions which precludes direct application of Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
 (10) We analyze subcritical random 3-SAT ($\alpha < 1/6$), establishing strict saddle avoidance for the multilinear relaxation in faces of dimension $d \ge 2$ conditioned on leaf structures ($H_{\rm leaf}$), classifying the dynamics on 1-dimensional edges, and formalizing the open status of global dynamical separation against Hinge.
 Finally, we delimit the Central Conjecture of CLG-R to the clustering interval $\alpha \in (\alpha_d, \alpha_s)$.
 \end{abstract}
@@ -436,8 +436,8 @@ Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_
 \label{thm:horn_separation}
 Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = (-1, \dots, -1)$ are satisfying:
 \begin{enumerate}
-    \item Under $\Phi_{\rm mult}$, the cross-derivatives along edges are strictly non-negative: $J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j} = +\frac{1}{4} \ge 0$, defining a cooperative dynamical system (Hirsch 1985). By the absence of competing bodies in linear clauses, the flow converges to a satisfying model with zero residual energy from almost all initial conditions: $\mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = o(1)$.
-    \item \textbf{Status of Dynamic Separation:} While $\Phi_{\rm mult}$ successfully reaches satisfying models, characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
+    \item While isolated binary implications $\neg x_i \lor x_j$ induce non-negative cross-derivatives ($J_{ij} = +1/4 \ge 0$), general Horn 3-SAT clauses with multiple negative literals induce competing cross-derivatives with $J_{ij}(x) \le 0$ as established in Remark~\ref{prop:constructive_basin}. Consequently, the multilinear gradient flow on general Horn-3-SAT forms a competitive dynamical system, rendering Hirsch's monotone cooperativity theorems directly inapplicable and leaving the global convergence to satisfying models an open problem.
+    \item \textbf{Status of Dynamic Separation:} Characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
 \end{enumerate}
 \end{theorem}
 
@@ -517,7 +517,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
-\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ & Horn / Subcritical: $\rho_{\rm mult}=0$ (T9/T10 Open) & Regularized finite ($\beta < \infty$) \\
+\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ & Horn / Subcritical: Open (T9 Falsified/Open, T10 Not Closed) & Regularized finite ($\beta < \infty$) \\
 \bottomrule
 \end{tabular}
 \label{tab:synthesis}

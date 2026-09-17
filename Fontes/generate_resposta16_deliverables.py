@@ -85,7 +85,7 @@ $$\\mathbb{E}[\\mu(Z)] \\ge \\left(\\frac{5}{6}\\right)^{\\lfloor \\alpha N \\rf
 e afirmava:
 $$\\lim_{N \\to \\infty} \\mathbb{E}[\\mu(Z)] = 0 \\quad \\text{com decaimento exponencial controlado}.$$
 Vossa Senhoria demonstrou a falácia lógica dessa conclusão:
-* Uma cota inferior que tende a zero ($\ell(N) \\to 0$) **não prova** que a quantidade em si tende a zero. Por exemplo, a função constante $f(N) = 1/2$ satisfaz $f(N) \\ge (5/6)^N$, mas $\\lim_{N \\to \\infty} f(N) = 1/2 \\ne 0$.
+* Uma cota inferior que tende a zero ($\\ell(N) \\to 0$) **não prova** que a quantidade em si tende a zero. Por exemplo, a função constante $f(N) = 1/2$ satisfaz $f(N) \\ge (5/6)^N$, mas $\\lim_{N \\to \\infty} f(N) = 1/2 \\ne 0$.
 * Da mesma forma, a existência da cota inferior estabelece uma cota superior sobre a taxa de decaimento (se houver decaimento), mas não demonstra que o volume decai exponencialmente para zero.
 
 ### 2.2. Ação Corretiva Executada
@@ -564,8 +564,8 @@ def build_deliverables():
     print("Salvo: MensagemParaOAvaliador16.txt")
 
     # 5. Atualizar zip do arxiv
-    zip_path = os.path.join(PUB_DIR, "arxiv_package.zip")
-    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
+    zip_arxiv = os.path.join(PUB_DIR, "arxiv_package.zip")
+    with zipfile.ZipFile(zip_arxiv, 'w', zipfile.ZIP_DEFLATED) as z:
         for fname in [
             "CLG_FOUNDATIONS_ARXIV.tex",
             "clg_references.bib",
@@ -576,8 +576,31 @@ def build_deliverables():
             fpath = os.path.join(PUB_DIR, fname)
             if os.path.exists(fpath):
                 z.write(fpath, arcname=fname)
-                print(f"[ZIP] Adicionado: {fname}")
+                print(f"[ZIP arXiv] Adicionado: {fname}")
     print("Salvo: arxiv_package.zip atualizado!")
+
+    # 6. Gerar Enviar_17.zip completo na raiz e em Publicacoes/
+    enviar_zip_pub = os.path.join(PUB_DIR, "Enviar_17.zip")
+    enviar_zip_root = os.path.join(ROOT_DIR, "Enviar_17.zip")
+    enviar_files = [
+        ("MensagemParaOAvaliador16.docx", os.path.join(PUB_DIR, "MensagemParaOAvaliador16.docx")),
+        ("MensagemParaOAvaliador16.txt", os.path.join(PUB_DIR, "MensagemParaOAvaliador16.txt")),
+        ("RespostaAoProfessor_Analise16.docx", os.path.join(PUB_DIR, "RespostaAoProfessor_Analise16.docx")),
+        ("RespostaAoProfessor_Analise16.md", os.path.join(PUB_DIR, "RespostaAoProfessor_Analise16.md")),
+        ("PARECER_16_AUDITORIA_CRITICA_PROFESSOR.md", os.path.join(PUB_DIR, "PARECER_16_AUDITORIA_CRITICA_PROFESSOR.md")),
+        ("ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md", os.path.join(PUB_DIR, "ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md")),
+        ("CLG_FOUNDATIONS_ARXIV.tex", os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.tex")),
+        ("arxiv_package.zip", os.path.join(PUB_DIR, "arxiv_package.zip"))
+    ]
+    for target_zip in [enviar_zip_pub, enviar_zip_root]:
+        with zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED) as z:
+            for arcname, filepath in enviar_files:
+                if os.path.exists(filepath):
+                    z.write(filepath, arcname=arcname)
+                    print(f"[ZIP Enviar_17] Adicionado: {arcname}")
+                else:
+                    print(f"[ZIP Enviar_17] AVISO: Arquivo nao encontrado: {filepath}")
+    print("Salvo: Enviar_17.zip gerado com sucesso na raiz e em Publicacoes/!")
 
 if __name__ == "__main__":
     build_deliverables()
