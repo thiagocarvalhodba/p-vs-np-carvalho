@@ -355,12 +355,15 @@ def update_arxiv_package():
         z.write(tex_path, arcname="CLG_FOUNDATIONS_ARXIV.tex")
         if os.path.exists(bib_path):
             z.write(bib_path, arcname="clg_references.bib")
-        fig_dir = os.path.join(PUB_DIR, "figuras")
-        if os.path.exists(fig_dir):
-            for fname in os.listdir(fig_dir):
-                fpath = os.path.join(fig_dir, fname)
-                if os.path.isfile(fpath):
-                    z.write(fpath, arcname=f"figuras/{fname}")
+        for fname in [
+            "fig_clg_teorema1_caixa_fracionaria.png",
+            "fig_clg_teorema3_4_harmonic_saddles_vertices.png",
+            "fig_clg_teorema5_6_softplus_convexity_bifurcation.png"
+        ]:
+            fpath = os.path.join(PUB_DIR, fname)
+            if os.path.exists(fpath):
+                z.write(fpath, arcname=fname)
+                print(f"  [+] {fname} -> arxiv_package.zip")
     print(f"arxiv_package.zip atualizado: {zip_path}")
 
 def build_enviar_18():
