@@ -1,0 +1,32 @@
+================================================================================
+RELATÓRIO CONSOLIDADO DE EXECUÇÃO — PROTOCOLO EXPERIMENTAL V2
+Data: 2026-09-18 10:55:02 | Tempo Total: 666.89s
+Ambiente: Windows 11 Pro | CPU: Intel Core 7 150U (10 cores, 12 threads)
+================================================================================
+
+--- RESULTADOS SEMENTE PRIMÁRIA (20260911) ---
+
+Ensemble: Horn_Monotone
+  Multilinear rho: 0.0000 [95% CI: 0.0000, 0.0000]
+  Hinge Quad  rho: 0.0000 [95% CI: 0.0000, 0.0000]
+  Delta Efeito   : 0.0000 [95% CI: 0.0000, 0.0000] (Wilcoxon p=1.0000e+00)
+
+Ensemble: Subcritical_3SAT
+  Multilinear rho: 0.0000 [95% CI: 0.0000, 0.0000]
+  Hinge Quad  rho: 0.0933 [95% CI: 0.0767, 0.1089]
+  Delta Efeito   : 0.0933 [95% CI: 0.0767, 0.1089] (Wilcoxon p=6.5496e-04)
+
+Ensemble: Planted_3SAT_alpha_3.0
+  Multilinear rho: 0.0039 [95% CI: 0.0023, 0.0058]
+  Hinge Quad  rho: 0.1059 [95% CI: 0.1017, 0.1107]
+  Delta Efeito   : 0.1019 [95% CI: 0.0981, 0.1059] (Wilcoxon p=6.5496e-04)
+
+Ensemble: Planted_3SAT_alpha_4.26
+  Multilinear rho: 0.0089 [95% CI: 0.0069, 0.0107]
+  Hinge Quad  rho: 0.1119 [95% CI: 0.1083, 0.1155]
+  Delta Efeito   : 0.1030 [95% CI: 0.0994, 0.1068] (Wilcoxon p=6.5496e-04)
+
+Ensemble: 3_XOR_SAT
+  Multilinear rho: 0.0330 [95% CI: 0.0318, 0.0341]
+  Hinge Quad  rho: 0.1134 [95% CI: 0.1108, 0.1158]
+  Delta Efeito   : 0.0804 [95% CI: 0.0772, 0.0835] (Wilcoxon p=6.5496e-04)
