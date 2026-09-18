@@ -26,3 +26,13 @@ prin*.png
 rules*.png
 # Pytest cache
 .pytest_cache/
+
+# AI assistant files, memory checkpoints, prompts and audit transcripts
+MEMORIA_CHECKPOINT_SESSAO.md
+PROJECT_MEMORY.md
+RELATORIO_AUDITORIA_CLG_R.md
+AUDITORIA_IA/
+*PROMPT_CLAUDE*
+create_claude_prompt.py
+Arquivos_Para_IA/
+scratch/
