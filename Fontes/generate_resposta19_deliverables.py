@@ -232,7 +232,7 @@ Agradecemos profundamente pela auditoria independente e minuciosa realizada sobr
 Acolhemos integralmente todas as recomendações de Vossa Senhoria e implementamos as seguintes ações no manuscrito arXiv, na monografia analítica e na suíte de testes:
 
 1. Proposição 7A — Expurgamento Completo do Item 2 (Contraexemplo N=4):
-   Removemos integralmente da Proposição 7A a afirmação de que o fluxo do Hinge preserva coordenadas positivas no ortante A_N = (1/3, 1)^N e atrai 100% das trajetórias para o arredondamento (+1, ..., +1). Reconhecemos e reproduzimos o seu contraexemplo numérico exato: para N=4 com x_0 = (0.334, 1, 1, 1), a integração do gradiente do Hinge conduz a x* ≈ (-0.004, 1/3, 1/3, 1/3), demonstrando que a coordenada x_1 cruza para o semi-espaço negativo. A Proposição 7A agora restringe-se estritamente ao resultado demonstrado: a derivação analítica de J_{ij}(x) <= 0 (sistema puramente competitivo) e a decorrente suspensão dos teoremas de cooperatividade monótona de Hirsch. A dinâmica global em F_N permanece formalmente em aberto sob re-auditoria.
+   Removemos integralmente da Proposição 7A a afirmação de que o fluxo do Hinge preserva coordenadas positivas no ortante A_N = (1/3, 1)^N e atrai 100% das trajetórias para o arredondamento (+1, ..., +1). Reconhecemos e reproduzimos o seu contraexemplo numérico exato: para N=4 com x_0 = (0.334, 1, 1, 1), a integração do gradiente do Hinge conduz a x* ≈ (-0.004, 1/3, 1/3, 1/3), demonstrando que a coordenada x_1 cruza para o semi-espaço negativo. A Proposição 7A agora restringe-se estritamente ao resultado demonstrado: a derivação analítica de J_{ij}(x) <= 0 (sistema competitivo, fracamente inibitório, com entradas não-positivas fora da diagonal) e a decorrente suspensão dos teoremas de cooperatividade monótona de Hirsch. A dinâmica global em F_N permanece formalmente em aberto sob re-auditoria.
 
 2. Teorema 7B — Formulação de LaSalle como Distância ao Conjunto (dist(x(t), Z) -> 0):
    Refinamos o enunciado e a demonstração do Teorema 7B para explicitar que o conjunto limite de LaSalle é o politopo Z sob a métrica de distância a conjuntos: lim_{t -> infty} dist(x(t), Z) = 0. Isso afasta formalmente qualquer inferência indevida de convergência pontual x(t) -> x* em variedades contínuas de equilíbrios. Explicitamos também que o operador Pi_{T_X(x)} é o operador de projeção ortogonal no cone tangente.
@@ -310,7 +310,7 @@ Acolhendo integralmente a recomendação do Professor:
 1. **O Item 2 foi completamente expurgado** tanto de `CLG_FOUNDATIONS_ARXIV.tex` quanto de `ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md`.
 2. A Proposição 7A agora mantém **estritamente o que foi provado analiticamente**:
    * A dedução de que todas as derivadas cruzadas satisfazem $\frac{\partial^2 P_c}{\partial x_i \partial x_j} \ge 0 \implies J_{ij}(x) \le 0$ para $i \ne j$;
-   * A conclusão de que o sistema é competitivo/inibitório e viola a condição de Kamke-Müller ($J_{ij} \ge 0$), impedindo a invocação direta da teoria monótona/cooperativa de Hirsch;
+   * A conclusão de que o sistema é competitivo (fracamente inibitório), com entradas não-positivas fora da diagonal ($J_{ij} \le 0$), violando a condição de Kamke-Müller ($J_{ij} \ge 0$) e impedindo a invocação direta da teoria monótona/cooperativa de Hirsch;
    * O registro formal de que a caracterização dinâmica assintótica do fluxo multilinear em $F_N$ permanece aberta sob re-auditoria analítica estrutural.
 3. Criamos um teste unitário automatizado em `tests/test_parecer19_auditoria.py::test_prop7a_counterexample_n4` que simula numericamente a trajetória a partir de $x_0 = (0.334, 1, 1, 1)$ e atesta a negatividade de $x^*_1$.
 
@@ -399,14 +399,14 @@ A tabela a seguir reflete com absoluta precisão o estado de cada resultado teó
 | **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero IEEE 754. |
 | **T7B** (Contração Centrípeta Hinge) | 🟢 **Fechado como Conjunto Limite** | $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção no cone tangente. |
-| **Proposição 7A** (Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\ge 0 \implies J_{ij} \le 0$ (Hirsch suspenso; Item 2 de $A_N$ expurgado). |
+| **Proposição 7A** (Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; Item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como Cota Finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita via Jensen ($M \ge 1$). |
 | **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); em aberto para DAGs gerais. |
 | **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ não fecha linearidade universal. |
 | **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} \ne 0$ asseguram $\lambda_{\min} < 0$. |
 | **Teorema 10** (Separação Subcrítica) | 🔴 **Não Fechado** | Lacuna em arestas $d=1$ (flat manifolds) e separação assintótica em aberto. |
 | **Conjectura Central** (Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita ao intervalo $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
-| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento categórico entre colapso contínuo e complexidade de Turing ($P \ne NP$). |
+| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |
 
 ---
 

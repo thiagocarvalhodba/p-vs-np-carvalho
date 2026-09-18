@@ -386,13 +386,13 @@ Let $N \ge 4$. Consider the formula $F_N$ consisting of all $M = \binom{N}{3}$ p
     \begin{equation}
     J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j.
     \end{equation}
-    \item \textbf{Dynamical Consequence and Suspension of Hirsch:} The continuous multilinear gradient flow $\dot{x} = -\nabla \Phi_{\rm mult}(x)$ is strictly competitive/inhibitory on $\mathcal{X} = [-1, 1]^N$. It violates the Kamke-M\"uller condition ($J_{ij} \ge 0$) required for cooperative/monotone dynamical systems, precluding any direct invocation of Hirsch's monotone convergence theorems.
+    \item \textbf{Dynamical Consequence and Suspension of Hirsch:} The continuous multilinear gradient flow $\dot{x} = -\nabla \Phi_{\rm mult}(x)$ is competitive (weakly inhibitory) with non-positive off-diagonal entries ($J_{ij}(x) \le 0$) on $\mathcal{X} = [-1, 1]^N$. It violates the Kamke-M\"uller condition ($J_{ij} \ge 0$) required for cooperative/monotone dynamical systems, precluding any direct invocation of Hirsch's monotone convergence theorems.
     \item \textbf{Formal Status:} The dynamical characterization of the multilinear flow on $F_N$ is formally suspended under active structural re-audit.
 \end{enumerate}
 \end{proposition}
 
 \begin{remark}[Analytical Audit Note on Proposition 7A]
-The derivation confirms that interactions between variables in purely negative clauses exert mutual competitive suppression ($J_{ij} \le 0$). Analyzing convergence on such competitive systems in dimension $N \ge 3$ requires carrying simplices and invariant manifold techniques rather than order-preserving flows.
+The derivation confirms that interactions between variables in purely negative clauses exert mutual competitive (weakly inhibitory) suppression ($J_{ij} \le 0$). Analyzing convergence on such competitive systems in dimension $N \ge 3$ requires carrying simplices and invariant manifold techniques rather than order-preserving flows.
 \end{remark}
 
 \section{Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality}
@@ -550,14 +550,14 @@ Lemma 10.1 (Hypertree Overlap Bound) & \textbf{Partially Closed} ($9\alpha^2 = \
 Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Closed conditionally under structural leaf hypothesis $H_{\rm leaf}$} \\
 Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Not Closed} ($d=1$ flat edges and Hinge separation open) \\
 Central Conjecture & \textbf{Delimited Conjecture} ($\alpha \in (\alpha_d, \alpha_s)$ / planted ensemble) \\
-Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from $P$ vs $NP$) \\
+Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from the $P$ versus $NP$ distinction) \\
 \bottomrule
 \end{tabular}
 \label{tab:status_matrix}
 \end{table}
 
-\section{Epistemological Firewall: 3-XOR-SAT and $P$ vs $NP$}
-The CLG-R framework establishes an epistemological firewall against illegitimate inferences from continuous dynamical hardness to Turing machine complexity ($P \ne NP$):
+\section{Epistemological Firewall: 3-XOR-SAT and the $P$ versus $NP$ Distinction}
+The CLG-R framework establishes an epistemological firewall against illegitimate inferences from continuous dynamical hardness to the $P$ versus $NP$ distinction:
 \begin{itemize}
     \item \textbf{3-XOR-SAT} is solvable in deterministic polynomial time $\mathcal{O}(N^3)$ via Gaussian Elimination over $\mathbb{F}_2$ (strictly in Class $\mathbf{P}$).
     \item However, under continuous gradient descent, 3-XOR-SAT exhibits complete dynamic glassy collapse due to dense $p$-spin metastable state proliferation \cite{ricci2010being, mezard2003two}.

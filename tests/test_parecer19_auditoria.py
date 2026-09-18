@@ -157,3 +157,43 @@ def test_sobriety_title_and_conclusion_parecer19():
     assert "100% of trajectories" not in tex_content
     assert "mantendo coordenadas positivas" not in md_content
     assert "100% das trajetórias" not in md_content
+
+def test_prop7a_weakly_inhibitory_wording():
+    """
+    Verifica que a Proposição 7A não alega 'strictly competitive/inhibitory'
+    pois a igualdade J_ij = 0 pode ocorrer, usando a formulação precisa
+    'competitive (weakly inhibitory)' com entradas não positivas fora da diagonal.
+    """
+    tex_path = os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.tex")
+    md_path = os.path.join(PUB_DIR, "ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md")
+    
+    with open(tex_path, "r", encoding="utf-8") as f:
+        tex_content = f.read()
+    with open(md_path, "r", encoding="utf-8") as f:
+        md_content = f.read()
+        
+    assert "strictly competitive/inhibitory" not in tex_content
+    assert "competitive (weakly inhibitory)" in tex_content
+    assert "estritamente competitivo/inibitório" not in md_content
+    assert "competitivo (fracamente inibitório)" in md_content
+
+def test_firewall_p_versus_np_distinction():
+    """
+    Verifica que o Firewall Epistemológico e a Resposta Técnica não afirmam P != NP,
+    adotando a formulação exata de desacoplamento entre a dinâmica contínua e a distinção P versus NP.
+    """
+    tex_path = os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.tex")
+    md_path = os.path.join(PUB_DIR, "ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md")
+    resp_path = os.path.join(PUB_DIR, "RespostaAoProfessor_Analise19.md")
+    
+    with open(tex_path, "r", encoding="utf-8") as f:
+        tex_content = f.read()
+    with open(md_path, "r", encoding="utf-8") as f:
+        md_content = f.read()
+    with open(resp_path, "r", encoding="utf-8") as f:
+        resp_content = f.read()
+        
+    assert "distinção P versus NP" in md_content
+    assert "Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP" in md_content
+    assert "Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP" in resp_content
+    assert "$P$ versus $NP$ distinction" in tex_content

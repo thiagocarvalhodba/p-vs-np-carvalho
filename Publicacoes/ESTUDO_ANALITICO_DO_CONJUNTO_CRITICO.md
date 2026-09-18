@@ -245,7 +245,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > *Seja $N \ge 4$. Considere a fórmula 3-CNF $F_N$ formada por todas as $M = \binom{N}{3}$ cláusulas exclusivamente negativas: $\mathcal{C} = \{ (\neg x_i \lor \neg x_j \lor \neg x_k) \mid 1 \le i < j < k \le N \}$.*  
 > *1. Estrutura do Jacobiano Competitivo:* Para o potencial multilinear $\Phi_{\text{mult}}$, cada cláusula tem potencial $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, cuja derivada cruzada no hipercubo $\mathcal{X} = [-1, 1]^N$ é $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequentemente, as entradas fora da diagonal do Jacobiano dinâmico $J(x) = D(-\nabla \Phi_{\text{mult}}(x)) = -\nabla^2 \Phi_{\text{mult}}(x)$ satisfazem:
 > $$J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j$$
-> *2. Consequência Dinâmica e Suspensão de Hirsch:* O sistema contínuo é estritamente **competitivo/inibitório**, violando a condição de Kamke-Müller ($J_{ij} \ge 0$) necessária para sistemas cooperativos de Hirsch. Teoremas de convergência monótona não se aplicam diretamente ao fluxo gradiente multilinear em dimensão $N \ge 3$, exigindo técnicas de variedades invariantes e simplices carregadores.  
+> *2. Consequência Dinâmica e Suspensão de Hirsch:* O sistema contínuo é **competitivo (fracamente inibitório)**, com entradas não-positivas fora da diagonal ($J_{ij}(x) \le 0$), violando a condição de Kamke-Müller ($J_{ij} \ge 0$) necessária para sistemas cooperativos de Hirsch. Teoremas de convergência monótona não se aplicam diretamente ao fluxo gradiente multilinear em dimensão $N \ge 3$, exigindo técnicas de variedades invariantes e simplices carregadores.  
 > *3. Supressão da Dinâmica Global de $A_N$:* Conforme contraexemplo numérico apresentado no Parecer 19 (para $N=4$ e $x_0 = (0.334, 1, 1, 1)$, a integração do fluxo Hinge conduz a $x^* \approx (-0.004, 1/3, 1/3, 1/3)$, com a coordenada $x_1$ tornando-se negativa), a alegação preliminar sobre preservação de positividade e arredondamento espúrio universal foi formalmente falsificada e expurgada. A dinâmica assintótica global de $F_N$ permanece aberta sob re-auditoria analítica estrutural.
 
 ---
@@ -340,10 +340,10 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ## 12. Firewall Epistemológico: 3-XOR-SAT e P vs NP
 
-A teoria CLG-R estabelece um firewall epistemológico contra inferências de dificuldade dinâmica para $P \ne NP$:
+A teoria CLG-R estabelece um firewall epistemológico contra inferências de dificuldade dinâmica para a distinção P versus NP:
 * **3-XOR-SAT** é solucionável em tempo polinomial determinístico $\mathcal{O}(N^3)$ via Eliminação Gaussiana em $\mathbb{F}_2$ (pertence estritamente a $\mathbf{P}$).
 * Sob qualquer relaxação contínua governada por gradientes métricos, 3-XOR-SAT sofre colapso dinâmico vítreo completo ($R_{\text{dyn}} = 0.0\%$).
-* **Conclusão Epistemológica:** Dificuldade geométrica ou colapso dinâmico não implicam dificuldade computacional no modelo de Turing ($P \ne NP$).
+* **Conclusão Epistemológica:** Dificuldade geométrica ou colapso dinâmico não implicam resolução da complexidade computacional no modelo de Turing (a distinção P versus NP permanece aberta).
 
 ---
 
@@ -359,11 +359,11 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições declaradas** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções IEEE** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero. |
 | **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção ortogonal no cone tangente. |
-| **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo; Hirsch suspenso; item 2 de $A_N$ expurgado). |
+| **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
 | **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); em aberto para DAGs gerais. |
 | **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ não implica $P(X=0)\to 1$. |
 | **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$. |
 | **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Não Fechado** | Lacuna em arestas $d=1$ (flat manifolds) e separação com Hinge em aberto. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
-| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Separação categórica entre dinâmica contínua e complexidade de Turing (sem "absoluto"). |
+| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |

@@ -22,7 +22,7 @@ O Professor realizou auditoria independente minuciosa sobre o pacote `Enviar_18.
 1. **Proposição 7A — Expurgamento Completo do Item 2 (Contraexemplo $N=4$ do Professor):**
    - **Contraexemplo do Professor:** Para $N=4$ com $F_4$ contendo 4 cláusulas puramente negativas e $x_0 = (0.334, 1, 1, 1) \in (1/3, 1)^4$, a integração do fluxo de gradiente projetado do Hinge leva ao estado limite $x^* \approx (-0.004, 1/3, 1/3, 1/3)$. A coordenada $x_1$ cruza o zero e torna-se estritamente negativa, refutando a preservação universal de positividade e o arredondamento uniforme $(+1, \dots, +1)$ em 100% das trajetórias.
    - **Ação:** O Item 2 foi **totalmente expurgado** do artigo arXiv (`CLG_FOUNDATIONS_ARXIV.tex`) e da monografia (`ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md`).
-   - **Núcleo Preservado:** A Proposição 7A foi restrita à dedução analítica de $J_{ij}(x) \le 0$ para $i \ne j$ (sistema competitivo) e à decorrente suspensão dos teoremas de Hirsch por violação da condição de Kamke-Müller. A dinâmica global em $F_N$ permanece aberta sob re-auditoria analítica estrutural.
+   - **Núcleo Preservado:** A Proposição 7A foi restrita à dedução analítica de $J_{ij}(x) \le 0$ para $i \ne j$ (sistema competitivo, fracamente inibitório, com entradas não-positivas fora da diagonal) e à decorrente suspensão dos teoremas de Hirsch por violação da condição de Kamke-Müller. A dinâmica global em $F_N$ permanece aberta sob re-auditoria analítica estrutural.
    - **Teste Automatizado:** Implementado em `tests/test_parecer19_auditoria.py::test_prop7a_counterexample_n4`.
 
 2. **Teorema 7B — Formulação Rigorosa de LaSalle como Distância ao Conjunto ($\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$):**
@@ -58,14 +58,14 @@ O Professor realizou auditoria independente minuciosa sobre o pacote `Enviar_18.
 | **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções IEEE** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero. |
 | **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção no cone tangente. |
-| **Proposição 7A** (Jacobiano Competitivo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\ge 0 \implies J_{ij} \le 0$; Hirsch suspenso; Item 2 de $A_N$ expurgado. |
+| **Proposição 7A** (Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; Item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita via Jensen com $M \ge 1$. |
 | **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); em aberto para DAGs gerais. |
 | **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ não fecha linearidade universal. |
 | **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado condicionalmente a $H_{\text{leaf}}$** | Traço nulo e $H_{\ell p} \ne 0 \implies \lambda_{\min} < 0$. |
 | **Teorema 10** (Separação Subcrítica) | 🔴 **Não Fechado** | Formulação condicional; arestas flat $d=1$ e separação com Hinge abertas. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado. |
-| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Separação categórica entre dinâmica contínua e complexidade de Turing. |
+| **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |
 
 ---
 
