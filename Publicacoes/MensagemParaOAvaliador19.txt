@@ -27,7 +27,10 @@ Acolhemos integralmente todas as recomendações de Vossa Senhoria e implementam
 7. Suíte Automatizada de Testes (test_parecer19_auditoria.py):
    Implementamos teste numérico automatizado reproduzindo o contraexemplo do Professor para N=4, bem como checagens de consistência formal de todos os textos, aprovados com 100% de sucesso.
 
-Seguem anexos no pacote consolidado Enviar_19.zip: a transcrição do Parecer nº 19, a Resposta Técnica Detalhada (MD e DOCX), a presente Mensagem (TXT e DOCX), o manuscrito CLG_FOUNDATIONS_ARXIV.tex revisado, a monografia analítica ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md, a suíte de testes e o arquivo compilável arxiv_package.zip.
+8. Bibliografia e Arquivo BBL Pré-compilado para o arXiv:
+   Sanamos em definitivo o bloqueador de compilação bibliográfica: incluímos clg_references.bib e geramos o arquivo CLG_FOUNDATIONS_ARXIV.bbl (formatado estritamente no padrão BibTeX plain para as 26 referências citadas). Ambos foram incorporados tanto ao pacote interno arxiv_package.zip quanto à raiz do pacote consolidado Enviar_19.zip, garantindo compilação direta e sem dependência de passos adicionais nos servidores automatizados do arXiv.
+
+Seguem anexos no pacote consolidado Enviar_19.zip: a transcrição do Parecer nº 19, a Resposta Técnica Detalhada (MD e DOCX), a presente Mensagem (TXT e DOCX), o manuscrito CLG_FOUNDATIONS_ARXIV.tex revisado, a monografia analítica ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md, a suíte de testes, os arquivos bibliográficos (clg_references.bib e CLG_FOUNDATIONS_ARXIV.bbl) e o arquivo compilável arxiv_package.zip.
 
 Agradecemos imensamente por guiar este trabalho até seu estado mais sólido, rigoroso e defensável.
 

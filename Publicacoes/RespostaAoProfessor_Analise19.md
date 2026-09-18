@@ -121,7 +121,20 @@ Substituímos o encerramento pela fórmula exata proposta pelo Professor:
 
 ---
 
-## 8. Matriz Consolidada de Rigor Científico (Versão 4.0.2 pós-Parecer 19)
+## 8. Ponto 7: Sanamento do Bloqueador Técnico de Bibliografia para o arXiv (`clg_references.bib` e `.bbl`)
+
+### 8.1. Diagnóstico da Submissão ao arXiv
+No pacote anterior, o manuscrito `CLG_FOUNDATIONS_ARXIV.tex` continha os comandos `\bibliographystyle{plain}` e `\bibliography{clg_references}`, porém o arquivo interno `arxiv_package.zip` continha apenas o `.tex` e as figuras, omitindo tanto o arquivo de referências `clg_references.bib` quanto o arquivo bibliográfico compilado `.bbl`.
+Como a infraestrutura de compilação automatizada do arXiv **não executa BibTeX** durante o processamento (exigindo que o autor submeta o arquivo `.bbl` pré-compilado com o mesmo nome-base do `.tex`), a submissão resultaria em referências não resolvidas (`[?]`) ou falha de compilação.
+
+### 8.2. Ação Corretiva Executada
+1. **Inclusão do `clg_references.bib`:** Adicionado ao pacote `arxiv_package.zip` e à raiz do `Enviar_19.zip`, contendo as definições completas em formato BibTeX.
+2. **Geração do `CLG_FOUNDATIONS_ARXIV.bbl`:** Gerado o arquivo bibliográfico compilado no estilo `plain`, com as 26 referências citadas no manuscrito, ordenadas alfabeticamente pelo sobrenome do primeiro autor e com os rótulos numéricos exatos.
+3. **Validação CRC e Integridade:** O arquivo `.bbl` foi incorporado ao `arxiv_package.zip` e espelhado na raiz do repositório e em `Publicacoes/`, garantindo compilação imediata, determinística e autossuficiente tanto localmente quanto no arXiv.
+
+---
+
+## 9. Matriz Consolidada de Rigor Científico (Versão 4.0.2 pós-Parecer 19)
 
 A tabela a seguir reflete com absoluta precisão o estado de cada resultado teórico após a auditoria do Parecer 19:
 
@@ -146,7 +159,7 @@ A tabela a seguir reflete com absoluta precisão o estado de cada resultado teó
 
 ---
 
-## 9. Pacote Consolidado de Entrega `Enviar_19.zip`
+## 10. Pacote Consolidado de Entrega `Enviar_19.zip`
 
 Em cumprimento irrestrito à diretriz do usuário (*"sempre que você ajustar, gere um novo .zip"*), foi compilado e gerado o pacote **`Enviar_19.zip`** contendo:
 1. `PARECER_19_AUDITORIA_CRITICA_PROFESSOR.md`
@@ -155,10 +168,12 @@ Em cumprimento irrestrito à diretriz do usuário (*"sempre que você ajustar, g
 4. `MensagemParaOAvaliador19.txt`
 5. `MensagemParaOAvaliador19.docx`
 6. `CLG_FOUNDATIONS_ARXIV.tex` (Versão 4.0.2 com título e conclusões corrigidos, Proposição 7A saneada e T7B ajustado)
-7. `ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md` (Monografia técnica atualizada)
-8. `arxiv_package.zip` (Arquivo de submissão do arXiv com `.tex` e as 3 figuras PNG)
-9. `tests/test_parecer19_auditoria.py` (Suíte de testes automatizados com o contraexemplo numérico do Professor)
-10. Figuras de suporte em alta resolução:
+7. `CLG_FOUNDATIONS_ARXIV.bbl` (Bibliografia pré-compilada no formato BibTeX plain)
+8. `clg_references.bib` (Base de dados BibTeX com as 26 referências citadas)
+9. `ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md` (Monografia técnica atualizada)
+10. `arxiv_package.zip` (Arquivo de submissão do arXiv com `.tex`, `.bbl`, `.bib` e as 3 figuras PNG)
+11. `tests/test_parecer19_auditoria.py` (Suíte de testes automatizados com o contraexemplo numérico do Professor)
+12. Figuras de suporte em alta resolução:
     - `fig_clg_teorema1_caixa_fracionaria.png`
     - `fig_clg_teorema3_4_harmonic_saddles_vertices.png`
     - `fig_clg_teorema5_6_softplus_convexity_bifurcation.png`

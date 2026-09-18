@@ -197,3 +197,78 @@ def test_firewall_p_versus_np_distinction():
     assert "Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP" in md_content
     assert "Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP" in resp_content
     assert "$P$ versus $NP$ distinction" in tex_content
+
+def test_arxiv_bibliography_and_bbl_integrity():
+    """
+    Verifica que o bloqueador técnico de compilação do arXiv foi sanado em definitivo:
+    1. clg_references.bib existe e contém todas as 26 chaves citadas em CLG_FOUNDATIONS_ARXIV.tex.
+    2. CLG_FOUNDATIONS_ARXIV.bbl existe e contém entradas \\bibitem para as 26 chaves.
+    3. O pacote arxiv_package.zip contém CLG_FOUNDATIONS_ARXIV.tex, CLG_FOUNDATIONS_ARXIV.bbl,
+       clg_references.bib e as 3 figuras PNG.
+    4. O pacote consolidado Enviar_19.zip contém arxiv_package.zip, CLG_FOUNDATIONS_ARXIV.bbl
+       e clg_references.bib.
+    5. As somas CRC de CLG_FOUNDATIONS_ARXIV.tex, .bbl e .bib no pacote externo são
+       idênticas às do arxiv_package.zip interno.
+    """
+    import zipfile
+    
+    tex_path = os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.tex")
+    bib_path = os.path.join(PUB_DIR, "clg_references.bib")
+    bbl_path = os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.bbl")
+    arxiv_zip = os.path.join(PUB_DIR, "arxiv_package.zip")
+    enviar_zip = os.path.join(PUB_DIR, "Enviar_19.zip")
+    
+    assert os.path.exists(bib_path), "clg_references.bib deve existir em PUB_DIR"
+    assert os.path.exists(bbl_path), "CLG_FOUNDATIONS_ARXIV.bbl deve existir em PUB_DIR"
+    
+    with open(tex_path, "r", encoding="utf-8") as f:
+        tex_content = f.read()
+    with open(bib_path, "r", encoding="utf-8") as f:
+        bib_content = f.read()
+    with open(bbl_path, "r", encoding="utf-8") as f:
+        bbl_content = f.read()
+        
+    # Extrai todas as chaves citadas no tex
+    cites = re.findall(r"\\cite\{([^}]+)\}", tex_content)
+    cited_keys = set()
+    for c in cites:
+        for k in c.split(','):
+            cited_keys.add(k.strip())
+            
+    assert len(cited_keys) == 26, f"Esperado 26 chaves citadas, obtido {len(cited_keys)}"
+    
+    # Verifica que todas as 26 chaves estão no .bib
+    bib_keys = set(re.findall(r"@\w+\{([^,]+),", bib_content))
+    missing_in_bib = cited_keys - bib_keys
+    assert not missing_in_bib, f"Chaves ausentes no .bib: {missing_in_bib}"
+    
+    # Verifica que todas as 26 chaves estão no .bbl
+    bbl_keys = set(re.findall(r"\\bibitem\{([^}]+)\}", bbl_content))
+    missing_in_bbl = cited_keys - bbl_keys
+    assert not missing_in_bbl, f"Chaves ausentes no .bbl: {missing_in_bbl}"
+    
+    # Verifica integridade do arxiv_package.zip
+    assert os.path.exists(arxiv_zip), "arxiv_package.zip deve existir"
+    with zipfile.ZipFile(arxiv_zip, "r") as zf:
+        arxiv_files = {info.filename: info for info in zf.infolist()}
+        assert "CLG_FOUNDATIONS_ARXIV.tex" in arxiv_files
+        assert "CLG_FOUNDATIONS_ARXIV.bbl" in arxiv_files
+        assert "clg_references.bib" in arxiv_files
+        assert "fig_clg_teorema1_caixa_fracionaria.png" in arxiv_files
+        assert "fig_clg_teorema3_4_harmonic_saddles_vertices.png" in arxiv_files
+        assert "fig_clg_teorema5_6_softplus_convexity_bifurcation.png" in arxiv_files
+        
+    # Verifica integridade do Enviar_19.zip
+    assert os.path.exists(enviar_zip), "Enviar_19.zip deve existir"
+    with zipfile.ZipFile(enviar_zip, "r") as zf:
+        enviar_files = {info.filename: info for info in zf.infolist()}
+        assert "CLG_FOUNDATIONS_ARXIV.tex" in enviar_files
+        assert "CLG_FOUNDATIONS_ARXIV.bbl" in enviar_files
+        assert "clg_references.bib" in enviar_files
+        assert "arxiv_package.zip" in enviar_files
+        
+        # Verificação de CRC idêntico entre o tex/bbl/bib externo e interno
+        assert enviar_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC == arxiv_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC
+        assert enviar_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC == arxiv_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC
+        assert enviar_files["clg_references.bib"].CRC == arxiv_files["clg_references.bib"].CRC
+
