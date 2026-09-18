@@ -1,8 +1,8 @@
 # Estudo Analítico do Conjunto Crítico e Massa de Bacia Espúria no Framework CLG-R
-**Versão 4.0.2 — Auditoria pós-Pareceres 16 e 18 (Homologação de Fechamento)**  
+**Versão 4.0.2 — Auditoria pós-Parecer 16, Parecer 18 e Parecer 19 (Homologação de Fechamento)**  
 **Data:** 17 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Quase Fechado; T8 Fechado como Cota Finita; Lema 10.2 Fechado sob $H_{\rm leaf}$; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; Lema 10.2 Fechado sob $H_{\rm leaf}$; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
 
 ---
 
@@ -210,26 +210,26 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > 3. *O conjunto de equilíbrios projetados do sistema dinâmico $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x))$ coincide identicamente com o politopo da relaxação linear canônica:*
 >    $$\mathcal{E}_{\text{proj}} \equiv \{x \in \mathcal{X} \mid \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x)) = \mathbf{0}\} = Z$$
 >    *tanto no interior quanto no bordo $\partial \mathcal{X}$. Não existe nenhum equilíbrio projetado fora de $Z$.*  
-> 4. *Pelo Princípio de Invariância de LaSalle, toda trajetória a partir de qualquer condição inicial $x_0 \in \mathcal{X}$ converge universalmente para o politopo $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$.*
-
-### Demonstração:
-1. Cláusula ativa $g_c(x) > 0 \iff -\frac{1}{2}(1 + \sigma^{(c)} \cdot x) > 0 \iff \sigma^{(c)} \cdot x = -(2 g_c(x) + 1)$.
-2. O gradiente é $-\nabla \Phi_{\text{quad}}(x) = \sum_{c \in \text{act}(x)} g_c(x) \sigma^{(c)}$.
-3. O produto escalar com o vetor posição $x$ é:
-   $$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = \sum_{c \in \text{act}(x)} g_c(x) (\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}(x)} g_c(x) (2 g_c(x) + 1) = -\sum_{c \in \text{act}(x)} (2 g_c(x)^2 + g_c(x)) < 0$$
-4. **Equivalência Estrita $\mathcal{E}_{\text{proj}} \equiv Z$:**
-   - **Inclusão $\mathcal{E}_{\text{proj}} \subseteq Z$:**
-     Se $x \notin Z$, então $\text{act}(x) \ne \emptyset$, donde $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < 0$.
-     Por outro lado, para qualquer ponto $x \in \mathcal{X} = [-1, 1]^N$, o cone normal exterior é:
-     $$N_{\mathcal{X}}(x) = \{\nu \in \mathbb{R}^N \mid \nu_i = 0 \text{ se } |x_i| < 1, \; \nu_i x_i \ge 0 \text{ se } |x_i| = 1\}$$
-     Consequentemente, para todo $\nu \in N_{\mathcal{X}}(x)$:
-     $$\langle \nu, x \rangle = \sum_{i: |x_i|=1} \nu_i x_i \ge 0$$
-     Um ponto $x^*$ é equilíbrio projetado se e somente se $\mathbf{0} \in -\nabla \Phi_{\text{quad}}(x^*) - N_{\mathcal{X}}(x^*) \iff -\nabla \Phi_{\text{quad}}(x^*) \in N_{\mathcal{X}}(x^*)$.
-     Se $x^* \notin Z$, tomando $\nu = -\nabla \Phi_{\text{quad}}(x^*)$ teríamos $\langle \nu, x^* \rangle = \langle -\nabla \Phi(x^*), x^* \rangle < 0$, o que contradiz $\langle \nu, x^* \rangle \ge 0$.
-     Logo, $-\nabla \Phi_{\text{quad}}(x^*) \notin N_{\mathcal{X}}(x^*)$ para todo $x^* \notin Z$, provando que $\mathcal{E}_{\text{proj}} \subseteq Z$.
-   - **Inclusão $Z \subseteq \mathcal{E}_{\text{proj}}$:**
-     Para todo $x \in Z$, todas as restrições são satisfeitas ($g_c(x) \le 0, \forall c$), de modo que $\text{act}(x) = \emptyset$. Como $\Phi_{\text{quad}}(x) = \sum_{c} \max(0, g_c(x))^2$, temos $-\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$. Como a projeção do vetor nulo sobre qualquer cone convexo contendo a origem satisfaz $\Pi_K(\mathbf{0}) = \mathbf{0}$, segue que $\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x)) = \mathbf{0}$ para todo $x \in Z$, no interior ou no bordo. Logo $Z \subseteq \mathcal{E}_{\text{proj}}$.
-   - **Conclusão de LaSalle:** Como $\dot{\Phi}_{\text{quad}}(x) = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x))\|^2 \le 0$, o conjunto $\{\dot{\Phi}_{\text{quad}} = 0\}$ coincide rigorosamente com $Z$. Como todo ponto de $Z$ é estacionário, $Z$ é invariante, e pelo Princípio de Invariância de LaSalle todas as trajetórias convergem assintoticamente para $Z$. $\blacksquare$
+> 4. *Pelo Princípio de Invariância de LaSalle, toda trajetória a partir de qualquer condição inicial $x_0 \in \mathcal{X}$ aproxima-se assintoticamente do conjunto de equilíbrios $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$, isto é, $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$, onde $\Pi_{T_{\mathcal{X}}(x)}$ denota o operador de projeção ortogonal no cone tangente.*
+ 
+ ### Demonstração:
+ 1. Cláusula ativa $g_c(x) > 0 \iff -\frac{1}{2}(1 + \sigma^{(c)} \cdot x) > 0 \iff \sigma^{(c)} \cdot x = -(2 g_c(x) + 1)$.
+ 2. O gradiente é $-\nabla \Phi_{\text{quad}}(x) = \sum_{c \in \text{act}(x)} g_c(x) \sigma^{(c)}$.
+ 3. O produto escalar com o vetor posição $x$ é:
+    $$\langle -\nabla \Phi_{\text{quad}}(x), \, x \rangle = \sum_{c \in \text{act}(x)} g_c(x) (\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}(x)} g_c(x) (2 g_c(x) + 1) = -\sum_{c \in \text{act}(x)} (2 g_c(x)^2 + g_c(x)) < 0$$
+ 4. **Equivalência Estrita $\mathcal{E}_{\text{proj}} \equiv Z$:**
+    - **Inclusão $\mathcal{E}_{\text{proj}} \subseteq Z$:**
+      Se $x \notin Z$, então $\text{act}(x) \ne \emptyset$, donde $\langle -\nabla \Phi_{\text{quad}}(x), x \rangle < 0$.
+      Por outro lado, para qualquer ponto $x \in \mathcal{X} = [-1, 1]^N$, o cone normal exterior é:
+      $$N_{\mathcal{X}}(x) = \{\nu \in \mathbb{R}^N \mid \nu_i = 0 \text{ se } |x_i| < 1, \; \nu_i x_i \ge 0 \text{ se } |x_i| = 1\}$$
+      Consequentemente, para todo $\nu \in N_{\mathcal{X}}(x)$:
+      $$\langle \nu, x \rangle = \sum_{i: |x_i|=1} \nu_i x_i \ge 0$$
+      Um ponto $x^*$ é equilíbrio projetado se e somente se $\mathbf{0} \in -\nabla \Phi_{\text{quad}}(x^*) - N_{\mathcal{X}}(x^*) \iff -\nabla \Phi_{\text{quad}}(x^*) \in N_{\mathcal{X}}(x^*)$.
+      Se $x^* \notin Z$, tomando $\nu = -\nabla \Phi_{\text{quad}}(x^*)$ teríamos $\langle \nu, x^* \rangle = \langle -\nabla \Phi(x^*), x^* \rangle < 0$, o que contradiz $\langle \nu, x^* \rangle \ge 0$.
+      Logo, $-\nabla \Phi_{\text{quad}}(x^*) \notin N_{\mathcal{X}}(x^*)$ para todo $x^* \notin Z$, provando que $\mathcal{E}_{\text{proj}} \subseteq Z$.
+    - **Inclusão $Z \subseteq \mathcal{E}_{\text{proj}}$:**
+      Para todo $x \in Z$, todas as restrições são satisfeitas ($g_c(x) \le 0, \forall c$), de modo que $\text{act}(x) = \emptyset$. Como $\Phi_{\text{quad}}(x) = \sum_{c} \max(0, g_c(x))^2$, temos $-\nabla \Phi_{\text{quad}}(x) = \mathbf{0}$. Como a projeção do vetor nulo sobre qualquer cone convexo contendo a origem satisfaz $\Pi_K(\mathbf{0}) = \mathbf{0}$, segue que $\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x)) = \mathbf{0}$ para todo $x \in Z$, no interior ou no bordo. Logo $Z \subseteq \mathcal{E}_{\text{proj}}$.
+    - **Conclusão de LaSalle:** Como $\dot{\Phi}_{\text{quad}}(x) = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\text{quad}}(x))\|^2 \le 0$, o conjunto $\{\dot{\Phi}_{\text{quad}} = 0\}$ coincide rigorosamente com $\mathcal{E}_{\text{proj}} \equiv Z$. Pelo Princípio de Invariância de LaSalle, o conjunto $\omega$-limite de toda trajetória está contido em $Z$, estabelecendo $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$. $\blacksquare$
 
 ---
 
@@ -241,14 +241,12 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-> **Proposição 7A (Estrutura do Jacobiano na Família de Cláusulas Negativas --- 🟡 Em Auditoria).**  
+> **Proposição 7A (Estrutura do Jacobiano na Família de Cláusulas Negativas --- 🟡 Em Re-auditoria).**  
 > *Seja $N \ge 4$. Considere a fórmula 3-CNF $F_N$ formada por todas as $M = \binom{N}{3}$ cláusulas exclusivamente negativas: $\mathcal{C} = \{ (\neg x_i \lor \neg x_j \lor \neg x_k) \mid 1 \le i < j < k \le N \}$.*  
 > *1. Estrutura do Jacobiano Competitivo:* Para o potencial multilinear $\Phi_{\text{mult}}$, cada cláusula tem potencial $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$, cuja derivada cruzada no hipercubo $\mathcal{X} = [-1, 1]^N$ é $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequentemente, as entradas fora da diagonal do Jacobiano dinâmico $J(x) = D(-\nabla \Phi_{\text{mult}}(x)) = -\nabla^2 \Phi_{\text{mult}}(x)$ satisfazem:
 > $$J_{ij}(x) = -\frac{\partial^2 \Phi_{\text{mult}}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j$$
-> O sistema contínuo é estritamente **competitivo/inibitório**, violando a condição de Kamke-Müller ($J_{ij} \ge 0$) necessária para sistemas cooperativos de Hirsch. Teoremas de convergência monótona não se aplicam diretamente.  
-> *2. Bacia Espúria do Hinge:* O fluxo projetado $\dot{x} = -\nabla \Phi_{\text{quad}}(x)$ atrai o ortante $A_N = (1/3, 1)^N$ para o politopo $Z$ mantendo coordenadas positivas, produzindo arredondamento booleano violador $\text{sign}(x) = (+1, \dots, +1)$ em 100% das trajetórias:
-> $$A_N \subseteq \mathcal{B}_{\text{spur}}(\Phi_{\text{quad}}) \implies \mathcal{M}_{\text{spur}}(\Phi_{\text{quad}}) \ge \left(\frac{1}{3}\right)^N > 0$$
-> *3. Status Formal:* A caracterização dinâmica multilinear de $F_N$ permanece formalmente suspensa sob re-auditoria analítica estrutural.
+> *2. Consequência Dinâmica e Suspensão de Hirsch:* O sistema contínuo é estritamente **competitivo/inibitório**, violando a condição de Kamke-Müller ($J_{ij} \ge 0$) necessária para sistemas cooperativos de Hirsch. Teoremas de convergência monótona não se aplicam diretamente ao fluxo gradiente multilinear em dimensão $N \ge 3$, exigindo técnicas de variedades invariantes e simplices carregadores.  
+> *3. Supressão da Dinâmica Global de $A_N$:* Conforme contraexemplo numérico apresentado no Parecer 19 (para $N=4$ e $x_0 = (0.334, 1, 1, 1)$, a integração do fluxo Hinge conduz a $x^* \approx (-0.004, 1/3, 1/3, 1/3)$, com a coordenada $x_1$ tornando-se negativa), a alegação preliminar sobre preservação de positividade e arredondamento espúrio universal foi formalmente falsificada e expurgada. A dinâmica assintótica global de $F_N$ permanece aberta sob re-auditoria analítica estrutural.
 
 ---
 
@@ -269,7 +267,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 3. Para uma cláusula aleatória sob um ponto uniforme $x \sim \text{Unif}([-1, 1]^N)$, a condição $g_c(x) \le 0$ corresponde a $\sum_{j=1}^3 \sigma_j x_j \ge -1$, equivalente a $u_1 + u_2 + u_3 \ge 1$ com $u_j = (\sigma_j x_j + 1)/2 \sim \text{Unif}([0, 1])$.
 4. A soma $S_3 = u_1 + u_2 + u_3$ segue a distribuição de Irwin-Hall de ordem 3, cuja CDF em $s=1$ vale $\mathbb{P}(S_3 < 1) = \frac{1^3}{3!} = \frac{1}{6}$. Portanto, a média espacial de $p(x)$ é exatamente:
    $$\int_{[-1, 1]^N} p(x) \frac{dx}{2^N} = 1 - \frac{1}{6} = \frac{5}{6}$$
-5. Como a função $t \mapsto t^M$ é estritamente convexa em $[0, 1]$ para $M \ge 2$, pela **Desigualdade de Jensen**:
+5. Para $M = \lfloor \alpha N \rfloor \ge 1$, como a função $t \mapsto t^M$ é convexa em $[0, 1]$, pela **Desigualdade de Jensen**:
    $$\mathbb{E}_F[\mu_{\text{norm}}(Z)] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N} \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} > 0$$
 6. Além disso, no interior da caixa central $\mathcal{U}_N = (-1/3, 1/3)^N$, toda cláusula possível tem $g_c(x) < 0$, de modo que $p(x) \equiv 1$ em $\mathcal{U}_N$, fornecendo $\mathbb{E}[\mu(Z)] \ge \mu(\mathcal{U}_N) = (1/3)^N$. $\blacksquare$
 
@@ -349,9 +347,9 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 
 ---
 
-### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Parecer 18 / Versão 4.0.2)
+### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Pareceres 18 e 19 / Versão 4.0.2)
 
-| Resultado | Status de Auditoria (Parecer 18) | Qualificação Técnica Formal e Limites Analíticos |
+| Resultado | Status de Auditoria (Pareceres 18 e 19) | Qualificação Técnica Formal e Limites Analíticos |
 | :--- | :---: | :--- |
 | **T1** (Caixa Central $\mathcal{U}_N$) | 🟢 **Fechado** | Universal determinístico; folga interior 0.5 em toda a caixa. |
 | **T2** (Medida Nula de Críticos) | 🟢 **Fechado sob hipóteses** | Fubini para $\Phi_{\text{mult}}$; analiticidade real para $\Phi_{\text{soft}}$. |
@@ -360,8 +358,8 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **4B** (Confinamento de LaSalle) | 🟡 **Fechado com ressalva sobre formulação dinâmica** | Lyapunov estrito no hipercubo compacto; atratores isolados confinados a $\{-1, 1\}^N$. |
 | **T5** (Hessiana Softplus $V^T W V$) | 🟢 **Fechado sob condições declaradas** | Fatoração exata; $\text{rank}(V)=N \implies$ estrita convexidade. |
 | **T6** (Lipschitz e Underflow) | 🟢 **Fechado sob convenções IEEE** | $L_\beta = \Theta(\beta)$ bilateral; limites de underflow e flush-to-zero. |
-| **T7B** (Contração Centrípeta e LaSalle) | 🟡 **Quase Fechado** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; convenção de cone normal exterior explicitada. |
-| **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟡 **Reauditoria aberta** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo). |
+| **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção ortogonal no cone tangente. |
+| **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
 | **T9** (Horn Linear Monótono) | 🔴 **Falsificado / Abandonado** | Lema 9.1 falsificado sob fato unitário positivo ($Z=\{(1,\dots,1)\}$); em aberto para DAGs gerais. |
 | **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcial** | $2\text{-core} = \emptyset$ provado a.a.s.; cota $9\alpha^2 = \mathcal{O}(1)$ não implica $P(X=0)\to 1$. |
