@@ -2,7 +2,7 @@
 **Versão 4.0.3 — Auditoria dinâmica estratificada do Teorema 10 (Evolução pós-Parecer 16, Parecer 18 e Parecer 19)**  
 **Data:** 21 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; Lemas 10.1--10.5 Fechados sob hipóteses explicitadas; Teorema 10 Fechado sob a análise dinâmica estratificada.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; Lemas 10.1 e 10.4 mantidos; Lemas 10.2--10.5 em auditoria após identificação de uma lacuna na passagem de aciclicidade para existência de cláusula violada folha; Teorema 10 reaberto.
 
 ---
 
@@ -346,13 +346,15 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.5 (Evasão de Selas Estratificada para o Fluxo Projetado — Fechado)
+### Lema 10.5 (PDS / Convergência / Evasão — Reaberto após auditoria adversarial)
 
-> **Lema 10.5.** Para cada componente arbórea finita K, o conjunto de inicializações que convergem para equilíbrios projetados de energia positiva tem medida de Lebesgue zero.
+> **Status.** A prova da PR #2 não é mais considerada fechamento. A etapa de trocas de face por mapas de impacto foi retirada como fundamento: o semifluxo projetado pode perder invertibilidade no bordo, e pré-imagem de conjunto nulo por mapa C¹ exige hipóteses adicionais de posto. A dinâmica global é formulada por Moreau como
+> $$-\dot x\in \nabla\Phi(x)+N_{\mathcal X}(x)=\partial(\Phi+\delta_{\mathcal X})(x),$$
+> com identidade de dissipação $d\Phi/dt=-\|\dot x\|^2$ a.e. Isso fornece uma rota correta para aplicar teoria KL/subgradiente através das faces, condicionada às hipóteses exatas do teorema de comprimento finito utilizado.
+>
+> A auditoria encontrou ainda uma lacuna estrutural anterior: aciclicidade da hiperárvore não implica que **cada cláusula violada** tenha uma variável de grau 1. Uma hiperaresta interna pode ter todos os seus vértices compartilhados. Portanto, usos de “cláusula violada folha” em L10.2/L10.3 precisam de um lema adicional derivado das condições de criticidade/equilíbrio. Até esse ponto ser provado, a evasão de equilíbrios positivos e o Teorema 10 permanecem abertos. Detalhes em `Publicacoes/CLG_T10_LEMA_10_5_SADDLE_AVOIDANCE.md`.
 
-> **Prova.** O Lema 10.2 fornece, em cada face de dimensão ≥2, uma direção Hessiana negativa em todo crítico positivo. Em cada estrato suave do conjunto crítico semialgébrico, os vetores tangentes pertencem ao núcleo da Hessiana; logo a direção negativa é transversal ao estrato e produz uma direção instável para o fluxo negativo do gradiente. O teorema de variedade centro-estável dá então um conjunto de convergência de codimensão ≥1. A estratificação de Whitney é finita, portanto a união desses conjuntos continua nula. Em arestas, o Lema 10.3 elimina equilíbrios positivos; em vértices, a poda de folhas elimina mínimos locais positivos. As trocas transversais de face são tratadas por mapas de impacto C¹; contatos tangenciais formam conjuntos semialgébricos de dimensão menor, salvo faces localmente invariantes, que são cobertas pela análise intrínseca da própria face. Uma indução descendente na dimensão das faces preserva a nulidade das pré-imagens. Não é necessário supor número finito de trocas de face: particionando por m = 0,1,2,… eventos e usando união contável, a nulidade permanece. A propriedade de Łojasiewicz para o potencial polinomial/semialgébrico, combinada com a monotonicidade de energia, fornece convergência a um único equilíbrio fora desse conjunto nulo. Esse equilíbrio deve ter energia zero e, pela identidade vértice--energia, seu arredondamento é satisfatível. O argumento detalhado, incluindo as hipóteses de regularidade e as referências externas, está em `Publicacoes/CLG_T10_LEMA_10_5_SADDLE_AVOIDANCE.md`. □
-
-### Teorema 10 (Separação Dinâmica Subcrítica Completa entre $\Phi_{\text{mult}}$ e $\Phi_{\text{quad}}$ --- Fechado)
+### Teorema 10 (Separação Dinâmica Subcrítica — Reaberto)
 > **Teorema 10 (Separação Dinâmica Subcrítica Completa).**  
 > *Para o ensemble de 3-SAT aleatório $\mathcal{E}(N, \alpha)$ abaixo do limiar de percolação de hipergrafos $\alpha < 1/6$:*
 > 1. *Evasão Condicional de Selas e Convergência Multilinear via Desacoplamento:* Pelo desacoplamento em componentes do Lema 10.1:
@@ -406,10 +408,10 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
 | **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🟢 **Fechado** | Desacoplamento dinâmico $R_0 = 6\alpha < 1$; identidade de grau global em árvores; defeitos $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$. |
-| **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado em Componentes em Árvore** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
-| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟢 **Fechado em Componentes em Árvore** | Projeção $s_\ell \nabla_\ell \Phi \ge (1-|t|)/4 > 0 \implies \operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$; bacia vazia $\mathcal{B} = \emptyset$ via LaSalle. |
+| **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Reaberto** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
+| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟡 **Reaberto** | Projeção $s_\ell \nabla_\ell \Phi \ge (1-|t|)/4 > 0 \implies \operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$; bacia vazia $\mathcal{B} = \emptyset$ via LaSalle. |
 | **Lema 10.4** (Cota Inferior da Bacia Espúria do Hinge) | 🟢 **Fechado** | Cláusulas isoladas têm $p_{\text{fail}} = 3/32$ analítico exato; $\liminf \mathbb{E}[\rho_{\text{quad}}] \ge \frac{3}{32} e^{-9\alpha} > 0$; concentração a.a.s. via Chebyshev. |
-| **Lema 10.5** (Evasão de Selas Estratificada) | 🟢 **Fechado** | Estratificação de Whitney finita; direção instável transversal; variedades centro-estáveis de codimensão ≥1; controle das trocas de face por indução de dimensão. |
-| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🟢 **Fechado** | Separação dinâmica incondicional fechada ($\rho_{\text{quad}} \ge \frac{3}{32} e^{-9\alpha} > \rho_{\text{mult}} = 0$ a.a.s. para $\alpha < 1/6$). |
+| **Lema 10.5** (PDS/KL/Evasão) | 🟡 **Reaberto** | Estratificação de Whitney finita; direção instável transversal; variedades centro-estáveis de codimensão ≥1; controle das trocas de face por indução de dimensão. |
+| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🟡 **Reaberto** | Separação dinâmica incondicional fechada ($\rho_{\text{quad}} \ge \frac{3}{32} e^{-9\alpha} > \rho_{\text{mult}} = 0$ a.a.s. para $\alpha < 1/6$). |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado; respaldada por cavidade 1RSB e Kac-Rice. |
 | **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |
