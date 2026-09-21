@@ -1,0 +1,17 @@
+# Defense-in-depth for unattended Gemini research runs.
+# These rules apply in Plan Mode and prevent a headless session from leaving
+# the read-only research posture.
+
+[[rule]]
+toolName = "exit_plan_mode"
+decision = "deny"
+priority = 900
+modes = ["plan"]
+denyMessage = "Automated research runs must remain in Plan Mode."
+
+[[rule]]
+toolName = ["write_file", "replace", "run_shell_command"]
+decision = "deny"
+priority = 900
+modes = ["plan"]
+denyMessage = "Automated research runs are read-only. Use Codex computation auditing for executable checks."
