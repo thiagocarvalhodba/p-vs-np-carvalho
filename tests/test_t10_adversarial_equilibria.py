@@ -223,3 +223,53 @@ def test_m16_core_trap_survives_degree_two_and_mixed_polarities():
     leaf_drift_max = leaf_speed_max * hit_time_max
     assert leaf_drift_max == Fraction(1, 101)
     assert Fraction(1, 32) + leaf_drift_max < eta
+
+
+def test_shared_leaf_m7_is_a_positive_trap_inside_the_degree_two_core():
+    edges = (
+        (0, 1, 2),
+        (0, 8, 3),
+        (1, 3, 4),
+        (2, 4, 5),
+        (0, 5, 6),
+        (1, 6, 7),
+        (2, 7, 8),
+    )
+    signs = (
+        (1, 1, 1),
+        (-1, 1, 1),
+        (-1, 1, 1),
+        (-1, 1, 1),
+        (-1, 1, 1),
+        (-1, 1, 1),
+        (-1, 1, 1),
+    )
+    x = (Fraction(-1),) * 9
+    phi, grad = phi_grad_exact(edges, signs, x)
+
+    degrees = [0] * 9
+    for edge in edges:
+        for v in edge:
+            degrees[v] += 1
+
+    assert degrees[:3] == [3, 3, 3]
+    assert degrees[3:] == [2] * 6
+    assert min(degrees) == 2
+    assert all(
+        len(set(edges[i]).intersection(edges[j])) <= 1
+        for i in range(len(edges))
+        for j in range(i)
+    )
+
+    assert phi == 1
+    assert grad[:3] == (Fraction(1, 2),) * 3
+    assert grad[3:] == (Fraction(0),) * 6
+    assert projected_equilibrium_exact(x, grad)
+
+    center_grad_min = Fraction(17, 64)
+    hit_time_max = Fraction(16, 17)
+    shared_leaf_speed_max = Fraction(1, 8)
+    shared_leaf_drift_max = shared_leaf_speed_max * hit_time_max
+    assert shared_leaf_drift_max == Fraction(2, 17)
+    assert Fraction(1, 8) + shared_leaf_drift_max == Fraction(33, 136)
+    assert Fraction(33, 136) < Fraction(1, 4)
