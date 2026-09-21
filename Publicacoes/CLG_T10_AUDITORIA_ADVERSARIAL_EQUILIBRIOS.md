@@ -1,14 +1,14 @@
 # Auditoria adversarial de equilíbrios projetados do Teorema 10
 
 **Data:** 21 de setembro de 2026  
-**Veredito primário:** **A — CONTRAEXEMPLO ENCONTRADO.**
+**Veredito primário:** **A — CONTRAEXEMPLO COM BACIA POSITIVA ENCONTRADO.**
 
 | Afirmação | Dependências | Contraexemplo/tentativa | Prova | Status |
 |---|---|---|---|---|
 | $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ em toda hiperárvore linear | KKT projetado | Certificado de 4 cláusulas abaixo | Gradiente exato nulo e $\Phi=1$ | **REFUTADO** |
 | O vértice certificado é mínimo/atrator positivo | PDS no ortante | Expansão factível $u\ge0$ | Termo quadrático com ambos os sinais | **REFUTADO** |
 | A bacia do vértice certificado tem medida positiva | PDS projetado | Monotonicidade exata das folhas | A bacia é o singleton $\{x^*\}$ | **REFUTADO** |
-| Toda bacia de equilíbrio positivo em hiperárvores tem medida zero | Classificação global | Busca local não basta | Nenhuma prova ou contraexemplo de atrator aberto | **ABERTO** |
+| Toda bacia de equilíbrio positivo em hiperárvores tem medida zero | Classificação global | Hiperárvore de 7 cláusulas com aberto atraído para \(\Phi=1\) | Certificado analítico em CLG_T10_CONTRAEXEMPLO_BACIA_POSITIVA_M7.md | **REFUTADO** |
 | Convergência global do PDS CLG a ponto único via BDL | Hipóteses KL exatas | Leitura da fonte primária | Teorema citado não se aplica diretamente a $\Phi+\delta_X$ | **CONDICIONAL** |
 
 ## Catálogo exato: equilíbrios positivos nos vértices
@@ -35,6 +35,27 @@ anterior.
 
 Este catálogo não classifica equilíbrios em faces de dimensão positiva e não
 constitui uma prova para $m\ge5$ ou para hiperárvores arbitrárias.
+
+## Contraexemplo de bacia positiva (7 cláusulas)
+
+A rodada adversarial posterior encontrou uma obstrução estritamente mais forte que o certificado de quatro cláusulas. Considere a cláusula central \((a\lor b\lor c)\) e, para cada variável central \(r\in\{a,b,c\}\), duas cláusulas periféricas \((\neg r\lor p_{r,1}\lor q_{r,1})\) e \((\neg r\lor p_{r,2}\lor q_{r,2})\). O hipergrafo resultante é uma hiperárvore linear 3-uniforme com 7 cláusulas e 15 variáveis.
+
+Em coordenadas de deslocamento a partir de \(-\mathbf1\), a energia é
+\[
+\Phi=\prod_r\left(1-\frac{u_r}{2}\right)+\sum_r\frac{u_r}{2}\left[\left(1-\frac{y_{r,1}}2\right)\left(1-\frac{z_{r,1}}2\right)+\left(1-\frac{y_{r,2}}2\right)\left(1-\frac{z_{r,2}}2\right)\right].
+\]
+
+O aberto \(0<u_a,u_b,u_c<1/4\), \(0<y_{r,j},z_{r,j}<1/8\) é atraído em tempo finito para o conjunto estacionário \(u_a=u_b=u_c=0\), mantendo todas as folhas abaixo de \(1/4\). A cota exata é
+\[
+\partial_{u_r}\Phi\ge\frac{17}{64},\qquad T_{\rm hit}\le\frac{16}{17},\qquad \Delta y,\Delta z\le\frac1{17},
+\]
+de modo que folhas inicialmente abaixo de \(1/8\) permanecem abaixo de \(25/136<1/4\). No conjunto limite, \(\Phi=1\) e a cláusula central continua violada após rounding.
+
+Consequentemente, a bacia ruim possui medida de Lebesgue positiva. Sob inicialização uniforme, o subcaixote explicitamente certificado já tem probabilidade \(2^{-57}>0\).
+
+O certificado completo está em `Publicacoes/CLG_T10_CONTRAEXEMPLO_BACIA_POSITIVA_M7.md`.
+
+Isto refuta a propriedade determinística necessária à prova atual de T10: não é verdade que quase toda trajetória em toda componente hiperarbórea converge para energia zero. A etapa restante para uma refutação assintótica completa da formulação aleatória é contabilizar a densidade de componentes isoladas desse tipo no ensemble \(\mathcal E(N,\alpha)\).
 
 ## Afirmação auditada
 
