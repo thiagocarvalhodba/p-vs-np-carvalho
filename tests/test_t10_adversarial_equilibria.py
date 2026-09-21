@@ -119,3 +119,48 @@ def test_zero_clause_energy_does_not_imply_zero_clause_gradient():
     phi, gradient = phi_grad_exact(edges, signs, (Fraction(1), Fraction(-1), Fraction(-1)))
     assert phi == 0
     assert gradient == (Fraction(-1, 2), Fraction(0), Fraction(0))
+
+
+def test_seven_clause_hypertree_has_open_positive_basin_certificate():
+    edges = (
+        (0, 1, 2),
+        (0, 3, 4), (0, 5, 6),
+        (1, 7, 8), (1, 9, 10),
+        (2, 11, 12), (2, 13, 14),
+    )
+    signs = (
+        (1, 1, 1),
+        (-1, 1, 1), (-1, 1, 1),
+        (-1, 1, 1), (-1, 1, 1),
+        (-1, 1, 1), (-1, 1, 1),
+    )
+    x = (Fraction(-1),) * 15
+    phi, grad = phi_grad_exact(edges, signs, x)
+
+    assert is_linear_acyclic_attachment_tree(edges)
+    assert phi == 1
+    assert grad[:3] == (Fraction(1, 2),) * 3
+    assert grad[3:] == (Fraction(0),) * 12
+    assert projected_equilibrium_exact(x, grad)
+
+    # Exact bootstrap used in the analytic open-basin proof:
+    # leaves below 1/4 imply each peripheral leaf-product >= 49/64,
+    # hence each central gradient is >= 17/64.
+    leaf_factor_min = Fraction(7, 8)
+    branch_product_min = leaf_factor_min * leaf_factor_min
+    two_branch_sum_min = 2 * branch_product_min
+    central_grad_min = (two_branch_sum_min - 1) / 2
+    assert branch_product_min == Fraction(49, 64)
+    assert two_branch_sum_min == Fraction(49, 32)
+    assert central_grad_min == Fraction(17, 64)
+
+    # With initial central displacement <1/4, hitting time is <16/17.
+    hit_time_max = Fraction(1, 4) / central_grad_min
+    assert hit_time_max == Fraction(16, 17)
+
+    # A leaf moves at speed <=u_center/4<=1/16, so from an initial
+    # displacement <1/8 it remains below 1/4 before the center hits.
+    leaf_displacement_max = Fraction(1, 16) * hit_time_max
+    assert leaf_displacement_max == Fraction(1, 17)
+    assert Fraction(1, 8) + leaf_displacement_max == Fraction(25, 136)
+    assert Fraction(25, 136) < Fraction(1, 4)
