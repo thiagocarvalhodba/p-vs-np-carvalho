@@ -22,6 +22,10 @@ import numpy as np
 
 RATIONAL_GRID = (Fraction(-1), Fraction(-1, 2), Fraction(0), Fraction(1, 2), Fraction(1))
 
+# The first exact counterexample, in the u=x+1 coordinates of the box.
+COUNTEREXAMPLE_EDGES = ((0, 1, 2), (0, 3, 4), (1, 5, 6), (2, 7, 8))
+COUNTEREXAMPLE_SIGNS = ((1, 1, 1), (-1, 1, 1), (-1, 1, 1), (-1, 1, 1))
+
 
 @dataclass(frozen=True)
 class Certificate:
@@ -30,6 +34,34 @@ class Certificate:
     x: tuple[Fraction, ...]
     phi: Fraction
     gradient: tuple[Fraction, ...]
+
+
+def counterexample_delta_exact(u: Sequence[Fraction]) -> Fraction:
+    """Exact Phi(-1+u)-Phi(-1) for the four-clause counterexample.
+
+    The expression is the complete Taylor polynomial (degree three), not an
+    asymptotic truncation.  Its degree-two part is indefinite on u >= 0.
+    """
+    if len(u) != 9:
+        raise ValueError("the counterexample has nine variables")
+    q = (u[0] * u[1] + u[0] * u[2] + u[1] * u[2]) / 4
+    q -= (u[0] * (u[3] + u[4]) + u[1] * (u[5] + u[6]) + u[2] * (u[7] + u[8])) / 4
+    cubic = -u[0] * u[1] * u[2] / 8
+    cubic += (u[0] * u[3] * u[4] + u[1] * u[5] * u[6] + u[2] * u[7] * u[8]) / 8
+    return q + cubic
+
+
+def counterexample_leaf_velocity_exact(u: Sequence[Fraction], leaf: int) -> Fraction:
+    """Exact PDS velocity of one of the six leaves in u=x+1 coordinates.
+
+    Leaves are 3,...,8.  Their gradient is nonpositive everywhere on the
+    orthant, so the tangent-cone projection does not change -grad Phi.
+    """
+    branches = {3: (0, 4), 4: (0, 3), 5: (1, 6), 6: (1, 5), 7: (2, 8), 8: (2, 7)}
+    if leaf not in branches:
+        raise ValueError("leaf must be one of 3,...,8")
+    center, sibling = branches[leaf]
+    return u[center] * (1 - u[sibling] / 2) / 4
 
 
 def attachment_trees(num_clauses: int) -> Iterator[tuple[tuple[int, int, int], ...]]:

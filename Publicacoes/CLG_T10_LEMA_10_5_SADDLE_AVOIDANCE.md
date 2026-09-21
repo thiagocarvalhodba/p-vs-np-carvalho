@@ -95,7 +95,10 @@ Portanto, a tentativa de fortalecer L10.5 para
 \mathcal E_{\rm proj}(K)\subseteq\{\Phi=0\}
 ]
 
-por um único argumento local de folha **não está demonstrada**.
+por um único argumento local de folha é **refutada** pelo certificado exato de
+quatro cláusulas. O certificado não implica, contudo, uma bacia positiva: sua
+bacia é o singleton do vértice, por monotonicidade exata das seis folhas; ver
+`CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`.
 
 O mesmo ponto deve ser auditado nos Lemas 10.2 e 10.3: sempre que a prova requer uma *cláusula violada folha*, é necessário provar sua existência a partir das condições de criticidade/equilíbrio, e não apenas da aciclicidade.
 

@@ -8,6 +8,8 @@ sys.path.insert(0, str(ROOT / "Fontes"))
 from search_t10_positive_equilibrium_hypertrees import (
     attachment_trees,
     certificate_if_positive_equilibrium,
+    counterexample_delta_exact,
+    counterexample_leaf_velocity_exact,
     gauge_sign_patterns,
     is_linear_acyclic_attachment_tree,
     phi_grad_exact,
@@ -72,6 +74,24 @@ def test_four_clause_hypertree_counterexample_has_an_exact_certificate():
     assert candidate is not None
     assert candidate.phi == 1
     assert candidate.gradient == (Fraction(0),) * 9
+
+
+def test_counterexample_exact_boundary_expansion_has_both_signs():
+    zero = (Fraction(0),) * 9
+    assert counterexample_delta_exact(zero) == 0
+    # Feasible directions u>=0: one raises and one lowers Phi exactly.
+    raise_direction = (Fraction(1), Fraction(1)) + (Fraction(0),) * 7
+    lower_direction = (Fraction(1), Fraction(0), Fraction(0), Fraction(1)) + (Fraction(0),) * 5
+    assert counterexample_delta_exact(raise_direction) == Fraction(1, 4)
+    assert counterexample_delta_exact(lower_direction) == Fraction(-1, 4)
+
+
+def test_counterexample_leaf_velocities_are_nonnegative_on_the_box():
+    u = (Fraction(1), Fraction(3, 2), Fraction(1, 2), Fraction(1), Fraction(1, 2), Fraction(0), Fraction(1), Fraction(3, 2), Fraction(0))
+    assert all(counterexample_leaf_velocity_exact(u, leaf) >= 0 for leaf in range(3, 9))
+    # A positive central displacement immediately forces its leaf outward.
+    u_center_only = (Fraction(1),) + (Fraction(0),) * 8
+    assert counterexample_leaf_velocity_exact(u_center_only, 3) == Fraction(1, 4)
 
 
 def test_non_tree_control_has_a_positive_exact_equilibrium():

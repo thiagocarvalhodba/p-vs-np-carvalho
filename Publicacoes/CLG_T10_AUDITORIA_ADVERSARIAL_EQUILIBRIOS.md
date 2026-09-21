@@ -3,6 +3,14 @@
 **Data:** 21 de setembro de 2026  
 **Veredito primário:** **A — CONTRAEXEMPLO ENCONTRADO.**
 
+| Afirmação | Dependências | Contraexemplo/tentativa | Prova | Status |
+|---|---|---|---|---|
+| $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ em toda hiperárvore linear | KKT projetado | Certificado de 4 cláusulas abaixo | Gradiente exato nulo e $\Phi=1$ | **REFUTADO** |
+| O vértice certificado é mínimo/atrator positivo | PDS no ortante | Expansão factível $u\ge0$ | Termo quadrático com ambos os sinais | **REFUTADO** |
+| A bacia do vértice certificado tem medida positiva | PDS projetado | Monotonicidade exata das folhas | A bacia é o singleton $\{x^*\}$ | **REFUTADO** |
+| Toda bacia de equilíbrio positivo em hiperárvores tem medida zero | Classificação global | Busca local não basta | Nenhuma prova ou contraexemplo de atrator aberto | **ABERTO** |
+| Convergência global do PDS CLG a ponto único via BDL | Hipóteses KL exatas | Leitura da fonte primária | Teorema citado não se aplica diretamente a $\Phi+\delta_X$ | **CONDICIONAL** |
+
 ## Afirmação auditada
 
 Para toda hiperárvore linear 3-uniforme conexa $K$, a afirmação auditada era
@@ -56,6 +64,53 @@ $$\nabla\Phi_K(x^*)=(0,\ldots,0).$$
 Consequentemente a projeção no cone tangente é exatamente zero; não há questão
 de tolerância numérica nem de sinal KKT.
 
+## Estabilidade relativa à caixa e bacia do certificado
+
+Escreva $x=-\mathbf1+u$, com $u\in[0,2]^9$. A expansão exata (não apenas
+uma aproximação de Hessiana) é
+
+$$
+\begin{aligned}
+\Phi(-\mathbf1+u)-1
+={}&\frac14\left[u_0u_1+u_0u_2+u_1u_2
+-u_0(u_3+u_4)-u_1(u_5+u_6)-u_2(u_7+u_8)\right]\\
+&-\frac18u_0u_1u_2
++\frac18\left[u_0u_3u_4+u_1u_5u_6+u_2u_7u_8\right].
+\end{aligned}
+$$
+
+O primeiro termo homogêneo não nulo é a forma quadrática exibida na primeira
+linha. Nas direções factíveis $u=t(e_0+e_1)$ e $u=t(e_0+e_3)$, para todo
+$t>0$ pequeno, as diferenças de energia são respectivamente $+t^2/4$ e
+$-t^2/4$. Logo $x^*$ é uma sela relativa à caixa: não é mínimo local nem
+máximo local. Esta conclusão usa perturbações factíveis, não a Hessiana livre
+como critério de estabilidade no vértice.
+
+Há ainda uma prova direta, sem variedade estável, de que sua bacia é unitária.
+As folhas $3,4$ obedecem, no PDS e em coordenadas $u$,
+
+$$
+\dot u_3=\frac{u_0}{4}\left(1-\frac{u_4}{2}\right)\ge0,
+\qquad
+\dot u_4=\frac{u_0}{4}\left(1-\frac{u_3}{2}\right)\ge0,
+$$
+
+e as quatro fórmulas análogas valem para os pares $(5,6)$ e $(7,8)$,
+com centros $u_1$ e $u_2$. A projeção no cone tangente preserva essas fórmulas,
+pois $-\partial_{u_\ell}\Phi$ já aponta para dentro do ortante.
+
+Se uma trajetória converge para $u=0$, cada folha, não negativa e não
+decrescente, tem de ser identicamente zero desde o instante inicial. Então as
+equações acima forçam $u_0=u_1=u_2=0$ em todo instante. Portanto
+
+$$
+\{x_0:\ x(t;x_0)\to x^*\}=\{x^*\},
+$$
+
+cuja medida de Lebesgue é zero. O certificado derruba a exclusão de
+equilíbrios positivos, mas **não** fornece uma bacia positiva e não refuta por
+si só a conclusão quase-em-toda-parte de T10.
+
 ## Checagens de implementação
 
 O programa `Fontes/search_t10_positive_equilibrium_hypertrees.py` usa
@@ -108,5 +163,6 @@ contraexemplo não determina sozinho a medida de sua bacia nem a densidade de
 componentes que contribuem dinamicamente.
 
 O próximo passo matematicamente válido é classificar a estabilidade e a bacia
-do certificado de quatro cláusulas, antes de tentar qualquer novo argumento de
-peeling ou qualquer inferência sobre o ensemble aleatório.
+de outros equilíbrios positivos de hiperárvores pequenas, em particular um
+mínimo relativo positivo ou atrator não pontual, antes de tentar qualquer novo
+argumento de peeling ou qualquer inferência sobre o ensemble aleatório.
