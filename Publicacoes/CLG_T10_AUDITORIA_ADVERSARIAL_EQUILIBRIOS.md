@@ -166,3 +166,15 @@ O próximo passo matematicamente válido é classificar a estabilidade e a bacia
 de outros equilíbrios positivos de hiperárvores pequenas, em particular um
 mínimo relativo positivo ou atrator não pontual, antes de tentar qualquer novo
 argumento de peeling ou qualquer inferência sobre o ensemble aleatório.
+
+## Obstrução adicional ao peeling ingênuo
+
+Mesmo em uma única cláusula positiva $(0,1,2)$, no ponto
+$(x_0,x_1,x_2)=(1,-1,-1)$ vale $P_c=0$, mas
+
+$$\nabla P_c=(-1/2,0,0).$$
+
+Assim, remover uma cláusula apenas porque seu valor é zero não preserva o
+gradiente na variável compartilhada. Qualquer indução por peeling precisa de
+uma condição mais forte (por exemplo, fatores nulos suficientes para anular
+todas as derivadas relevantes), ainda não obtida.

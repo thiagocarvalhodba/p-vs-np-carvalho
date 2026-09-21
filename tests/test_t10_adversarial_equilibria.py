@@ -102,3 +102,13 @@ def test_non_tree_control_has_a_positive_exact_equilibrium():
     assert not is_linear_acyclic_attachment_tree(edges)
     assert candidate is not None
     assert candidate.phi == Fraction(1, 4)
+
+
+def test_zero_clause_energy_does_not_imply_zero_clause_gradient():
+    # This is the obstruction to a naive peeling induction: a satisfied leaf
+    # clause may still exert force through the variable carrying its zero factor.
+    edges = ((0, 1, 2),)
+    signs = ((1, 1, 1),)
+    phi, gradient = phi_grad_exact(edges, signs, (Fraction(1), Fraction(-1), Fraction(-1)))
+    assert phi == 0
+    assert gradient == (Fraction(-1, 2), Fraction(0), Fraction(0))
