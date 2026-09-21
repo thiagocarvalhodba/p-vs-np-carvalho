@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "claim": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PROVED",
+        "REFUTED",
+        "OPEN",
+        "CONDITIONAL",
+        "COMPUTATIONAL_ONLY"
+      ]
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "verified_claims": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "refuted_claims": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "exact_certificates": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "computational_evidence": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "surviving_obligations": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "next_target": {
+      "type": "string"
+    },
+    "stop_recommendation": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "claim",
+    "status",
+    "rationale",
+    "verified_claims",
+    "refuted_claims",
+    "exact_certificates",
+    "computational_evidence",
+    "surviving_obligations",
+    "next_target",
+    "stop_recommendation"
+  ]
+}
