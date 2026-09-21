@@ -164,3 +164,62 @@ def test_seven_clause_hypertree_has_open_positive_basin_certificate():
     assert leaf_displacement_max == Fraction(1, 17)
     assert Fraction(1, 8) + leaf_displacement_max == Fraction(25, 136)
     assert Fraction(25, 136) < Fraction(1, 4)
+
+
+def test_m16_core_trap_survives_degree_two_and_mixed_polarities():
+    # Clause nodes V_k cycle through centers a,b,c five times.
+    groups = tuple(i % 3 for i in range(15))
+    edges = [(0, 1, 2)]
+    signs = [(1, 1, 1)]
+    # leaf ell_k = variable 3+k; V_k contains incoming ell_{k-1}
+    # negatively and outgoing ell_k positively.
+    for k, center in enumerate(groups):
+        incoming = 3 + ((k - 1) % 15)
+        outgoing = 3 + k
+        edges.append((center, incoming, outgoing))
+        signs.append((-1, -1, 1))
+
+    x = (Fraction(-1),) * 3 + (Fraction(0),) * 15
+    phi, grad = phi_grad_exact(tuple(edges), tuple(signs), x)
+
+    # Linear hypergraph: no pair of clauses shares more than one variable.
+    assert all(
+        len(set(edges[i]).intersection(edges[j])) <= 1
+        for i in range(len(edges))
+        for j in range(i)
+    )
+
+    degrees = [0] * 18
+    polarity_sets = [set() for _ in range(18)]
+    for edge, sign in zip(edges, signs):
+        for v, s in zip(edge, sign):
+            degrees[v] += 1
+            polarity_sets[v].add(s)
+
+    assert min(degrees) >= 2
+    assert degrees[:3] == [6, 6, 6]
+    assert degrees[3:] == [2] * 15
+    assert all(polarity_sets[v] == {-1, 1} for v in range(18))
+
+    assert phi == 1
+    assert grad[:3] == (Fraction(1, 8),) * 3
+    assert grad[3:] == (Fraction(0),) * 15
+    assert projected_equilibrium_exact(x, grad)
+
+    # Exact open-basin bootstrap constants.
+    eta = Fraction(1, 16)
+    epsilon = Fraction(1, 32)
+    factor_min = (1 - eta) / 2
+    five_branch_sum_min = 5 * factor_min * factor_min
+    center_grad_min = (five_branch_sum_min - 1) / 2
+    assert factor_min == Fraction(15, 32)
+    assert five_branch_sum_min == Fraction(1125, 1024)
+    assert center_grad_min == Fraction(101, 2048)
+
+    hit_time_max = epsilon / center_grad_min
+    assert hit_time_max == Fraction(64, 101)
+
+    leaf_speed_max = epsilon / 2
+    leaf_drift_max = leaf_speed_max * hit_time_max
+    assert leaf_drift_max == Fraction(1, 101)
+    assert Fraction(1, 32) + leaf_drift_max < eta
