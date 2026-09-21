@@ -40,7 +40,7 @@ A estratificação é finita; portanto a união das variedades centro-estáveis 
 
 Para d = 1, o Lema 10.3 exclui equilíbrios positivos no interior relativo da aresta.
 
-Para d = 0, um equilíbrio é um vértice. A poda de folhas da componente arbórea exclui mínimos locais booleanos positivos. Para potenciais analíticos, equilíbrios estáveis de um fluxo gradiente são precisamente mínimos locais; portanto um vértice positivo não pode ser um atrator estável.
+Para d = 0, um equilíbrio é um vértice. A poda de folhas fornece algo mais forte: se o vértice tem energia positiva, existe uma cláusula violada com uma variável folha ℓ. Na aresta obtida libertando apenas x_ℓ, a derivada transversal tem sinal estritamente interior, exatamente como em L10.3. Logo o vértice possui uma direção instável unilateral. No chart local do cubo, a linearização tem uma direção expansiva; o argumento de variedade centro-estável, agora em um domínio com bordo, mostra que as condições iniciais que convergem para esse vértice formam um conjunto de medida zero. Não se usa aqui a afirmação de Absil–Kurdyka sobre estabilidade em uma face 0-dimensional, que seria vacuamente trivial.
 
 ### 5. Trocas de face
 
@@ -50,11 +50,11 @@ Num primeiro contato transversal com uma face G, a função de tempo de impacto 
 
 Contatos tangenciais satisfazem simultaneamente a equação da face e velocidade normal nula. Como o campo é polinomial, esses contatos formam um conjunto semialgébrico de dimensão estritamente menor, exceto quando a face é localmente invariante. Nesse último caso, a trajetória deve ser analisada pela dinâmica intrínseca da própria face.
 
-Aplicando esse argumento por indução descendente na dimensão das faces, a pré-imagem no cubo dos conjuntos centro-estáveis nulos permanece nula. Como o cubo possui apenas finitas faces, a união total continua nula.
+Aplicando esse argumento por indução descendente na dimensão das faces, a pré-imagem no cubo dos conjuntos centro-estáveis nulos permanece nula. Uma trajetória pode reentrar em uma face de dimensão maior após visitar uma face menor; portanto não se afirma que o número de trocas de face seja finito. Em vez disso, particiona-se o conjunto de trajetórias pelo número m de eventos de troca transversal e toma-se a união sobre m = 0,1,2,…; cada classe é nula pelo mesmo argumento de impacto, e a união é contável. Eventuais sequências com acumulação de tempos de impacto pertencem ao conjunto de contatos tangenciais/degenerados, tratado pelo mesmo argumento semialgébrico ou, no caso de uma face invariável, pela dinâmica intrínseca dessa face. Como o cubo possui somente finitas faces e a estratificação crítica é finita, a conclusão de medida zero permanece válida.
 
 ### 6. Convergência
 
-A energia é monotônica e Φ é polinomial/semialgébrica. A desigualdade de Łojasiewicz aplicada aos fluxos suaves nos estratos, juntamente com a finitude da estratificação e o controle das trocas de face, exclui uma trajetória não constante cujo conjunto ω contenha mais de um limite crítico. Assim, fora do conjunto nulo construído acima, a trajetória converge a um único equilíbrio projetado.
+A energia é monotônica e Φ é polinomial/semialgébrica. A desigualdade de Łojasiewicz aplicada aos fluxos suaves nos estratos, juntamente com a monotonicidade de energia e o controle semialgébrico das trocas de face, fornece a convergência a um único equilíbrio projetado para as trajetórias consideradas. Esta é a etapa de convergência estratificada; ela não é obtida apenas por LaSalle, que fornece o conjunto de equilíbrios como conjunto limite.
 
 Esse equilíbrio não pode ter energia positiva pelos itens 3 e 4. Logo Φ(x*) = 0.
 
