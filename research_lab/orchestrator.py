@@ -243,6 +243,8 @@ def run_gemini(
         "--output-format",
         gcfg["output_format"],
     ]
+    if gcfg.get("policy"):
+        argv += ["--policy", str(abs_path(gcfg["policy"]))]
     if gcfg.get("model"):
         argv += ["--model", gcfg["model"]]
 
