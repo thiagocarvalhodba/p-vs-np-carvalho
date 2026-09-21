@@ -1,0 +1,9 @@
+# Automated local research transcripts and state.
+rounds/*
+!rounds/.gitkeep
+runtime/*
+!runtime/.gitkeep
+
+# Python noise.
+__pycache__/
+*.pyc
