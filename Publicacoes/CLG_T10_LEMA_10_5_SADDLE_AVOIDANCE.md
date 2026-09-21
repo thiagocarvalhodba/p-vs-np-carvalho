@@ -1,83 +1,128 @@
-# Lema 10.5 — Evasão de Selas Estratificada no Fluxo Projetado
+# Lema 10.5 — Convergência do Fluxo Projetado em Componentes Arbóreas
 
 ## Enunciado
 
-Seja K uma componente arbórea finita e Φ = Φ_K sua extensão multilinear em X_K = [-1,1]^{V(K)}. Considere o fluxo de gradiente projetado ẋ = Π_T(-∇Φ).
+Seja K uma componente arbórea finita e Φ = Φ_K sua extensão multilinear em X_K = [-1,1]^{V(K)}. Considere
 
-Sob as conclusões dos Lemas 10.2 e 10.3 e a exclusão de mínimos locais booleanos positivos pela poda de folhas, o conjunto de inicializações que convergem para equilíbrios de energia positiva tem medida de Lebesgue zero em X_K. Portanto, para Lebesgue-quase todo x₀, a trajetória termina em equilíbrio de energia zero e seu arredondamento booleano é satisfatível.
+    ẋ = Π_{T_X(x)}(-∇Φ(x)).
+
+Então **toda** trajetória do fluxo projetado converge a um equilíbrio projetado de energia zero. Em particular, para toda inicialização x₀ ∈ X_K, existe um vértice booleano satisfatível na face limite contendo o equilíbrio; sob a convenção de arredondamento do Teorema 4A′, o resultado é uma atribuição satisfatível.
+
+Este lema é mais forte que a formulação anterior de “quase toda trajetória”: não é necessário um argumento de medida-zero para eliminar equilíbrios positivos.
 
 ## Prova
 
-### 1. PDS bem posto e Lyapunov
+### 1. O PDS é um fluxo subgradiente com restrição convexa
 
-∇Φ é polinomial e, portanto, Lipschitz na caixa compacta. A teoria de projected dynamical systems para conjuntos convexos fechados fornece existência e unicidade global da solução absolutamente contínua. Além disso, ao longo das trajetórias:
+Defina a função estendida
 
-    dΦ(x(t))/dt = - || Π_T(-∇Φ(x(t))) ||² ≤ 0.
+    F(x) = Φ(x) + δ_X(x),
 
-Assim, cada trajetória é precompacta e seus conjuntos ω são não vazios e compactos.
+onde δ_X é o indicador de X. Como X é o hipercubo fechado e convexo, a condição de primeira ordem para o equilíbrio projetado é
 
-### 2. Dinâmica suave dentro de cada face
+    0 ∈ ∇Φ(x*) + N_X(x*).
 
-O hipercubo possui um número finito de faces. Enquanto a trajetória permanece no interior relativo de uma face F de dimensão d, o PDS coincide com o fluxo gradiente suave intrínseco
+Equivalentemente, a dinâmica projetada pode ser escrita como a inclusão subgradiente
 
-    ẏ = -∇_F Φ_F(y).
+    ẋ(t) + N_X(x(t)) ∋ -∇Φ(x(t)),
 
-Logo, em cada face a dinâmica é um fluxo suave de um polinômio. O conjunto crítico relativo Σ_F = {y : ∇_F Φ_F(y)=0} é semialgébrico e admite uma estratificação de Whitney finita.
+isto é, ẋ(t) ∈ -∂F(x(t)). Para o hipercubo, esta é exatamente a forma normal-cone do PDS. A literatura de PDS caracteriza seus equilíbrios por variational inequalities e pela condição de normal cone. Cojocaru estabelece a formulação por cones tangentes/normais; Nagurney–Zhang e trabalhos posteriores tratam a equivalência com sistemas de complementaridade.
 
-### 3. Direção instável transversal nos críticos positivos
+### 2. Convergência de toda trajetória por KL — sem argumento de troca de face
 
-Para d ≥ 2, o Lema 10.2 dá, em todo crítico positivo, λ_min(H_F(x*)) < 0.
+F é próprio, limitado inferiormente, fechado e semialgébrico: Φ é polinomial e X é semialgébrico. Portanto F é uma função KL/subanalítica.
 
-Se S é um estrato do conjunto crítico, então ∇_F Φ_F é identicamente nulo em S. Diferenciando ao longo de uma curva em S, obtemos H_F(x*)u = 0 para todo u ∈ T_x*S.
+A energia satisfaz, para quase todo t,
 
-Portanto, uma direção própria associada a um autovalor negativo da Hessiana é transversal a S. Para o fluxo negativo do gradiente, ela produz um autovalor positivo na linearização.
+    dΦ(x(t))/dt = -||ẋ(t)||² ≤ 0.
 
-O teorema de variedade centro-estável aplicado ao estrato crítico implica que toda trajetória que converge para S deve, localmente, pertencer a uma variedade centro-estável W^cs(S) de codimensão pelo menos 1. Consequentemente, W^cs(S) tem medida de Lebesgue zero na face.
+Como X é compacto, toda trajetória é limitada. A teoria de subgradient flows para funções subanalíticas/KL implica então que uma trajetória limitada tem comprimento total finito e converge a um único ponto crítico de F. Esta é precisamente a situação tratada por Bolte–Daniilidis–Lewis: a desigualdade de Łojasiewicz é estendida ao subdiferencial e, sob a regularidade aplicável, trajetórias limitadas do sistema subgradiente têm comprimento finito e convergem.
 
-A estratificação é finita; portanto a união das variedades centro-estáveis correspondentes a todos os estratos críticos positivos de uma face continua tendo medida zero. Isso evita a falha lógica de tomar uma união não enumerável de bacias nulas.
+Portanto não precisamos mais decompor a trajetória em uma sequência de faces nem introduzir mapas de impacto. A mudança de face já está incorporada na inclusão normal-cone ẋ ∈ -∂F.
 
-### 4. Faces de dimensão 1 e 0
+### 3. Nenhum equilíbrio projetado de energia positiva em uma componente arbórea
 
-Para d = 1, o Lema 10.3 exclui equilíbrios positivos no interior relativo da aresta.
+Suponha, por absurdo, que x* seja um equilíbrio projetado com Φ(x*) > 0.
 
-Para d = 0, um equilíbrio é um vértice. A poda de folhas fornece algo mais forte: se o vértice tem energia positiva, existe uma cláusula violada com uma variável folha ℓ. Na aresta obtida libertando apenas x_ℓ, a derivada transversal tem sinal estritamente interior, exatamente como em L10.3. Logo o vértice possui uma direção instável unilateral. No chart local do cubo, a linearização tem uma direção expansiva; o argumento de variedade centro-estável, agora em um domínio com bordo, mostra que as condições iniciais que convergem para esse vértice formam um conjunto de medida zero. Não se usa aqui a afirmação de Absil–Kurdyka sobre estabilidade em uma face 0-dimensional, que seria vacuamente trivial.
+Como
 
-### 5. Trocas de face
+    Φ(x*) = Σ_{c∈K} P_c(x*),
 
-Ainda é necessário controlar trajetórias que atingem faces de menor dimensão.
+com P_c(x) = ∏_{j∈c}(1-σ_j^c x_j)/2 ≥ 0, existe uma cláusula violada c tal que P_c(x*) > 0.
 
-Num primeiro contato transversal com uma face G, a função de tempo de impacto é C¹ pela função implícita, e a aplicação de impacto preserva a regularidade nas direções tangenciais. Em particular, a pré-imagem de um subconjunto de medida nula de G continua tendo medida nula entre as condições iniciais que atingem G transversalmente.
+Como K é uma hiperfloresta, c possui uma variável folha ℓ, isto é, deg_K(ℓ)=1.
 
-Contatos tangenciais satisfazem simultaneamente a equação da face e velocidade normal nula. Como o campo é polinomial, esses contatos formam um conjunto semialgébrico de dimensão estritamente menor, exceto quando a face é localmente invariante. Nesse último caso, a trajetória deve ser analisada pela dinâmica intrínseca da própria face.
+Como P_c(x*) > 0, temos
 
-Aplicando esse argumento por indução descendente na dimensão das faces, a pré-imagem no cubo dos conjuntos centro-estáveis nulos permanece nula. Uma trajetória pode reentrar em uma face de dimensão maior após visitar uma face menor; portanto não se afirma que o número de trocas de face seja finito. Em vez disso, particiona-se o conjunto de trajetórias pelo número m de eventos de troca transversal e toma-se a união sobre m = 0,1,2,…; cada classe é nula pelo mesmo argumento de impacto, e a união é contável. Eventuais sequências com acumulação de tempos de impacto pertencem ao conjunto de contatos tangenciais/degenerados, tratado pelo mesmo argumento semialgébrico ou, no caso de uma face invariável, pela dinâmica intrínseca dessa face. Como o cubo possui somente finitas faces e a estratificação crítica é finita, a conclusão de medida zero permanece válida.
+    (1 - σ_ℓ^c x_ℓ*)/2 > 0,
 
-### 6. Convergência
+logo x_ℓ* ≠ σ_ℓ^c.
 
-A energia é monotônica e Φ é polinomial/semialgébrica. A desigualdade de Łojasiewicz aplicada aos fluxos suaves nos estratos, juntamente com a monotonicidade de energia e o controle semialgébrico das trocas de face, fornece a convergência a um único equilíbrio projetado para as trajetórias consideradas. Esta é a etapa de convergência estratificada; ela não é obtida apenas por LaSalle, que fornece o conjunto de equilíbrios como conjunto limite.
+Além disso, ℓ não aparece em nenhuma outra cláusula. Consequentemente, a derivada em relação a ℓ recebe contribuição somente de c:
 
-Esse equilíbrio não pode ter energia positiva pelos itens 3 e 4. Logo Φ(x*) = 0.
+    ∂_ℓ Φ(x*) = -(σ_ℓ^c/2) ∏_{j∈c\{ℓ}} (1-σ_j^c x_j*)/2.
 
-Pela identidade vértice-energia da extensão multilinear e pelo Teorema 4A′, os vértices da face que contém o equilíbrio como mínimo local têm energia discreta zero. Portanto E_disc(sign(x*)) = 0.
+Como P_c(x*) > 0, todos os fatores do produto são positivos; portanto
+
+    σ_ℓ^c ∂_ℓ Φ(x*) < 0.
+
+Há dois casos:
+
+**Caso A — x_ℓ* ∈ (-1,1).** Então a direção ℓ pertence integralmente ao cone tangente. Logo a projeção do campo possui componente
+
+    σ_ℓ^c ẋ_ℓ* = -σ_ℓ^c ∂_ℓ Φ(x*) > 0,
+
+e portanto x* não é equilíbrio.
+
+**Caso B — x_ℓ* = -σ_ℓ^c.** Esta é a única possibilidade de fronteira compatível com P_c(x*) > 0. A direção factível no ponto -σ_ℓ^c é precisamente o semieixo σ_ℓ^c. Como
+
+    σ_ℓ^c ẋ_ℓ* = -σ_ℓ^c ∂_ℓ Φ(x*) > 0,
+
+o campo projetado aponta estritamente para o interior do cubo. Portanto x* também não é equilíbrio.
+
+Assim, nenhum equilíbrio projetado positivo pode existir em uma componente arbórea:
+
+    E_proj(K) ⊆ {x : Φ(x)=0}.
+
+Observe que esta conclusão é estritamente mais forte que L10.2 + L10.3: aqueles lemas classificam críticos relativos em faces; o argumento da folha exclui diretamente **todos os KKT/PDS positivos**, inclusive os localizados no bordo.
+
+### 4. O equilíbrio limite é uma solução booleana
+
+Pelo item 2, x(t) → x* e Φ(x*) = 0. Como Φ é uma extensão multilinear não negativa, x* é um mínimo global de Φ sobre X.
+
+Considere a menor face G de X que contém x*. A extensão multilinear em G é a combinação multilinear dos valores nos vértices de G. Como Φ(x*)=0 e todos os valores nos vértices são não negativos, todo vértice de G com peso positivo na representação de x* também tem energia zero.
+
+Em particular, existe um vértice v ∈ {−1,+1}^{V(K)} com
+
+    Φ(v)=E_disc(v)=0.
+
+Esse v é uma atribuição satisfatível da componente. Pelo Teorema 4A′, a estrutura de mínimo local na face é compatível com a identidade vértice–energia usada no arredondamento.
 
 □
 
-## Por que esta etapa fecha o gap
+## Consequência dinâmica
 
-A passagem não é mais simplesmente “Hessiana tem autovalor negativo ⇒ bacia tem medida zero”.
+O argumento anterior elimina completamente a necessidade da passagem
 
-Ela passa por quatro objetos explícitos:
+    strict saddle → bacia de medida zero → quase toda trajetória.
 
-1. conjunto crítico semialgébrico;
-2. estratificação de Whitney finita;
-3. direção instável transversal e variedade centro-estável de codimensão ≥ 1;
-4. preservação da nulidade de medida sob as aplicações de impacto entre faces.
+Também elimina a necessidade de provar que mapas de impacto entre faces preservam conjuntos nulos. Isso seria uma rota frágil para PDS: ao contrário de um ODE suave, o mapa de fluxo de um PDS pode não ser invertível depois que uma trajetória atinge a fronteira. A literatura de sistemas projetados registra explicitamente essa possibilidade.
 
-Assim, L10.2/L10.3 fornecem a etapa probabilística necessária para o Teorema 10, sem depender da falácia de uma união não enumerável de conjuntos nulos.
+A rota correta para este T10 é portanto:
+
+    componente arbórea
+        → existência de folha em toda cláusula
+        → nenhum equilíbrio projetado positivo
+        → F = Φ + δ_X é KL/semialgébrica
+        → toda trajetória limitada do subgradient flow converge
+        → equilíbrio de energia zero
+        → solução booleana.
+
+Isso é mais forte e tecnicamente mais limpo do que o argumento estratificado anterior.
 
 ## Referências externas
 
-- M.-G. Cojocaru, *Nonpivot and Implicit Projected Dynamical Systems on Hilbert Spaces* (2012): existência e unicidade para PDS com campo Lipschitz.
-- A. Hauswirth, S. Bolognani & F. Dörfler, *Projected Dynamical Systems on Irregular, Non-Euclidean Domains for Nonlinear Optimization*, SIAM Journal on Control and Optimization (2021): regularidade, estabilidade e convergência de fluxos projetados.
-- P.-A. Absil & K. Kurdyka, *On the stable equilibrium points of gradient systems*, Systems & Control Letters 55 (2006), 573–577, DOI 10.1016/j.sysconle.2006.01.002: em fluxos gradiente analíticos, estabilidade implica minimalidade local.
-- A construção por estratificação finita e variedades centro-estáveis é a forma padrão de tratar conjuntos críticos não isolados sem cometer a falácia da união não enumerável de conjuntos de medida zero.
+- M.-G. Cojocaru, *Nonpivot and Implicit Projected Dynamical Systems on Hilbert Spaces* (2012): cones tangentes/normais e formulação de PDS.
+- J. Bolte, A. Daniilidis & A. Lewis, *The Łojasiewicz inequality for nonsmooth subanalytic functions with applications to subgradient dynamical systems*, SIAM Journal on Optimization 17 (2007), 1205–1223, DOI 10.1137/050644641: extensão da desigualdade de Łojasiewicz ao subdiferencial e convergência de trajetórias subgradientes limitadas sob hipóteses de regularidade.
+- P.-A. Absil & K. Kurdyka, *On the stable equilibrium points of gradient systems*, Systems & Control Letters 55 (2006), 573–577, DOI 10.1016/j.sysconle.2006.01.002: estabilidade versus minimalidade para fluxos gradiente analíticos.
+- A literatura de PDS também mostra que o mapa de fluxo em conjuntos com fronteira pode não ser invertível; por isso a prova atual não depende de preservar medida zero por pré-imagens de mapas de impacto.
