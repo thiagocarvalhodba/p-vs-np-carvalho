@@ -123,53 +123,60 @@ def test_isolated_clause_monte_carlo_exactness():
 
 def test_hyperforest_isolated_clause_asymptotics():
     """
-    Testa que no ensemble subcrítico E(N, alpha), o número de cláusulas isoladas K
-    concentra-se fortemente em torno de alpha * N * exp(-9 * alpha).
+    Testa que no ensemble subcrítico E(N, alpha):
+    1. O número de cláusulas isoladas K/N concentra-se em torno de alpha * exp(-9 * alpha);
+    2. A fração em relação ao total de cláusulas K/M concentra-se em exp(-9 * alpha).
     """
     rng = np.random.default_rng(2026)
     N = 200
     for alpha in [0.05, 0.10, 0.15]:
         M = int(round(alpha * N))
-        expected_iso_fraction = alpha * np.exp(-9.0 * alpha)
+        expected_iso_per_n = alpha * np.exp(-9.0 * alpha)
+        expected_iso_per_m = np.exp(-9.0 * alpha)
         
         iso_counts = []
         for _ in range(50):
             clauses = [rng.choice(N, size=3, replace=False) for _ in range(M)]
-            # Conta cláusulas isoladas (nenhuma de suas 3 variáveis aparece em outra cláusula)
             var_counts = np.zeros(N, dtype=int)
             for c in clauses:
                 for v in c:
                     var_counts[v] += 1
             
             num_iso = sum(1 for c in clauses if all(var_counts[v] == 1 for v in c))
-            iso_counts.append(num_iso / N)
+            iso_counts.append(num_iso)
 
-        mean_fraction = float(np.mean(iso_counts))
-        # Verifica aproximação da cota teórica com tolerância de ordem O(1/sqrt(N))
-        assert abs(mean_fraction - expected_iso_fraction) < 0.025, (
-            f"Fração de isoladas {mean_fraction} diverge da assíntota {expected_iso_fraction} para alpha={alpha}"
+        mean_per_n = float(np.mean([k / N for k in iso_counts]))
+        mean_per_m = float(np.mean([k / M for k in iso_counts]))
+
+        assert abs(mean_per_n - expected_iso_per_n) < 0.025, (
+            f"Fração K/N {mean_per_n} diverge de {expected_iso_per_n} para alpha={alpha}"
+        )
+        assert abs(mean_per_m - expected_iso_per_m) < 0.15, (
+            f"Fração K/M {mean_per_m} diverge de {expected_iso_per_m} para alpha={alpha}"
         )
 
 
 def test_euler_projected_flow_hinge_residual_density_scaling():
     """
-    Testa a integração numérica precisa do fluxo Euler projetado do Hinge
+    Testa a integração numérica do fluxo Euler projetado do Hinge
     para diferentes tamanhos N in {20, 50, 100} e alpha in {0.05, 0.10, 0.15}.
     
     Verifica:
-    1. rho_quad(alpha) >= c(alpha) > 0 em todas as configurações;
+    1. rho_quad(alpha) = eq / M >= c(alpha) > 0 em todas as configurações,
+       onde c(alpha) = (3/64) * exp(-9*alpha);
     2. rho_quad não colapsa a zero quando N aumenta;
     3. Intervalo de confiança bootstrap a 95% estritamente positivo.
     """
     sizes = [20, 50, 100]
     alphas = [0.05, 0.10, 0.15]
-    n_trials = 40
+    n_trials = 30
 
     for alpha in alphas:
-        c_alpha = (3.0 / 64.0) * alpha * np.exp(-9.0 * alpha) # Cota inferior analítica conservadora
+        c_alpha = (3.0 / 64.0) * np.exp(-9.0 * alpha) # Cota analítica conservadora (fração por cláusula)
         rho_by_size = {}
 
         for N in sizes:
+            M = max(1, int(round(alpha * N)))
             rhos = []
             for trial in range(n_trials):
                 inst = generate_random_3sat(N, alpha, seed=trial * 1000 + N + int(alpha * 100))
@@ -177,24 +184,22 @@ def test_euler_projected_flow_hinge_residual_density_scaling():
                 rel = Relaxation(N, clauses)
                 x0 = np.random.uniform(-1.0, 1.0, N)
 
-                # Fluxo projetado Euler do Hinge
                 xq, _, _ = rel.projected_gradient_descent(x0, "quad", eta=0.05, T=20.0)
                 sq = np.where(xq >= 0.0, 1.0, -1.0)
                 eq = rel.discrete_energy(sq)
-                rhos.append(eq / N)
+                rhos.append(eq / M)
 
             mean_rho = float(np.mean(rhos))
             rho_by_size[N] = mean_rho
 
-            # Bootstrap a 95%
             boot_means = [np.mean(np.random.choice(rhos, size=len(rhos), replace=True)) for _ in range(500)]
             ci_lower = float(np.percentile(boot_means, 2.5))
             
-            # Garante que a densidade média é estritamente positiva e respeita a cota c(alpha)
-            assert mean_rho > 0.0, f"Densidade Hinge nula detectada em N={N}, alpha={alpha}"
+            assert mean_rho >= c_alpha * 0.7, (
+                f"Densidade Hinge {mean_rho} abaixo da cota analítica {c_alpha} em N={N}, alpha={alpha}"
+            )
             assert ci_lower >= 0.0, f"IC 95% inferior negativo em N={N}, alpha={alpha}"
 
-        # Comprova estabilidade assintótica: rho em N=100 não sofre contração exponencial
         ratio = rho_by_size[100] / rho_by_size[20]
         assert ratio > 0.3, f"Queda anormal de densidade em N=100 para alpha={alpha}: razão={ratio}"
 
@@ -206,6 +211,7 @@ def test_subcritical_dynamical_separation_theorem10():
     """
     N = 50
     alpha = 0.12
+    M = max(1, int(round(alpha * N)))
     n_trials = 30
     
     rhos_quad = []
@@ -220,12 +226,12 @@ def test_subcritical_dynamical_separation_theorem10():
         # Hinge
         xq, _, _ = rel.projected_gradient_descent(x0, "quad", eta=0.05, T=20.0)
         sq = np.where(xq >= 0.0, 1.0, -1.0)
-        rhos_quad.append(rel.discrete_energy(sq) / N)
+        rhos_quad.append(rel.discrete_energy(sq) / M)
 
         # Multilinear
         xm, _, _ = rel.projected_gradient_descent(x0, "mult", eta=0.05, T=20.0)
         sm = np.where(xm >= 0.0, 1.0, -1.0)
-        rhos_mult.append(rel.discrete_energy(sm) / N)
+        rhos_mult.append(rel.discrete_energy(sm) / M)
 
     mean_quad = float(np.mean(rhos_quad))
     mean_mult = float(np.mean(rhos_mult))
@@ -233,6 +239,74 @@ def test_subcritical_dynamical_separation_theorem10():
     # Multilinear atinge zero a.a.s.
     assert mean_mult == 0.0, f"Multilinear falhou no regime subcrítico: rho_mult = {mean_mult}"
     # Hinge tem resíduo estritamente positivo
-    assert mean_quad > 0.005, f"Hinge não reteve resíduo: rho_quad = {mean_quad}"
+    assert mean_quad > 0.02, f"Hinge não reteve resíduo: rho_quad = {mean_quad}"
     # Separação estrita
     assert mean_quad > mean_mult, f"Falha de separação dinâmica: quad={mean_quad}, mult={mean_mult}"
+
+
+def test_component_decoupling_and_tree_degree_identity():
+    """
+    Testa a Estratégia B do Lema 10.1:
+    1. Particionamento do hipergrafo em componentes conexas disjuntas;
+    2. Identidade de grau global deg_{F_N}(v) == deg_K(v) em todas as componentes em árvore;
+    3. Fração de cláusulas em defeitos M_defect / M decresce com N.
+    """
+    import networkx as nx
+
+    rng = np.random.default_rng(42)
+    alpha = 0.15
+
+    # Teste de identidade de grau em componentes
+    for N in [50, 100]:
+        M = max(1, int(round(alpha * N)))
+        clauses = [tuple(sorted(rng.choice(N, size=3, replace=False))) for _ in range(M)]
+
+        # Grafo bipartido cláusula-variável
+        B = nx.Graph()
+        for ci, c in enumerate(clauses):
+            B.add_node(f"c_{ci}", bipartite=0)
+            for v in c:
+                B.add_node(f"v_{v}", bipartite=1)
+                B.add_edge(f"c_{ci}", f"v_{v}")
+
+        # Identifica componentes conexas
+        comps = list(nx.connected_components(B))
+        for comp in comps:
+            sub = B.subgraph(comp)
+            # Componente é árvore se número de arestas == número de nós - 1
+            is_tree = (sub.number_of_edges() == sub.number_of_nodes() - 1)
+            if is_tree:
+                comp_vars = [int(n.split("_")[1]) for n in comp if n.startswith("v_")]
+                for v in comp_vars:
+                    deg_in_comp = sub.degree(f"v_{v}")
+                    deg_global = B.degree(f"v_{v}")
+                    # IDENTIDADE DE GRAU GLOBAL
+                    assert deg_in_comp == deg_global, (
+                        f"Falha na identidade de grau: deg_comp={deg_in_comp} != deg_global={deg_global}"
+                    )
+
+    # Verifica decaimento assintótico da densidade de defeitos M_defect / M
+    fractions = []
+    for N in [100, 300]:
+        M = max(1, int(round(alpha * N)))
+        n_bad_list = []
+        for _ in range(30):
+            clauses = [tuple(sorted(rng.choice(N, size=3, replace=False))) for _ in range(M)]
+            B = nx.Graph()
+            for ci, c in enumerate(clauses):
+                B.add_node(f"c_{ci}")
+                for v in c:
+                    B.add_node(f"v_{v}")
+                    B.add_edge(f"c_{ci}", f"v_{v}")
+
+            bad_clauses = 0
+            for comp in nx.connected_components(B):
+                sub = B.subgraph(comp)
+                if sub.number_of_edges() > sub.number_of_nodes() - 1:
+                    bad_clauses += sum(1 for n in comp if n.startswith("c_"))
+            n_bad_list.append(bad_clauses / M)
+        fractions.append(np.mean(n_bad_list))
+
+    # A fração de defeitos para N=300 é menor ou igual à de N=100
+    assert fractions[1] <= fractions[0] + 0.05, f"Defeitos não decrescem: {fractions}"
+

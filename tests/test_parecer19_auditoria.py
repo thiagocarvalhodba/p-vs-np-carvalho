@@ -292,7 +292,8 @@ def test_arxiv_bibliography_and_bbl_integrity():
             assert "fig_clg_teorema5_6_softplus_convexity_bifurcation.png" in arxiv_files
         
     # Verifica integridade do Enviar_19.zip se presente
-    if enviar_zip and os.path.exists(enviar_zip) and arxiv_zip and os.path.exists(arxiv_zip):
+    if enviar_zip and os.path.exists(enviar_zip):
+        import io
         with zipfile.ZipFile(enviar_zip, "r") as zf:
             enviar_files = {info.filename: info for info in zf.infolist()}
             assert "CLG_FOUNDATIONS_ARXIV.tex" in enviar_files
@@ -300,9 +301,11 @@ def test_arxiv_bibliography_and_bbl_integrity():
             assert "clg_references.bib" in enviar_files
             assert "arxiv_package.zip" in enviar_files
             
-            # Verificação de CRC idêntico entre o tex/bbl/bib externo e interno
-            assert enviar_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC == arxiv_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC
-            assert enviar_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC == arxiv_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC
-            assert enviar_files["clg_references.bib"].CRC == arxiv_files["clg_references.bib"].CRC
+            # Verificação de CRC idêntico entre o tex/bbl/bib externo e interno do próprio pacote
+            with zipfile.ZipFile(io.BytesIO(zf.read("arxiv_package.zip")), "r") as int_zf:
+                int_files = {info.filename: info for info in int_zf.infolist()}
+                assert enviar_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC == int_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC
+                assert enviar_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC == int_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC
+                assert enviar_files["clg_references.bib"].CRC == int_files["clg_references.bib"].CRC
 
 
