@@ -2,7 +2,7 @@
 **Versão 4.0.3 — Auditoria dinâmica estratificada do Teorema 10 (Evolução pós-Parecer 16, Parecer 18 e Parecer 19)**  
 **Data:** 21 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; Lemas 10.1 e 10.4 mantidos; Lemas 10.2--10.5 em auditoria após identificação de uma lacuna na passagem de aciclicidade para existência de cláusula violada folha; Teorema 10 reaberto.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; o uso de $H_{\text{leaf}}$ em L10.1--L10.3 foi refutado por contraexemplo exato numa hiperárvore linear; L10.4 mantido; L10.5 em auditoria; Teorema 10 aberto.
 
 ---
 
@@ -292,7 +292,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.1 (Desacoplamento em Componentes Conexas, Identidade de Grau e Tightness de Defeitos --- Fechado)
+### Lema 10.1 (Desacoplamento em Componentes Conexas, Identidade de Grau e Tightness de Defeitos --- Parcial; item de folha refutado)
 > **Lema 10.1 (Desacoplamento em Componentes Conexas Subcríticas, Identidade de Grau Global e Cota de Defeitos).**  
 > *Para o ensemble de 3-SAT aleatório abaixo do limiar subcrítico $\alpha < \alpha_c = 1/6$:*
 > 1. *Desacoplamento Dinâmico em Componentes Conexas Disjuntas:* O fator de ramificação da exploração de cláusulas satisfaz $R_0 = 2 \times 3\alpha = 6\alpha < 1$. Consequentemente, o hipergrafo $F_N$ decompõe-se numa coleção finita de componentes conexas mutuamente disjuntas $F_N = \bigcup_j \mathcal{K}_j$, onde componentes distintas não compartilham nenhuma variável ($V(\mathcal{K}_j) \cap V(\mathcal{K}_{j'}) = \emptyset$ para $j \ne j'$). A energia multilinear é estritamente aditiva:
@@ -300,12 +300,12 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 >    e o sistema dinâmico de fluxo gradiente projetado desacopla-se em fluxos autônomos e independentes por componente: $\dot{x}_{V(\mathcal{K}_j)} = \Pi_{[-1, 1]^{V(\mathcal{K}_j)}}\left(-\nabla \Phi_{\mathcal{K}_j}(x_{V(\mathcal{K}_j)})\right)$.
 > 2. *Identidade de Grau Global nas Componentes em Árvore:* Seja $\mathcal{C}_{\text{tree}}$ a classe de componentes conexas $\mathcal{K}_j$ que são acíclicas (hiperárvores lineares). Como as variáveis de $V(\mathcal{K}_j)$ incidem em zero cláusulas fora de $\mathcal{K}_j$, o grau de qualquer variável em $\mathcal{K}_j$ é **identicamente igual ao seu grau global** na fórmula original:
 >    $$\deg_{F_N}(v) \equiv \deg_{\mathcal{K}_j}(v), \quad \forall v \in V(\mathcal{K}_j)$$
->    Em cada hiperárvore linear $\mathcal{K} \in \mathcal{C}_{\text{tree}}$, o peeling recursivo elimina todas as hiperarestas. Sempre que $\Phi_{\mathcal{K}}(x) > 0$, qualquer cláusula folha violada possui ao menos uma variável de grau 1 em $\mathcal{K}$, que portanto tem grau global 1 em $F_N$. Assim, a hipótese folha $H_{\text{leaf}}$ é válida **incondicionalmente e globalmente** em toda componente $\mathcal{K} \in \mathcal{C}_{\text{tree}}$, eliminando mínimos locais booleanos positivos ($E_{\text{disc}} > 0$).
+>    **Errata adversarial (21-09-2026).** A igualdade entre grau local e global é válida, mas não implica $H_{\text{leaf}}$. A hiperárvore linear de quatro cláusulas registrada em `Publicacoes/CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md` possui uma cláusula central sem variável folha e um equilíbrio projetado positivo exato. Assim, a conclusão “$H_{\text{leaf}}$ é válida incondicionalmente” e qualquer exclusão de equilíbrios positivos deduzida dela são retiradas.
 > 3. *Tightness de Defeitos e Densidade Negligível (Estratégia B):* Seja $\mathcal{C}_{\text{defect}}$ a coleção de componentes conexas contendo ciclos (pares compartilhando $\ge 2$ variáveis ou ciclos soltos de comprimento $k \ge 3$). Como $R_0 = 6\alpha < 1$, o número esperado de ciclos de todas as ordens é $\mathcal{O}(1)$ e o tamanho das componentes tem cauda exponencial. Logo, o número total de cláusulas em componentes com defeito satisfaz $\mathbb{E}[M_{\text{defect}}] = \mathcal{O}(1) \implies M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$ (tightness). Mesmo sob a hipótese pessimista adversarial em que todas as cláusulas defeituosas fossem violadas, a energia discreta multilinear residual devida a defeitos é limitada por $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$. $\blacksquare$
 
 ---
 
-### Lema 10.2 (Strict Saddle Subcrítico em Componentes em Árvore --- Fechado)
+### Lema 10.2 (Strict Saddle Subcrítico em Componentes em Árvore --- Reaberto)
 > **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Identidade de Grau de Folha).**  
 > *Seja $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ qualquer componente em árvore, seja $\mathcal{F} \subseteq [-1, 1]^{V(\mathcal{K})}$ qualquer face de dimensão $d = \dim(\mathcal{F}) \ge 2$, e seja $x^* \in \text{relint}(\mathcal{F})$ um ponto crítico relativo de $\Phi_{\mathcal{K}}|_{\mathcal{F}}$ com energia positiva $\Phi_{\mathcal{K}}(x^*) > 0$:*
 > 1. *$\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) \equiv 0$, decorrente da multilinearidade coordenada a coordenada ($\frac{\partial^2 \Phi_{\mathcal{K}}}{\partial x_i^2} \equiv 0$).*
@@ -318,7 +318,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.3 (Universalidade de Repulsão Transversal em Arestas Planas Degeneradas --- Fechado)
+### Lema 10.3 (Universalidade de Repulsão Transversal em Arestas Planas Degeneradas --- Reaberto)
 > **Lema 10.3 (Não-Equilíbrio Projetado e Bacia Vazia de Arestas Planas em Componentes em Árvore).**  
 > *Seja $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ qualquer componente em árvore, e seja $\mathcal{F}_1 = \{x(t) = x^* + t e_i \mid t \in [-1, 1]\} \subseteq [-1, 1]^{V(\mathcal{K})}$ qualquer face 1-dimensional (aresta) com energia positiva $\Phi_{\mathcal{K}}|_{\mathcal{F}_1} \equiv b > 0$ e gradiente longitudinal nulo $a = \nabla_i \Phi_{\mathcal{K}} \equiv 0$:*
 > 1. *Pela Identidade de Grau Global do Lema 10.1, toda cláusula violada $c$ ao longo de $\mathcal{F}_1$ admite uma variável folha exclusiva $x_\ell$ com grau global $\deg_{F_N}(x_\ell) = 1$ posicionada no bordo $s_\ell = x^*_\ell \in \{-1, +1\}$.*
@@ -352,7 +352,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 > $$-\dot x\in \nabla\Phi(x)+N_{\mathcal X}(x)=\partial(\Phi+\delta_{\mathcal X})(x),$$
 > com identidade de dissipação $d\Phi/dt=-\|\dot x\|^2$ a.e. Isso fornece uma rota correta para aplicar teoria KL/subgradiente através das faces, condicionada às hipóteses exatas do teorema de comprimento finito utilizado.
 >
-> A auditoria encontrou ainda uma lacuna estrutural anterior: aciclicidade da hiperárvore não implica que **cada cláusula violada** tenha uma variável de grau 1. Uma hiperaresta interna pode ter todos os seus vértices compartilhados. Portanto, usos de “cláusula violada folha” em L10.2/L10.3 precisam de um lema adicional derivado das condições de criticidade/equilíbrio. Até esse ponto ser provado, a evasão de equilíbrios positivos e o Teorema 10 permanecem abertos. Detalhes em `Publicacoes/CLG_T10_LEMA_10_5_SADDLE_AVOIDANCE.md`.
+> A auditoria adversarial agora produziu um contraexemplo exato à afirmação auxiliar mais forte $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ para hiperárvores lineares: ver `Publicacoes/CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`. Logo, a aciclicidade não apenas deixa de provar que cada cláusula violada tem folha; ela não exclui equilíbrios projetados positivos. L10.2/L10.3 e a passagem multilinear de T10 não podem ser usados até uma nova hipótese ou novo lema resolver esse contraexemplo.
 
 ### Teorema 10 (Separação Dinâmica Subcrítica — Reaberto)
 > **Teorema 10 (Separação Dinâmica Subcrítica Completa).**  
@@ -407,11 +407,11 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção ortogonal no cone tangente. |
 | **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
-| **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🟢 **Fechado** | Desacoplamento dinâmico $R_0 = 6\alpha < 1$; identidade de grau global em árvores; defeitos $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$. |
+| **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🔴 **Parcial / item de folha refutado** | A identidade de grau local-global não implica $H_{\text{leaf}}$; há hiperárvore linear com equilíbrio projetado positivo exato. |
 | **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Reaberto** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
 | **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟡 **Reaberto** | Projeção $s_\ell \nabla_\ell \Phi \ge (1-|t|)/4 > 0 \implies \operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$; bacia vazia $\mathcal{B} = \emptyset$ via LaSalle. |
 | **Lema 10.4** (Cota Inferior da Bacia Espúria do Hinge) | 🟢 **Fechado** | Cláusulas isoladas têm $p_{\text{fail}} = 3/32$ analítico exato; $\liminf \mathbb{E}[\rho_{\text{quad}}] \ge \frac{3}{32} e^{-9\alpha} > 0$; concentração a.a.s. via Chebyshev. |
 | **Lema 10.5** (PDS/KL/Evasão) | 🟡 **Reaberto** | Estratificação de Whitney finita; direção instável transversal; variedades centro-estáveis de codimensão ≥1; controle das trocas de face por indução de dimensão. |
-| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🟡 **Reaberto** | Separação dinâmica incondicional fechada ($\rho_{\text{quad}} \ge \frac{3}{32} e^{-9\alpha} > \rho_{\text{mult}} = 0$ a.a.s. para $\alpha < 1/6$). |
+| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Aberto; prova atual inválida** | A passagem para $\rho_{\text{mult}}=0$ dependia da exclusão universal de equilíbrios positivos em árvores, refutada pelo certificado adversarial. Nenhuma conclusão sobre P versus NP decorre deste estado. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado; respaldada por cavidade 1RSB e Kac-Rice. |
 | **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |

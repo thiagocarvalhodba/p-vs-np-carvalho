@@ -7,7 +7,7 @@
 1. a preservação de nulidade de medida por “aplicações de impacto” entre faces não foi demonstrada com hipóteses suficientes e é especialmente delicada porque o semifluxo de um projected dynamical system (PDS) pode perder invertibilidade após contato com o bordo;
 2. a frase “Łojasiewicz nos estratos + controle das trocas de face” não é, por si só, um teorema de convergência para o PDS.
 
-A auditoria também encontrou uma lacuna anterior e mais estrutural: em uma hiperárvore, **não é verdade em geral que toda cláusula violada possua uma variável de grau 1**. Uma hiperaresta interna pode ter todos os seus vértices compartilhados com outras hiperarestas. Logo, energia positiva não implica automaticamente a existência de uma *cláusula violada folha*. Isso afeta o uso dessa afirmação em L10.2/L10.3 e impede declarar T10 fechado sem um lema adicional.
+A auditoria também encontrou uma falha estrutural: em uma hiperárvore, **não é verdade em geral que toda cláusula violada possua uma variável de grau 1**. Mais fortemente, a busca exata encontrou uma hiperárvore linear de quatro cláusulas com $\Phi=1$ e $\nabla\Phi=0$ num vértice, portanto um equilíbrio projetado positivo. O certificado está em `CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`. Isso afeta L10.2/L10.3 e impede declarar T10 fechado sem uma hipótese nova que exclua o padrão certificado.
 
 ## 1. Formulação correta do PDS sem mapas de impacto
 
