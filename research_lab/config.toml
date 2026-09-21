@@ -25,6 +25,7 @@ timeout_seconds = 3600
 binary = "gemini"
 approval_mode = "plan"
 output_format = "json"
+policy = "research_lab/policies/gemini-readonly.toml"
 timeout_seconds = 3600
 # Leave empty to use the Gemini CLI configured/default model.
 model = ""
