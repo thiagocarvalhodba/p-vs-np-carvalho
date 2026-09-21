@@ -11,6 +11,31 @@
 | Toda bacia de equilíbrio positivo em hiperárvores tem medida zero | Classificação global | Busca local não basta | Nenhuma prova ou contraexemplo de atrator aberto | **ABERTO** |
 | Convergência global do PDS CLG a ponto único via BDL | Hipóteses KL exatas | Leitura da fonte primária | Teorema citado não se aplica diretamente a $\Phi+\delta_X$ | **CONDICIONAL** |
 
+## Catálogo exato: equilíbrios positivos nos vértices
+
+Foi executada a enumeração exata de todos os vértices, para $m\le4$, sobre
+as construções de anexação rotuladas e todas as classes de polaridade módulo
+gauge de variável. Toda hiperárvore linear 3-uniforme pode ser obtida por uma
+ordem de anexação de folhas; portanto esse espaço rotulado cobre cada tipo não
+rotulado ao menos uma vez, embora deliberadamente contenha duplicatas e não
+seja uma canonicalização por isomorfismo.
+
+Foram verificados respectivamente $8$, $192$, $7680$ e $430080$ candidatos
+para $m=1,2,3,4$. Não houve equilíbrio positivo nos vértices para $m\le3$.
+Para $m=4$, os 12 certificados retornados são cópias por rotulagem/permutação
+da mesma hiperárvore-estelar de quatro cláusulas já certificada; todos têm
+$\Phi=1$, gradiente nulo e são selas relativas de bacia singleton pela prova
+anterior.
+
+| estrutura | face | $\Phi$ | classificação | bacia conhecida | certificado |
+|---|---:|---:|---|---|---|
+| $m\le3$, qualquer hiperárvore linear | vértices | — | nenhum equilíbrio positivo | — | enumeração exata |
+| estrela 3-uniforme com 4 cláusulas | vértice | $1$ | sela relativa | $\{x^*\}$, medida zero | seção “Certificado exato” |
+| demais cópias rotuladas da estrela, $m=4$ | vértice | $1$ | sela relativa | $\{x^*\}$, medida zero | mesmo certificado por simetria |
+
+Este catálogo não classifica equilíbrios em faces de dimensão positiva e não
+constitui uma prova para $m\ge5$ ou para hiperárvores arbitrárias.
+
 ## Afirmação auditada
 
 Para toda hiperárvore linear 3-uniforme conexa $K$, a afirmação auditada era

@@ -7,6 +7,7 @@ sys.path.insert(0, str(ROOT / "Fontes"))
 
 from search_t10_positive_equilibrium_hypertrees import (
     attachment_trees,
+    catalogue_positive_vertex_equilibria,
     certificate_if_positive_equilibrium,
     counterexample_delta_exact,
     counterexample_leaf_velocity_exact,
@@ -102,6 +103,12 @@ def test_non_tree_control_has_a_positive_exact_equilibrium():
     assert not is_linear_acyclic_attachment_tree(edges)
     assert candidate is not None
     assert candidate.phi == Fraction(1, 4)
+
+
+def test_vertex_catalogue_is_empty_through_three_clauses():
+    certificates, counts = catalogue_positive_vertex_equilibria(3)
+    assert certificates == []
+    assert counts == {1: 8, 2: 192, 3: 7680}
 
 
 def test_zero_clause_energy_does_not_imply_zero_clause_gradient():

@@ -15,6 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from itertools import product
+import sys
 from typing import Iterable, Iterator, Sequence
 
 import numpy as np
@@ -181,6 +182,35 @@ def exhaustive_vertex_search(max_clauses: int = 5) -> tuple[Certificate | None, 
     return None, counts
 
 
+def catalogue_positive_vertex_equilibria(
+    max_clauses: int = 4,
+    limit: int | None = None,
+) -> tuple[list[Certificate], dict[int, int]]:
+    """Catalogue exact positive *vertex* equilibria in the generated family.
+
+    This is exhaustive over labelled attachment constructions and the stated
+    gauge representatives, not an isomorphism quotient and not a catalogue of
+    positive equilibria on higher-dimensional faces.
+    """
+    certificates: list[Certificate] = []
+    counts: dict[int, int] = {}
+    for m in range(1, max_clauses + 1):
+        checked = 0
+        for edges in attachment_trees(m):
+            n = 2 * m + 1
+            for signs in gauge_sign_patterns(edges):
+                for x in product((Fraction(-1), Fraction(1)), repeat=n):
+                    checked += 1
+                    certificate = certificate_if_positive_equilibrium(edges, signs, x)
+                    if certificate is not None:
+                        certificates.append(certificate)
+                        if limit is not None and len(certificates) >= limit:
+                            counts[m] = checked
+                            return certificates, counts
+        counts[m] = checked
+    return certificates, counts
+
+
 def rational_grid_search(max_clauses: int = 3) -> tuple[Certificate | None, dict[int, int]]:
     """Exhaustive rational-grid search, deliberately bounded to small trees."""
     counts: dict[int, int] = {}
@@ -225,6 +255,13 @@ def format_certificate(certificate: Certificate) -> str:
 
 
 def main() -> int:
+    if len(sys.argv) == 2 and sys.argv[1] == "--catalogue-vertices-m4":
+        certificates, counts = catalogue_positive_vertex_equilibria(4)
+        print("exact positive-vertex catalogue through 4 clauses:", counts)
+        print("number of certificates:", len(certificates))
+        for certificate in certificates:
+            print(format_certificate(certificate))
+        return 0
     vertex_hit, vertex_counts = exhaustive_vertex_search(5)
     print("exact vertex search through 5 clauses:", vertex_counts)
     if vertex_hit:
