@@ -1,6 +1,6 @@
 # Estudo Analítico do Conjunto Crítico e Massa de Bacia Espúria no Framework CLG-R
-**Versão 4.0.2 — Auditoria pós-Parecer 16, Parecer 18 e Parecer 19 (Homologação de Fechamento)**  
-**Data:** 17 de Setembro de 2026  
+**Versão 4.0.3 — Auditoria de Consistência do Teorema 10**  
+**Data:** 21 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
 **Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; Lema 10.2 Fechado sob $H_{\rm leaf}$; T9 e T10 Mantidos em Aberto após Auditoria Crítica e Testes de Falsificação.
 
@@ -250,7 +250,7 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### 10. Novos Teoremas Matemáticos Estruturais (Versão 4.0.2 de Fechamento)
+### 10. Resultados Matemáticos Estruturais (Versão 4.0.3 — Auditoria de T10)
 
 ### Teorema 8 (Cota Inferior de Volume do Politopo LP via Desigualdade de Jensen --- Dimensão Finita)
 > **Teorema 8 (Cota Inferior de Volume do Politopo LP Aleatório em Dimensão Finita via Jensen).**  
@@ -292,18 +292,21 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.1 (Desacoplamento em Componentes Conexas, Identidade de Grau e Tightness de Defeitos --- Fechado)
-> **Lema 10.1 (Desacoplamento em Componentes Conexas Subcríticas, Identidade de Grau Global e Cota de Defeitos).**  
-> *Para o ensemble de 3-SAT aleatório abaixo do limiar subcrítico $\alpha < \alpha_c = 1/6$:*
-> 1. *Desacoplamento Dinâmico em Componentes Conexas Disjuntas:* O fator de ramificação da exploração de cláusulas satisfaz $R_0 = 2 \times 3\alpha = 6\alpha < 1$. Consequentemente, o hipergrafo $F_N$ decompõe-se numa coleção finita de componentes conexas mutuamente disjuntas $F_N = \bigcup_j \mathcal{K}_j$, onde componentes distintas não compartilham nenhuma variável ($V(\mathcal{K}_j) \cap V(\mathcal{K}_{j'}) = \emptyset$ para $j \ne j'$). A energia multilinear é estritamente aditiva:
->    $$\Phi_{\text{mult}}(x) = \sum_j \Phi_{\mathcal{K}_j}(x_{V(\mathcal{K}_j)}), \quad \text{e} \quad \mathcal{X} = \prod_j [-1, 1]^{V(\mathcal{K}_j)}$$
->    e o sistema dinâmico de fluxo gradiente projetado desacopla-se em fluxos autônomos e independentes por componente: $\dot{x}_{V(\mathcal{K}_j)} = \Pi_{[-1, 1]^{V(\mathcal{K}_j)}}\left(-\nabla \Phi_{\mathcal{K}_j}(x_{V(\mathcal{K}_j)})\right)$.
-> 2. *Identidade de Grau Global nas Componentes em Árvore:* Seja $\mathcal{C}_{\text{tree}}$ a classe de componentes conexas $\mathcal{K}_j$ que são acíclicas (hiperárvores lineares). Como as variáveis de $V(\mathcal{K}_j)$ incidem em zero cláusulas fora de $\mathcal{K}_j$, o grau de qualquer variável em $\mathcal{K}_j$ é **identicamente igual ao seu grau global** na fórmula original:
->    $$\deg_{F_N}(v) \equiv \deg_{\mathcal{K}_j}(v), \quad \forall v \in V(\mathcal{K}_j)$$
->    Em cada hiperárvore linear $\mathcal{K} \in \mathcal{C}_{\text{tree}}$, o peeling recursivo elimina todas as hiperarestas. Sempre que $\Phi_{\mathcal{K}}(x) > 0$, qualquer cláusula folha violada possui ao menos uma variável de grau 1 em $\mathcal{K}$, que portanto tem grau global 1 em $F_N$. Assim, a hipótese folha $H_{\text{leaf}}$ é válida **incondicionalmente e globalmente** em toda componente $\mathcal{K} \in \mathcal{C}_{\text{tree}}$, eliminando mínimos locais booleanos positivos ($E_{\text{disc}} > 0$).
-> 3. *Tightness de Defeitos e Densidade Negligível (Estratégia B):* Seja $\mathcal{C}_{\text{defect}}$ a coleção de componentes conexas contendo ciclos (pares compartilhando $\ge 2$ variáveis ou ciclos soltos de comprimento $k \ge 3$). Como $R_0 = 6\alpha < 1$, o número esperado de ciclos de todas as ordens é $\mathcal{O}(1)$ e o tamanho das componentes tem cauda exponencial. Logo, o número total de cláusulas em componentes com defeito satisfaz $\mathbb{E}[M_{\text{defect}}] = \mathcal{O}(1) \implies M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$ (tightness). Mesmo sob a hipótese pessimista adversarial em que todas as cláusulas defeituosas fossem violadas, a energia discreta multilinear residual devida a defeitos é limitada por $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$. $\blacksquare$
-
----
+### Lema 10.1 (Hiperárvores Subcríticas, Cota de Interseção e Peeling — Parcialmente Fechado)
+> **Lema 10.1 (Estrutura Subcrítica, Tightness dos Defeitos e Limite da Redução por Peeling).**  
+> *Para o ensemble de 3-SAT aleatório no regime $\alpha<1/6$:*
+> 1. *Limiar do 2-core:* a emergência do 2-core em hipergrafos 3-uniformes aleatórios é governada pela equação de ramificação $\mu=3\alpha(1-e^{-\mu})^2$. O limiar crítico corresponde à raiz positiva de $e^\lambda-2\lambda-1=0$, fornecendo
+>    $$\alpha_{\rm core}=\frac{\lambda^*}{3(1-e^{-\lambda^*})^2}\approx0.818469.$$
+>    Portanto, $\alpha<1/6$ está estritamente abaixo desse limiar, e o 2-core é vazio a.a.s. sob o modelo declarado.
+> 2. *Tightness dos defeitos de sobreposição:* para
+>    $$X=\#\{c\ne c':|c\cap c'|\ge2\},$$
+>    as estimativas de primeiro/segundo momento registradas nesta versão fornecem $\mathbb E[X]=\mathcal O(1)$ e $\operatorname{Var}(X)=\mathcal O(1)$; logo $X=\mathcal O_{\mathbb P}(1)$. Consequentemente, a deleção de $\mathcal O_{\mathbb P}(1)$ cláusulas participantes desses defeitos produz uma hiperfloresta linear com probabilidade $1-o(1)$.
+> 3. *Limite lógico da redução:* a propriedade do hipergrafo **após deleção** não é uma propriedade automática da fórmula original. Em particular,
+>    $$X=\mathcal O_{\mathbb P}(1)\;\not\Rightarrow\;\mathbb P(H_{\rm leaf})\to1.$$
+>    Os componentes defeituosos permanecem na instância original e podem, em princípio, conter cláusulas sem variável privada de grau global 1.
+> 4. *O que o peeling efetivamente prova:* no subsistema hiperflorestal obtido após a remoção dos defeitos, o peeling elimina recursivamente as hiperarestas e exclui mínimos booleanos positivos gerados apenas por esse núcleo bom. Isso **não** exclui, por si só, mínimos/equilíbrios positivos estabilizados pelos $\mathcal O_{\mathbb P}(1)$ componentes defeituosos da fórmula original.
+>
+> **Status:** a redução probabilístico-combinatória a uma hiperfloresta após a remoção de poucos defeitos é mantida; a passagem para $H_{\rm leaf}$ global e para a ausência de mínimos positivos na fórmula original permanece em aberto. $\blacksquare$
 
 ### Lema 10.2 (Strict Saddle Subcrítico em Componentes em Árvore --- Fechado)
 > **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Identidade de Grau de Folha).**  
@@ -346,20 +349,40 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Teorema 10 (Separação Dinâmica Subcrítica Completa entre $\Phi_{\text{mult}}$ e $\Phi_{\text{quad}}$ --- Fechado)
-> **Teorema 10 (Separação Dinâmica Subcrítica Completa).**  
-> *Para o ensemble de 3-SAT aleatório $\mathcal{E}(N, \alpha)$ abaixo do limiar de percolação de hipergrafos $\alpha < 1/6$:*
-> 1. *Evasão Condicional de Selas e Convergência Multilinear via Desacoplamento:* Pelo desacoplamento em componentes do Lema 10.1:
->    - Em todas as componentes em árvore $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ (abrangendo $M - \mathcal{O}_{\mathbb{P}}(1)$ cláusulas), a evasão de selas estritas em faces $d \ge 2$ (Lema 10.2) e a repulsão transversal de LaSalle em arestas $d=1$ (Lema 10.3) garantem que quase todas as trajetórias convergem para atribuições satisfatíveis ($E_{\mathcal{K}}(\operatorname{sign}(x^*)) = 0$).
->    - Nas componentes com defeito $\mathcal{C}_{\text{defect}}$, o número total de cláusulas é $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$, de modo que a energia discreta total satisfaz $E_{\text{disc}}(\operatorname{sign}(x(T))) \le M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$.
->    Dividindo por $M = \alpha N$, a densidade assintótica de resíduo multilinear colapsa estritamente:
->    $$\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0 \quad \text{a.a.s. e em esperança para todo } \alpha < 1/6.$$
-> 2. *Densidade Residual do Hinge Estritamente Positiva:* Pelo Lema 10.4, as trajetórias do Hinge contraem para o politopo LP $Z$, retendo resíduo positivo sob arredondamento de sinal:
->    $$\liminf_{N \to \infty} \mathbb{E}[\rho_{\text{quad}}(\alpha)] \ge \frac{3}{32} e^{-9\alpha} > 0, \quad \text{e} \quad \lim_{N \to \infty} \mathbb{P}\left(\rho_{\text{quad}}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1.$$
-> 3. *Separação Dinâmica Definitiva:* Combinando os dois limites, para qualquer $\varepsilon > 0$:
->    $$\lim_{N \to \infty} \mathbb{P}\left(\rho_{\text{quad}}(\alpha) - \rho_{\text{mult}}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1,$$
->    e em esperança: $\liminf_{N \to \infty} \left(\mathbb{E}[\rho_{\text{quad}}(\alpha)] - \mathbb{E}[\rho_{\text{mult}}(\alpha)]\right) \ge \frac{3}{32} e^{-9\alpha} > 0$.
->    Consequentemente, a separação dinâmica entre a extensão harmônica multilinear e a relaxação quadrática Hinge em 3-SAT subcrítico está **incondicionalmente fechada e rigorosamente demonstrada**. $\blacksquare$
+### Lema 10.4 (Cláusulas Isoladas e Cota para o Hinge — Status Parcial)
+> **Lema 10.4 (Componente isolado do Hinge — parte local).**  
+> O cálculo local registrado no manuscrito para uma cláusula isolada fornece
+> $$p_{\rm fail}=\frac{3}{32}.$$
+> Esse cálculo, isoladamente, ainda não fecha uma cota assintótica global para $\rho_{\rm quad}$. Para isso é necessário explicitar:
+> 1. se $\rho_{\rm quad}$ é normalizada por $N$ ou por $M=\alpha N$;
+> 2. a lei assintótica e, se desejado resultado a.a.s., a concentração do número de cláusulas isoladas sob essa mesma normalização;
+> 3. o argumento que permite somar a contribuição dos componentes isolados ao limite produzido pela dinâmica;
+> 4. a distinção entre uma cota **em expectativa** e uma cota **a.a.s.**
+>
+> Em particular,
+> $$\liminf_{N\to\infty}\mathbb E[\rho_{\rm quad}(\alpha)]\ge c(\alpha)>0$$
+> é uma afirmação em expectativa e não deve receber simultaneamente o qualificador “a.a.s.” sem um argumento adicional de concentração. Se $\rho$ for normalizada por $M=\alpha N$, o fator $\alpha$ presente numa densidade por variável também precisa ser rederivado, pois pode cancelar na conversão para densidade por cláusula.
+>
+> **Status:** o cálculo local $p_{\rm fail}=3/32$ é mantido; a cota global assintótica permanece pendente de normalização e concentração explícitas.
+
+---
+
+### Teorema 10 (Separação Dinâmica em 3-SAT Subcrítico $\alpha<1/6$ — Candidato / Em Aberto)
+> **Teorema 10 (Candidato a Separação Dinâmica Subcrítica entre $\Phi_{\rm mult}$ e $\Phi_{\rm quad}$).**  
+> *Para o ensemble de 3-SAT aleatório $\mathcal E(N,\alpha)$ com $\alpha<1/6$, os resultados atuais estabelecem um mecanismo geométrico condicional, mas ainda não uma separação dinâmica assintótica completa.*
+>
+> 1. *Parte multilinear condicionada a $H_{\rm leaf}$:* sob $H_{\rm leaf}$, o Lema 10.2 fornece curvatura negativa em críticos positivos de faces $d\ge2$, e o Lema 10.3 exclui equilíbrios projetados no interior relativo de arestas planas positivas. O peeling exclui vértices positivos no núcleo hiperflorestal sem defeitos.
+> 2. *Lacuna global dos defeitos:* o Lema 10.1 mostra somente que há $\mathcal O_{\mathbb P}(1)$ defeitos de sobreposição e que sua deleção produz uma hiperfloresta linear. Isso não prova $H_{\rm leaf}$ para a fórmula original e não exclui que esses componentes defeituosos sustentem equilíbrios/atratores positivos. Portanto,
+>    $$\lim_{N\to\infty}\rho_{\rm mult}(\alpha)=0\quad\text{a.a.s.}$$
+>    **não decorre ainda** dos lemas atuais.
+> 3. *Parte Hinge:* o Teorema 7B garante $\operatorname{dist}(x(t),Z)\to0$. O cálculo local do Lema 10.4 é compatível com uma obstrução de arredondamento, mas a promoção para uma cota global positiva de $\rho_{\rm quad}$ requer a derivação probabilística e a normalização explicitadas naquele lema.
+> 4. *Rotas suficientes para fechar a parte multilinear:*  
+>    **(A)** provar diretamente $\mathbb P(H_{\rm leaf})\to1$ para a fórmula original; ou  
+>    **(B)** decompor
+>    $$F_N=F_N^{\rm good}\cup F_N^{\rm bad},\qquad |F_N^{\rm bad}|=\mathcal O_{\mathbb P}(1),$$
+>    e provar que os componentes defeituosos não podem criar atratores projetados positivos com massa de bacia assintoticamente não desprezível.
+>
+> **Status:** **🟡 Em aberto.** L10.2 e L10.3 fornecem o mecanismo geométrico condicional; falta a ponte probabilístico-dinâmica para a fórmula original e uma derivação global completa da cota Hinge.
 
 ---
 
@@ -385,7 +408,7 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 
 ---
 
-### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Pareceres 18 e 19 / Versão 4.0.2 Homologada)
+### 13. Matriz Consolidada de Rigor Científico (Auditoria de Consistência — Versão 4.0.3)
 
 | Resultado | Status de Auditoria | Qualificação Técnica Formal e Limites Analíticos |
 | :--- | :---: | :--- |
@@ -399,10 +422,10 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção ortogonal no cone tangente. |
 | **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
-| **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🟢 **Fechado** | Desacoplamento dinâmico $R_0 = 6\alpha < 1$; identidade de grau global em árvores; defeitos $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$. |
+| **Lema 10.1** (Hiperárvores Subcríticas) | 🟡 **Parcialmente fechado** | $2\text{-core}=\emptyset$ a.a.s. e $X=\mathcal O_{\mathbb P}(1)$ permitem remover poucos defeitos e obter hiperfloresta; isso não implica $H_{\rm leaf}$ global na fórmula original. |
 | **Lema 10.2** (Strict Saddle Subcrítico) | 🟢 **Fechado em Componentes em Árvore** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
-| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟢 **Fechado em Componentes em Árvore** | Projeção $s_\ell \nabla_\ell \Phi \ge (1-|t|)/4 > 0 \implies \operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$; bacia vazia $\mathcal{B} = \emptyset$ via LaSalle. |
-| **Lema 10.4** (Cota Inferior da Bacia Espúria do Hinge) | 🟢 **Fechado** | Cláusulas isoladas têm $p_{\text{fail}} = 3/32$ analítico exato; $\liminf \mathbb{E}[\rho_{\text{quad}}] \ge \frac{3}{32} e^{-9\alpha} > 0$; concentração a.a.s. via Chebyshev. |
-| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🟢 **Fechado** | Separação dinâmica incondicional fechada ($\rho_{\text{quad}} \ge \frac{3}{32} e^{-9\alpha} > \rho_{\text{mult}} = 0$ a.a.s. para $\alpha < 1/6$). |
+| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟢 **Fechado condicionalmente a $H_{\rm leaf}$** | Sob $H_{\rm leaf}$, o interior relativo de uma aresta plana positiva não contém equilíbrio projetado; LaSalle exclui ômega-limites nessa aresta. |
+| **Lema 10.4** (Cláusulas Isoladas / Hinge) | 🟡 **Parcial / em auditoria** | Mantém-se $p_{\rm fail}=3/32$ como cálculo local; a cota global exige normalização de $\rho$, derivação da densidade correspondente e separação entre expectativa e a.a.s. |
+| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🟡 **Em aberto** | O mecanismo geométrico é condicional a $H_{\rm leaf}$; $X=\mathcal O_{\mathbb P}(1)$ não implica $H_{\rm leaf}$ global, e a parte Hinge ainda requer normalização/concentração explícitas. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado; respaldada por cavidade 1RSB e Kac-Rice. |
 | **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |
