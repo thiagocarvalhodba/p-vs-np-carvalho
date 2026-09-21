@@ -1,0 +1,27 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+sandbox_mode = "read-only"
+
+[agents]
+max_concurrent_threads_per_session = 6
+
+[agents.constructor]
+description = "Constructive mathematician: attempts exact proofs, exact families, and exact counterexamples without preserving the preferred theorem."
+config_file = "agents/constructor.toml"
+
+[agents.adversary]
+description = "Adversarial referee: attacks the weakest implication, searches for minimal counterexamples, and refuses unsupported theorem promotion."
+config_file = "agents/adversary.toml"
+
+[agents.computation_auditor]
+description = "Exact-computation auditor: separates discovery numerics from certified finite/exact computation and checks reproducibility."
+config_file = "agents/computation-auditor.toml"
+
+[agents.literature_verifier]
+description = "Primary-source verifier: checks exact theorem statements and maps every hypothesis to the CLG-R PDS."
+config_file = "agents/literature-verifier.toml"
+
+[agents.adjudicator]
+description = "Epistemically conservative integrator: consolidates only claims that survive adversarial review and lists every remaining obligation."
+config_file = "agents/adjudicator.toml"
