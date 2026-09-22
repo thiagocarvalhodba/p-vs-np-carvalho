@@ -40,8 +40,8 @@ Estas questões constituem problemas de pesquisa abertos e matematicamente frut�
 
 ### Etapa 3.1 — Geometria das Variedades Críticas e Separação Subcrítica [T10 REFUTADO]
 - **Objeto Formal:** Equilíbrios projetados positivos em todas as faces do hipercubo, suas bacias, e cotas assintóticas para motivos isolados no ensemble esparso.
-- **Resultado Obtido:** O cálculo de L10.3 permanece apenas local e condicional. O certificado M6 exibe uma família 9-dimensional de mínimos relativos positivos com bacia aberta e prova $\liminf\mathbb E[\rho_{\rm mult}]\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$, refutando o antigo Teorema 10. A cota do Hinge $\frac{3}{32}e^{-9\alpha}>0$ permanece válida.
-- **Próximo problema legítimo:** Provar concentração/segundo momento para o número de componentes M6 isoladas e caracterizar a densidade total de motivos atratores; isso fortalece a descrição probabilística, mas não restaura T10.
+- **Resultado Obtido:** O cálculo de L10.3 permanece apenas local e condicional. O certificado M6 exibe uma família 9-dimensional de mínimos relativos positivos com bacia aberta e prova $\liminf\mathbb E[\rho_{\rm mult}]\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$, refutando o antigo Teorema 10. A prova de alta probabilidade em `PROVA_ALTA_PROBABILIDADE_M6.md` estabelece $\Pr[\rho_{\rm mult}\ge(729/2^{60})\alpha^5e^{-39\alpha}]\to1$. A cota do Hinge $\frac{3}{32}e^{-9\alpha}>0$ permanece válida.
+- **Próximo problema legítimo:** Caracterizar a densidade total de motivos atratores e procurar cotas mais fortes para a energia residual; isso fortalece a descrição probabilística, mas não restaura T10.
 - **Relevância para P vs NP:** Fornece um contraexemplo controlado a uma proposta de separação dinâmica no regime subcrítico e corrige a arquitetura do programa.
 - **Por que não resolve P vs NP:** Trata de um regime esparso e de uma heurística contínua específica; a refutação de T10 não implica $\mathbf P=\mathbf{NP}$ nem $\mathbf P\ne\mathbf{NP}$.
 
