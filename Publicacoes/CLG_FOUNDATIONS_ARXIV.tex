@@ -123,7 +123,19 @@ We formalize the landscape hierarchy across four structural levels:
     \item \textbf{Level 2 (Local Stability):} $\mathcal{S}_{\rm spur}(\Phi) \equiv \{ x^* \in \mathcal{X} \mid x^* \text{ is a Lyapunov-stable equilibrium of } \mathcal{D}_{\rm proj}, \; E_{\rm disc}(\text{sign}(x^*)) > 0 \}$.
     \item \textbf{Level 3 (Attraction Basins):} $\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}) \equiv \{ x_0 \in \mathcal{X} \mid \omega(x_0; \mathcal{D}) \subseteq \{x \in \mathcal{X} \mid E_{\rm disc}(\text{sign}(x)) > 0\} \}$.
     \item \textbf{Level 4 (Spurious Dynamical Mass):} $\mathcal{M}_{\rm spur}(\Phi, \mathcal{D}) \equiv \mu_{\rm norm}(\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}))$, with $\mu_{\rm norm}$ the normalized Lebesgue measure on $\mathcal{X}$.
-    \item \textbf{Level 5 (Residual Violation Density):} For any continuous state $x \in \mathcal{X}$, let $\text{sign}(x) \in \{-1, +1\}^N$ denote coordinate-wise Boolean rounding. The discrete residual violation density is $\rho(x) \equiv \frac{1}{M} E_{\rm disc}(\text{sign}(x))$. For a gradient flow $\mathcal{D}$, the asymptotic expected residual density is $\rho(\alpha) \equiv \lim_{T \to \infty} \mathbb{E}_{F, x_0}[\rho(x(T))]$.
+    \item \textbf{Level 5 (Residual Violation Density):} For a finite formula $F$ with $M$ clauses, initial condition $x_0$, and flow state $x_{F,x_0}(T)$, define the random finite-size residual density
+    \[
+    \rho_{N,T}(F,x_0)\equiv \frac{1}{M}E_{\rm disc}(\operatorname{sign}(x_{F,x_0}(T))).
+    \]
+    When the projected flow converges, write
+    \[
+    \rho_N(F,x_0)\equiv \lim_{T\to\infty}\rho_{N,T}(F,x_0).
+    \]
+    The ensemble-and-initialization expectation is denoted
+    \[
+    \bar\rho_N(\alpha)\equiv \mathbb E_{F,x_0}[\rho_N(F,x_0)].
+    \]
+    Thus probability statements refer to the random variable $\rho_N(F,x_0)$, while expectation statements refer to $\bar\rho_N(\alpha)$. This convention removes the earlier ambiguity in which the same symbol $\rho(\alpha)$ was used both for a random residual density and for its expectation.
 \end{enumerate}
 
 \section{Theorem 1: Central Fractional Box and Linear Relaxation Slack}
@@ -514,18 +526,48 @@ For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$, unde
 
 \begin{theorem}[Audit Refutation of the Former Theorem 10]
 \label{thm:subcritical_separation}
-Let $M=\lfloor\alpha N\rfloor$ with fixed $\alpha>0$, initialize the
-projected multilinear gradient flow uniformly on $[-1,1]^N$, and round its
-limit coordinatewise to a Boolean assignment.  In the uniform model of
-distinct signed clauses,
+Let $M=\lfloor\alpha N\rfloor$ with fixed $\alpha>0$, let $F$ be sampled
+uniformly from the $M$-subsets of the $Q_N=8\binom N3$ distinct signed
+3-SAT clauses, initialize the projected multilinear gradient flow with
+$x_0\sim\operatorname{Unif}([-1,1]^N)$ independently of $F$, and round its
+limit coordinatewise to a Boolean assignment. With the notation above,
 \begin{equation}
-\liminf_{N\to\infty}\mathbb E[\rho_{\rm mult}(\alpha)]
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)
 \ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
 \label{eq:t10_refutation}
 \end{equation}
-The independent-clause model has the same leading constant.  Hence the former
-claim $\rho_{\rm mult}(\alpha)\to0$ in expectation, and therefore the former
-``complete subcritical separation'' theorem for $0<\alpha<1/6$, is false.
+Moreover,
+\begin{equation}
+\mathbb P_{F,x_0}\!\left[
+\rho_{N,\rm mult}(F,x_0)
+\ge
+\frac{729}{2^{60}}\alpha^5e^{-39\alpha}
+\right]\longrightarrow1.
+\label{eq:t10_refutation_whp}
+\end{equation}
+In fact, writing
+\[
+d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha},
+\qquad p_0=2^{-53},
+\]
+for all sufficiently large $N$,
+\begin{equation}
+\mathbb P_F\!\left[
+\mathbb P_{x_0}\!\left(
+\rho_{N,\rm mult}(F,x_0)\ge
+\frac{729}{2^{60}}\alpha^5e^{-39\alpha}
+\,\middle|\,F
+\right)
+\ge 1-\exp\!\left(-\frac{3p_0d(\alpha)}{128}N\right)
+\right]
+\ge
+1-\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right).
+\label{eq:t10_refutation_conditional}
+\end{equation}
+The independent-clause model has the same leading expectation constant.
+Hence the former claim that the multilinear residual tends to zero, both
+in expectation and with asymptotically high probability, is false for every
+fixed $\alpha>0$ and in particular throughout $0<\alpha<1/6$.
 \end{theorem}
 
 \begin{proof}
