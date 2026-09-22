@@ -9,6 +9,18 @@
 4. Engenheiro de Reprodutibilidade Científica
 5. Revisor Editorial de Periódicos Internacionais (Padrão STOC/FOCS, SICON, Annals)
 
+> **AVISO DE SUPERSESSÃO — 22/09/2026.** Este relatório preserva o estado
+> histórico da auditoria de 18/09. Seu diagnóstico “T10 não fechado” foi
+> superado por evidência exata mais forte: T10 está **refutado**. O certificado
+> M6 possui uma família 9-dimensional de mínimos relativos positivos, bacia
+> aberta de massa $2^{-53}$ e induz
+> $\liminf\mathbb E[\rho_{\rm mult}]\ge
+> (729/2^{59})\alpha^5e^{-39\alpha}>0$.
+> O estado autoritativo está em
+> `Publicacoes/CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md` e no
+> manuscrito v4.0.4. As avaliações e hashes abaixo são históricos e não
+> descrevem o pacote atual.
+
 ---
 
 ## 1. Veredito Objetivo de Prontidão

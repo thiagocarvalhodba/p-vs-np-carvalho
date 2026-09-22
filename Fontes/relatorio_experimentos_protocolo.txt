@@ -9,12 +9,12 @@ Resultados por Ensemble (Intervalos de Confianca Bootstrap 95% por Instancia):
    - Multilinear rho_mult: 0.0015 [IC 95%: 0.0003, 0.0030] (convergencia quase certa ao modelo minimo)
    - Quadratic Hinge rho_quad: 0.1272 [IC 95%: 0.1183, 0.1358]
    - ERT Solver: solucionado em 0/15 instancias no tempo limite (T=30)
-   -> Teorema 9 CONFIRMADO empiricamente (separacao estrita entre Hinge e Multilinear).
+   -> Observacao de amostra finita; nao confirma o antigo Teorema 9.
 
 2. Ensemble 3-SAT Subcritico (alpha=0.12 < 1/6, N=50):
    - Multilinear rho_mult: 0.0000 [IC 95%: 0.0000, 0.0000] (rho=0.000 exato)
    - Quadratic Hinge rho_quad: 0.0756 [IC 95%: 0.0567, 0.0944]
-   -> Teorema 10 CONFIRMADO empiricamente (separacao em formulas-arvore).
+   -> Observacao de amostra finita; nao certifica T10, refutado posteriormente pelo motivo M6.
 
 3. Ensemble 3-SAT Plantado (alpha=4.26, N=40):
    - Multilinear rho_mult: 0.0136 [IC 95%: 0.0115, 0.0158]

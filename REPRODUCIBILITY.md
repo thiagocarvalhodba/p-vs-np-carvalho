@@ -43,7 +43,7 @@ python Fontes/run_protocol_v2_clean.py
 
 ### 3.1 Figuras Científicas (em `Publicacoes/`)
 - `fig_clg_teorema1_caixa_fracionaria.png`: Visualização geométrica da caixa central $\mathcal{U}_N = (-1/3, 1/3)^N$, do hipercubo $[-1, 1]^N$ e da folga fracionária $0.5$ do politopo LP.
-- `fig_clg_teorema3_4_harmonic_saddles_vertices.png`: Demonstração da harmonicidade ($\Delta \Phi_{\text{mult}} \equiv 0$), selas de Morse no interior e confinamento de atratores estáveis aos vértices discretos $\{-1, 1\}^N$.
+- `fig_clg_teorema3_4_harmonic_saddles_vertices.png`: Ilustração da harmonicidade ($\Delta \Phi_{\text{mult}} \equiv 0$), de selas de Morse não degeneradas no interior e do confinamento de mínimos estritos/equilíbrios assintoticamente estáveis isolados aos vértices; contínuos não estritos podem atrair no bordo.
 - `fig_clg_teorema5_6_softplus_convexity_bifurcation.png`: Fatoração da Hessiana Softplus $V^T W V \succeq 0$, funil estritamente convexo e underflow exponencial IEEE 754.
 
 ### 3.2 Dados Experimentais e Relatórios (em `Fontes/`)
