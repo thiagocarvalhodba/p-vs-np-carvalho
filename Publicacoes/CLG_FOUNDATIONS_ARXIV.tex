@@ -7,6 +7,7 @@
 \usepackage{geometry}
 \geometry{margin=1in}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{cite}
@@ -778,7 +779,7 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 \textbf{Attractor Loci} & LP Polytope $Z$ & Isolated stable points are vertices; positive boundary continua can attract & Unique minimizer if $\text{rank}(V)=N$ \\
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Smooth Hinge / log-sum-exp smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & If $\operatorname{rank}(V)=N$: $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
-\textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
+\textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel if $\operatorname{rank}(V)=N$ \\
 \textbf{Dynamical Separation} & Subcritical isolated-clause bound: $\liminf\mathbb E\rho_{\rm quad}\ge\frac{3}{32}e^{-9\alpha}$ for $0<\alpha<1/6$ & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
 \bottomrule
 \end{tabular}
@@ -789,7 +790,7 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 \centering
 \small
 \caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.5).}}
-\begin{tabular}{@{}ll@{}}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
 \toprule
 \textbf{Result} & \textbf{Formal Audit Status} \\
 \midrule
@@ -797,13 +798,13 @@ Theorem 1 (Central Box $\mathcal{U}_N$) & \textbf{Closed} (Deterministic, slack 
 Theorem 2 (Measure Zero Critical Sets) & \textbf{Closed under stated hypotheses} (Fubini / Real Analytic) \\
 Theorem 3 (Harmonicity and Saddles) & \textbf{Closed with hypotheses} (Harmonic, Milnor Curve Selection) \\
 Theorem 4A$'$ (Face Minima without H4) & \textbf{Closed} (Inherited vertex energies) \\
-Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed, subject to final projected system formulation} \\
+Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed} (isolated asymptotically stable equilibria are vertices) \\
 Theorem 5 (Hessian Factorization) & \textbf{Closed under stated conditions} ($V^T W V \succeq 0$) \\
-Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed under IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
+Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed} ($L_\beta=\Theta(\beta)$; idealized normal/subnormal/round-to-zero scales distinguished) \\
 Theorem 7B (Centripetal Contraction) & \textbf{Closed as Limit Set} ($\mathcal{E}_{\rm proj} \equiv Z$, $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$) \\
-Proposition 7A (Negative Clause Families) & \textbf{Closed for Competitive Jacobian} (Sign $J_{ij} \le 0$, Hirsch suspended; item 2 expunged) \\
+Proposition 7A (Negative Clause Families) & \textbf{Closed for the Jacobian-sign claim} ($J_{ij}\le0$ for purely negative clauses; global dynamics suspended) \\
 Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional lower bound} ($\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$) \\
-Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
+Theorem 9 (Horn Dynamics) & \textbf{Open} (former unit-fact trapping claim falsified; general Horn DAG dynamics unresolved) \\
 Lemma 10.1 (Component Decoupling \& Defect Tightness) & \textbf{Partial} (decoupling and degree identity remain; universal $H_{\rm leaf}$ is refuted) \\
 Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Refuted as a universal claim} (M6 has positive non-strict relative minima) \\
 Lemma 10.3 (Degenerate Edge Non-Equilibrium) & \textbf{Insufficient} (a one-dimensional local statement cannot exclude higher-dimensional attracting faces) \\
@@ -812,11 +813,11 @@ Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Refuted} (positive M6 residu
 Central Conjecture & \textbf{Reduced Comparison Conjecture} (random ensemble: only $\rho_{\rm quad}>\rho_{\rm mult}$ remains open; planted case separate) \\
 Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from the $P$ versus $NP$ distinction) \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \label{tab:status_matrix}
 \end{table}
 
-\section{Epistemological Firewall: 3-XOR-SAT and the $P$ versus $NP$ Distinction}
+\section{Epistemological Firewall: 3-XOR-SAT and the \texorpdfstring{$P$ versus $NP$}{P versus NP} Distinction}
 The CLG-R framework establishes an epistemological firewall against illegitimate inferences from continuous dynamical hardness to the $P$ versus $NP$ distinction:
 \begin{itemize}
     \item \textbf{3-XOR-SAT} is solvable in deterministic polynomial time $\mathcal{O}(N^3)$ via Gaussian Elimination over $\mathbb{F}_2$ (strictly in Class $\mathbf{P}$).
