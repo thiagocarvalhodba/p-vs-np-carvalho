@@ -173,7 +173,7 @@ Substituting into $g_c(x)$:
 g_c(x) = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j\right) < -\frac{1}{2}(1 - 1) = 0.
 \end{equation}
 Thus $g_c(x) < 0$ holds simultaneously for all $M$ clauses. By Lemma~\ref{lem:inactivity}, $\Phi_{\rm quad}(x) \equiv 0$ and $\nabla \Phi_{\rm quad}(x) \equiv \mathbf{0}$ on all of $\mathcal{U}_N$.
-Under (H3'), at least one clause is violated by some vertex; the corresponding orthant within $\mathcal{U}_N$ satisfies $\text{sign}(x) = -\sigma^{(c)}$ and has normalized measure $(1/6)^N$. For UNSAT formulas, all $2^N$ orthants violate clauses.
+Under (H3'), choose any Boolean assignment $s\in\{-1,+1\}^N$ that violates at least one clause. The full sign orthant $\{x\in\mathcal U_N:\operatorname{sign}(x)=s\}$ has normalized measure $(1/6)^N$ and is contained in $\mathcal C_{\rm spur}(\Phi_{\rm quad})$. For UNSAT formulas, every full sign orthant in $\mathcal U_N$ is spurious, so the whole central box contributes.
 \end{proof}
 
 \begin{remark}[Geometric Manifestation of LP Relaxation Slack]
@@ -203,7 +203,7 @@ Under hypotheses (H1), (H2), and (H3'), the critical zero-sets of the multilinea
 Under (H3'), $\Phi_{\rm mult} \not\equiv \text{const}$. Thus there exists an index $k \in \{1, \dots, N\}$ such that $P_k(x) \equiv \partial_k \Phi_{\rm mult}(x) \not\equiv 0$. By Fubini's theorem and induction on dimension (Okamoto's Lemma \cite{okamoto1973distinctness, caron2005zero}), the zero set $Z(P_k) = \{x \in \mathbb{R}^N \mid P_k(x) = 0\}$ has Lebesgue measure zero: $\mu(Z(P_k)) = 0$. Since $\mathcal{C}_0(\Phi_{\rm mult}) \subseteq Z(\nabla \Phi_{\rm mult}) \subseteq Z(P_k)$, it follows that $\mu(\mathcal{C}_0(\Phi_{\rm mult})) = 0$.
 
 \textbf{Case 2: Softplus ($\Phi_{\rm soft}$).}
-The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on $\mathbb{R}^N$. By Theorem~\ref{thm:softplus_convexity}, its Laplacian satisfies $\Delta \Phi_{\rm soft}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0$ everywhere on $\mathbb{R}^N$ for any formula with $M \ge 1$. Being strictly subharmonic, $\Phi_{\rm soft}$ is unconditionally non-constant. By the Identity Theorem for Real Analytic Functions \cite{krantz2002primer}, the zero set of a non-trivial real analytic function on a connected domain has measure zero: $\mu(Z(\partial_k \Phi_{\rm soft})) = 0 \implies \mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0$.
+The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on $\mathbb{R}^N$. By Theorem~\ref{thm:softplus_convexity}, its Laplacian satisfies $\Delta \Phi_{\rm soft}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0$ everywhere on $\mathbb{R}^N$ for any formula with $M \ge 1$. Being strictly subharmonic, $\Phi_{\rm soft}$ is non-constant. Hence at least one partial derivative $\partial_k\Phi_{\rm soft}$ is a nonzero real-analytic function. By the zero-set theorem for nontrivial real-analytic functions \cite{krantz2002primer}, $\mu(Z(\partial_k\Phi_{\rm soft}))=0$. Since $\mathcal C_0(\Phi_{\rm soft})\subseteq Z(\partial_k\Phi_{\rm soft})$, the critical set has measure zero.
 \end{proof}
 
 \section{Theorem 3: Harmonic Multilinear Landscapes \& Morse Saddles}
@@ -269,7 +269,7 @@ Consider the Lyapunov function $V(x) = \Phi_{\rm mult}(x)$. By Moreau's projecti
 \begin{equation}
 \dot{V}(x(t)) = \langle \nabla \Phi_{\rm mult}(x), \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x)) \rangle = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x))\|^2 \le 0.
 \end{equation}
-By LaSalle's Invariance Principle for projected dynamical systems \cite{brogliato2006equivalence, nagurney1996projected}, all trajectories on the compact set $\mathcal{X}$ converge to the largest invariant set contained in $\{\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi) = 0\}$, which corresponds to the stationary points $-\nabla \Phi(x^*) \in N_{\mathcal{X}}(x^*)$.
+By LaSalle's Invariance Principle for projected dynamical systems \cite{brogliato2006equivalence, nagurney1996projected}, every omega-limit set on the compact set $\mathcal X$ is contained in the largest invariant subset of $\{\Pi_{T_{\mathcal X}(x)}(-\nabla\Phi)=0\}$; equivalently, trajectories approach the projected stationary set $\{-\nabla\Phi(x^*)\in N_{\mathcal X}(x^*)\}$.
 An isolated asymptotically stable equilibrium $x^*$ must be a strict local minimum of $\Phi_{\rm mult}$ relative to $\mathcal{X}$. By Theorem~\ref{thm:vertex_geom}, no point in the relative interior of a face $\mathcal{F}$ with $\dim(\mathcal{F}) \ge 1$ can be a strict local minimum (since $\Phi$ is constant along all tangent directions in $\mathcal{F}$). Hence, all isolated asymptotically stable equilibria must belong to faces of dimension $d=0$: $x^* \in \{-1, +1\}^N$.
 \end{proof}
 
@@ -293,7 +293,7 @@ For the Softplus potential $\Phi_{\rm soft}(x) = \sum_{c=1}^M \frac{1}{\beta}\ln
     w_c(x) = \beta \, \sigma(\beta g_c(x)) \, (1 - \sigma(\beta g_c(x))) > 0.
     \end{equation}
     \item $\Phi_{\rm soft}$ is globally convex on $\mathbb{R}^N$. If ${\rm rank}(V) = N$, then $\nabla^2 \Phi_{\rm soft}(x) \succ 0$ and $\Phi_{\rm soft}$ is strictly convex.
-    \item The spectral condition number $\kappa(\nabla^2 \Phi_{\rm soft}(x))$ is bounded by:
+    \item If ${\rm rank}(V)=N$ (so that $V^TV\succ0$), the spectral condition number $\kappa(\nabla^2 \Phi_{\rm soft}(x))$ is bounded by:
     \begin{equation}
     \kappa(\nabla^2 \Phi_{\rm soft}(x)) \le \frac{\max_c w_c(x)}{\min_c w_c(x)} \cdot \frac{\lambda_{\max}(V^T V)}{\lambda_{\min}(V^T V)} = \kappa(W(x)) \cdot \kappa(V^T V).
     \end{equation}
@@ -318,7 +318,7 @@ For any $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi_{\rm soft}(x) z = \|W(x)^{1/2} 
 
 \begin{theorem}[Lipschitz Constant of Gradient Field and Numerical Underflow]
 \label{thm:bifurcation}
-For the Softplus relaxation as $\beta \to \infty$:
+For the Softplus relaxation as $\beta \to \infty$, let $d_{\max}=\max_i |\{c:i\in c\}|$ be the maximum variable degree:
 \begin{enumerate}
     \item The \textbf{Lipschitz constant of the gradient field} $L_\beta \equiv \sup_x \|\nabla^2 \Phi_{\rm soft}(x)\|_2 = \Theta(\beta)$ satisfies:
     \begin{equation}
