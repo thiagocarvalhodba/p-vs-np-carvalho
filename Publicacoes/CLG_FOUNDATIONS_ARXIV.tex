@@ -26,7 +26,7 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 
-\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.4):\\
+\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.5):\\
 Rigorous Structural Results and Open Dynamical Problems\\
 for Continuous 3-SAT Relaxations}}
 
@@ -55,8 +55,11 @@ We prove:
 (7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal approach to the LP polytope ($\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$);
 (8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
 (9) We analyze dynamical behavior in monotone Horn families, identifying the competitive Jacobian sign ($J_{ij} \le 0$) in negative clause interactions which precludes direct application of Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
-(10) An adversarial audit refutes the previously claimed complete subcritical separation: an isolated six-clause linear hypertree has an open basin of positive multilinear residual energy, yielding $\liminf_{N\to\infty}\mathbb{E}[\rho_{\rm mult}(\alpha)]\ge (729/2^{59})\alpha^5e^{-39\alpha}>0$ for every fixed $\alpha>0$. Pointwise convergence of the projected multilinear flow remains valid through nonsmooth Kurdyka--\L{}ojasiewicz theory, but convergence to zero residual energy does not.
-Finally, we delimit the Central Conjecture of CLG-R to the clustering interval $\alpha \in (\alpha_d, \alpha_s)$.
+(10) An adversarial audit refutes the previously claimed complete subcritical separation: an isolated six-clause linear hypertree is the minimal linear-hypertree obstruction with an open basin of positive multilinear residual energy. In the uniform distinct-clause ensemble,
+$\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)\ge (729/2^{59})\alpha^5e^{-39\alpha}>0$ for every fixed $\alpha>0$, and
+$\mathbb P_{F,x_0}[\rho_{N,\rm mult}(F,x_0)\ge(729/2^{60})\alpha^5e^{-39\alpha}]\to1$.
+Pointwise convergence of the projected multilinear flow remains valid through nonsmooth Kurdyka--\L{}ojasiewicz theory, but convergence to zero residual energy does not.
+For the random 3-SAT ensemble, the remaining clustering-regime conjecture is therefore comparative ($\rho_{\rm quad}>\rho_{\rm mult}$), not positivity of the multilinear residual.
 \end{abstract}
 
 \noindent\textbf{Keywords:} Computational Complexity, Differential Topology, Morse Theory, Continuous Relaxations, MAX-3-SAT, Dynamical Systems, Convex Optimization, Spin Glasses.
@@ -639,6 +642,35 @@ Component decoupling, the basin mass $2^{-53}$, non-negativity of all other
 violations, and division by $M\sim\alpha N$ give
 \eqref{eq:t10_refutation}.  The same local
 calculation applies in the independent-clause model.
+
+For the uniform model without replacement, changing one selected clause by
+one swap changes $X_{M6}$ by at most $4$: deleting a 3-clause can destroy at
+most one isolated M6 or expose at most three, while adding a 3-clause can
+destroy at most three isolated M6 components or create at most one.  In the
+Doob exposure martingale, a transposition coupling therefore places the
+conditional expectations at each step in an interval of length at most $4$.
+Hoeffding's martingale bound yields, with
+$d(\alpha)=(729/64)\alpha^6e^{-39\alpha}$,
+\[
+\mathbb P_F\left[X_{M6}<\frac34d(\alpha)N\right]
+\le
+\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right)
+\]
+for all sufficiently large $N$.  Conditional on such a formula, the
+certified M6 basin events are independent because isolated components have
+disjoint variable supports, and hence
+$Z_N\mid F\sim\operatorname{Binomial}(X_{M6},2^{-53})$.
+A multiplicative Chernoff bound gives
+\[
+\mathbb P_{x_0}\left[
+Z_N<\frac34,2^{-53}X_{M6}\mid F
+\right]
+\le
+\exp\!\left(-\frac{3\,2^{-53}d(\alpha)}{128}N\right).
+\]
+Each captured component contributes at least one distinct violated clause,
+which proves \eqref{eq:t10_refutation_whp} and the stronger conditional
+statement \eqref{eq:t10_refutation_conditional}.
 \end{proof}
 
 \begin{remark}[Pointwise PDS convergence survives the refutation]
@@ -662,13 +694,21 @@ equilibrium.  This result does not imply zero limit energy: the open set
 
 \section{The Central Conjecture of the CLG-R Program}
 
-\begin{conjecture}[Central Conjecture of CLG-R in the Clustering Regime]
+\begin{conjecture}[Remaining CLG-R Comparison in the Clustering Regime]
 \label{conj:clg_separation}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ in the non-trivial clustering interval $\alpha \in (\alpha_d, \alpha_s)$, where $\alpha_d \approx 3.86$ is the clustering threshold \cite{krzakala2007gibbs} and $\alpha_s \approx 4.267$ is the satisfiability threshold, or for the planted ensemble $\mathcal{E}_{\rm plant}(N, \alpha)$:
-Under pure projected gradient flow with uniform initialization $x_0 \sim \text{Unif}([-1, 1]^N)$, the asymptotic residual energy densities satisfy:
+For the uniform random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ in the non-trivial clustering interval $\alpha \in (\alpha_d, \alpha_s)$, where $\alpha_d \approx 3.86$ is the clustering threshold \cite{krzakala2007gibbs} and $\alpha_s \approx 4.267$ is the satisfiability threshold, under pure projected gradient flow with uniform initialization, the remaining conjectural comparison is
 \begin{equation}
-\lim_{T \to \infty} \rho_{\rm quad}(\alpha, T) > \lim_{T \to \infty} \rho_{\rm mult}(\alpha, T) > 0.
+\liminf_{N\to\infty}\bar\rho_{N,\rm quad}(\alpha)
+>
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha).
 \end{equation}
+The positivity of the multilinear term is no longer conjectural in this ensemble: the M6 theorem gives
+\[
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)
+\ge
+\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\]
+For planted ensembles, no corresponding M6 frequency theorem is asserted here; their residual comparison remains a separate open problem.
 \end{conjecture}
 
 \section{Summary Synthesis and Formal Status Matrix}
@@ -676,7 +716,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.4 Audited).}}
+\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.5 Audited).}}
 \begin{tabular}{@{}llll@{}}
 \toprule
 \textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
@@ -688,7 +728,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
-\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Former subcritical claim refuted: $\liminf\mathbb E\rho_{\rm mult}>0$; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
+\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
 \bottomrule
 \end{tabular}
 \label{tab:synthesis}
@@ -697,7 +737,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.4).}}
+\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.5).}}
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Result} & \textbf{Formal Audit Status} \\
@@ -717,8 +757,8 @@ Lemma 10.1 (Component Decoupling \& Defect Tightness) & \textbf{Partial} (decoup
 Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Refuted as a universal claim} (M6 has positive non-strict relative minima) \\
 Lemma 10.3 (Degenerate Edge Non-Equilibrium) & \textbf{Insufficient} (a one-dimensional local statement cannot exclude higher-dimensional attracting faces) \\
 Lemma 10.4 (Hinge Subcritical Basin Bound) & \textbf{Closed} (Exact $p_{\rm fail} = 3/32$, $\rho_{\rm quad} \ge \frac{3}{32} e^{-9\alpha} > 0$, Chebyshev concentration) \\
-Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Refuted} ($\liminf\mathbb E\rho_{\rm mult}\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$) \\
-Central Conjecture & \textbf{Delimited Conjecture} ($\alpha \in (\alpha_d, \alpha_s)$ / planted ensemble) \\
+Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Refuted} (positive M6 residual in expectation and w.h.p.; $m_{*,HT}^{\rm mult}=6$) \\
+Central Conjecture & \textbf{Reduced Comparison Conjecture} (random ensemble: only $\rho_{\rm quad}>\rho_{\rm mult}$ remains open; planted case separate) \\
 Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from the $P$ versus $NP$ distinction) \\
 \bottomrule
 \end{tabular}
@@ -734,7 +774,7 @@ The CLG-R framework establishes an epistemological firewall against illegitimate
 \end{itemize}
 
 \section{Conclusion}
-We have established rigorous analytical foundations for Computational Landscape Geometry and Representation (CLG-R), including the Universal Centripetal Contraction Theorem, Exact Hessian Factorization, harmonic exclusion of interior minima, vertex confinement for isolated asymptotically stable multilinear equilibria, and a finite-dimensional LP-polytope volume bound.  The adversarial M6 audit also refutes the former complete subcritical-separation claim by exhibiting an attracting non-strict boundary continuum.  Together these results provide a rigorous framework for studying divergent dynamical accessibility, corrected in light of the M6 counterexample, while maintaining explicit computational-complexity boundaries.
+We have established rigorous analytical foundations for Computational Landscape Geometry and Representation (CLG-R), including the Universal Centripetal Contraction Theorem, Exact Hessian Factorization, harmonic exclusion of interior minima, vertex confinement for isolated asymptotically stable multilinear equilibria, and a finite-dimensional LP-polytope volume bound. The adversarial M6 analysis changes the subcritical picture decisively: six clauses are necessary and sufficient for a positive-measure bad basin within connected linear 3-uniform Berge-acyclic components, and isolated M6 components occur with linear density in the audited sparse random ensemble. Consequently the multilinear residual is bounded away from zero both in expectation and with asymptotically high probability, refuting the former complete subcritical-separation theorem. The remaining random-ensemble conjecture is comparative rather than existential: whether the Hinge residual remains strictly larger than the multilinear residual in the clustering regime. None of these dynamical results implies a separation of computational complexity classes.
 
 \bibliographystyle{plain}
 \bibliography{clg_references}
