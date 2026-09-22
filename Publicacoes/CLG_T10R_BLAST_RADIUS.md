@@ -98,11 +98,11 @@ A trilha de evidência atual é:
 - `CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`: auditoria principal do T10;
 - `../PROVA_ALTA_PROBABILIDADE_M6.md`: prova detalhada w.h.p.
 
-## 7. Artefato que requer regeneração
+## 7. Pacote arXiv regenerado
 
-O arquivo `Publicacoes/arxiv_package.zip` existe na master, mas é um artefato binário previamente gerado. Como o fonte `CLG_FOUNDATIONS_ARXIV.tex` foi alterado após sua geração, o pacote deve ser considerado **potencialmente desatualizado** até ser regenerado a partir da versão 4.0.5 do fonte.
+O arquivo `Publicacoes/arxiv_package.zip` foi regenerado automaticamente a partir da versão 4.0.5 do fonte. O pacote contém o TeX atual, bibliografia, BBL pré-compilado, as três figuras raster referenciadas e `ARXIV_PACKAGE_MANIFEST.txt` com hashes SHA-256 dos componentes.
 
-Nenhuma inferência matemática deve usar o conteúdo do ZIP como autoridade enquanto ele não for reconstruído e comparado com o fonte atual.
+A regeneração também restaura automaticamente PNGs a partir dos SVGs canônicos quando o TeX referencia uma figura raster ausente. O workflow correspondente é `.github/workflows/rebuild_arxiv_package.yml`.
 
 ## 8. Estado final da auditoria de impacto
 
@@ -112,4 +112,4 @@ Após as correções no fonte principal:
 - referências à antiga "complete subcritical separation" aparecem apenas como afirmações explicitamente refutadas;
 - o resultado "isolated asymptotically stable equilibria are vertices" permanece, pois não é contradito pelo M6;
 - a conjectura central foi reduzida para não tratar positividade de rho_mult como questão aberta no ensemble aleatório;
-- o único artefato público conhecido que ainda requer sincronização é o pacote binário arXiv.
+- o pacote arXiv foi regenerado e possui manifesto de integridade sincronizado com a versão 4.0.5.
