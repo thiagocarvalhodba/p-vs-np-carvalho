@@ -25,6 +25,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Restore raster figures referenced by TeX
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq librsvg2-bin
+          cd Publicacoes
+          python3 - <<'PY'
+          import pathlib, re, subprocess
+          tex = pathlib.Path("CLG_FOUNDATIONS_ARXIV.tex").read_text(encoding="utf-8")
+          for name in re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}', tex):
+              p = pathlib.Path(name)
+              if p.exists():
+                  continue
+              if p.suffix.lower() == ".png":
+                  svg = p.with_suffix(".svg")
+                  if svg.exists():
+                      subprocess.run(["rsvg-convert", "-o", str(p), str(svg)], check=True)
+                      print(f"generated {p} from {svg}")
+          PY
+
       - name: Build deterministic arXiv source package
         shell: bash
         run: |
@@ -96,6 +117,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Publicacoes/arxiv_package.zip
+          git add Publicacoes/arxiv_package.zip Publicacoes/*.png
           git commit -m "build(arxiv): regenerate v4.0.5 source package"
           git push origin HEAD:master
