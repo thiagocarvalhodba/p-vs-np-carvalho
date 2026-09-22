@@ -139,6 +139,12 @@ We formalize the landscape hierarchy across four structural levels:
     \bar\rho_N(\alpha)\equiv \mathbb E_{F,x_0}[\rho_N(F,x_0)].
     \]
     Thus probability statements refer to the random variable $\rho_N(F,x_0)$, while expectation statements refer to $\bar\rho_N(\alpha)$. This convention removes the earlier ambiguity in which the same symbol $\rho(\alpha)$ was used both for a random residual density and for its expectation.
+
+    Throughout, fix one deterministic tie convention for $\operatorname{sign}(0)$ (for definiteness, $\operatorname{sign}(0)=+1$); whenever a result is tie-independent, this is stated explicitly.
+
+    We also distinguish the random-formula models:
+    $\mathcal E_{\rm iid}(N,\alpha)$ denotes $M=\lfloor\alpha N\rfloor$ independent signed-clause draws, while
+    $\mathcal E_{\rm unif}(N,\alpha)$ denotes the uniform $M$-subset of the $Q_N=8\binom N3$ distinct signed clauses.
 \end{enumerate}
 
 \section{Theorem 1: Central Fractional Box and Linear Relaxation Slack}
@@ -310,7 +316,7 @@ For any $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi_{\rm soft}(x) z = \|W(x)^{1/2} 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\textwidth]{fig_clg_teorema5_6_softplus_convexity_bifurcation.png}
-\caption{\textbf{Illustration of Theorems 5 and 6:} The Softplus relaxation Hessian factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, creating a strictly convex funnel when $\text{rank}(V)=N$. As $\beta \to \infty$, the gradient field Lipschitz constant scales as $L_\beta = \Theta(\beta)$, and IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau.}
+\caption{\textbf{Illustration of Theorems 5 and 6:} The Softplus relaxation Hessian factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, creating a strictly convex funnel when $\text{rank}(V)=N$. As $\beta \to \infty$, the gradient-field Lipschitz constant scales as $L_\beta=\Theta(\beta)$, while finite-precision evaluation can drive the exponentially small Softplus gradients into subnormal/underflow regimes, numerically approaching the flat Hinge plateau.}
 \label{fig:teorema5_6}
 \end{figure}
 
@@ -328,11 +334,9 @@ For the Softplus relaxation as $\beta \to \infty$, let $d_{\max}=\max_i |\{c:i\i
     \begin{equation}
     \|\nabla \Phi_{\rm soft}(x)\|_\infty \leq \frac{M}{2} e^{-\beta(1 - 3\rho)/2} \quad\text{and}\quad \|\nabla \Phi_{\rm soft}(x)\|_2 \leq \frac{\sqrt{3} M}{2} e^{-\beta(1 - 3\rho)/2}.
     \end{equation}
-    \item At the origin $x = \mathbf{0}$, IEEE 754 floating-point underflow thresholds are:
-    \begin{itemize}
-        \item \textbf{binary32 (FP32):} normal-to-subnormal onset at $\beta\approx175$; gradual-underflow-to-zero scale at $\beta\approx207$.
-        \item \textbf{binary64 (FP64):} normal-to-subnormal onset at $\beta\approx1417$; gradual-underflow-to-zero scale at $\beta\approx1489$.
-    \end{itemize}
+    \item At the origin $x=\mathbf 0$, the idealized exponential scale $e^{-\beta/2}$ crosses the IEEE~754 binary32 minimum normal, minimum subnormal, and round-to-nearest zero thresholds at approximately
+    $\beta=174.67$, $206.56$, and $207.94$, respectively; for binary64 the corresponding values are
+    $\beta=1416.79$, $1488.88$, and $1490.27$.  These are scales for the exponential factor itself, not implementation-independent thresholds for a particular sigmoid routine; FTZ/DAZ modes can zero subnormals earlier.
 \end{enumerate}
 \end{theorem}
 
@@ -348,7 +352,7 @@ For the lower bound, choose a clause $c$ and a point with $g_c(x)=0$. Then $w_c=
 
 If $x\in\mathcal U_N(\rho)$, then every clause obeys $g_c(x)\le-(1-3\rho)/2$. Hence $\sigma(\beta g_c)\le e^{-\beta(1-3\rho)/2}$. Using $\|v_c\|_\infty=1/2$ and $\|v_c\|_2=\sqrt3/2$ and the triangle inequality yields the stated gradient bounds.
 
-At $x=0$, $g_c(0)=-1/2$, so the exponentially small scale is $e^{-\beta/2}$. Equating this with the smallest positive normal and subnormal magnitudes gives approximately $\beta=174.7,206.6$ in binary32 and $\beta=1416.8,1488.9$ in binary64, respectively. The latter threshold describes underflow to zero under gradual-underflow arithmetic; hardware flush-to-zero modes can zero subnormals earlier.
+At $x=0$, $g_c(0)=-1/2$, so the relevant idealized exponential scale is $e^{-\beta/2}$.  Equating it with $2^{-126}$, $2^{-149}$, and $2^{-150}$ gives the binary32 values $174.67$, $206.56$, and $207.94$; equating it with $2^{-1022}$, $2^{-1074}$, and $2^{-1075}$ gives the binary64 values $1416.79$, $1488.88$, and $1490.27$.  The last value in each triple is the ideal round-to-nearest transition below half the smallest subnormal.  Actual evaluation of the logistic function is implementation dependent, and FTZ/DAZ modes may zero subnormals earlier.
 \end{proof}
 
 \section{Theorem 7B and Proposition 7A: Universal Centripetal Contraction}
@@ -430,7 +434,7 @@ The derivation confirms that interactions between variables in purely negative c
 
 \begin{theorem}[Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
 \label{thm:lp_volume}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses:
+For the independent-clause ensemble $\mathcal E_{\rm iid}(N,\alpha)$ with $M=\lfloor\alpha N\rfloor$:
 For every finite dimension $N \ge 3$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous finite-dimensional exponential lower bound:
 \begin{equation}
 \mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
@@ -473,7 +477,12 @@ Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_
 \label{thm:horn_separation}
 Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = (-1, \dots, -1)$ are satisfying:
 \begin{enumerate}
-    \item While isolated binary implications $\neg x_i \lor x_j$ induce non-negative cross-derivatives ($J_{ij} = +1/4 \ge 0$), general Horn 3-SAT clauses with multiple negative literals induce competing cross-derivatives with $J_{ij}(x) \le 0$ as established in Proposition~\ref{prop:constructive_basin}. Consequently, the multilinear gradient flow on general Horn-3-SAT forms a competitive dynamical system, rendering Hirsch's monotone cooperativity theorems directly inapplicable and leaving the global convergence to satisfying models an open problem.
+    \item Isolated binary implications $\neg x_i \lor x_j$ and purely negative clauses exhibit different Jacobian sign patterns.  More generally, a Horn clause such as
+    $(\neg x_1\lor\neg x_2\lor x_3)$ has
+    $J_{12}=-(1-x_3)/8\le0$ but
+    $J_{13}=(1+x_2)/8\ge0$ and
+    $J_{23}=(1+x_1)/8\ge0$.
+    Thus general Horn 3-SAT has sign-indefinite off-diagonal interactions and is not, in general, a cooperative or competitive system with respect to the standard positive orthant order.  Proposition~\ref{prop:constructive_basin} applies only to the purely negative family.  Standard Hirsch monotonicity results therefore do not directly settle the general Horn case, and global convergence to satisfying models remains open.
     \item \textbf{Status of Dynamic Separation:} Characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
 \end{enumerate}
 \end{theorem}
@@ -522,7 +531,7 @@ former conclusion $\rho_{\rm mult}\to0$.
 
 \begin{lemma}[Lemma 10.4: Subcritical Hinge Basin Lower Bound and Residual Energy Density]
 \label{lem:hinge_lower_bound}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$, under pure projected gradient flow $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm quad}(x))$ initialized from $x_0 \sim \text{Unif}([-1, 1]^N)$:
+For the uniform distinct-clause ensemble $\mathcal E_{\rm unif}(N,\alpha)$ with $\alpha<1/6$, under pure projected gradient flow $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm quad}(x))$ initialized from $x_0 \sim \text{Unif}([-1, 1]^N)$:
 \begin{enumerate}
     \item \textbf{Decoupled Dynamics on Isolated Clauses:} Let $\mathcal{C}_{\rm iso}$ denote the set of isolated clauses in $F_N$ sharing no variables with any other clause. For each $c \in \mathcal{C}_{\rm iso}$, the projected flow on its variables $(x_{i_1}, x_{i_2}, x_{i_3})$ is strictly autonomous and decoupled from all other coordinates, with initial condition $(x_{0, i_1}, x_{0, i_2}, x_{0, i_3}) \sim \text{Unif}([-1, 1]^3)$ statistically independent across clauses.
     \item \textbf{Boundary Non-Saturation (No-Clipping):} For any initial point outside the LP polytope $Z$ ($S_0 = \sum_{p=1}^3 \sigma_p x_{0, p} < -1$), the trajectory translates linearly at identical rates $\dot{U}_p = g_c(U) > 0$, landing on $\partial Z$ at $U_p^* = U_p(0) + \frac{-1 - S_0}{3}$. Because $U_p^* \in (-1, 1)$ strictly for almost all initial conditions, no boundary clipping occurs before reaching $\partial Z$.
@@ -530,7 +539,7 @@ For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$, unde
     \begin{equation}
     p_{\rm fail} = \mathbb{P}(x_0 \in Z \text{ and } \hat{s} \text{ violates } c) + \mathbb{P}(x_0 \notin Z \text{ and landing } x^* \text{ violates } c) = \frac{1}{48} + \frac{7}{96} = \frac{3}{32} = 0.09375.
     \end{equation}
-    \item \textbf{Density Scaling and Exact Expectation Lower Bound:} In $\mathcal{E}(N, \alpha)$, the expected number of isolated clauses is $\mathbb{E}[|\mathcal{C}_{\rm iso}|] = \alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))$. Since the discrete residual density is normalized by total clauses $M = \alpha N$, the factor $\alpha$ cancels exactly:
+    \item \textbf{Density Scaling and Exact Expectation Lower Bound:} In $\mathcal E_{\rm unif}(N,\alpha)$, the expected number of isolated clauses is $\mathbb{E}[|\mathcal{C}_{\rm iso}|] = \alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))$. Since the discrete residual density is normalized by total clauses $M = \alpha N$, the factor $\alpha$ cancels exactly:
     \begin{equation}
     \frac{\mathbb{E}[|\mathcal{C}_{\rm iso}|]}{M} = \frac{\alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))}{\alpha N} = e^{-9\alpha}(1 + \mathcal{O}(1/N)).
     \end{equation}
@@ -737,7 +746,7 @@ and hence convergence to a single projected critical point. The rate statement i
 
 \begin{conjecture}[Remaining CLG-R Comparison in the Clustering Regime]
 \label{conj:clg_separation}
-For the uniform random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ in the non-trivial clustering interval $\alpha \in (\alpha_d, \alpha_s)$, where $\alpha_d \approx 3.86$ is the clustering threshold \cite{krzakala2007gibbs} and $\alpha_s \approx 4.267$ is the satisfiability threshold, under pure projected gradient flow with uniform initialization, the remaining conjectural comparison is
+For the uniform distinct-clause ensemble $\mathcal E_{\rm unif}(N,\alpha)$ in the non-trivial clustering interval $\alpha \in (\alpha_d, \alpha_s)$, where $\alpha_d \approx 3.86$ is the clustering threshold \cite{krzakala2007gibbs} and $\alpha_s \approx 4.267$ is the satisfiability threshold, under pure projected gradient flow with uniform initialization, the remaining conjectural comparison is
 \begin{equation}
 \liminf_{N\to\infty}\bar\rho_{N,\rm quad}(\alpha)
 >
@@ -769,7 +778,7 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
-\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
+\textbf{Dynamical Separation} & Subcritical isolated-clause bound: $\liminf\mathbb E\rho_{\rm quad}\ge\frac{3}{32}e^{-9\alpha}$ for $0<\alpha<1/6$ & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
 \bottomrule
 \end{tabular}
 \label{tab:synthesis}
