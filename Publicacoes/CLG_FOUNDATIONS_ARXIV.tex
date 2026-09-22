@@ -270,7 +270,7 @@ Consider the Lyapunov function $V(x) = \Phi_{\rm mult}(x)$. By Moreau's projecti
 \dot{V}(x(t)) = \langle \nabla \Phi_{\rm mult}(x), \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x)) \rangle = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x))\|^2 \le 0.
 \end{equation}
 By LaSalle's Invariance Principle for projected dynamical systems \cite{brogliato2006equivalence, nagurney1996projected}, every omega-limit set on the compact set $\mathcal X$ is contained in the largest invariant subset of $\{\Pi_{T_{\mathcal X}(x)}(-\nabla\Phi)=0\}$; equivalently, trajectories approach the projected stationary set $\{-\nabla\Phi(x^*)\in N_{\mathcal X}(x^*)\}$.
-An isolated asymptotically stable equilibrium $x^*$ must be a strict local minimum of $\Phi_{\rm mult}$ relative to $\mathcal{X}$. By Theorem~\ref{thm:vertex_geom}, no point in the relative interior of a face $\mathcal{F}$ with $\dim(\mathcal{F}) \ge 1$ can be a strict local minimum (since $\Phi$ is constant along all tangent directions in $\mathcal{F}$). Hence, all isolated asymptotically stable equilibria must belong to faces of dimension $d=0$: $x^* \in \{-1, +1\}^N$.
+An isolated asymptotically stable equilibrium $x^*$ must be a strict local minimum of $\Phi_{\rm mult}$ relative to $\mathcal X$: if arbitrarily close points had strictly smaller energy, monotonicity of $\Phi_{\rm mult}$ would prevent their trajectories from converging upward to $x^*$; if arbitrarily close distinct points had equal energy, then either their trajectories immediately decrease below $\Phi(x^*)$ or they are additional equilibria, contradicting isolation. By Theorem~\ref{thm:vertex_geom}, no point in the relative interior of a face $\mathcal{F}$ with $\dim(\mathcal{F}) \ge 1$ can be a strict local minimum. Hence all isolated asymptotically stable equilibria belong to faces of dimension $d=0$: $x^* \in \{-1, +1\}^N$.
 \end{proof}
 
 \section{Theorem 5: Hessian Factorization and Spectral Conditioning}
@@ -392,6 +392,7 @@ The unconstrained gradient is $-\nabla \Phi_{\rm quad}(x) = \sum_{c \in \text{ac
 \begin{equation}
 \langle -\nabla \Phi_{\rm quad}(x), x \rangle = \sum_{c \in \text{act}} g_c(x)(\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}} (2 g_c(x)^2 + g_c(x)) < 0.
 \end{equation}
+Writing $v=-\nabla\Phi_{\rm quad}(x)=d+n$ by Moreau decomposition, with $d=\Pi_{T_{\mathcal X}(x)}v$ and $n\in N_{\mathcal X}(x)$, the box normal-cone sign condition gives $\langle x,n\rangle\ge0$. Therefore $\langle x,d\rangle\le\langle x,v\rangle<0$ whenever an active clause exists, which proves the strict decrease of $\|x(t)\|^2$ asserted in item 2.
 We now verify the exact identity of projected equilibria $\mathcal{E}_{\rm proj} \equiv Z$:
 \begin{enumerate}
     \item If $x \in Z$, then $g_c(x) \le 0$ for all $c$, so $\text{act}(x) = \emptyset$ and $-\nabla \Phi_{\rm quad}(x) = \mathbf{0} \in N_{\mathcal{X}}(x)$ for all $x \in \mathcal{X}$, yielding $Z \subseteq \mathcal{E}_{\rm proj}$.
