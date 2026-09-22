@@ -14,6 +14,8 @@ $\mathbb E\rho_{\rm mult}(\alpha)\to0$ de T10.
 Este resultado não implica nenhuma conclusão sobre $\mathbf P$ versus
 $\mathbf{NP}$.
 
+A definição histórica e a normalização exata de $\rho_{\rm mult}$ foram reconciliadas com a refutação M6 em `CLG_T10R_ALINHAMENTO_RHO.md`; a refutação usa o mesmo residual discreto $E_{\rm disc}(\operatorname{sign}(x))/M$ do antigo T10 e separa explicitamente variável aleatória e esperança.
+
 ## Matriz de obrigações
 
 | Afirmação | Status | Certificação |
