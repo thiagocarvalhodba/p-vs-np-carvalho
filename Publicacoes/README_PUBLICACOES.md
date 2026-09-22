@@ -58,9 +58,13 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Arquivo:** [RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)
    - **Conteúdo:** Resolução matemática minuciosa dos achados críticos (identidade de $\Omega_{\text{curv}}$, cancelamento algébrico em Equi-3-SAT, controle de Horn-SAT, eliminação do viés UNSAT) e resultados do benchmark definitivo **CLG-03 com 3-XOR-SAT** (provando por que o gradiente contínuo colapsa para $0.0\%$ em problemas solvíveis em $P$ via Gauss $\text{GF}(2)$). Formaliza o reposicionamento epistemológico da tese para limites de GNNs e OGP.
 
-8. 🧮 **T10R — Minimalidade da Obstrução Multilinear em Hiperárvores:**  
-   - **Arquivo:** [CLG_T10R_PROVA_MINIMALIDADE_M6.md](CLG_T10R_PROVA_MINIMALIDADE_M6.md)  
-   - **Resultado:** prova formal independente de \(m_{*,HT}^{\mathrm{mult}}=6\), combinando convergência PDS/KL, contagem de cláusulas positivas, ramo unitário e monotonicidade de folha; a prova não depende de anti-Zeno nem de identificação finita de face.
+8. 🧮 **T10R — Minimalidade e Propagação Probabilística da Obstrução M6:**  
+   - **Prova de minimalidade:** [CLG_T10R_PROVA_MINIMALIDADE_M6.md](CLG_T10R_PROVA_MINIMALIDADE_M6.md)  
+   - **Auditoria probabilística:** [CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md](CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md)  
+   - **Alinhamento de $\rho_{\rm mult}$:** [CLG_T10R_ALINHAMENTO_RHO.md](CLG_T10R_ALINHAMENTO_RHO.md)  
+   - **Blast radius do antigo T10:** [CLG_T10R_BLAST_RADIUS.md](CLG_T10R_BLAST_RADIUS.md)  
+   - **Resultado:** \(m_{*,HT}^{\mathrm{mult}}=6\); o M6 produz residual multilinear positivo em expectativa e com alta probabilidade no ensemble uniforme sem reposição. A prova de minimalidade não depende de anti-Zeno nem de identificação finita de face.  
+   - **Nota editorial:** `arxiv_package.zip` deve ser regenerado após as alterações da versão CLG-R v4.0.5 do fonte LaTeX.
 
 ---
 
