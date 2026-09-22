@@ -64,7 +64,7 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Alinhamento de $\rho_{\rm mult}$:** [CLG_T10R_ALINHAMENTO_RHO.md](CLG_T10R_ALINHAMENTO_RHO.md)  
    - **Blast radius do antigo T10:** [CLG_T10R_BLAST_RADIUS.md](CLG_T10R_BLAST_RADIUS.md)  
    - **Resultado:** \(m_{*,HT}^{\mathrm{mult}}=6\); o M6 produz residual multilinear positivo em expectativa e com alta probabilidade no ensemble uniforme sem reposição. A prova de minimalidade não depende de anti-Zeno nem de identificação finita de face.  
-   - **Nota editorial:** `arxiv_package.zip` deve ser regenerado após as alterações da versão CLG-R v4.0.5 do fonte LaTeX.
+   - **Pacote arXiv:** `arxiv_package.zip` foi regenerado para a CLG-R v4.0.5 e possui `ARXIV_PACKAGE_MANIFEST.txt` com hashes SHA-256.
 
 ---
 
