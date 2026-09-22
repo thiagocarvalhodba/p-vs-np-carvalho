@@ -51,10 +51,10 @@ We prove:
 (3) The Multilinear relaxation is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$), precluding any interior local minimum via the Strong Minimum Principle, while all interior critical points admit arbitrary-neighborhood lower-energy points via Milnor's Curve Selection Lemma;
 (4) Without boundary non-degeneracy hypotheses, every local minimum of $\Phi_{\rm mult}$ on a face $\mathcal{F}$ satisfies $\Phi_{\rm mult}(x^*) = E_{\rm disc}(v)$ for all $v \in \mathcal{V}(\mathcal{F})$, and every isolated asymptotically stable equilibrium of the projected gradient flow is strictly a discrete vertex in $\{-1, +1\}^N$;
 (5) The Softplus relaxation factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, attaining global strict convexity when $\text{rank}(V) = N$, with condition number bounded by $\kappa(\nabla^2 \Phi) \le \kappa(W(x)) \kappa(V^T V)$;
-(6) The Lipschitz constant of the gradient field scales as $L_\beta = \Theta(\beta)$, while finite IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau;
+(6) The Lipschitz constant of the gradient field scales as $L_\beta = \Theta(\beta)$, while finite-precision evaluation can suppress exponentially small Softplus gradients into subnormal/underflow regimes, numerically approaching Hinge-like flat behavior;
 (7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal approach to the LP polytope ($\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$);
-(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
-(9) We analyze dynamical behavior in monotone Horn families, identifying the competitive Jacobian sign ($J_{ij} \le 0$) in negative clause interactions which precludes direct application of Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
+(8) For the independent-clause random 3-SAT ensemble, we prove analytically that the normalized volume of the LP polytope satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
+(9) We analyze dynamical behavior in monotone Horn families: purely negative clauses have competitive off-diagonal sign ($J_{ij}\le0$), while general Horn clauses can have mixed Jacobian signs; consequently standard orthant-monotonicity results do not settle the general case, and Hinge separation on Horn DAGs remains open after the singleton collapse under positive unit facts;
 (10) An adversarial audit refutes the previously claimed complete subcritical separation: an isolated six-clause linear hypertree is the minimal linear-hypertree obstruction with an open basin of positive multilinear residual energy. In the uniform distinct-clause ensemble,
 $\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)\ge (729/2^{59})\alpha^5e^{-39\alpha}>0$ for every fixed $\alpha>0$, and
 $\mathbb P_{F,x_0}[\rho_{N,\rm mult}(F,x_0)\ge(729/2^{60})\alpha^5e^{-39\alpha}]\to1$.
@@ -775,8 +775,8 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 \textbf{Critical Measure $\mu(\mathcal{C}_0)$} & $> 0$ (Plateau $\geq (1/3)^N$) & $= 0$ (Fubini / Polynomials) & $= 0$ (Real Analytic Identity) \\
 \textbf{Laplacian $\Delta\Phi$} & $\equiv 0$ on $\mathcal{U}_N$ & $\equiv 0$ on $\mathbb{R}^N$ (Harmonic) & $\text{Tr}(V^T W V) > 0$ (Subharmonic) \\
 \textbf{Attractor Loci} & LP Polytope $Z$ & Isolated stable points are vertices; positive boundary continua can attract & Unique minimizer if $\text{rank}(V)=N$ \\
-\textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
-\textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
+\textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Smooth Hinge / log-sum-exp smoothing \\
+\textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & If $\operatorname{rank}(V)=N$: $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
 \textbf{Dynamical Separation} & Subcritical isolated-clause bound: $\liminf\mathbb E\rho_{\rm quad}\ge\frac{3}{32}e^{-9\alpha}$ for $0<\alpha<1/6$ & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
 \bottomrule
