@@ -276,3 +276,51 @@ A prova de alta probabilidade fortalece essa refutação e mostra que a energia 
 - lower bound w.h.p. da energia residual: **PROVADO** no modelo uniforme sem reposição + inicialização produto uniforme.
 
 A única cautela editorial restante é alinhar a notação rho_mult e o espaço de probabilidade exatamente com a formulação histórica de T10 no manuscrito principal, para evitar ambiguidade entre probabilidade sobre fórmulas, sobre inicializações, ou conjunta.
+
+
+## 11. Resolução da auditoria de escala temporal do certificado M6
+
+Uma auditoria externa apontou uma aparente discrepância de fator 4 entre as derivadas de Φ escritas em coordenadas-fator e as velocidades usadas no bootstrap quantitativo M6.
+
+A discrepância é apenas de parametrização temporal. Para uma coordenada-fator
+
+    z = (1±x)/2,
+
+temos
+
+    ∂_x Φ = ±(1/2) ∂_z Φ
+    e
+    ż = ±(1/2) ẋ.
+
+Como o fluxo original é ẋ = Proj(-∇_x Φ), no tempo original t:
+
+    ż = (1/4) Proj(-∇_z Φ).
+
+Assim, no envelope usado no M6:
+
+    |∂_y Φ| ≤ 31/256
+    => |ẏ| ≤ (1/4)(31/256) = 31/1024,
+
+e para uma folha:
+
+    |∂_a Φ| ≤ 1/16
+    => |ȧ| ≤ 1/64.
+
+Do mesmo modo, para um fator central u,
+
+    -∂_u Φ ≥ 13/64
+    => u̇ ≥ 13/256,
+
+de forma que o tempo para atravessar no máximo 1/16 é
+
+    (1/16)/(13/256) = 16/13.
+
+Consequentemente os deslocamentos usados no bootstrap permanecem exatamente
+
+    (31/1024)(16/13) = 31/832,
+
+e
+
+    (1/64)(16/13) = 1/52.
+
+Logo a caixa certificada, sua massa p0=2^-53 e todas as constantes probabilísticas derivadas dela permanecem inalteradas. O manuscrito principal passou a declarar explicitamente essa conversão de tempo para eliminar a ambiguidade.
