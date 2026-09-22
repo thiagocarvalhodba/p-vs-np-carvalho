@@ -336,6 +336,21 @@ For the Softplus relaxation as $\beta \to \infty$, let $d_{\max}=\max_i |\{c:i\i
 \end{enumerate}
 \end{theorem}
 
+\begin{proof}
+Since $0<w_c(x)\le \beta/4$,
+\[
+\|\nabla^2\Phi_{\rm soft}(x)\|_2
+\le \frac\beta4\,\lambda_{\max}(V^TV).
+\]
+Each row of $V$ has exactly three nonzero entries of magnitude $1/2$. For a fixed variable $i$, the absolute row sum of $V^TV$ is at most $3d_i/4$, hence Gershgorin gives $\lambda_{\max}(V^TV)\le3d_{\max}/4$. Therefore $L_\beta\le3d_{\max}\beta/16$.
+
+For the lower bound, choose a clause $c$ and a point with $g_c(x)=0$. Then $w_c=\beta/4$. Since $\|v_c\|^2=3/4$ and all Hessian summands are positive semidefinite, $\lambda_{\max}(\nabla^2\Phi_{\rm soft})\ge(\beta/4)(3/4)=3\beta/16$.
+
+If $x\in\mathcal U_N(\rho)$, then every clause obeys $g_c(x)\le-(1-3\rho)/2$. Hence $\sigma(\beta g_c)\le e^{-\beta(1-3\rho)/2}$. Using $\|v_c\|_\infty=1/2$ and $\|v_c\|_2=\sqrt3/2$ and the triangle inequality yields the stated gradient bounds.
+
+At $x=0$, $g_c(0)=-1/2$, so the exponentially small scale is $e^{-\beta/2}$. Equating this with the smallest positive normal and subnormal magnitudes gives approximately $\beta=174.7,206.6$ in binary32 and $\beta=1416.8,1488.9$ in binary64, respectively. The latter threshold describes underflow to zero under gradual-underflow arithmetic; hardware flush-to-zero modes can zero subnormals earlier.
+\end{proof}
+
 \section{Theorem 7B and Proposition 7A: Universal Centripetal Contraction}
 
 \begin{theorem}[Theorem 7B: Universal Centripetal Contraction of Quadratic Hinge]
