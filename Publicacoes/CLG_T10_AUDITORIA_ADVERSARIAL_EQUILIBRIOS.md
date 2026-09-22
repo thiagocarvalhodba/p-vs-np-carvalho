@@ -25,7 +25,7 @@ $\mathbf{NP}$.
 | $m=6$ é mínimo para bacia positiva em hiperárvores da classe auditada | **PROVADA** | exclusão de medida positiva para $m\le5$ |
 | Toda trajetória PDS converge a um único equilíbrio | **PROVADA** | Moreau + BDL, Teorema 3.1 e Remark 4.8 |
 | $\lim \mathbb E\rho_{\rm mult}(\alpha)=0$ para $0<\alpha<1/6$ | **REFUTADA** | contagem exata de componentes M6 isoladas |
-| Cota positiva para $\rho_{\rm mult}$ com alta probabilidade | **ABERTA NESTE RELATÓRIO** | requer segundo momento uniforme; desnecessária para refutar a parte em esperança de T10 |
+| Cota positiva para $\rho_{\rm mult}$ com alta probabilidade | **PROVADA** | concentração de McDiarmid (swap sem reposição) + Chernoff condicional exato em `PROVA_ALTA_PROBABILIDADE_M6.md` |
 
 ## Catálogo desta auditoria
 
@@ -477,9 +477,7 @@ Não é necessário provar concentração para refutar T10: o enunciado reivindi
 simultaneamente colapso a.a.s. **e em esperança**, e (15) contradiz a segunda
 reivindicação para todo $0<\alpha<1/6$.
 
-Uma conclusão com alta probabilidade é plausível via segundo momento para
-componentes isoladas, mas não é promovida a teorema neste relatório sem o
-cálculo uniforme das covariâncias de pares disjuntos.
+A conclusão com alta probabilidade foi formalizada e provada rigorosamente no documento `P_NP/PROVA_ALTA_PROBABILIDADE_M6.md` via martingal acoplado por troca sem reposição (McDiarmid com $C_{M6}\le 4$) combinado com concentração de Chernoff para a captura binomial condicional exata, estabelecendo $\Pr[\rho_{\rm mult}\ge \frac{729}{2^{60}}\alpha^5e^{-39\alpha}]\to 1$.
 
 ## 8. Auditoria dos documentos Gemini
 
