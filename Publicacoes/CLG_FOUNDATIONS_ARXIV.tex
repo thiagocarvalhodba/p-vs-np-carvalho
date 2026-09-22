@@ -322,10 +322,26 @@ For the Softplus potential $\Phi_{\rm soft}(x) = \sum_{c=1}^M \frac{1}{\beta}\ln
 \end{theorem}
 
 \begin{proof}
-Let $v_c = -\frac{1}{2}\sigma^{(c)}$. Since $g_c(x) = v_c^T x - 1/2$, $\nabla g_c(x) = v_c$ and $\nabla^2 g_c(x) \equiv 0$.
-The gradient is $\nabla \Phi_{\rm soft}(x) = \sum_{c=1}^M \sigma(\beta g_c(x)) v_c = V^T \sigma(\beta g(x))$.
-Differentiating gives $\nabla^2 \Phi_{\rm soft}(x) = \sum_{c=1}^M \beta \sigma(\beta g_c)(1 - \sigma(\beta g_c)) v_c v_c^T = V^T W(x) V$.
-For any $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi_{\rm soft}(x) z = \|W(x)^{1/2} V z\|_2^2 \ge 0$, establishing convexity. By Courant-Fischer minimax bounds, Rayleigh quotients satisfy $\lambda_{\min}(H) \ge \min_c w_c \lambda_{\min}(V^TV)$ and $\lambda_{\max}(H) \le \max_c w_c \lambda_{\max}(V^TV)$, establishing the condition number bound.
+Let $v_c=-\frac12\sigma^{(c)}$. Since $g_c(x)=v_c^Tx-1/2$, we have $\nabla g_c=v_c$ and $\nabla^2g_c\equiv0$. Moreover,
+\[
+\nabla\Phi_{\rm soft}(x)
+=\sum_{c=1}^M\sigma(\beta g_c(x))v_c
+=V^T\sigma(\beta g(x)),
+\]
+and differentiation gives
+\[
+\nabla^2\Phi_{\rm soft}(x)
+=\sum_{c=1}^M \beta\sigma(\beta g_c)(1-\sigma(\beta g_c))v_cv_c^T
+=V^TW(x)V.
+\]
+For any $z\in\mathbb R^N$,
+\[
+z^T\nabla^2\Phi_{\rm soft}(x)z
+=\|W(x)^{1/2}Vz\|_2^2\ge0,
+\]
+which establishes convexity.  Courant--Fischer gives
+$\lambda_{\min}(H)\ge(\min_cw_c)\lambda_{\min}(V^TV)$ and
+$\lambda_{\max}(H)\le(\max_cw_c)\lambda_{\max}(V^TV)$, yielding the condition-number bound.
 \end{proof}
 
 \begin{figure}[htbp]
@@ -507,7 +523,10 @@ Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = 
     $J_{13}=(1+x_2)/8\ge0$ and
     $J_{23}=(1+x_1)/8\ge0$.
     Thus general Horn 3-SAT has sign-indefinite off-diagonal interactions and is not, in general, a cooperative or competitive system with respect to the standard positive orthant order.  Proposition~\ref{prop:constructive_basin} applies only to the purely negative family.  Standard Hirsch monotonicity results therefore do not directly settle the general Horn case, and global convergence to satisfying models remains open.
-    \item \textbf{Status of Dynamic Separation:} Characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
+    \item \textbf{Status of Dynamic Separation:} The exact spurious basin mass of $\Phi_{\rm quad}$ for general Horn DAGs remains an \textbf{Open Problem}.  In particular, single linear chains with positive head facts cannot establish the desired separation because their zero set collapses to the singleton
+    \[
+    Z=\{(+1,\dots,+1)\}.
+    \]
 \end{enumerate}
 \end{theorem}
 
