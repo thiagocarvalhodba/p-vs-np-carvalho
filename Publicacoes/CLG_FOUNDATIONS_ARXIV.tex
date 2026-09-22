@@ -82,7 +82,7 @@ The three canonical relaxations on the hypercube $\mathcal{X} = [-1, 1]^N$ are:
     \begin{equation}
     \Phi_{\rm quad}(x) = \sum_{c=1}^M \left[\max(0, g_c(x))\right]^2.
     \end{equation}
-    \textit{LP Identification:} The zero-level set $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \; \forall c\}$ is identically the polytope of the canonical Linear Programming (LP) relaxation \cite{goemans1995improved}, under the coordinate transformation $z_j = (1 + x_j)/2 \in [0, 1]$.
+    \textit{LP Identification:} The zero-level set $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \; \forall c\}$ is the canonical clause-wise LP relaxation. Under $z_j=(1+x_j)/2$, a clause constraint is $\sum_{j:\sigma_j^{(c)}=+1} z_j+\sum_{j:\sigma_j^{(c)}=-1}(1-z_j)\ge1$ \cite{goemans1995improved}.
     \item \textbf{Multilinear Harmonics Relaxation:}
     \begin{equation}
     \Phi_{\rm mult}(x) = \sum_{c=1}^M \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}.
@@ -177,7 +177,7 @@ Under (H3'), choose any Boolean assignment $s\in\{-1,+1\}^N$ that violates at le
 \end{proof}
 
 \begin{remark}[Geometric Manifestation of LP Relaxation Slack]
-Under $z_i = (1 + x_i)/2 \in [0, 1]$, $g_c(x) \leq 0 \iff \sum_{j \in c} z_j \geq 1$. At the origin $x=\mathbf{0}$ ($z_i = 1/2$), every 3-literal clause satisfies $\sum z_j = 1.5$, producing an exact \textbf{fractional slack of $0.5$}.
+For a fixed clause define its literal-satisfaction coordinates $q_{cj}=(1+\sigma_j^{(c)}x_j)/2\in[0,1]$. Then $g_c(x)\le0\iff\sum_{j\in c}q_{cj}\ge1$. At the origin every $q_{cj}=1/2$, so every 3-literal clause has left-hand side $3/2$ and exact \textbf{fractional slack of $0.5$}.
 The plateau $\mathcal{U}_N$ provides the geometric realization of this fractional interior slack.
 \end{remark}
 
@@ -330,8 +330,8 @@ For the Softplus relaxation as $\beta \to \infty$, let $d_{\max}=\max_i |\{c:i\i
     \end{equation}
     \item At the origin $x = \mathbf{0}$, IEEE 754 floating-point underflow thresholds are:
     \begin{itemize}
-        \item \textbf{FP32:} Normal at $\beta \approx 175$; Flush-to-zero at $\beta \approx 207$.
-        \item \textbf{FP64:} Normal at $\beta \approx 1417$; Flush-to-zero at $\beta \approx 1489$.
+        \item \textbf{binary32 (FP32):} normal-to-subnormal onset at $\beta\approx175$; gradual-underflow-to-zero scale at $\beta\approx207$.
+        \item \textbf{binary64 (FP64):} normal-to-subnormal onset at $\beta\approx1417$; gradual-underflow-to-zero scale at $\beta\approx1489$.
     \end{itemize}
 \end{enumerate}
 \end{theorem}
@@ -430,7 +430,7 @@ The derivation confirms that interactions between variables in purely negative c
 \begin{theorem}[Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
 \label{thm:lp_volume}
 For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses:
-For every finite dimension $N \ge 1$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous finite-dimensional exponential lower bound:
+For every finite dimension $N \ge 3$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous finite-dimensional exponential lower bound:
 \begin{equation}
 \mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
 \end{equation}
