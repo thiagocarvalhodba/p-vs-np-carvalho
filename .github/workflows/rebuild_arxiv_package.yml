@@ -1,0 +1,101 @@
+name: Rebuild arXiv package
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/rebuild_arxiv_package.yml'
+      - 'Publicacoes/CLG_FOUNDATIONS_ARXIV.tex'
+      - 'Publicacoes/clg_references.bib'
+      - 'Publicacoes/CLG_FOUNDATIONS_ARXIV.bbl'
+      - 'Publicacoes/*.png'
+      - 'Publicacoes/*.jpg'
+      - 'Publicacoes/*.jpeg'
+      - 'Publicacoes/*.pdf'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build deterministic arXiv source package
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd Publicacoes
+          python3 - <<'PY'
+          import hashlib, pathlib, re, zipfile, os
+          root = pathlib.Path(".")
+          tex = root / "CLG_FOUNDATIONS_ARXIV.tex"
+          text = tex.read_text(encoding="utf-8")
+
+          files = [tex]
+          bib = root / "clg_references.bib"
+          if bib.exists():
+              files.append(bib)
+          bbl = root / "CLG_FOUNDATIONS_ARXIV.bbl"
+          if bbl.exists():
+              files.append(bbl)
+
+          for name in re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}', text):
+              p = root / name
+              if not p.suffix:
+                  for ext in (".pdf", ".png", ".jpg", ".jpeg"):
+                      q = p.with_suffix(ext)
+                      if q.exists():
+                          p = q
+                          break
+              if not p.exists():
+                  raise SystemExit(f"Missing figure referenced by TeX: {name}")
+              files.append(p)
+
+          unique = []
+          seen = set()
+          for p in files:
+              p = p.resolve()
+              if p not in seen:
+                  seen.add(p)
+                  unique.append(p)
+
+          manifest_lines = [
+              "CLG-R arXiv source package",
+              "Source commit: " + os.environ.get("GITHUB_SHA", "unknown"),
+              "",
+          ]
+          for p in sorted(unique, key=lambda x: x.name):
+              data = p.read_bytes()
+              manifest_lines.append(f"{hashlib.sha256(data).hexdigest()}  {p.name}")
+
+          manifest = "\n".join(manifest_lines) + "\n"
+          out = root / "arxiv_package.zip"
+          with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for p in sorted(unique, key=lambda x: x.name):
+                  z.write(p, p.name)
+              z.writestr("ARXIV_PACKAGE_MANIFEST.txt", manifest)
+
+          print("Package files:")
+          for p in sorted(unique, key=lambda x: x.name):
+              print(" -", p.name)
+          print("ZIP SHA256:", hashlib.sha256(out.read_bytes()).hexdigest())
+          PY
+
+      - name: Commit regenerated package
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- Publicacoes/arxiv_package.zip; then
+            echo "arxiv_package.zip already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Publicacoes/arxiv_package.zip
+          git commit -m "build(arxiv): regenerate v4.0.5 source package"
+          git push origin HEAD:master
