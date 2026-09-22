@@ -704,22 +704,32 @@ statement \eqref{eq:t10_refutation_conditional}.
 \end{proof}
 
 \begin{remark}[Pointwise PDS convergence survives the refutation]
-Let $X=[-1,1]^N$ and $F=\Phi_{\rm mult}+\delta_X$.  Moreau's decomposition
-identifies the projected flow with
-$-\dot x\in\partial F(x)=\nabla\Phi_{\rm mult}(x)+N_X(x)$ and gives
-$d\Phi_{\rm mult}(x(t))/dt=-\|\dot x(t)\|^2$ almost everywhere.  The function
-$F$ is regular and subanalytic and is continuous on its closed domain.
-Moreover, $G=\nabla\Phi_{\rm mult}\circ\Pi_X$ is a globally Lipschitz
-extension of the gradient restricted to $X$, while $N_X$ is maximal
-monotone.  The Lipschitz-perturbed normal-cone inclusion therefore has a
-unique global absolutely continuous solution for each initial point.
-Because $\nabla\Phi_{\rm mult}$ is bounded on $X$, its composition with that
-solution makes $F\circ x=\Phi_{\rm mult}\circ x$ absolutely continuous.  The
-nonsmooth {\L}ojasiewicz theorem and its dynamical extension
-\cite[Theorem~3.1 and Remark~4.8]{bolte2007lojasiewicz} therefore give finite
-length and convergence of every trajectory to a single projected
-equilibrium.  This result does not imply zero limit energy: the open set
-\eqref{eq:m6_basin} converges to $\mathcal M\subset\{\Phi_{\rm mult}=1\}$.
+Let $X=[-1,1]^N$ and $F=\Phi_{\rm mult}+\delta_X$. The hypotheses of the nonsmooth KL dynamical theorem can be checked explicitly.
+
+First, $F$ is proper, lower semicontinuous and semialgebraic, with nonempty domain $X$, and $F|_X=\Phi_{\rm mult}|_X$ is continuous. Since $\delta_X$ is convex and subdifferentially regular and $\Phi_{\rm mult}$ is $C^1$, smooth-sum calculus gives
+\[
+\widehat\partial F(x)=\partial F(x)=\nabla\Phi_{\rm mult}(x)+N_X(x).
+\]
+The nonsmooth Kurdyka--\L{}ojasiewicz inequality for lower-semicontinuous definable functions \cite[Theorem~11]{bolte2007clarke} therefore supplies the KL property required in \cite[Remark~4.8]{bolte2007lojasiewicz}.
+
+Second, Moreau decomposition gives, for $d(x)=\Pi_{T_X(x)}(-\nabla\Phi_{\rm mult}(x))$,
+\[
+-\dot x\in\partial F(x),
+\qquad
+\|\dot x\|=\operatorname{dist}(0,\partial F(x)),
+\]
+and along every absolutely continuous solution
+\[
+\frac{d}{dt}\Phi_{\rm mult}(x(t))=-\|\dot x(t)\|^2
+\quad\text{a.e.}
+\]
+The vector field $-\nabla\Phi_{\rm mult}$ is Lipschitz on the compact box. For a nonempty closed convex constraint set, a projected dynamical system with Lipschitz vector field has a unique global absolutely continuous solution; equivalently, the normal-cone inclusion is a Lipschitz perturbation of a maximal monotone operator. Because trajectories remain in compact $X$, they are bounded, and $F\circ x=\Phi_{\rm mult}\circ x$ is absolutely continuous.
+
+Thus all requirements listed in \cite[Remark~4.8]{bolte2007lojasiewicz} hold. The finite-length theorem \cite[Theorem~4.5]{bolte2007lojasiewicz} yields
+\[
+\int_0^\infty\|\dot x(t)\|\,dt<\infty,
+\]
+and hence convergence to a single projected critical point. The rate statement is then covered by \cite[Theorem~4.7]{bolte2007lojasiewicz}. This result does not imply zero limit energy: the open set \eqref{eq:m6_basin} converges to $\mathcal M\subset\{\Phi_{\rm mult}=1\}$.
 \end{remark}
 
 \section{The Central Conjecture of the CLG-R Program}
