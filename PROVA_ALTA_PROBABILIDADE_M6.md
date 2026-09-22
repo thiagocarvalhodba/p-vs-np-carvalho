@@ -19,9 +19,11 @@ Como cada cláusula contém exatamente $3$ variáveis, ela intersecta o suporte 
 *   **Adição de $c'$:** A inserção de $c'$ pode completar a $6^{\rm a}$ cláusula de uma componente isolada (variação $+1$). Se $c'$ incidir sobre componentes $M6$ já isoladas, pode desisolar no máximo $3$ componentes (variação $-3$).
 
 Em qualquer caso, a variação líquida satisfaz rigidamente:
-$$ |X(F) - X(F')| \le 4. $$
+$ |X(F) - X(F')| \le 4. $
 
-Para a amostragem sem reposição de $M$ cláusulas, consideramos o martingal de Doob gerado pela revelação sequencial das cláusulas $c_1, \dots, c_M$. Dadas duas realizações para o passo $k$, acoplamos os sorteios restantes $\{c_{k+1}, \dots, c_M\}$ por uma permutação de troca (transposição elementar). Os conjuntos de cláusulas resultantes são idênticos ou diferem por exatamente uma substituição de cláusula. Pelo limitante de sensibilidade $|X(F) - X(F')| \le 4$, a diferença entre as expectativas condicionais em cada passo do martingal é limitada por $C_{M6} \le 4$.
+A justificativa estrutural é a seguinte. Ao remover uma cláusula $c$, pode-se destruir no máximo uma componente $M6$ isolada; por outro lado, como $c$ contém exatamente três variáveis, sua remoção pode separar a antiga componente conexa em no máximo três blocos adjacentes a essas variáveis e, portanto, criar no máximo três novas componentes $M6$ isoladas. Assim $-1\le\Delta_{\rm rem}\le3$. Ao adicionar uma cláusula $c'$, ela toca no máximo três componentes conexas distintas e pode destruir no máximo três componentes $M6$ isoladas; como existe uma única componente final contendo $c'$, ela pode criar no máximo uma nova componente $M6$. Assim $-3\le\Delta_{\rm add}\le1$. Somando, obtém-se o limite absoluto $4$.
+
+Para a amostragem sem reposição de $M$ cláusulas, consideramos o martingal de Doob gerado pela revelação sequencial das cláusulas $c_1, \dots, c_M$. Dadas duas realizações possíveis $a,b$ para o passo $k$ sob o mesmo prefixo, acoplamos os sorteios restantes por uma transposição $a\leftrightarrow b$. Os conjuntos finais resultantes são idênticos ou diferem por exatamente uma substituição de cláusula. Pelo limite acima, os possíveis valores finais de $X$ diferem por no máximo $4$; consequentemente, as possíveis expectativas condicionais no passo $k$ ocupam um intervalo de comprimento no máximo $4$. É esta propriedade de **intervalo condicional**, e não apenas a afirmação $|D_k|\le4$, que justifica a forma de Hoeffding usada abaixo.
 
 ## 3. Concentração Macroscópica da Densidade
 
@@ -68,5 +70,25 @@ $$ \frac{9}{16} \frac{p_0 d}{\alpha} > \frac{729}{2^{60}} \alpha^5 e^{-39\alpha}
 Como a probabilidade de falha é majorada pela união das caudas exponenciais:
 $$ \Pr\!\left( \rho_{\rm mult} < \frac{729}{2^{60}} \alpha^5 e^{-39\alpha} \right) \le \exp\!\left( - \frac{d^2}{512 \alpha} N \right) + \exp\!\left( - \frac{3 p_0 d}{128} N \right) \longrightarrow 0 \quad (N \to \infty). $$
 
-**Teorema:** Para o fluxo de gradiente projetado multilinear original sobre o hipercubo $[-1, 1]^N$ com inicialização produto uniforme, no modelo de $M = \lfloor\alpha N\rfloor$ cláusulas $3$-SAT assinadas distintas sem reposição ($\alpha > 0$):
-$$ \Pr\!\left[ \rho_{\rm mult} \ge \frac{729}{2^{60}} \alpha^5 e^{-39\alpha} \right] \longrightarrow 1 \quad \text{quando } N \to \infty. \quad \blacksquare $$
+**Teorema (forma conjunta):** Para o fluxo de gradiente projetado multilinear original sobre o hipercubo $[-1, 1]^N$ com inicialização produto uniforme, no modelo de $M = \lfloor\alpha N\rfloor$ cláusulas $3$-SAT assinadas distintas sem reposição ($\alpha > 0$),
+$ \Pr_{F,x_0}\!\left[ \rho_{\rm mult} \ge \frac{729}{2^{60}} \alpha^5 e^{-39\alpha} \right] \longrightarrow 1 \quad \text{quando } N \to \infty. $
+
+Mais precisamente, com
+$ d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha},\qquad p_0=2^{-53}, $
+para $N$ suficientemente grande,
+$
+\Pr_F\!\left[
+  \Pr_{x_0}\!\left(
+    \rho_{\rm mult}\ge \frac{729}{2^{60}}\alpha^5e^{-39\alpha}\mid F
+  \right)
+  \ge 1-\exp\!\left(-\frac{3p_0d(\alpha)}{128}N\right)
+\right]
+\ge
+1-\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right).
+$
+Assim uma fórmula típica já possui probabilidade condicional exponencialmente alta de exibir a densidade residual certificada sob a inicialização produto uniforme. $\blacksquare$
+
+
+## 6. Auditoria independente
+
+A derivação de automorfismos, órbita de gauge, expectativa exata, constante assintótica, sensibilidade por troca e formulação probabilística em dois níveis foi auditada independentemente em `Publicacoes/CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md`.
