@@ -1,0 +1,2496 @@
+AUDITORIA ADVERSARIAL FINAL — CLG-R v4.0.5
+PACOTE AUTOCONTIDO PÓS-CORREÇÕES
+
+PAPEL
+Você atuará exclusivamente como referee matemático adversarial independente.
+Esta é a rodada final de auditoria da versão corrigida do manuscrito.
+
+OBJETIVO
+Tente encontrar erro fatal, hipótese escondida, inferência inválida, constante incorreta,
+uso incorreto de resultado externo, contradição entre teoremas, regressão introduzida
+pelas correções recentes ou afirmação mais forte do que a prova sustenta.
+
+REGRAS
+- Audite os DOCUMENTOS INTEGRAIS abaixo, não apenas este cabeçalho.
+- Não use versões anteriores para julgar a validade atual, exceto para identificar regressões.
+- Para cada objeção, cite arquivo, seção/teorema e inferência exata.
+- Para REFUTADO, forneça contradição formal, contraexemplo compatível com TODAS as hipóteses,
+  ou inferência logicamente inválida que não possa ser reparada sem mudar o resultado.
+- Diferencie FATAL / REPARÁVEL / EDITORIAL / ATAQUE FALHOU.
+- Não trate ausência de contraexemplo como certificação absoluta.
+- Não escreva “10/10” nem “prova definitiva”.
+
+ALVOS PRIORITÁRIOS
+1. Teoremas 1–8, com ênfase em T4B, T6 e T7B.
+2. T9: confirmar que qualquer cálculo Sparre–Andersen está apenas condicional à hipótese isotônica.
+3. PDS/KL:
+   F=Phi_mult+delta_X; proper/l.s.c./semialgebraic; subdiferenciais; Moreau;
+   dissipação; well-posedness; KL; BDL Theorems 4.5, 4.7 e Remark 4.8;
+   BDLS Theorem 11; convergência para um único equilíbrio.
+4. Regressão M6:
+   z=(1±x)/2; fator temporal 1/4; 31/1024; 1/64; 13/256;
+   tempo 16/13; drifts 31/832 e 1/52; p0=2^-53;
+   constantes 729/2^59 e 729/2^60.
+5. Consistência global:
+   não misturar x, z e coordenadas literais q_cj;
+   não misturar tempo t e tau;
+   não promover expectativa para w.h.p.;
+   não promover modelo uniforme para iid ou planted;
+   não promover atratores isolados para todos os atratores;
+   não promover resultados contínuos para P versus NP.
+
+FORMATO OBRIGATÓRIO
+Para cada bloco T1, T2, T3, T4A, T4B, T5, T6, T7B, P7A, T8, T9, KL/PDS,
+M6 regression e consistência global, responda:
+
+VEREDITO: PROVADO / REFUTADO / CONDICIONAL / ABERTO
+PRIMEIRO PONTO POTENCIALMENTE FATAL:
+ATAQUE MAIS FORTE:
+ANÁLISE:
+SE O ATAQUE FALHAR:
+SEVERIDADE: FATAL / REPARÁVEL / EDITORIAL / ATAQUE FALHOU
+
+Ao final produza:
+| Resultado | Veredito | Severidade máxima | Risco residual |
+
+Finalize com APENAS UMA:
+1. ENCONTREI ERRO FATAL
+2. ENCONTREI LACUNA NÃO FATAL
+3. NÃO CONSEGUI REFUTAR, MAS HÁ DEPENDÊNCIAS NÃO VERIFICADAS
+4. NÃO CONSEGUI REFUTAR APÓS AUDITORIA COMPLETA
+
+======================================================================
+INÍCIO DOS DOCUMENTOS INTEGRAIS
+======================================================================
+
+
+======================================================================
+ARQUIVO: CLG_FOUNDATIONS_ARXIV.tex
+CAMINHO: Publicacoes/CLG_FOUNDATIONS_ARXIV.tex
+======================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{microtype}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.5):\\
+Rigorous Structural Results and Open Dynamical Problems\\
+for Continuous 3-SAT Relaxations}}
+
+\author{
+    \textbf{Thiago Carvalho}\\
+    Independent Researcher\\
+    \texttt{thiago.carvalho.dba@gmail.com}
+}
+
+\date{September 22, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Continuous relaxations of Boolean Satisfiability (3-SAT) are widely utilized in neural combinatorial optimization, semidefinite programming, and physics-inspired dynamical solvers. However, the fundamental mathematical mechanism determining why certain continuous representations succeed while other Boolean-equivalent formulations fail has remained unformalized. In this paper, we establish the rigorous analytical foundations of \textbf{Computational Landscape Geometry and Representation (CLG-R)} on the compact hypercube $\mathcal{X} = [-1, 1]^N$. 
+
+We prove: 
+(1) The Quadratic Hinge relaxation unconditionally generates a central fractional plateau $\mathcal{U}_N = (-1/3, 1/3)^N$ with identically vanishing gradient $\nabla \Phi_{\rm quad} \equiv \mathbf{0}$, manifesting the exact interior slack ($0.5$) of the canonical Linear Programming (LP) relaxation;
+(2) Under structural non-degeneracy (Walsh-Fourier variance $\text{Var}(E_{\rm disc}) > 0$), the singular sets of Multilinear and Softplus relaxations have Lebesgue measure zero ($\mu(\mathcal{C}_0) = 0$);
+(3) The Multilinear relaxation is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$), precluding any interior local minimum via the Strong Minimum Principle, while all interior critical points admit arbitrary-neighborhood lower-energy points via Milnor's Curve Selection Lemma;
+(4) Without boundary non-degeneracy hypotheses, every local minimum of $\Phi_{\rm mult}$ on a face $\mathcal{F}$ satisfies $\Phi_{\rm mult}(x^*) = E_{\rm disc}(v)$ for all $v \in \mathcal{V}(\mathcal{F})$, and every isolated asymptotically stable equilibrium of the projected gradient flow is strictly a discrete vertex in $\{-1, +1\}^N$;
+(5) The Softplus relaxation factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, attaining global strict convexity when $\text{rank}(V) = N$, with condition number bounded by $\kappa(\nabla^2 \Phi) \le \kappa(W(x)) \kappa(V^T V)$;
+(6) The Lipschitz constant of the gradient field scales as $L_\beta = \Theta(\beta)$, while finite IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau;
+(7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal approach to the LP polytope ($\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$);
+(8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
+(9) We analyze dynamical behavior in monotone Horn families, identifying the competitive Jacobian sign ($J_{ij} \le 0$) in negative clause interactions which precludes direct application of Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
+(10) An adversarial audit refutes the previously claimed complete subcritical separation: an isolated six-clause linear hypertree is the minimal linear-hypertree obstruction with an open basin of positive multilinear residual energy. In the uniform distinct-clause ensemble,
+$\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)\ge (729/2^{59})\alpha^5e^{-39\alpha}>0$ for every fixed $\alpha>0$, and
+$\mathbb P_{F,x_0}[\rho_{N,\rm mult}(F,x_0)\ge(729/2^{60})\alpha^5e^{-39\alpha}]\to1$.
+Pointwise convergence of the projected multilinear flow remains valid through nonsmooth Kurdyka--\L{}ojasiewicz theory, but convergence to zero residual energy does not.
+For the random 3-SAT ensemble, the remaining clustering-regime conjecture is therefore comparative ($\rho_{\rm quad}>\rho_{\rm mult}$), not positivity of the multilinear residual.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Computational Complexity, Differential Topology, Morse Theory, Continuous Relaxations, MAX-3-SAT, Dynamical Systems, Convex Optimization, Spin Glasses.
+
+\section{Introduction and Theoretical Framework}
+
+The Cook-Levin Theorem \cite{cook1971complexity, levin1973universal, karp1972reducibility} established 3-SAT as the canonical NP-complete problem. Over decades, numerous continuous embeddings have been proposed to solve or approximate SAT using continuous dynamical systems \cite{gu1994global, kurchan1993barriers, mezard2002analytic, ercsey2011optimization, molnar2018continuous}. 
+
+The central thesis of the \textbf{Computational Landscape Geometry and Representation (CLG-R)} framework is that \textit{Boolean equivalence does not imply dynamic or algorithmic equivalence in continuous space}. Two potential functions $\Phi_1, \Phi_2: [-1, 1]^N \to \mathbb{R}$ that agree perfectly on discrete vertices $\{-1, 1\}^N$ can induce fundamentally incompatible critical set topologies, Morse indices, and gradient flow reachabilities.
+
+\subsection{The Three Canonical Continuous Relaxations and Physical Identifications}
+Let $F$ be a 3-CNF formula with $M$ clauses over $N$ Boolean variables $s \in \{-1, +1\}^N$. For each clause $c \in \{1, \dots, M\}$, let $\sigma^{(c)} \in \{-1, 0, +1\}^N$ denote its literal polarity vector, where $\sigma_j^{(c)} = +1$ if variable $j$ appears positive, $\sigma_j^{(c)} = -1$ if negated, and $0$ if absent. The clause violation affine function is:
+\begin{equation}
+g_c(x) = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j\right) = -\frac{1}{2}(1 + \sigma^{(c)} \cdot x).
+\end{equation}
+At discrete vertices $s \in \{-1, +1\}^N$, $g_c(s) = 1$ if clause $c$ is violated, and $g_c(s) \le 0$ if satisfied.
+The three canonical relaxations on the hypercube $\mathcal{X} = [-1, 1]^N$ are:
+\begin{enumerate}
+    \item \textbf{Quadratic Hinge Relaxation:}
+    \begin{equation}
+    \Phi_{\rm quad}(x) = \sum_{c=1}^M \left[\max(0, g_c(x))\right]^2.
+    \end{equation}
+    \textit{LP Identification:} The zero-level set $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \; \forall c\}$ is the canonical clause-wise LP relaxation. Under $z_j=(1+x_j)/2$, a clause constraint is $\sum_{j:\sigma_j^{(c)}=+1} z_j+\sum_{j:\sigma_j^{(c)}=-1}(1-z_j)\ge1$ \cite{goemans1995improved}.
+    \item \textbf{Multilinear Harmonics Relaxation:}
+    \begin{equation}
+    \Phi_{\rm mult}(x) = \sum_{c=1}^M \prod_{j \in c} \frac{1 - \sigma_j^{(c)} x_j}{2}.
+    \end{equation}
+    \textit{Physical Identification:} $\Phi_{\rm mult}(x)$ is rigorously the \textbf{naive mean-field Hamiltonian} of statistical physics \cite{thouless1977solution, calinescu2011maximizing, odonnell2014analysis}:
+    \begin{equation}
+    \Phi_{\rm mult}(x) = \mathbb{E}_{s \sim \prod_{i=1}^N \text{Bern}\left(\frac{1+x_i}{2}\right)} [E_{\rm disc}(s)].
+    \end{equation}
+    For 3-XOR-SAT, $\Phi_{\rm mult}$ matches the diluted $p$-spin spin glass Hamiltonian \cite{franz2001ferromagnet, mezard2003two, ricci2010being}:
+    \begin{equation}
+    \Phi_{\rm mult}(x) = \frac{1}{2}\sum_e (1 - J_e x_i x_j x_k).
+    \end{equation}
+    \item \textbf{Softplus Convex Relaxation:}
+    \begin{equation}
+    \Phi_{\rm soft}(x) = \sum_{c=1}^M \frac{1}{\beta} \ln\left(1 + e^{\beta g_c(x)}\right), \quad \beta > 0.
+    \end{equation}
+\end{enumerate}
+
+\subsection{Dynamical Flow and Structural Hypotheses}
+The governing continuous dynamical system is the \textbf{projected gradient flow}:
+\begin{equation}
+\dot{x}(t) = \Pi_{T_{\mathcal{X}}(x(t))}\left(-\nabla \Phi(x(t))\right)
+\end{equation}
+where $T_{\mathcal{X}}(x)$ is the tangent cone to $\mathcal{X}$ at $x$, and $\Pi_K$ is orthogonal projection onto the closed convex cone $K$ \cite{nagurney1996projected}. The temporal discretization is pure projected Euler: $x^{(t+1)} = \text{clip}(x^{(t)} - \eta \nabla \Phi(x^{(t)}), -1, 1)$, without artificial box penalties.
+
+The foundational structural hypotheses are:
+\begin{itemize}
+    \item \textbf{(H1 - Irreducibility):} Each clause contains exactly three distinct variables ($|\{i, j, k\}| = 3$), without trivial tautologies.
+    \item \textbf{(H2 - Variable Connectivity):} Every variable appears in at least one clause ($\deg(x_i) \ge 1$).
+    \item \textbf{(H3' - Walsh-Fourier Non-Degeneracy):} The discrete energy $E_{\rm disc}: \{-1, 1\}^N \to \mathbb{Z}_{\ge 0}$ is non-constant: $\text{Var}_{s \sim \text{Unif}(\mathcal{V})}(E_{\rm disc}(s)) > 0$. By Parseval's identity on the Boolean hypercube \cite{odonnell2014analysis}:
+    \begin{equation}
+    \sum_{S \subseteq \{1, \dots, N\}, S \ne \emptyset} \widehat{E}_{\rm disc}(S)^2 = \text{Var}(E_{\rm disc}) > 0,
+    \end{equation}
+    guaranteeing that $\Phi_{\rm mult} \not\equiv \text{const}$.
+\end{itemize}
+
+\subsection{The Four Structural Levels of Critical Geometry}
+We formalize the landscape hierarchy across four structural levels:
+\begin{enumerate}
+    \item \textbf{Level 1 (Static Critical Geometry):} $\mathcal{C}_{\rm spur}(\Phi) \equiv \{ x \in \mathcal{X} \mid \nabla \Phi(x) = \mathbf{0}, \; E_{\rm disc}(\text{sign}(x)) > 0 \}$.
+    \item \textbf{Level 2 (Local Stability):} $\mathcal{S}_{\rm spur}(\Phi) \equiv \{ x^* \in \mathcal{X} \mid x^* \text{ is a Lyapunov-stable equilibrium of } \mathcal{D}_{\rm proj}, \; E_{\rm disc}(\text{sign}(x^*)) > 0 \}$.
+    \item \textbf{Level 3 (Attraction Basins):} $\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}) \equiv \{ x_0 \in \mathcal{X} \mid \omega(x_0; \mathcal{D}) \subseteq \{x \in \mathcal{X} \mid E_{\rm disc}(\text{sign}(x)) > 0\} \}$.
+    \item \textbf{Level 4 (Spurious Dynamical Mass):} $\mathcal{M}_{\rm spur}(\Phi, \mathcal{D}) \equiv \mu_{\rm norm}(\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}))$, with $\mu_{\rm norm}$ the normalized Lebesgue measure on $\mathcal{X}$.
+    \item \textbf{Level 5 (Residual Violation Density):} For a finite formula $F$ with $M$ clauses, initial condition $x_0$, and flow state $x_{F,x_0}(T)$, define the random finite-size residual density
+    \[
+    \rho_{N,T}(F,x_0)\equiv \frac{1}{M}E_{\rm disc}(\operatorname{sign}(x_{F,x_0}(T))).
+    \]
+    When the projected flow converges, write
+    \[
+    \rho_N(F,x_0)\equiv \lim_{T\to\infty}\rho_{N,T}(F,x_0).
+    \]
+    The ensemble-and-initialization expectation is denoted
+    \[
+    \bar\rho_N(\alpha)\equiv \mathbb E_{F,x_0}[\rho_N(F,x_0)].
+    \]
+    Thus probability statements refer to the random variable $\rho_N(F,x_0)$, while expectation statements refer to $\bar\rho_N(\alpha)$. This convention removes the earlier ambiguity in which the same symbol $\rho(\alpha)$ was used both for a random residual density and for its expectation.
+\end{enumerate}
+
+\section{Theorem 1: Central Fractional Box and Linear Relaxation Slack}
+
+\begin{lemma}[Simultaneous Clause Inactivity]
+\label{lem:inactivity}
+If $g_c(x) \leq 0$ for all $c \in \{1, \dots, M\}$, then $\Phi_{\rm quad}(x) \equiv 0$ and $\nabla \Phi_{\rm quad}(x) \equiv \mathbf{0}$.
+\end{lemma}
+
+\begin{theorem}[The Central Fractional Box Theorem]
+\label{thm:central_box}
+For any 3-CNF formula $F$ satisfying (H1) and (H2), the zero-gradient set $Z(\nabla \Phi_{\rm quad}) \equiv \{x \in {\rm int}(\mathcal{X}) \mid \nabla \Phi_{\rm quad}(x) = \mathbf{0}\}$ contains the open central hypercube $\mathcal{U}_N = (-1/3, 1/3)^N$.
+Consequently:
+\begin{enumerate}
+    \item $\Phi_{\rm quad}(x) \equiv 0$ and $\nabla \Phi_{\rm quad}(x) \equiv \mathbf{0}$ on all of $\mathcal{U}_N$.
+    \item The normalized volume of the LP polytope satisfies $\mu_{\rm norm}(Z) \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N$.
+    \item Under (H3'), the spurious critical set $\mathcal{C}_{\rm spur}(\Phi_{\rm quad})$ contains all clause-violating orthants within $\mathcal{U}_N$, satisfying:
+    \begin{equation}
+    \mu_{\rm norm}(\mathcal{C}_{\rm spur}(\Phi_{\rm quad})) \geq \left(\frac{1}{6}\right)^N > 0.
+    \end{equation}
+    For unsatisfiable (UNSAT) formulas, $\mu_{\rm norm}(\mathcal{C}_{\rm spur}(\Phi_{\rm quad})) \geq \mu_{\rm norm}(Z) \geq (1/3)^N$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $x \in \mathcal{U}_N$. Then $|x_i| < 1/3$ for all $i \in \{1, \dots, N\}$. For any clause $c = (\ell_1 \lor \ell_2 \lor \ell_3)$:
+\begin{equation}
+\sum_{j \in c} \sigma_j^{(c)} x_j \geq -\sum_{j \in c} |\sigma_j^{(c)} x_j| = -\sum_{j \in c} |x_j| > -3 \times \frac{1}{3} = -1.
+\end{equation}
+Substituting into $g_c(x)$:
+\begin{equation}
+g_c(x) = -\frac{1}{2}\left(1 + \sum_{j \in c} \sigma_j^{(c)} x_j\right) < -\frac{1}{2}(1 - 1) = 0.
+\end{equation}
+Thus $g_c(x) < 0$ holds simultaneously for all $M$ clauses. By Lemma~\ref{lem:inactivity}, $\Phi_{\rm quad}(x) \equiv 0$ and $\nabla \Phi_{\rm quad}(x) \equiv \mathbf{0}$ on all of $\mathcal{U}_N$.
+Under (H3'), choose any Boolean assignment $s\in\{-1,+1\}^N$ that violates at least one clause. The full sign orthant $\{x\in\mathcal U_N:\operatorname{sign}(x)=s\}$ has normalized measure $(1/6)^N$ and is contained in $\mathcal C_{\rm spur}(\Phi_{\rm quad})$. For UNSAT formulas, every full sign orthant in $\mathcal U_N$ is spurious, so the whole central box contributes.
+\end{proof}
+
+\begin{remark}[Geometric Manifestation of LP Relaxation Slack]
+For a fixed clause define its literal-satisfaction coordinates $q_{cj}=(1+\sigma_j^{(c)}x_j)/2\in[0,1]$. Then $g_c(x)\le0\iff\sum_{j\in c}q_{cj}\ge1$. At the origin every $q_{cj}=1/2$, so every 3-literal clause has left-hand side $3/2$ and exact \textbf{fractional slack of $0.5$}.
+The plateau $\mathcal{U}_N$ provides the geometric realization of this fractional interior slack.
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_clg_teorema1_caixa_fracionaria.png}
+\caption{\textbf{Illustration of Theorem 1:} The central fractional box $\mathcal{U}_N = (-1/3, 1/3)^N$ embedded inside the hypercube $\mathcal{X} = [-1, 1]^N$. Throughout $\mathcal{U}_N$, every clause violation satisfies $g_c(x) < 0$, creating an exact zero-gradient flat plateau with 0.5 LP interior slack.}
+\label{fig:teorema1}
+\end{figure}
+
+\section{Theorem 2: Measure Zero of Critical Sets in Analytic Relaxations}
+
+\begin{theorem}[Measure Zero of Critical Sets under (H3')]
+\label{thm:measure_zero}
+Under hypotheses (H1), (H2), and (H3'), the critical zero-sets of the multilinear and Softplus relaxations satisfy:
+\begin{equation}
+\mu(\mathcal{C}_0(\Phi_{\rm mult})) = 0 \quad\text{and}\quad \mu(\mathcal{C}_0(\Phi_{\rm soft})) = 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+\textbf{Case 1: Multilinear ($\Phi_{\rm mult}$).}
+Under (H3'), $\Phi_{\rm mult} \not\equiv \text{const}$. Thus there exists an index $k \in \{1, \dots, N\}$ such that $P_k(x) \equiv \partial_k \Phi_{\rm mult}(x) \not\equiv 0$. By Fubini's theorem and induction on dimension (Okamoto's Lemma \cite{okamoto1973distinctness, caron2005zero}), the zero set $Z(P_k) = \{x \in \mathbb{R}^N \mid P_k(x) = 0\}$ has Lebesgue measure zero: $\mu(Z(P_k)) = 0$. Since $\mathcal{C}_0(\Phi_{\rm mult}) \subseteq Z(\nabla \Phi_{\rm mult}) \subseteq Z(P_k)$, it follows that $\mu(\mathcal{C}_0(\Phi_{\rm mult})) = 0$.
+
+\textbf{Case 2: Softplus ($\Phi_{\rm soft}$).}
+The function $\Phi_{\rm soft}(x)$ is real analytic ($\mathcal{C}^\omega$) on $\mathbb{R}^N$. By Theorem~\ref{thm:softplus_convexity}, its Laplacian satisfies $\Delta \Phi_{\rm soft}(x) = \text{Tr}(V^T W(x) V) = \frac{3}{4} \sum_{c=1}^M w_c(x) > 0$ everywhere on $\mathbb{R}^N$ for any formula with $M \ge 1$. Being strictly subharmonic, $\Phi_{\rm soft}$ is non-constant. Hence at least one partial derivative $\partial_k\Phi_{\rm soft}$ is a nonzero real-analytic function. By the zero-set theorem for nontrivial real-analytic functions \cite{krantz2002primer}, $\mu(Z(\partial_k\Phi_{\rm soft}))=0$. Since $\mathcal C_0(\Phi_{\rm soft})\subseteq Z(\partial_k\Phi_{\rm soft})$, the critical set has measure zero.
+\end{proof}
+
+\section{Theorem 3: Harmonic Multilinear Landscapes \& Morse Saddles}
+
+\begin{theorem}[The Harmonic Saddle Theorem]
+\label{thm:harmonic}
+For any 3-CNF formula $F$ satisfying (H1) and (H3'), the multilinear potential $\Phi_{\rm mult}$ has identically vanishing Laplacian:
+\begin{equation}
+\Delta \Phi_{\rm mult}(x) = \text{Tr}(\nabla^2 \Phi_{\rm mult}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^N.
+\end{equation}
+Consequently:
+\begin{enumerate}
+    \item $\Phi_{\rm mult}$ admits no local minimum in ${\rm int}(\mathcal{X})$.
+    \item Every non-degenerate interior critical point is strictly a hyperbolic saddle of Morse index $1 \leq m \leq N-1$.
+    \item For every interior critical point $x^* \in {\rm int}(\mathcal{X})$ (whether non-degenerate or degenerate):
+    \begin{equation}
+    \forall \varepsilon > 0, \; \exists y \in {\rm int}(\mathcal{X}), \; \|y - x^*\| < \varepsilon \quad\text{such that}\quad \Phi_{\rm mult}(y) < \Phi_{\rm mult}(x^*).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For any clause $c$, the variables are distinct by (H1). Thus $\frac{\partial^2 \phi_c}{\partial x_i^2} \equiv 0$, yielding $\Delta \Phi_{\rm mult}(x) = \sum_{i=1}^N 0 \equiv 0$. By the \textbf{Strong Minimum Principle for Harmonic Functions} \cite{courant1962methods, evans2010partial}, a non-constant harmonic function cannot attain a local minimum in the interior. In non-degenerate critical points, $\text{Tr}(H) = 0 \implies \lambda_1 < 0$ and $\lambda_N > 0$, giving Morse index $1 \leq m \leq N-1$. For degenerate points, the non-existence of a local minimum implies the existence of lower-energy points in every open ball, reinforced by Milnor's Curve Selection Lemma \cite{milnor1968singular}.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_clg_teorema3_4_harmonic_saddles_vertices.png}
+\caption{\textbf{Illustration of Theorems 3 and 4A'/4B:} The multilinear potential $\Phi_{\rm mult}$ is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$). Every non-degenerate interior critical point is a hyperbolic saddle; degenerate interior points still have lower-energy points in every neighborhood. Under projected gradient flow, all isolated asymptotically stable equilibria are confined to the discrete vertices $\{-1, +1\}^N$, while non-strict attracting continua can occur on the boundary.}
+\label{fig:teorema3_4}
+\end{figure}
+
+\section{Theorem 4A' and Corollary 4B: Stratified Hypercube Dynamics and Vertex Confinement (Without Hypothesis H4)}
+
+\begin{theorem}[Theorem 4A': Relative Face Local Minima Inherit Vertex Values]
+\label{thm:vertex_geom}
+Under (H1), for any 3-CNF formula, let $x^* \in \text{relint}(\mathcal{F})$ be a local minimum of the restriction of $\Phi_{\rm mult}$ relative to a face $\mathcal{F}$ of dimension $d \ge 0$. Then:
+\begin{equation}
+\Phi_{\rm mult}(x^*) = E_{\rm disc}(v), \quad \forall v \in \mathcal{V}(\mathcal{F})
+\end{equation}
+where $\mathcal{V}(\mathcal{F})$ is the set of Boolean vertices of $\mathcal{F}$.
+In particular, if $x^*$ is a strict local minimum of $\Phi_{\rm mult}|_{\mathcal{X}}$ relative to the hypercube, then $x^*$ is strictly a discrete vertex $x^* \in \{-1, +1\}^N$ (face of dimension $d=0$).
+\end{theorem}
+
+\begin{proof}
+The hypercube decomposes into disjoint open faces $\mathcal{X} = \bigcup_{\mathcal{F}} \text{relint}(\mathcal{F})$.
+On any face $\mathcal{F}$ of dimension $d \ge 1$, fixing $N-d$ coordinates to $\pm 1$ preserves multilinearity. The intrinsic face Laplacian vanishes identically: $\Delta_{\mathcal{F}} \Phi_{\mathcal{F}} \equiv 0$.
+If $x^* \in \text{relint}(\mathcal{F})$ is a local minimum of $\Phi_{\mathcal{F}}$ on the connected open domain $\text{relint}(\mathcal{F})$, then by the Strong Minimum Principle for harmonic functions, $\Phi_{\mathcal{F}}$ must be constant on a neighborhood of $x^*$. Since $\Phi_{\mathcal{F}}$ is a multilinear polynomial, it is identically constant on the entire compact face $\mathcal{F}$:
+\begin{equation}
+\Phi_{\rm mult}(x) \equiv \Phi_{\rm mult}(x^*), \quad \forall x \in \mathcal{F}.
+\end{equation}
+Since all Boolean vertices $\mathcal{V}(\mathcal{F}) \subset \{-1, +1\}^N$ belong to $\mathcal{F}$, and $\Phi_{\rm mult}(v) = E_{\rm disc}(v)$, it follows that $\Phi_{\rm mult}(x^*) = E_{\rm disc}(v)$ for all $v \in \mathcal{V}(\mathcal{F})$.
+Consequently, no strict local minimum can exist on any face of dimension $d \ge 1$. All strict local minima reside exclusively in faces of dimension $d=0$, i.e., discrete vertices $\{-1, +1\}^N$.
+\end{proof}
+
+\begin{corollary}[Corollary 4B: Confinement of Projected Attractors via LaSalle]
+\label{cor:vertex_dyn}
+Under projected gradient flow $\dot{x}(t) = \Pi_{T_{\mathcal{X}}(x(t))}\left(-\nabla \Phi_{\rm mult}(x(t))\right)$, every isolated asymptotically stable equilibrium is strictly a discrete vertex $x^* \in \{-1, +1\}^N$.
+\end{corollary}
+
+\begin{proof}
+Consider the Lyapunov function $V(x) = \Phi_{\rm mult}(x)$. By Moreau's projection property on closed convex cones:
+\begin{equation}
+\dot{V}(x(t)) = \langle \nabla \Phi_{\rm mult}(x), \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x)) \rangle = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm mult}(x))\|^2 \le 0.
+\end{equation}
+By LaSalle's Invariance Principle for projected dynamical systems \cite{brogliato2006equivalence, nagurney1996projected}, every omega-limit set on the compact set $\mathcal X$ is contained in the largest invariant subset of $\{\Pi_{T_{\mathcal X}(x)}(-\nabla\Phi)=0\}$; equivalently, trajectories approach the projected stationary set $\{-\nabla\Phi(x^*)\in N_{\mathcal X}(x^*)\}$.
+An isolated asymptotically stable equilibrium $x^*$ must be a strict local minimum of $\Phi_{\rm mult}$ relative to $\mathcal X$: if arbitrarily close points had strictly smaller energy, monotonicity of $\Phi_{\rm mult}$ would prevent their trajectories from converging upward to $x^*$; if arbitrarily close distinct points had equal energy, then either their trajectories immediately decrease below $\Phi(x^*)$ or they are additional equilibria, contradicting isolation. By Theorem~\ref{thm:vertex_geom}, no point in the relative interior of a face $\mathcal{F}$ with $\dim(\mathcal{F}) \ge 1$ can be a strict local minimum. Hence all isolated asymptotically stable equilibria belong to faces of dimension $d=0$: $x^* \in \{-1, +1\}^N$.
+\end{proof}
+
+\section{Theorem 5: Hessian Factorization and Spectral Conditioning}
+
+Define the \textbf{Clause Incidence Matrix} $V \in \mathbb{R}^{M \times N}$ with rows $v_c^T = -\frac{1}{2}(\sigma^{(c)})^T$:
+\begin{equation}
+V = -\frac{1}{2} \begin{pmatrix} \sigma_1^{(1)} & \dots & \sigma_N^{(1)} \\ \vdots & \ddots & \vdots \\ \sigma_1^{(M)} & \dots & \sigma_N^{(M)} \end{pmatrix} \in \mathbb{R}^{M \times N}.
+\end{equation}
+
+\begin{theorem}[Hessian Factorization and Spectral Bounds]
+\label{thm:softplus_convexity}
+For the Softplus potential $\Phi_{\rm soft}(x) = \sum_{c=1}^M \frac{1}{\beta}\ln(1 + e^{\beta g_c(x)})$:
+\begin{enumerate}
+    \item The Hessian admits the exact global factorization:
+    \begin{equation}
+    \nabla^2 \Phi_{\rm soft}(x) = V^T W(x) V \succeq 0,
+    \end{equation}
+    where $W(x) = \text{diag}(w_1(x), \dots, w_M(x))$ with strictly positive weights:
+    \begin{equation}
+    w_c(x) = \beta \, \sigma(\beta g_c(x)) \, (1 - \sigma(\beta g_c(x))) > 0.
+    \end{equation}
+    \item $\Phi_{\rm soft}$ is globally convex on $\mathbb{R}^N$. If ${\rm rank}(V) = N$, then $\nabla^2 \Phi_{\rm soft}(x) \succ 0$ and $\Phi_{\rm soft}$ is strictly convex.
+    \item If ${\rm rank}(V)=N$ (so that $V^TV\succ0$), the spectral condition number $\kappa(\nabla^2 \Phi_{\rm soft}(x))$ is bounded by:
+    \begin{equation}
+    \kappa(\nabla^2 \Phi_{\rm soft}(x)) \le \frac{\max_c w_c(x)}{\min_c w_c(x)} \cdot \frac{\lambda_{\max}(V^T V)}{\lambda_{\min}(V^T V)} = \kappa(W(x)) \cdot \kappa(V^T V).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $v_c = -\frac{1}{2}\sigma^{(c)}$. Since $g_c(x) = v_c^T x - 1/2$, $\nabla g_c(x) = v_c$ and $\nabla^2 g_c(x) \equiv 0$.
+The gradient is $\nabla \Phi_{\rm soft}(x) = \sum_{c=1}^M \sigma(\beta g_c(x)) v_c = V^T \sigma(\beta g(x))$.
+Differentiating gives $\nabla^2 \Phi_{\rm soft}(x) = \sum_{c=1}^M \beta \sigma(\beta g_c)(1 - \sigma(\beta g_c)) v_c v_c^T = V^T W(x) V$.
+For any $z \in \mathbb{R}^N$, $z^T \nabla^2 \Phi_{\rm soft}(x) z = \|W(x)^{1/2} V z\|_2^2 \ge 0$, establishing convexity. By Courant-Fischer minimax bounds, Rayleigh quotients satisfy $\lambda_{\min}(H) \ge \min_c w_c \lambda_{\min}(V^TV)$ and $\lambda_{\max}(H) \le \max_c w_c \lambda_{\max}(V^TV)$, establishing the condition number bound.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_clg_teorema5_6_softplus_convexity_bifurcation.png}
+\caption{\textbf{Illustration of Theorems 5 and 6:} The Softplus relaxation Hessian factors as $\nabla^2 \Phi_{\rm soft} = V^T W(x) V \succeq 0$, creating a strictly convex funnel when $\text{rank}(V)=N$. As $\beta \to \infty$, the gradient field Lipschitz constant scales as $L_\beta = \Theta(\beta)$, and IEEE 754 precision induces exponential underflow recovering the flat Hinge plateau.}
+\label{fig:teorema5_6}
+\end{figure}
+
+\section{Theorem 6: Lipschitz Gradient Bounds and IEEE 754 Underflow}
+
+\begin{theorem}[Lipschitz Constant of Gradient Field and Numerical Underflow]
+\label{thm:bifurcation}
+For the Softplus relaxation as $\beta \to \infty$, let $d_{\max}=\max_i |\{c:i\in c\}|$ be the maximum variable degree:
+\begin{enumerate}
+    \item The \textbf{Lipschitz constant of the gradient field} $L_\beta \equiv \sup_x \|\nabla^2 \Phi_{\rm soft}(x)\|_2 = \Theta(\beta)$ satisfies:
+    \begin{equation}
+    \frac{3}{16} \beta \leq L_\beta \leq \frac{3 d_{\max}}{16} \beta.
+    \end{equation}
+    \item On the contracted sub-box $\mathcal{U}_N(\rho) = (-\rho, \rho)^N$ with $\rho < 1/3$:
+    \begin{equation}
+    \|\nabla \Phi_{\rm soft}(x)\|_\infty \leq \frac{M}{2} e^{-\beta(1 - 3\rho)/2} \quad\text{and}\quad \|\nabla \Phi_{\rm soft}(x)\|_2 \leq \frac{\sqrt{3} M}{2} e^{-\beta(1 - 3\rho)/2}.
+    \end{equation}
+    \item At the origin $x = \mathbf{0}$, IEEE 754 floating-point underflow thresholds are:
+    \begin{itemize}
+        \item \textbf{binary32 (FP32):} normal-to-subnormal onset at $\beta\approx175$; gradual-underflow-to-zero scale at $\beta\approx207$.
+        \item \textbf{binary64 (FP64):} normal-to-subnormal onset at $\beta\approx1417$; gradual-underflow-to-zero scale at $\beta\approx1489$.
+    \end{itemize}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Since $0<w_c(x)\le \beta/4$,
+\[
+\|\nabla^2\Phi_{\rm soft}(x)\|_2
+\le \frac\beta4\,\lambda_{\max}(V^TV).
+\]
+Each row of $V$ has exactly three nonzero entries of magnitude $1/2$. For a fixed variable $i$, the absolute row sum of $V^TV$ is at most $3d_i/4$, hence Gershgorin gives $\lambda_{\max}(V^TV)\le3d_{\max}/4$. Therefore $L_\beta\le3d_{\max}\beta/16$.
+
+For the lower bound, choose a clause $c$ and a point with $g_c(x)=0$. Then $w_c=\beta/4$. Since $\|v_c\|^2=3/4$ and all Hessian summands are positive semidefinite, $\lambda_{\max}(\nabla^2\Phi_{\rm soft})\ge(\beta/4)(3/4)=3\beta/16$.
+
+If $x\in\mathcal U_N(\rho)$, then every clause obeys $g_c(x)\le-(1-3\rho)/2$. Hence $\sigma(\beta g_c)\le e^{-\beta(1-3\rho)/2}$. Using $\|v_c\|_\infty=1/2$ and $\|v_c\|_2=\sqrt3/2$ and the triangle inequality yields the stated gradient bounds.
+
+At $x=0$, $g_c(0)=-1/2$, so the exponentially small scale is $e^{-\beta/2}$. Equating this with the smallest positive normal and subnormal magnitudes gives approximately $\beta=174.7,206.6$ in binary32 and $\beta=1416.8,1488.9$ in binary64, respectively. The latter threshold describes underflow to zero under gradual-underflow arithmetic; hardware flush-to-zero modes can zero subnormals earlier.
+\end{proof}
+
+\section{Theorem 7B and Proposition 7A: Universal Centripetal Contraction}
+
+\begin{theorem}[Theorem 7B: Universal Centripetal Contraction of Quadratic Hinge]
+\label{thm:universal_contraction}
+For any 3-CNF formula and any point $x \in \mathcal{X}$ with active clauses $\text{act}(x) = \{c \mid g_c(x) > 0\} \ne \emptyset$:
+\begin{enumerate}
+    \item The gradient field satisfies strict centripetal contraction:
+    \begin{equation}
+    \langle -\nabla \Phi_{\rm quad}(x), \, x \rangle = -\sum_{c \in \text{act}(x)} \left(2 g_c(x)^2 + g_c(x)\right) < 0.
+    \end{equation}
+    \item The squared norm $\|x(t)\|_2^2$ is a strict Lyapunov function outside $Z$:
+    \begin{equation}
+    \frac{d}{dt} \|x(t)\|_2^2 = 2 \langle x(t), \dot{x}(t) \rangle \le 2 \langle x(t), -\nabla \Phi_{\rm quad}(x(t)) \rangle < 0.
+    \end{equation}
+    \item The set of projected equilibria $\mathcal{E}_{\rm proj} = \{x \in \mathcal{X} \mid -\nabla \Phi_{\rm quad}(x) \in N_{\mathcal{X}}(x)\}$ coincides identically with the LP relaxation polytope:
+    \begin{equation}
+    \mathcal{E}_{\rm proj} \equiv Z.
+    \end{equation}
+    \item By LaSalle's Invariance Principle on the compact hypercube $\mathcal{X} = [-1, 1]^N$, every trajectory under projected gradient flow approaches the LP equilibrium polytope $Z = \{x \in \mathcal{X} \mid g_c(x) \le 0, \forall c\}$, i.e., $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $\mathcal{X} = [-1, 1]^N$. At any point $x \in \mathcal{X}$, the outward normal cone in the sense of convex analysis is:
+\begin{equation}
+N_{\mathcal{X}}(x) = \left\{ \nu \in \mathbb{R}^N \;\middle|\; \nu_i = 0 \text{ if } |x_i| < 1, \quad \nu_i x_i \ge 0 \text{ if } |x_i| = 1 \right\}.
+\end{equation}
+The tangent cone is $T_{\mathcal{X}}(x) = \{w \in \mathbb{R}^N \mid \langle w, \nu \rangle \le 0, \, \forall \nu \in N_{\mathcal{X}}(x)\}$, and the projected gradient dynamical system is defined by $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm quad}(x))$, where $\Pi_{T_{\mathcal{X}}(x)}$ is the orthogonal projection operator onto the tangent cone:
+\begin{equation}
+[\Pi_{T_{\mathcal{X}}(x)}(v)]_i = \begin{cases} 
+v_i, & \text{if } |x_i| < 1 \text{ or } (x_i = +1, v_i \le 0) \text{ or } (x_i = -1, v_i \ge 0), \\ 
+0, & \text{otherwise}. 
+\end{cases}
+\end{equation}
+A state $x^* \in \mathcal{X}$ is a projected equilibrium if $\dot{x} = \mathbf{0}$, which is geometrically equivalent to $-\nabla \Phi_{\rm quad}(x^*) \in N_{\mathcal{X}}(x^*)$.
+
+For active $c$, $g_c(x) > 0 \iff \sigma^{(c)} \cdot x = -(2 g_c(x) + 1)$.
+The unconstrained gradient is $-\nabla \Phi_{\rm quad}(x) = \sum_{c \in \text{act}} g_c(x) \sigma^{(c)}$. Taking the Euclidean inner product with $x$:
+\begin{equation}
+\langle -\nabla \Phi_{\rm quad}(x), x \rangle = \sum_{c \in \text{act}} g_c(x)(\sigma^{(c)} \cdot x) = -\sum_{c \in \text{act}} (2 g_c(x)^2 + g_c(x)) < 0.
+\end{equation}
+Writing $v=-\nabla\Phi_{\rm quad}(x)=d+n$ by Moreau decomposition, with $d=\Pi_{T_{\mathcal X}(x)}v$ and $n\in N_{\mathcal X}(x)$, the box normal-cone sign condition gives $\langle x,n\rangle\ge0$. Therefore $\langle x,d\rangle\le\langle x,v\rangle<0$ whenever an active clause exists, which proves the strict decrease of $\|x(t)\|^2$ asserted in item 2.
+We now verify the exact identity of projected equilibria $\mathcal{E}_{\rm proj} \equiv Z$:
+\begin{enumerate}
+    \item If $x \in Z$, then $g_c(x) \le 0$ for all $c$, so $\text{act}(x) = \emptyset$ and $-\nabla \Phi_{\rm quad}(x) = \mathbf{0} \in N_{\mathcal{X}}(x)$ for all $x \in \mathcal{X}$, yielding $Z \subseteq \mathcal{E}_{\rm proj}$.
+    \item Conversely, suppose $x \notin Z$. Then $\text{act}(x) \ne \emptyset$, which guarantees $\langle -\nabla \Phi_{\rm quad}(x), x \rangle < 0$. On the other hand, for any vector $\nu \in N_{\mathcal{X}}(x)$, the sign condition $\nu_i x_i = |\nu_i| \ge 0$ ensures:
+    \begin{equation}
+    \langle \nu, x \rangle = \sum_{i: |x_i|=1} \nu_i x_i = \sum_{i: |x_i|=1} |\nu_i| \ge 0.
+    \end{equation}
+    Consequently, $-\nabla \Phi_{\rm quad}(x)$ cannot belong to $N_{\mathcal{X}}(x)$, since any element $\nu \in N_{\mathcal{X}}(x)$ must satisfy $\langle \nu, x \rangle \ge 0$, whereas $\langle -\nabla \Phi_{\rm quad}(x), x \rangle < 0$. This establishes that no projected equilibria exist outside $Z$, neither in the interior nor on the boundary faces: $\mathcal{E}_{\rm proj} \subseteq Z$.
+\end{enumerate}
+Therefore, $\mathcal{E}_{\rm proj} \equiv Z$ holds identically on $\mathcal{X}$. Since the energy dissipation satisfies $\dot{\Phi}_{\rm quad}(x) = -\|\Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm quad}(x))\|_2^2 \le 0$, by LaSalle's Invariance Principle all trajectories approach the largest invariant set contained in $\{\dot{\Phi}_{\rm quad} = 0\} = \mathcal{E}_{\rm proj}$, which is identically $Z$, establishing $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$.
+\end{proof}
+
+\begin{remark}[Clarification on Unsatisfiable Formulas]
+For any unsatisfiable (UNSAT) formula, every Boolean vertex satisfies $E_{\rm disc}(s) \ge 1$. Consequently, the spurious basin mass is identically $\mathcal{M}_{\rm spur} \equiv 1$ for all continuous representations ($\Phi_{\rm quad}, \Phi_{\rm mult}, \Phi_{\rm soft}$). The separation $\mathcal{M}_{\rm spur}(\Phi_{\rm quad}) - \mathcal{M}_{\rm spur}(\Phi_{\rm mult}) = 1 - 1 = 0$ is zero for UNSAT. The true divergence occurs on satisfiable instances where $\Phi_{\rm mult}$ finds satisfying vertices while $\Phi_{\rm quad}$ is trapped in the fractional LP polytope $Z$.
+\end{remark}
+
+\begin{proposition}[Proposition 7A: Competitive Jacobian Structure for Purely Negative Clause Families (Under Re-Audit)]
+\label{prop:constructive_basin}
+Let $N \ge 4$. Consider the formula $F_N$ consisting of all $M = \binom{N}{3}$ purely negative clauses $c = (\neg x_i \lor \neg x_j \lor \neg x_k)$.
+\begin{enumerate}
+    \item \textbf{Competitive Jacobian Structure:} For the multilinear relaxation $\Phi_{\rm mult}$, each clause potential is $P_c(x) = \left(\frac{1+x_i}{2}\right)\left(\frac{1+x_j}{2}\right)\left(\frac{1+x_k}{2}\right)$. On the hypercube $\mathcal{X} = [-1, 1]^N$, the cross-derivatives satisfy $\frac{\partial^2 P_c}{\partial x_i \partial x_j} = \frac{1+x_k}{8} \ge 0$. Consequently, the off-diagonal entries of the Jacobian matrix $J(x) = D(-\nabla \Phi_{\rm mult}(x)) = -\nabla^2 \Phi_{\rm mult}(x)$ satisfy:
+    \begin{equation}
+    J_{ij}(x) = -\frac{\partial^2 \Phi_{\rm mult}}{\partial x_i \partial x_j}(x) = -\sum_{c \ni \{i, j\}} \frac{\partial^2 P_c}{\partial x_i \partial x_j}(x) \le 0, \quad \forall i \ne j.
+    \end{equation}
+    \item \textbf{Dynamical Consequence and Suspension of Hirsch:} The continuous multilinear gradient flow $\dot{x} = -\nabla \Phi_{\rm mult}(x)$ is competitive (weakly inhibitory) with non-positive off-diagonal entries ($J_{ij}(x) \le 0$) on $\mathcal{X} = [-1, 1]^N$. It violates the Kamke-M\"uller condition ($J_{ij} \ge 0$) required for cooperative/monotone dynamical systems, precluding any direct invocation of Hirsch's monotone convergence theorems.
+    \item \textbf{Formal Status:} The dynamical characterization of the multilinear flow on $F_N$ is formally suspended under active structural re-audit.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Analytical Audit Note on Proposition 7A]
+The derivation confirms that interactions between variables in purely negative clauses exert mutual competitive (weakly inhibitory) suppression ($J_{ij} \le 0$). Analyzing convergence on such competitive systems in dimension $N \ge 3$ requires carrying simplices and invariant manifold techniques rather than order-preserving flows.
+\end{remark}
+
+\section{Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality}
+
+\begin{theorem}[Theorem 8: Finite-Dimensional Lower Bound on LP Polytope Volume via Jensen's Inequality]
+\label{thm:lp_volume}
+For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $M = \lfloor \alpha N \rfloor$ independent clauses:
+For every finite dimension $N \ge 3$, the expected normalized volume of the LP polytope $Z = \{x \in [-1, 1]^N \mid g_c(x) \le 0, \forall c\}$ satisfies the rigorous finite-dimensional exponential lower bound:
+\begin{equation}
+\mathbb{E}[\mu_{\rm norm}(Z)] \ge \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \exp\left(-N \alpha \ln\left(\frac{6}{5}\right)\right) > 0.
+\end{equation}
+Moreover, $\mathbb{E}[\mu_{\rm norm}(Z)] \ge \mu_{\rm norm}(\mathcal{U}_N) = (1/3)^N > 0$.
+\end{theorem}
+
+\begin{proof}
+By Fubini's theorem:
+\begin{equation}
+\mathbb{E}_F[\mu_{\rm norm}(Z)] = \mathbb{E}_F \left[ \int_{[-1, 1]^N} \prod_{c=1}^M \mathbf{1}_{\{g_c(x) \le 0\}} \frac{dx}{2^N} \right] = \int_{[-1, 1]^N} [p(x)]^M \frac{dx}{2^N},
+\end{equation}
+where $p(x) = \mathbb{P}_c(g_c(x) \le 0)$. For a single clause under $x \sim \text{Unif}([-1, 1]^N)$, $u_1 + u_2 + u_3 \ge 1$ for $u_j \sim \text{Unif}([0, 1])$. By the Irwin-Hall distribution of order 3, $\mathbb{P}(S_3 < 1) = 1/6 \implies \int p(x) \frac{dx}{2^N} = 5/6$.
+For $M = \lfloor \alpha N \rfloor \ge 1$, by Jensen's inequality for the convex function $t \mapsto t^M$ on $[0, 1]$:
+\begin{equation}
+\mathbb{E}_F[\mu_{\rm norm}(Z)] \ge \left( \int_{[-1, 1]^N} p(x) \frac{dx}{2^N} \right)^M = \left(\frac{5}{6}\right)^M = \left(\frac{5}{6}\right)^{\lfloor \alpha N \rfloor} \ge \left(\frac{5}{6}\right)^{\alpha N} > 0.
+\end{equation}
+This establishes a strictly positive lower bound for each finite dimension $N$. We emphasize that this lower bound does not demonstrate that $\lim_{N \to \infty} \mathbb{E}[\mu_{\rm norm}(Z)] = 0$, which would require an independent upper bound.
+\end{proof}
+
+\section{Theorems 9 and 10: Dynamic Analysis, Audit, and Refutation}
+
+\begin{lemma}[Lemma 9.1: Implication Chain Dynamics, Stirling Expansion, and Unit-Fact Falsification]
+\label{lem:hinge_basin}
+Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$):
+\begin{enumerate}
+    \item \textbf{Pure Implication Chain (Conservation of Mean vs. Isotonic Limit):} In the absence of external facts, the Hinge penalty is purely telescoping: $\Phi_{\rm quad}(x) = \sum_{k=1}^{K-1} \left[\max\left(0, \frac{x_k - x_{k+1}}{2}\right)\right]^2$. Trajectories strictly conserve the center of mass: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, constraining the dynamics to affine hyperplanes of constant mean. While heuristic and numerical evidence associates the asymptotic state with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ (via Pool Adjacent Violators) onto the cone $Z = \{x \in [-1, 1]^K \mid x_1 \le x_2 \le \dots \le x_K\}$, the rigorous proof that continuous non-smooth Hinge gradient flow trajectories converge identically to $\Pi_Z(x_0)$ constitutes an independent analytical problem and remains open.
+    \item \textbf{Conditional Sparre--Andersen Calculation:} If the still-unproved identification $x^*=\Pi_Z(x_0)$ with the Euclidean isotonic projection is assumed, then $x_1^*>0$ is equivalent to positivity of all prefix sums of the i.i.d. symmetric continuous increments. Sparre--Andersen then gives
+    \begin{equation}
+    \mathbb{P}(x^*_1 > 0\mid x^*=\Pi_Z(x_0))
+    = \frac{\binom{2K}{K}}{4^K}
+    = \frac{1}{\sqrt{\pi K}}\left(1 - \frac{1}{8K} + \mathcal{O}(K^{-2})\right).
+    \end{equation}
+    This calculation is conditional evidence, not an unconditional theorem about the continuous Hinge flow.
+    \item \textbf{Falsification of Spurious Trapping under Positive Unit Fact:} If a positive unit fact $x_1 = 1$ is incorporated via penalty $h(x_1) = [\max(0, (1 - x_1)/2)]^2$, its gradient injects a strictly positive upward force $-\frac{\partial h}{\partial x_1} = \frac{1 - x_1}{2} > 0$ for $x_1 < 1$. This breaks the conservation of the center of mass ($\frac{d}{dt}\sum x_k > 0$). Furthermore, the zero set of the resulting convex squared-Hinge objective collapses to the singleton $Z = \{(+1, \dots, +1)\}$. Standard projected convex-gradient-flow convergence therefore forces every trajectory to approach that singleton. Thus the former claim of a spurious trapping basin of mass $1-o(1)$ for chains with a positive head fact is false; numerical integration is only a consistency check, not the proof.
+\end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Theorem 9: Dynamical Behavior in Monotone Horn-3-SAT --- Open Status]
+\label{thm:horn_separation}
+Consider monotone Horn-3-SAT formulas $F_N$ where all-negative assignments $s = (-1, \dots, -1)$ are satisfying:
+\begin{enumerate}
+    \item While isolated binary implications $\neg x_i \lor x_j$ induce non-negative cross-derivatives ($J_{ij} = +1/4 \ge 0$), general Horn 3-SAT clauses with multiple negative literals induce competing cross-derivatives with $J_{ij}(x) \le 0$ as established in Proposition~\ref{prop:constructive_basin}. Consequently, the multilinear gradient flow on general Horn-3-SAT forms a competitive dynamical system, rendering Hirsch's monotone cooperativity theorems directly inapplicable and leaving the global convergence to satisfying models an open problem.
+    \item \textbf{Status of Dynamic Separation:} Characterizing the exact spurious basin mass $\mathcal{M}_{\rm spur}(\Phi_{\rm quad})$ for general Horn DAGs with competing clauses remains an \textbf{Open Problem}. The proof cannot rely on single linear chains with head facts due to the singleton collapse $Z = \{(+1, \dots, +1)\}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{lemma}[Lemma 10.1: Subcritical Hypergraph Component Decoupling, Degree Identity, and Defect Tightness]
+\label{lem:peeling}
+For random 3-SAT below the subcritical threshold $\alpha < \alpha_c = 1/6$:
+\begin{enumerate}
+    \item \textbf{Subcritical Branching and Connected Component Decoupling:} The clause exploration branching factor satisfies $R_0 = 2 \times 3\alpha = 6\alpha < 1$. Consequently, the formula hypergraph $F_N$ partitions into a collection of mutually disjoint connected components $F_N = \bigcup_j \mathcal{K}_j$, where distinct components share no variables ($V(\mathcal{K}_j) \cap V(\mathcal{K}_{j'}) = \emptyset$ for $j \ne j'$). The continuous multilinear energy is strictly separable across components:
+    \begin{equation}
+    \Phi_{\rm mult}(x) = \sum_j \Phi_{\mathcal{K}_j}(x_{V(\mathcal{K}_j)}),
+    \end{equation}
+    and the projected gradient dynamical system decouples into mutually independent autonomous flows $\dot{x}_{V(\mathcal{K}_j)} = \Pi_{[-1, 1]^{V(\mathcal{K}_j)}}(-\nabla \Phi_{\mathcal{K}_j}(x_{V(\mathcal{K}_j)}))$.
+    \item \textbf{Global Degree Identity on Tree Components:} Let $\mathcal{C}_{\rm tree}$ denote the class of connected components $\mathcal{K}_j$ that are acyclic (linear hypertrees). Because variables in $V(\mathcal{K}_j)$ appear in zero clauses outside $\mathcal{K}_j$, the degree of any variable in $\mathcal{K}_j$ is \textbf{identically equal to its global degree} in the original formula:
+    \begin{equation}
+    \deg_{F_N}(v) \equiv \deg_{\mathcal{K}_j}(v), \quad \forall v \in V(\mathcal{K}_j).
+    \end{equation}
+    Recursive leaf peeling eliminates every hyperedge of a linear hypertree, but this combinatorial fact does \emph{not} imply that every positive clause at a projected equilibrium contains a degree-one variable. A four-clause star already has a positive projected equilibrium on its leafless central clause, and the six-clause construction in Theorem~\ref{thm:subcritical_separation} has a positive-dimensional attracting equilibrium family. Thus the former universal hypothesis $H_{\rm leaf}$ is withdrawn; only the local--global degree identity itself remains valid.
+    \item \textbf{Defect Tightness and Negligible Density (Strategy B):} Let $\mathcal{C}_{\rm defect}$ denote the collection of connected components containing cycles (either clause pairs sharing $\ge 2$ variables or loose cycles of length $k \ge 3$). Since $R_0 = 6\alpha < 1$, the expected number of cycles of all orders is $\mathcal{O}(1)$ and component sizes exhibit an exponential tail. Thus, the total number of clauses in defective components satisfies $\mathbb{E}[M_{\rm defect}] = \mathcal{O}(1)$, ensuring $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$ (tightness). Even under the worst-case adversarial assumption that every clause in defective components is violated, the multilinear discrete energy contribution from defects is bounded by $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Former Lemma 10.2: Universal Strict-Saddle Claim --- Refuted]
+\label{lem:strict_saddle}
+Coordinate-wise multilinearity still gives
+$\operatorname{Tr}(\mathcal H_{\mathcal F})=0$ on every positive-dimensional
+face.  The former proof, however, inferred
+$\mathcal H_{\mathcal F}\ne0$ from an unproved ``violated leaf clause.''  That
+inference is false.  The six-clause linear hypertree in
+Theorem~\ref{thm:subcritical_separation} has a nine-dimensional family of
+positive non-strict relative minima with an open basin.  Hence neither the
+universal strict-saddle conclusion nor the associated almost-sure evasion
+claim is valid.
+\end{lemma}
+
+\begin{lemma}[Former Lemma 10.3: Universal Transverse Repulsion --- Insufficient]
+\label{lem:flat_edge_instability}
+The transverse calculation for an edge that actually has the stipulated
+exclusive leaf remains a valid local statement.  It is not universal on tree
+components, because the existence of that leaf in a positive clause does not
+follow from acyclicity.  More importantly, excluding equilibria from
+one-dimensional open edges cannot exclude attracting equilibrium families on
+higher-dimensional faces.  This lemma therefore supplies no route to the
+former conclusion $\rho_{\rm mult}\to0$.
+\end{lemma}
+
+\begin{lemma}[Lemma 10.4: Subcritical Hinge Basin Lower Bound and Residual Energy Density]
+\label{lem:hinge_lower_bound}
+For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$, under pure projected gradient flow $\dot{x} = \Pi_{T_{\mathcal{X}}(x)}(-\nabla \Phi_{\rm quad}(x))$ initialized from $x_0 \sim \text{Unif}([-1, 1]^N)$:
+\begin{enumerate}
+    \item \textbf{Decoupled Dynamics on Isolated Clauses:} Let $\mathcal{C}_{\rm iso}$ denote the set of isolated clauses in $F_N$ sharing no variables with any other clause. For each $c \in \mathcal{C}_{\rm iso}$, the projected flow on its variables $(x_{i_1}, x_{i_2}, x_{i_3})$ is strictly autonomous and decoupled from all other coordinates, with initial condition $(x_{0, i_1}, x_{0, i_2}, x_{0, i_3}) \sim \text{Unif}([-1, 1]^3)$ statistically independent across clauses.
+    \item \textbf{Boundary Non-Saturation (No-Clipping):} For any initial point outside the LP polytope $Z$ ($S_0 = \sum_{p=1}^3 \sigma_p x_{0, p} < -1$), the trajectory translates linearly at identical rates $\dot{U}_p = g_c(U) > 0$, landing on $\partial Z$ at $U_p^* = U_p(0) + \frac{-1 - S_0}{3}$. Because $U_p^* \in (-1, 1)$ strictly for almost all initial conditions, no boundary clipping occurs before reaching $\partial Z$.
+    \item \textbf{Exact Rounding Failure Probability:} The probability that the discrete Boolean assignment $\hat{s} = \text{sign}(x^*)$ violates clause $c$ is given analytically by the sum of two disjoint regions in $[-1, 1]^3$:
+    \begin{equation}
+    p_{\rm fail} = \mathbb{P}(x_0 \in Z \text{ and } \hat{s} \text{ violates } c) + \mathbb{P}(x_0 \notin Z \text{ and landing } x^* \text{ violates } c) = \frac{1}{48} + \frac{7}{96} = \frac{3}{32} = 0.09375.
+    \end{equation}
+    \item \textbf{Density Scaling and Exact Expectation Lower Bound:} In $\mathcal{E}(N, \alpha)$, the expected number of isolated clauses is $\mathbb{E}[|\mathcal{C}_{\rm iso}|] = \alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))$. Since the discrete residual density is normalized by total clauses $M = \alpha N$, the factor $\alpha$ cancels exactly:
+    \begin{equation}
+    \frac{\mathbb{E}[|\mathcal{C}_{\rm iso}|]}{M} = \frac{\alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))}{\alpha N} = e^{-9\alpha}(1 + \mathcal{O}(1/N)).
+    \end{equation}
+    Conditionally on the formula, the rounding failure of each isolated clause is an independent Bernoulli trial with parameter $p_{\rm fail} = 3/32$. Consequently, the expected asymptotic residual density satisfies:
+    \begin{equation}
+    \liminf_{N \to \infty} \mathbb{E}[\rho_{\rm quad}(\alpha)] \ge \frac{3}{32} e^{-9\alpha} > 0.
+    \end{equation}
+    \item \textbf{Asymptotically Almost Sure Concentration:} By the law of total variance, $\text{Var}(X_{\rm iso}) = \mathcal{O}(N)$, so the density variance satisfies $\text{Var}(X_{\rm iso} / M) = \mathcal{O}(1 / (\alpha^2 N)) = \mathcal{O}(1/N)$. By Chebyshev's inequality, for any $\varepsilon > 0$:
+    \begin{equation}
+    \lim_{N \to \infty} \mathbb{P}\left(\rho_{\rm quad}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Audit Refutation of the Former Theorem 10]
+\label{thm:subcritical_separation}
+Let $M=\lfloor\alpha N\rfloor$ with fixed $\alpha>0$, let $F$ be sampled
+uniformly from the $M$-subsets of the $Q_N=8\binom N3$ distinct signed
+3-SAT clauses, initialize the projected multilinear gradient flow with
+$x_0\sim\operatorname{Unif}([-1,1]^N)$ independently of $F$, and round its
+limit coordinatewise to a Boolean assignment. With the notation above,
+\begin{equation}
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)
+\ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\label{eq:t10_refutation}
+\end{equation}
+Moreover,
+\begin{equation}
+\mathbb P_{F,x_0}\!\left[
+\rho_{N,\rm mult}(F,x_0)
+\ge
+\frac{729}{2^{60}}\alpha^5e^{-39\alpha}
+\right]\longrightarrow1.
+\label{eq:t10_refutation_whp}
+\end{equation}
+In fact, writing
+\[
+d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha},
+\qquad p_0=2^{-53},
+\]
+for all sufficiently large $N$,
+\begin{equation}
+\mathbb P_F\!\left[
+\mathbb P_{x_0}\!\left(
+\rho_{N,\rm mult}(F,x_0)\ge
+\frac{729}{2^{60}}\alpha^5e^{-39\alpha}
+\,\middle|\,F
+\right)
+\ge 1-\exp\!\left(-\frac{3p_0d(\alpha)}{128}N\right)
+\right]
+\ge
+1-\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right).
+\label{eq:t10_refutation_conditional}
+\end{equation}
+The independent-clause model has the same leading expectation constant.
+Hence the former claim that the multilinear residual tends to zero, both
+in expectation and with asymptotically high probability, is false for every
+fixed $\alpha>0$ and in particular throughout $0<\alpha<1/6$.
+\end{theorem}
+
+\begin{proof}
+Use the signed linear hypertree on vertices $0,\ldots,12$ with clauses
+\begin{equation}
+\begin{split}
+ &(0,1,2),(0,3,4),(1,5,6),\\
+ &(2,7,8),(3,9,10),(4,11,12),
+\end{split}
+\end{equation}
+and sign triples $(+++),(-++),(-++),(-++),(-++),(-++)$.  In affine factor
+coordinates in $[0,1]$, its potential is
+\begin{equation}
+\begin{split}
+\Phi={}&yu_1u_2+(1-y)v_1v_2
+ +(1-u_1)a_1b_1+(1-u_2)a_2b_2\\
+ &+(1-v_1)c_1d_1+(1-v_2)c_2d_2.
+\end{split}
+\label{eq:m6_phi}
+\end{equation}
+The quantitative bounds below use the original projected-flow time in
+$x\in[-1,1]^N$.  If a factor coordinate is
+$z=(1\pm x)/2$, then
+$\partial_x\Phi=\pm\tfrac12\partial_z\Phi$ and
+$\dot z=\pm\tfrac12\dot x$; hence, away from the harmless tangent-cone
+projection notation,
+\[
+\dot z=\frac14\,\Pi_{T_{[0,1]}(z)}(-\nabla_z\Phi).
+\]
+Equivalently, with the rescaled time $\tau=t/4$ one recovers
+$dz/d\tau=\Pi_{T_{[0,1]}(z)}(-\nabla_z\Phi)$.  Thus all orbit and basin
+statements are unchanged by the affine coordinate change, while numerical
+speed bounds in the original time carry the factor $1/4$.
+The set
+\begin{equation}
+\mathcal M=\{u_1=u_2=v_1=v_2=1, 0<y<1,
+ a_jb_j>y, c_jd_j>1-y\}
+\end{equation}
+is a nine-dimensional family of projected equilibria with $\Phi=1$.  It
+consists locally of non-strict relative minima.  Moreover, the open box
+\begin{equation}
+U=\left\{\frac{31}{64}<y<\frac{33}{64},\quad
+\frac{15}{16}<u_j,v_j,a_j,b_j,c_j,d_j<1\right\}.
+\label{eq:m6_basin}
+\end{equation}
+is captured by $\mathcal M$ in finite time.  Indeed, in the envelope
+$7/16<y<9/16$, with the four core factors at least $15/16$ and the eight leaf
+factors above $7/8$, each unsaturated core factor has speed at least $13/256$
+and reaches one before time $16/13$.  During that interval
+$|\dot y|\le31/1024$ and every leaf speed has magnitude at most $1/64$; the
+total drifts are therefore less than $31/832$ and $1/52$, respectively, so
+the envelope is invariant until capture.  Once the four core factors equal
+one, all projected speeds vanish.  The normalized initial mass of
+\eqref{eq:m6_basin} is
+\begin{equation}
+\mathbb P(U)=\frac1{32}\left(\frac1{16}\right)^{12}=2^{-53}.
+\end{equation}
+After Boolean rounding, exactly one of the two core clauses is violated,
+including under either tie convention for $y=1/2$.
+
+The unsigned motif has automorphism group of order $128$, and its gauge orbit
+contains $2^{13}$ signed patterns.  If $X_{M6}$ counts isolated components in
+this orbit and $Q_N=8\binom N3$, then
+\begin{equation}
+\mathbb E X_{M6}=\frac{(N)_{13}}{128}\,2^{13}
+\frac{\binom{8\binom{N-13}{3}}{M-6}}{\binom{Q_N}{M}},
+\qquad
+\frac{\mathbb E X_{M6}}N\longrightarrow
+\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+For the independent-clause model, with
+$Q_{0,N}=8\binom{N-13}{3}$, the exact finite expectation is
+\begin{equation}
+\mathbb E X_{M6}^{\rm iid}
+=\frac{(N)_{13}}{128}\,2^{13}
+\frac{(M)_6Q_{0,N}^{M-6}}{Q_N^M},
+\qquad
+\frac{\mathbb E X_{M6}^{\rm iid}}N\longrightarrow
+\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+Component decoupling, the basin mass $2^{-53}$, non-negativity of all other
+violations, and division by $M\sim\alpha N$ give
+\eqref{eq:t10_refutation}.  The same local
+calculation applies in the independent-clause model.
+
+For the uniform model without replacement, changing one selected clause by
+one swap changes $X_{M6}$ by at most $4$: deleting a 3-clause can destroy at
+most one isolated M6 or expose at most three, while adding a 3-clause can
+destroy at most three isolated M6 components or create at most one.  In the
+Doob exposure martingale, a transposition coupling therefore places the
+conditional expectations at each step in an interval of length at most $4$.
+Hoeffding's martingale bound yields, with
+$d(\alpha)=(729/64)\alpha^6e^{-39\alpha}$,
+\[
+\mathbb P_F\left[X_{M6}<\frac34d(\alpha)N\right]
+\le
+\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right)
+\]
+for all sufficiently large $N$.  Conditional on such a formula, the
+certified M6 basin events are independent because isolated components have
+disjoint variable supports, and hence
+$Z_N\mid F\sim\operatorname{Binomial}(X_{M6},2^{-53})$.
+A multiplicative Chernoff bound gives
+\[
+\mathbb P_{x_0}\left[
+Z_N<\frac34\,2^{-53}X_{M6}\mid F
+\right]
+\le
+\exp\!\left(-\frac{3\,2^{-53}d(\alpha)}{128}N\right).
+\]
+Each captured component contributes at least one distinct violated clause,
+which proves \eqref{eq:t10_refutation_whp} and the stronger conditional
+statement \eqref{eq:t10_refutation_conditional}.
+\end{proof}
+
+\begin{remark}[Pointwise PDS convergence survives the refutation]
+Let $X=[-1,1]^N$ and $F=\Phi_{\rm mult}+\delta_X$. The hypotheses of the nonsmooth KL dynamical theorem can be checked explicitly.
+
+First, $F$ is proper, lower semicontinuous and semialgebraic, with nonempty domain $X$, and $F|_X=\Phi_{\rm mult}|_X$ is continuous. Since $\delta_X$ is convex and subdifferentially regular and $\Phi_{\rm mult}$ is $C^1$, smooth-sum calculus gives
+\[
+\widehat\partial F(x)=\partial F(x)=\nabla\Phi_{\rm mult}(x)+N_X(x).
+\]
+The nonsmooth Kurdyka--\L{}ojasiewicz inequality for lower-semicontinuous definable functions \cite[Theorem~11]{bolte2007clarke} therefore supplies the KL property required in \cite[Remark~4.8]{bolte2007lojasiewicz}.
+
+Second, Moreau decomposition gives, for $d(x)=\Pi_{T_X(x)}(-\nabla\Phi_{\rm mult}(x))$,
+\[
+-\dot x\in\partial F(x),
+\qquad
+\|\dot x\|=\operatorname{dist}(0,\partial F(x)),
+\]
+and along every absolutely continuous solution
+\[
+\frac{d}{dt}\Phi_{\rm mult}(x(t))=-\|\dot x(t)\|^2
+\quad\text{a.e.}
+\]
+The vector field $-\nabla\Phi_{\rm mult}$ is Lipschitz on the compact box. For a nonempty closed convex constraint set, a projected dynamical system with Lipschitz vector field has a unique global absolutely continuous solution; equivalently, the normal-cone inclusion is a Lipschitz perturbation of a maximal monotone operator. Because trajectories remain in compact $X$, they are bounded, and $F\circ x=\Phi_{\rm mult}\circ x$ is absolutely continuous.
+
+Thus all requirements listed in \cite[Remark~4.8]{bolte2007lojasiewicz} hold. The finite-length theorem \cite[Theorem~4.5]{bolte2007lojasiewicz} yields
+\[
+\int_0^\infty\|\dot x(t)\|\,dt<\infty,
+\]
+and hence convergence to a single projected critical point. The rate statement is then covered by \cite[Theorem~4.7]{bolte2007lojasiewicz}. This result does not imply zero limit energy: the open set \eqref{eq:m6_basin} converges to $\mathcal M\subset\{\Phi_{\rm mult}=1\}$.
+\end{remark}
+
+\section{The Central Conjecture of the CLG-R Program}
+
+\begin{conjecture}[Remaining CLG-R Comparison in the Clustering Regime]
+\label{conj:clg_separation}
+For the uniform random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ in the non-trivial clustering interval $\alpha \in (\alpha_d, \alpha_s)$, where $\alpha_d \approx 3.86$ is the clustering threshold \cite{krzakala2007gibbs} and $\alpha_s \approx 4.267$ is the satisfiability threshold, under pure projected gradient flow with uniform initialization, the remaining conjectural comparison is
+\begin{equation}
+\liminf_{N\to\infty}\bar\rho_{N,\rm quad}(\alpha)
+>
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha).
+\end{equation}
+The positivity of the multilinear term is no longer conjectural in this ensemble: the M6 theorem gives
+\[
+\liminf_{N\to\infty}\bar\rho_{N,\rm mult}(\alpha)
+\ge
+\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\]
+For planted ensembles, no corresponding M6 frequency theorem is asserted here; their residual comparison remains a separate open problem.
+\end{conjecture}
+
+\section{Summary Synthesis and Formal Status Matrix}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.5 Audited).}}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
+\midrule
+\textbf{Regularity} & $\mathcal{C}^1$ (piecewise quadratic) & $\mathcal{C}^\infty$ (polynomial) & $\mathcal{C}^\omega$ (real analytic) \\
+\textbf{Critical Measure $\mu(\mathcal{C}_0)$} & $> 0$ (Plateau $\geq (1/3)^N$) & $= 0$ (Fubini / Polynomials) & $= 0$ (Real Analytic Identity) \\
+\textbf{Laplacian $\Delta\Phi$} & $\equiv 0$ on $\mathcal{U}_N$ & $\equiv 0$ on $\mathbb{R}^N$ (Harmonic) & $\text{Tr}(V^T W V) > 0$ (Subharmonic) \\
+\textbf{Attractor Loci} & LP Polytope $Z$ & Isolated stable points are vertices; positive boundary continua can attract & Unique minimizer if $\text{rank}(V)=N$ \\
+\textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
+\textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
+\textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
+\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
+\bottomrule
+\end{tabular}
+\label{tab:synthesis}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.5).}}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Result} & \textbf{Formal Audit Status} \\
+\midrule
+Theorem 1 (Central Box $\mathcal{U}_N$) & \textbf{Closed} (Deterministic, slack $0.5$) \\
+Theorem 2 (Measure Zero Critical Sets) & \textbf{Closed under stated hypotheses} (Fubini / Real Analytic) \\
+Theorem 3 (Harmonicity and Saddles) & \textbf{Closed with hypotheses} (Harmonic, Milnor Curve Selection) \\
+Theorem 4A$'$ (Face Minima without H4) & \textbf{Closed} (Inherited vertex energies) \\
+Corollary 4B (LaSalle Vertex Confinement) & \textbf{Closed, subject to final projected system formulation} \\
+Theorem 5 (Hessian Factorization) & \textbf{Closed under stated conditions} ($V^T W V \succeq 0$) \\
+Theorem 6 (Lipschitz and IEEE 754) & \textbf{Closed under IEEE conventions} ($L_\beta = \Theta(\beta)$, underflow thresholds) \\
+Theorem 7B (Centripetal Contraction) & \textbf{Closed as Limit Set} ($\mathcal{E}_{\rm proj} \equiv Z$, $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$) \\
+Proposition 7A (Negative Clause Families) & \textbf{Closed for Competitive Jacobian} (Sign $J_{ij} \le 0$, Hirsch suspended; item 2 expunged) \\
+Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional lower bound} ($\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$) \\
+Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
+Lemma 10.1 (Component Decoupling \& Defect Tightness) & \textbf{Partial} (decoupling and degree identity remain; universal $H_{\rm leaf}$ is refuted) \\
+Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Refuted as a universal claim} (M6 has positive non-strict relative minima) \\
+Lemma 10.3 (Degenerate Edge Non-Equilibrium) & \textbf{Insufficient} (a one-dimensional local statement cannot exclude higher-dimensional attracting faces) \\
+Lemma 10.4 (Hinge Subcritical Basin Bound) & \textbf{Closed} (Exact $p_{\rm fail} = 3/32$, $\rho_{\rm quad} \ge \frac{3}{32} e^{-9\alpha} > 0$, Chebyshev concentration) \\
+Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Refuted} (positive M6 residual in expectation and w.h.p.; $m_{*,HT}^{\rm mult}=6$) \\
+Central Conjecture & \textbf{Reduced Comparison Conjecture} (random ensemble: only $\rho_{\rm quad}>\rho_{\rm mult}$ remains open; planted case separate) \\
+Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from the $P$ versus $NP$ distinction) \\
+\bottomrule
+\end{tabular}
+\label{tab:status_matrix}
+\end{table}
+
+\section{Epistemological Firewall: 3-XOR-SAT and the $P$ versus $NP$ Distinction}
+The CLG-R framework establishes an epistemological firewall against illegitimate inferences from continuous dynamical hardness to the $P$ versus $NP$ distinction:
+\begin{itemize}
+    \item \textbf{3-XOR-SAT} is solvable in deterministic polynomial time $\mathcal{O}(N^3)$ via Gaussian Elimination over $\mathbb{F}_2$ (strictly in Class $\mathbf{P}$).
+    \item In the CLG computational experiments, the corresponding continuous multilinear dynamics exhibits severe glassy trapping despite the polynomial-time discrete solution method; related diluted $p$-spin/XORSAT literature provides the statistical-physics context for such metastable structure \cite{ricci2010being, mezard2003two}.
+    \item Therefore, failure or success of a continuous gradient flow neither implies nor is implied by Turing solvability.
+\end{itemize}
+
+\section{Conclusion}
+We have established rigorous analytical foundations for Computational Landscape Geometry and Representation (CLG-R), including the Universal Centripetal Contraction Theorem, Exact Hessian Factorization, harmonic exclusion of interior minima, vertex confinement for isolated asymptotically stable multilinear equilibria, and a finite-dimensional LP-polytope volume bound. The adversarial M6 analysis changes the subcritical picture decisively: six clauses are necessary and sufficient for a positive-measure bad basin within connected linear 3-uniform Berge-acyclic components, and isolated M6 components occur with linear density in the audited sparse random ensemble. Consequently the multilinear residual is bounded away from zero both in expectation and with asymptotically high probability, refuting the former complete subcritical-separation theorem. The remaining random-ensemble conjecture is comparative rather than existential: whether the Hinge residual remains strictly larger than the multilinear residual in the clustering regime. None of these dynamical results implies a separation of computational complexity classes.
+
+\bibliographystyle{plain}
+\bibliography{clg_references}
+
+\end{document}
+
+
+
+======================================================================
+ARQUIVO: CLG_AUDITORIA_FINAL_T1_T9_KL.md
+CAMINHO: Publicacoes/CLG_AUDITORIA_FINAL_T1_T9_KL.md
+======================================================================
+
+# CLG-R v4.0.5 — Auditoria final dos Teoremas 1–9 e da convergência PDS/KL
+
+**Data:** 22 de setembro de 2026  
+**Escopo:** manuscrito `Publicacoes/CLG_FOUNDATIONS_ARXIV.tex`, com foco nos Teoremas 1–9 e na dependência externa de convergência usada no T10R/M6.
+
+## 1. Veredito executivo
+
+Após rederivação independente e revisão adversarial:
+
+- Teorema 1: **PROVADO**, após correção editorial da coordenada literal na identificação LP.
+- Teorema 2: **PROVADO**, com explicitação da escolha de uma derivada parcial analítica não nula no caso Softplus.
+- Teorema 3: **PROVADO**.
+- Teorema 4A': **PROVADO**.
+- Corolário 4B: **PROVADO**, com formulação de LaSalle corrigida e argumento explícito de que estabilidade assintótica isolada força mínimo local estrito.
+- Teorema 5: **PROVADO SOB A HIPÓTESE DECLARADA rank(V)=N** para o bound de número de condição.
+- Teorema 6: **PROVADO**; a prova, antes ausente no manuscrito, foi adicionada.
+- Teorema 7B: **PROVADO**, incluindo o efeito da projeção no Lyapunov radial.
+- Proposição 7A: **PROVADA apenas quanto ao sinal competitivo do Jacobiano**; caracterização global da dinâmica permanece suspensa, como já declarado.
+- Teorema 8: **PROVADO** no modelo de cláusulas independentes declarado.
+- Teorema 9: **ABERTO**, como já declarado; uma antiga afirmação probabilística incondicional foi corretamente rebaixada para cálculo condicional.
+- Convergência PDS/KL: **PROVADA sob o mapeamento explícito das hipóteses de Bolte–Daniilidis–Lewis + Bolte–Daniilidis–Lewis–Shiota**, detalhado abaixo.
+
+Nenhum erro fatal foi encontrado nesta rodada.
+
+## 2. Auditoria PDS/KL — hipótese por hipótese
+
+Defina
+
+    F(x) = Phi_mult(x) + delta_X(x),
+    X = [-1,1]^N.
+
+### 2.1 Proper, l.s.c., domínio e continuidade no domínio
+
+- X é não vazio, compacto, convexo e semialgébrico.
+- delta_X é própria e l.s.c.
+- Phi_mult é polinomial.
+- Logo F é própria, l.s.c. e semialgébrica.
+- Em dom F = X, temos F|_X = Phi_mult|_X, que é contínua.
+
+Isso verifica a condição de domínio e a alternativa “f restrita ao domínio é contínua” do Remark 4.8 de Bolte–Daniilidis–Lewis.
+
+### 2.2 Igualdade entre subdiferenciais regular e limiting
+
+Para uma caixa convexa X:
+
+    hat_partial delta_X = partial delta_X = N_X.
+
+Como Phi_mult é C^1, a soma com uma função suave preserva regularidade:
+
+    hat_partial F
+      = partial F
+      = grad Phi_mult + N_X.
+
+Portanto a condição
+
+    hat_partial F = partial F
+
+do Remark 4.8 está satisfeita.
+
+### 2.3 Propriedade Kurdyka–Lojasiewicz
+
+F é semialgébrica e l.s.c.
+
+Bolte–Daniilidis–Lewis–Shiota, *Clarke Subgradients of Stratifiable Functions*, SIAM J. Optim. 18(2), 556–572 (2007), Theorem 11, estabelece a desigualdade KL não suave para funções l.s.c. definíveis; o próprio artigo observa que a conclusão permanece válida para subdiferenciais de Fréchet e limiting, por estarem contidos no Clarke.
+
+Logo F possui a propriedade KL requerida pelo Remark 4.8 de BDL.
+
+### 2.4 Equivalência PDS / inclusão subgradiente
+
+Para
+
+    d(x) = Proj_{T_X(x)}(-grad Phi_mult(x)),
+
+Moreau fornece
+
+    -grad Phi_mult = d + n,
+    n in N_X,
+    <d,n> = 0.
+
+Assim:
+
+    -d in grad Phi_mult + N_X = partial F.
+
+Além disso, d é o vetor de menor norma da inclusão:
+
+    ||d|| = dist(0, partial F).
+
+### 2.5 Dissipação e regra da cadeia
+
+Como x(.) é absolutamente contínua e Phi_mult é C^1:
+
+    d/dt Phi_mult(x(t))
+      = <grad Phi_mult(x(t)), xdot(t)>
+      = -||xdot(t)||^2
+
+quase em todo lugar.
+
+Como x(t) permanece em X,
+
+    F(x(t)) = Phi_mult(x(t)),
+
+logo F∘x é absolutamente contínua.
+
+### 2.6 Existência e unicidade global
+
+O vetor
+
+    -grad Phi_mult
+
+é Lipschitz em X, pois Phi_mult é polinomial e X é compacto.
+
+Para conjunto não vazio, fechado e convexo, PDS com campo Lipschitz possui solução global absolutamente contínua única; equivalentemente,
+
+    xdot + N_X(x) contains -grad Phi_mult(x)
+
+é uma inclusão de evolução com operador normal maximal monotone perturbado por mapa Lipschitz.
+
+Isso verifica a hipótese adicional de solução global única do Remark 4.8.
+
+### 2.7 Teorema exato usado
+
+A citação antiga do manuscrito para “Theorem 3.1” como resultado dinâmico era imprecisa.
+
+O mapeamento correto é:
+
+- **BDL Theorem 4.5:** trajetória maximal limitada possui comprimento finito e converge a ponto crítico sob as hipóteses do sistema subgradiente;
+- **BDL Theorem 4.7:** fornece convergência/rates em função do expoente de Łojasiewicz;
+- **BDL Remark 4.8:** estende Theorems 4.5 e 4.7 para funções l.s.c. com:
+  1. dom não vazio e hat_partial f = partial f;
+  2. f convexa ou contínua no domínio;
+  3. propriedade Łojasiewicz;
+  4. solução global única e f∘x absolutamente contínua;
+- **BDLS Theorem 11:** fornece a propriedade KL para a função definível/l.s.c. usada aqui.
+
+Todas essas condições foram verificadas acima.
+
+Consequentemente:
+
+    integral_0^infinity ||xdot(t)|| dt < infinity,
+
+e cada trajetória converge a um único equilíbrio projetado.
+
+## 3. Teoremas 1–9 — achados específicos
+
+### Teorema 1
+
+O argumento da caixa central é correto.
+
+Foi corrigida uma formulação inadequada que escrevia genericamente
+
+    sum z_j >= 1
+
+para cláusulas com sinais mistos.
+
+A forma correta usa coordenadas de satisfação literal:
+
+    q_cj = (1 + sigma_j^(c) x_j)/2,
+
+de modo que
+
+    g_c <= 0  iff  sum_j q_cj >= 1.
+
+A cota de volume (1/3)^N e a subcota espúria (1/6)^N permanecem inalteradas.
+
+### Teorema 2
+
+O caso multilinear está correto: uma função multilinear não constante possui pelo menos uma derivada parcial polinomial não nula, e o conjunto crítico está contido em seu zero-set de medida zero.
+
+No caso Softplus, Delta Phi_soft > 0 implica não constância; foi explicitado que se escolhe uma derivada parcial analítica não identicamente nula antes de aplicar o teorema de zero-set analítico.
+
+### Teorema 3
+
+A harmonicidade é exata porque todas as diagonais da Hessiana multilinear são zero.
+
+Em ponto crítico não degenerado, Hessiana invertível + traço zero implica ao menos um autovalor positivo e um negativo.
+
+Em ponto crítico degenerado, a ausência de mínimo local já garante pontos de energia menor em toda vizinhança.
+
+### Teorema 4A' / Corolário 4B
+
+A restrição a qualquer face continua multilinear e harmônica.
+
+Um mínimo relativo interior da face força constância na face, logo herda o valor de todos os vértices.
+
+Para 4B foi removida a formulação forte demais de LaSalle (“converge ao maior conjunto invariante”); a forma correta é que omega-limits ficam contidos / trajetórias se aproximam do maior conjunto invariante.
+
+Também foi adicionada a prova de que equilíbrio isolado assintoticamente estável precisa ser mínimo local estrito.
+
+### Teorema 5
+
+A fatoração
+
+    H = V^T W V
+
+está correta.
+
+O bound do número de condição foi explicitamente condicionado a
+
+    rank(V)=N,
+
+pois somente então V^T V é definida positiva e kappa é finito.
+
+### Teorema 6
+
+A prova estava faltando e foi incorporada.
+
+Com w_c <= beta/4 e Gershgorin:
+
+    lambda_max(V^T V) <= 3 d_max / 4,
+
+logo
+
+    L_beta <= 3 d_max beta / 16.
+
+Escolhendo uma cláusula com g_c=0:
+
+    L_beta >= 3 beta / 16.
+
+Os bounds exponenciais do gradiente no box central também conferem.
+
+A terminologia IEEE foi corrigida para distinguir:
+- início da faixa subnormal;
+- escala de underflow gradual a zero;
+- modos de hardware flush-to-zero.
+
+### Teorema 7B
+
+A contração centrípeta está correta.
+
+Foi explicitado o passo de projeção:
+
+    v = d+n,
+    n in N_X,
+    <x,n> >= 0,
+
+logo
+
+    <x,d> <= <x,v> < 0
+
+fora de Z.
+
+A identidade entre equilíbrios projetados e Z permanece válida.
+
+### Proposição 7A
+
+O sinal
+
+    J_ij <= 0
+
+para cláusulas puramente negativas foi rechecado e está correto.
+
+Nenhuma conclusão global de Hirsch é reivindicada; o status de caracterização dinâmica permanece suspenso.
+
+### Teorema 8
+
+Para cláusulas independentes:
+
+    E[mu_norm(Z)]
+      = integral p(x)^M dx/2^N
+      >= (integral p(x) dx/2^N)^M
+      = (5/6)^M.
+
+A aplicação de Jensen é correta.
+
+O domínio foi ajustado editorialmente para N>=3, natural para 3-SAT.
+
+### Teorema 9
+
+O status permanece aberto.
+
+A antiga expressão
+
+    P(x_1^*>0) = C(2K,K)/4^K
+
+não pode ser apresentada como resultado incondicional enquanto a identidade entre o limite do fluxo e a projeção isotônica permanecer sem prova.
+
+O manuscrito agora a apresenta apenas como cálculo **condicional** à hipótese
+
+    x^* = Pi_Z(x_0).
+
+Isso elimina uma inconsistência lógica interna.
+
+## 4. Alterações aplicadas à master
+
+Nesta auditoria foram aplicadas correções para:
+
+- coordenadas literais na identificação LP;
+- zero-set analítico do Softplus;
+- formulação precisa de LaSalle;
+- condição rank(V)=N para kappa;
+- prova completa do Teorema 6;
+- terminologia de underflow IEEE;
+- detalhe da projeção no Teorema 7B;
+- caráter condicional do cálculo Sparre–Andersen no Teorema 9;
+- mapeamento exato dos teoremas KL/PDS;
+- nova referência BDLS 2007.
+
+## 5. Riscos residuais
+
+Não foi encontrado risco fatal nos Teoremas 1–8.
+
+Os riscos residuais são:
+
+1. **Teorema 9 permanece deliberadamente aberto.**
+2. A parte Hinge do antigo T10 possui seus próprios lemas probabilísticos/dinâmicos e não foi reaberta nesta auditoria além das dependências já registradas.
+3. A compilação arXiv deve continuar sendo usada como teste operacional separado da validade matemática.
+
+## 6. Veredito
+
+A dependência PDS/KL que sustentava a minimalidade M6 passa de “citação plausível” para **mapeamento formal hipótese-por-hipótese**.
+
+Não foi encontrado erro fatal.
+
+**Veredito desta rodada: NÃO CONSEGUI REFUTAR APÓS AUDITORIA DOS TEoremas 1–9 E DA DEPENDÊNCIA KL/PDS, com o Teorema 9 explicitamente mantido como problema aberto.**
+
+
+
+======================================================================
+ARQUIVO: CLG_T10R_PROVA_MINIMALIDADE_M6.md
+CAMINHO: Publicacoes/CLG_T10R_PROVA_MINIMALIDADE_M6.md
+======================================================================
+
+# T10R — Prova formal independente da minimalidade M6
+
+**Data:** 22 de setembro de 2026  
+**Escopo:** hiperárvores conexas, lineares, 3-uniformes e Berge-acíclicas.  
+**Relaxação:** energia multilinear natural de 3-SAT com fluxo de gradiente projetado no hipercubo.  
+**Resultado:** **m_{*,HT}^{mult} = 6**.
+
+Este documento registra uma derivação independente da minimalidade. A prova evita identificação finita de face, exclusão geral de Zeno, mapas de impacto, argumentos de variedade estável, Hessianas irrestritas no bordo e cascatas dimensionais por Liouville.
+
+A estratégia usa apenas: convergência pontual do PDS via teoria KL/subgradiente; contagem exata das cláusulas positivas em um equilíbrio; existência forçada de um ramo unitário quando m ≤ 5; monotonicidade global de uma variável-folha; e o certificado construtivo M6 já existente.
+
+## 1. Coordenadas de fatores
+
+Fixe uma orientação global por variável e use coordenadas z_v ∈ [0,1]. Para cada ocorrência literal na cláusula c, o fator correspondente é
+
+    ell_cv(z_v) ∈ {z_v, 1-z_v}.
+
+A energia é
+
+    Φ(z) = Σ_{c∈E} P_c(z),
+    P_c(z) = Π_{v∈c} ell_cv(z_v).
+
+Cada P_c é multilinear e não negativo em [0,1]^n.
+
+Se z=(1±x)/2 é a coordenada-fator associada a uma coordenada original x∈[-1,1], então
+
+    ∂_x Φ = ±(1/2) ∂_z Φ
+    e
+    ż = ±(1/2) ẋ.
+
+Portanto, no tempo original t do fluxo em x,
+
+    ż = (1/4) Proj_{T_[0,1]^n(z)}(-∇_z Φ(z)).
+
+Se reparametrizamos o tempo por τ=t/4, obtemos exatamente
+
+    dz/dτ = Proj_{T_[0,1]^n(z)}(-∇_z Φ(z)).
+
+Toda a prova qualitativa abaixo usa essa forma reparametrizada; os conjuntos de órbitas, equilíbrios, bacias e propriedades de medida são invariantes por essa reparametrização positiva. Quando constantes quantitativas de tempo são usadas no certificado M6, o fator 1/4 deve ser mantido explicitamente.
+
+Para z_v = 0, a condição KKT é ∂_v Φ ≥ 0; para 0 < z_v < 1, ∂_v Φ = 0; para z_v = 1, ∂_v Φ ≤ 0.
+
+## 2. Convergência de toda trajetória para um equilíbrio
+
+Defina
+
+    F(z) = Φ(z) + δ_X(z),
+    X = [0,1]^n.
+
+Como Φ é polinomial e X é semialgébrico compacto, F é própria, l.s.c. e semialgébrica.
+
+Para
+
+    d(z) = Proj_{T_X(z)}(-∇Φ(z)),
+
+a decomposição ortogonal de Moreau fornece
+
+    -∇Φ(z) = d(z) + n(z),
+    n(z) ∈ N_X(z),
+    <d(z), n(z)> = 0.
+
+Portanto
+
+    -d(z) ∈ ∇Φ(z) + N_X(z) = ∂F(z).
+
+Além disso,
+
+    ||d(z)||
+    = dist(-∇Φ(z), N_X(z))
+    = dist(0, ∂F(z)).                                      (2.1)
+
+Ao longo de uma solução absolutamente contínua,
+
+    d/dt Φ(z(t))
+    = <∇Φ(z(t)), ż(t)>
+    = -||ż(t)||²                                           (2.2)
+
+quase em todo tempo.
+
+A teoria de Kurdyka–Łojasiewicz para funções subanalíticas/semialgébricas l.s.c., aplicada ao sistema subgradiente correspondente, implica comprimento finito para trajetórias limitadas. Como X é compacto, toda trajetória é limitada, logo
+
+    ∫_0^∞ ||ż(t)|| dt < ∞.
+
+Consequentemente z(t) é Cauchy e existe z^∞ com
+
+    z(t) → z^∞.
+
+Pela inclusão subgradiente, dissipação e fechamento do gráfico de ∂F,
+
+    0 ∈ ∂F(z^∞) = ∇Φ(z^∞) + N_X(z^∞).
+
+Logo toda trajetória converge a um único equilíbrio projetado.
+
+**Fonte primária:** J. Bolte, A. Daniilidis, A. Lewis, *The Łojasiewicz Inequality for Nonsmooth Subanalytic Functions with Applications to Subgradient Dynamical Systems*, SIAM J. Optim. 17 (2007), 1205–1223, DOI 10.1137/050644641. A aplicação usa a regularidade de F = Φ + δ_X, a compacidade da caixa, (2.1) e (2.2).
+
+## 3. Cláusulas positivas e derivadas de cláusulas nulas
+
+Fixe um equilíbrio z* com Φ(z*) > 0.
+
+Chame c de **cláusula positiva** se P_c(z*) > 0. Existe ao menos uma.
+
+### Lema 3.1 — cláusula nula não atua numa coordenada livre
+
+Se 0 < z_v* < 1 e P_c(z*) = 0, então
+
+    ∂_v P_c(z*) = 0.
+
+**Prova.** O fator ell_cv(z_v*) é estritamente positivo. Como o produto da cláusula é zero, algum outro fator da cláusula é zero. Esse fator continua presente após derivar em relação a z_v, anulando a derivada. □
+
+Assim, numa coordenada livre, somente cláusulas positivas podem contribuir ao gradiente.
+
+## 4. Quantas folhas existem no sub-hipergrafo positivo
+
+Considere uma componente conexa do sub-hipergrafo formado apenas pelas cláusulas positivas. Se ela contém t cláusulas, então, por ser 3-uniforme e Berge-acíclica,
+
+    |V| = 2t + 1.                                          (4.1)
+
+Se L é o número de variáveis de grau 1 dentro dessa componente positiva, então
+
+    L ≥ t + 2.                                             (4.2)
+
+De fato,
+
+    Σ_{v∈V} (deg_+(v)-1)
+    = 3t - (2t+1)
+    = t-1.
+
+Cada variável com grau positivo pelo menos 2 contribui ao menos 1 para essa soma. Portanto existem no máximo t-1 variáveis com grau ≥ 2, e
+
+    L ≥ (2t+1) - (t-1) = t+2.
+
+Se o sub-hipergrafo positivo tem várias componentes, somando componente a componente obtemos uma desigualdade ainda mais forte. Em particular, se o número total de cláusulas positivas é t,
+
+    L ≥ t + 2.                                             (4.3)
+
+## 5. Cada folha positiva exige uma cláusula restauradora distinta
+
+Escolha uma variável v que aparece em exatamente uma cláusula positiva. Oriente a coordenada u_v ∈ [0,1] para que o fator dessa única cláusula positiva seja u_v.
+
+Como a cláusula é positiva, u_v* > 0.
+
+Pelo Lema 3.1, v não pode estar no interior: se estivesse, a única cláusula positiva produziria uma derivada não nula e nenhuma cláusula nula poderia cancelá-la. Portanto
+
+    u_v* = 1.
+
+A cláusula positiva empurra u_v para o interior. Para satisfazer KKT no bordo superior, é necessária pelo menos uma cláusula nula com derivada restauradora não nula.
+
+Numa cláusula nula, a derivada em relação a u_v só pode ser não nula quando o fator de v é o **único** fator zero da cláusula. Portanto a mesma cláusula nula não pode restaurar simultaneamente duas variáveis distintas: se tivesse dois fatores zero, a derivada em qualquer um ainda conteria o outro fator zero.
+
+Logo as L folhas do sub-hipergrafo positivo exigem pelo menos L cláusulas nulas distintas.
+
+Se m é o número total de cláusulas,
+
+    m - t ≥ L.
+
+Com (4.3),
+
+    m ≥ t + L ≥ 2t + 2.                                  (5.1)
+
+Se t ≥ 2, então m ≥ 6. Portanto
+
+    m ≤ 5  =>  t = 1.                                     (5.2)
+
+Todo equilíbrio de energia positiva numa hiperárvore com no máximo cinco cláusulas possui exatamente uma cláusula positiva.
+
+## 6. Estrutura forçada quando há uma única cláusula positiva
+
+Seja a única cláusula positiva C0. Oriente seus três fatores como
+
+    C0 = y1 y2 y3.
+
+Pela mesma razão anterior, nenhuma das três coordenadas pode ser livre. Como C0 é positiva,
+
+    y1* = y2* = y3* = 1.                                  (6.1)
+
+Cada y_i precisa de uma cláusula restauradora distinta. Logo já são necessárias quatro cláusulas:
+
+    C0 + A1 + A2 + A3.
+
+Ao remover C0 do grafo de incidência, a árvore se separa em três ramos, um por variável y_i. Cada ramo contém pelo menos sua cláusula restauradora.
+
+Se m ≤ 5, há no máximo quatro cláusulas fora de C0. Distribuídas em três ramos não vazios:
+
+- para m = 4, os tamanhos são (1,1,1);
+- para m = 5, os tamanhos são (1,1,2), após permutação.
+
+Em particular existe ao menos um **ramo unitário**.
+
+Escolha o ramo unitário ligado a y. Sua única cláusula adicional precisa ter fator complementar em y, pois somente esse sinal fornece derivada restauradora no ponto y* = 1. Depois de orientar as duas folhas,
+
+    A_y = (1-y)ab.                                         (6.2)
+
+Como o ramo contém somente A_y, as variáveis a,b são folhas globais de grau 1.
+
+## 7. A folha monotônica força bacia de medida zero
+
+No equilíbrio, y* = 1.
+
+A derivada em y contém somente a contribuição da cláusula positiva e da única cláusula do ramo unitário:
+
+    ∂_y Φ(z*) = 1 - a*b*.                                  (7.1)
+
+Como y* = 1 está no bordo superior, KKT exige ∂_y Φ(z*) ≤ 0. Logo
+
+    a*b* ≥ 1.
+
+Como a*,b* ∈ [0,1],
+
+    a* = b* = 1.                                           (7.2)
+
+Agora use que a é folha global. Ela aparece apenas em A_y, então em todo o hipercubo
+
+    ∂_a Φ = (1-y)b ≥ 0.
+
+Assim a velocidade projetada satisfaz
+
+    ȧ(t) ≤ 0                                               (7.3)
+
+para todo t.
+
+Portanto a(t) é globalmente não crescente.
+
+Se uma trajetória converge ao equilíbrio positivo acima, (7.2) exige a(t) → 1. Uma função não crescente com valores em [0,1] só pode convergir para 1 se já começar em 1:
+
+    a(0) = 1.                                              (7.4)
+
+Logo a bacia desse equilíbrio está contida no hiperplano {a=1}, que tem medida de Lebesgue ambiente zero.
+
+## 8. União sobre todos os equilíbrios positivos
+
+A escolha do ramo unitário ou da cláusula positiva pode depender do equilíbrio, mas a instância possui apenas finitas cláusulas e variáveis-folha.
+
+Para cada possibilidade de cláusula positiva C, fixe uma folha a_C pertencente a um ramo unitário cuja existência foi demonstrada acima.
+
+Se
+
+    B_+ = {z0 : Φ(z^∞(z0)) > 0},
+
+então
+
+    B_+ ⊆ ⋃_C {a_C(0)=1}.                                 (8.1)
+
+A união é finita. Cada conjunto do lado direito é uma face afim de codimensão 1. Portanto
+
+    Leb(B_+) = 0.                                          (8.2)
+
+Essa conclusão independe do número de trocas de faces sofridas pela trajetória antes de convergir.
+
+## 9. Energia contínua zero implica erro discreto zero após rounding
+
+Se Φ(z^∞) = 0, como cada P_c ≥ 0, temos P_c(z^∞) = 0 para toda cláusula.
+
+Logo, em cada cláusula, ao menos um fator literal vale exatamente zero. Isso significa que a variável correspondente está exatamente no endpoint booleano que satisfaz aquele literal.
+
+Qualquer arredondamento compatível com os endpoints mantém a cláusula satisfeita. Portanto
+
+    Φ(z^∞)=0  =>  E_disc(round(z^∞))=0.                    (9.1)
+
+Assim toda bacia ruim está contida em B_+, que possui medida zero para m ≤ 5.
+
+Conclui-se
+
+    m_{*,HT}^{mult} ≥ 6.                                   (9.2)
+
+## 10. Certificado M6 e igualdade
+
+O documento principal de auditoria já contém um motivo M6 explícito, linear, 3-uniforme e Berge-acíclico, com uma face positiva de energia 1 e um aberto de condições iniciais capturado em tempo finito.
+
+Consequentemente,
+
+    m_{*,HT}^{mult} ≤ 6.                                  (10.1)
+
+Com (9.2),
+
+    m_{*,HT}^{mult} = 6.
+
+## 11. O que esta prova não usa
+
+A minimalidade acima não depende de exclusão de Zeno em PDS multilineares, identificação finita da variedade ativa, uma face final atingida em tempo finito, preservação de volume entre faces, argumentos de coárea em mapas de hitting, teoremas de variedade estável ou espectro da Hessiana irrestrita.
+
+Mesmo que uma trajetória execute infinitas sequências de hit, stick e release, a prova permanece válida: ela usa apenas a convergência pontual z(t) → z^∞ e a monotonicidade global de uma folha forçada pela combinatória de m ≤ 5.
+
+## 12. Status
+
+**Teorema T10R-M6 (minimalidade hiperarbórea): PROVADO.**
+
+Na classe de hiperárvores conexas, lineares, 3-uniformes e Berge-acíclicas, seis cláusulas são necessárias e suficientes para a existência de uma bacia ruim aberta de medida de Lebesgue positiva para a relaxação multilinear projetada.
+
+Este teorema é um resultado sobre a dinâmica dessa relaxação contínua. Ele não implica P = NP, P ≠ NP, nem resolve o problema P versus NP.
+
+
+
+======================================================================
+ARQUIVO: CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md
+CAMINHO: Publicacoes/CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md
+======================================================================
+
+# T10R — Auditoria independente da propagação probabilística do motivo M6
+
+**Data:** 22 de setembro de 2026  
+**Objeto:** contagem e concentração de componentes M6 isoladas no modelo uniforme de M = floor(alpha N) cláusulas 3-SAT assinadas distintas, sem reposição.  
+**Veredito:** a rota probabilística M6 sobrevive à auditoria independente, com duas correções de formulação: a prova de diferenças limitadas deve usar o comprimento do intervalo condicional do martingale, e a afirmação com alta probabilidade deve distinguir claramente a aleatoriedade da fórmula da aleatoriedade da inicialização.
+
+## 1. Motivo M6 e automorfismos
+
+O suporte estrutural M6 possui 13 variáveis e 6 cláusulas:
+
+    (0,1,2),
+    (0,3,4),
+    (1,5,6),
+    (2,7,8),
+    (3,9,10),
+    (4,11,12).
+
+O grafo de incidência é uma árvore. No grafo de adjacência entre cláusulas, há duas cláusulas centrais de grau 3 ligadas entre si; cada uma possui duas cláusulas-folha.
+
+Os automorfismos estruturais são:
+
+- troca das duas cláusulas centrais: fator 2;
+- troca das duas cláusulas-folha em cada lado: fator 2^2;
+- troca das duas variáveis-folha dentro de cada uma das quatro cláusulas-folha: fator 2^4.
+
+Logo
+
+    |Aut(M6)| = 2 * 2^2 * 2^4 = 128.
+
+Uma verificação computacional independente do grafo de incidência bipartido também retorna exatamente 128 automorfismos preservando os tipos variável/cláusula.
+
+## 2. Tamanho da órbita de gauge assinada
+
+Fixada uma cópia estrutural rotulada do M6, o grupo de gauge {±1}^13 age nas polaridades trocando simultaneamente o sinal de todas as ocorrências de cada variável.
+
+Essa ação é livre: se uma transformação de gauge deixa todas as 18 ocorrências literais inalteradas, então cada uma das 13 variáveis deve ter flip trivial, pois toda variável aparece em ao menos uma cláusula.
+
+Portanto a órbita de gauge possui exatamente
+
+    2^13
+
+signings distintos.
+
+Consequentemente o número de candidatos M6 assinados em N variáveis é
+
+    A_N = (N)_13 / 128 * 2^13
+        = 64 (N)_13.
+
+Não há sobrecontagem escondida nessa expressão: (N)_13 / 128 conta cópias estruturais não orientadas do hipergrafo rotulado, e para cada conjunto fixo de 6 arestas estruturais a órbita assinada contém 2^13 conjuntos distintos de cláusulas assinadas.
+
+## 3. Probabilidade exata de uma cópia ser uma componente isolada
+
+O universo de cláusulas assinadas é
+
+    Q_N = 8 C(N,3).
+
+Para um suporte fixo S de 13 variáveis, o número de cláusulas assinadas que não tocam S é
+
+    Q_0 = 8 C(N-13,3).
+
+Fixe uma cópia assinada específica do M6. Para que ela apareça como componente isolada, as seis cláusulas do motivo devem ser selecionadas, e as M-6 cláusulas restantes devem pertencer ao conjunto das Q_0 cláusulas que evitam completamente S.
+
+Logo
+
+    P(cópia fixa isolada)
+      = C(Q_0, M-6) / C(Q_N, M).
+
+Portanto
+
+    E X_N
+      = 64 (N)_13
+        C(8 C(N-13,3), M-6)
+        / C(8 C(N,3), M).                         (3.1)
+
+Esta é a expressão finita exata para o modelo sem reposição.
+
+## 4. Assintótica da expectativa
+
+Com M = floor(alpha N), alpha > 0 fixo,
+
+    (N)_13 = N^13 (1 + O(1/N)),
+
+e o custo de incluir as seis cláusulas específicas é assintoticamente
+
+    (M)_6 / Q_N^6
+      = alpha^6 (3/4)^6 N^-12 (1+O(1/N)).
+
+O fator de isolamento satisfaz
+
+    Q_0 / Q_N
+      = C(N-13,3)/C(N,3)
+      = 1 - 39/N + O(1/N^2),
+
+e portanto
+
+    (Q_0/Q_N)^(M-6)
+      -> exp(-39 alpha).
+
+Assim
+
+    E X_N / N
+      -> 64 (3/4)^6 alpha^6 exp(-39 alpha)
+       = (729/64) alpha^6 exp(-39 alpha).          (4.1)
+
+Defina
+
+    d(alpha) = (729/64) alpha^6 exp(-39 alpha).
+
+Então
+
+    E X_N = d(alpha) N + o(N).
+
+## 5. Diferenças limitadas para uma troca de cláusula
+
+Sejam F e F' fórmulas de M cláusulas que diferem por uma única troca
+
+    F' = F - {e} + {e'}.
+
+Afirmamos:
+
+    |X(F') - X(F)| <= 4.                           (5.1)
+
+### Remoção de e
+
+Se e pertence a uma componente M6 isolada, sua remoção pode destruir no máximo essa única componente: contribuição -1.
+
+Se e não está numa componente M6 isolada, sua remoção pode separar a componente conexa que contém e. Como e possui exatamente três variáveis, após removê-la há no máximo três blocos conexos distintos adjacentes a essas três variáveis. Portanto no máximo três novas componentes isoladas M6 podem surgir.
+
+Assim
+
+    -1 <= Delta_remove <= 3.
+
+### Adição de e'
+
+A cláusula e' toca no máximo três componentes conexas distintas, uma por variável. Logo sua adição pode destruir no máximo três componentes M6 isoladas, fundindo-as a uma componente maior.
+
+Por outro lado, e' pode criar no máximo uma nova componente M6: a componente conexa final que contém e' é única.
+
+Assim
+
+    -3 <= Delta_add <= 1.
+
+Somando,
+
+    -4 <= X(F') - X(F) <= 4,
+
+provando (5.1).
+
+## 6. Concentração sem reposição: a constante correta
+
+Represente a amostra uniforme sem reposição pelas primeiras M posições de uma permutação uniforme das Q_N cláusulas assinadas.
+
+Considere o martingale de Doob obtido revelando sequencialmente essas M cláusulas.
+
+Fixado um prefixo até o passo k-1, compare duas possibilidades a e b para a k-ésima cláusula. Acople os sufixos por uma transposição a <-> b. Os conjuntos finais produzidos pelo acoplamento são iguais ou diferem por exatamente uma troca de cláusula.
+
+Pelo Lema (5.1), os valores finais de X diferem por no máximo 4. Logo, para cada passo k, as possíveis expectativas condicionais ocupam um intervalo de comprimento no máximo 4.
+
+A forma de Hoeffding para martingales com intervalos condicionais de comprimento c_k dá
+
+    P(X_N - E X_N <= -t)
+      <= exp( -2 t^2 / sum_k c_k^2 )
+      <= exp( -2 t^2 / (16 M) ).                  (6.1)
+
+Este é o fundamento correto para o fator 2 no expoente. Não basta dizer apenas que cada incremento tem módulo <= 4.
+
+Como E X_N >= (7/8)dN para N suficientemente grande, tomando t = dN/8,
+
+    P(X_N < (3/4)dN)
+      <= exp( - d^2 N / (512 alpha) )              (6.2)
+
+para N suficientemente grande.
+
+Portanto há linearmente muitas componentes M6 isoladas com probabilidade 1 - exp(-Theta(N)) sobre a fórmula.
+
+## 7. Captura dinâmica condicional à fórmula
+
+Cada componente M6 isolada possui uma caixa aberta certificada de probabilidade produto uniforme
+
+    p_0 = 2^-53.
+
+Componentes isoladas possuem suportes de variáveis disjuntos. Como a inicialização global é produto uniforme, condicionada a uma fórmula F com X_N componentes isoladas, os eventos de captura são independentes e
+
+    Z_N | F ~ Binomial(X_N, p_0).                  (7.1)
+
+Se X_N >= (3/4)dN, Chernoff com delta = 1/4 dá
+
+    P_x( Z_N < (3/4)p_0 X_N | F )
+      <= exp( - p_0 X_N / 32 )
+      <= exp( - 3 p_0 d N / 128 ).                (7.2)
+
+Cada captura produz pelo menos uma cláusula violada distinta após rounding.
+
+## 8. Lower bound de energia residual
+
+Como M <= alpha N,
+
+    rho_mult >= Z_N / M.
+
+Na interseção dos eventos bons de (6.2) e (7.2),
+
+    rho_mult
+      >= (9/16) p_0 d / alpha
+       = (6561 / 2^63) alpha^5 exp(-39 alpha).
+
+Como
+
+    6561 / 2^63 > 729 / 2^60,
+
+segue a cota conservadora
+
+    rho_mult
+      >= (729 / 2^60) alpha^5 exp(-39 alpha).      (8.1)
+
+## 9. Formulação probabilística correta em dois níveis
+
+Há duas fontes de aleatoriedade distintas:
+
+1. a fórmula F;
+2. a inicialização x(0), condicionada a F.
+
+A forma mais informativa do resultado é:
+
+Para todo alpha > 0 fixo, existem c_1(alpha), c_2(alpha) > 0 tais que, para N suficientemente grande,
+
+    P_F[
+      P_x(
+        rho_mult >= (729/2^60) alpha^5 exp(-39 alpha)
+        | F
+      )
+      >= 1 - exp(-c_2 N)
+    ]
+    >= 1 - exp(-c_1 N).                            (9.1)
+
+Pode-se tomar
+
+    c_1 = d(alpha)^2 / (512 alpha),
+
+e
+
+    c_2 = 3 p_0 d(alpha) / 128,
+
+até ajustes inofensivos de N grande.
+
+Em particular, integrando sobre F,
+
+    P_{F,x}[
+      rho_mult >= (729/2^60) alpha^5 exp(-39 alpha)
+    ]
+    -> 1.                                           (9.2)
+
+Assim a afirmação conjunta w.h.p. é verdadeira, mas (9.1) é mais forte e deixa explícito que uma fórmula típica já possui probabilidade condicional exponencialmente alta de apresentar a densidade residual certificada sob inicialização produto uniforme.
+
+## 10. Relação com a afirmação em esperança
+
+A refutação em esperança não precisa de concentração. Pela linearidade da esperança,
+
+    liminf E rho_mult
+      >= (729 / 2^59) alpha^5 exp(-39 alpha) > 0,
+
+usando diretamente E X_N e p_0.
+
+A prova de alta probabilidade fortalece essa refutação e mostra que a energia residual positiva não é sustentada por uma cauda rara de fórmulas.
+
+## 11. Status após auditoria
+
+- ordem do grupo de automorfismos 128: **VERIFICADA**;
+- tamanho da órbita de gauge 2^13: **VERIFICADO**;
+- expressão finita da expectativa: **VERIFICADA**;
+- constante assintótica 729/64: **VERIFICADA**;
+- expoente de isolamento exp(-39 alpha): **VERIFICADO**;
+- sensibilidade por troca <= 4: **PROVADA**;
+- concentração exponencial de X_N: **PROVADA**, usando intervalo condicional do martingale;
+- independência condicional das capturas: **PROVADA**;
+- Chernoff: **PROVADA**;
+- lower bound w.h.p. da energia residual: **PROVADO** no modelo uniforme sem reposição + inicialização produto uniforme.
+
+A única cautela editorial restante é alinhar a notação rho_mult e o espaço de probabilidade exatamente com a formulação histórica de T10 no manuscrito principal, para evitar ambiguidade entre probabilidade sobre fórmulas, sobre inicializações, ou conjunta.
+
+
+## 11. Resolução da auditoria de escala temporal do certificado M6
+
+Uma auditoria externa apontou uma aparente discrepância de fator 4 entre as derivadas de Φ escritas em coordenadas-fator e as velocidades usadas no bootstrap quantitativo M6.
+
+A discrepância é apenas de parametrização temporal. Para uma coordenada-fator
+
+    z = (1±x)/2,
+
+temos
+
+    ∂_x Φ = ±(1/2) ∂_z Φ
+    e
+    ż = ±(1/2) ẋ.
+
+Como o fluxo original é ẋ = Proj(-∇_x Φ), no tempo original t:
+
+    ż = (1/4) Proj(-∇_z Φ).
+
+Assim, no envelope usado no M6:
+
+    |∂_y Φ| ≤ 31/256
+    => |ẏ| ≤ (1/4)(31/256) = 31/1024,
+
+e para uma folha:
+
+    |∂_a Φ| ≤ 1/16
+    => |ȧ| ≤ 1/64.
+
+Do mesmo modo, para um fator central u,
+
+    -∂_u Φ ≥ 13/64
+    => u̇ ≥ 13/256,
+
+de forma que o tempo para atravessar no máximo 1/16 é
+
+    (1/16)/(13/256) = 16/13.
+
+Consequentemente os deslocamentos usados no bootstrap permanecem exatamente
+
+    (31/1024)(16/13) = 31/832,
+
+e
+
+    (1/64)(16/13) = 1/52.
+
+Logo a caixa certificada, sua massa p0=2^-53 e todas as constantes probabilísticas derivadas dela permanecem inalteradas. O manuscrito principal passou a declarar explicitamente essa conversão de tempo para eliminar a ambiguidade.
+
+
+
+======================================================================
+ARQUIVO: PROVA_ALTA_PROBABILIDADE_M6.md
+CAMINHO: PROVA_ALTA_PROBABILIDADE_M6.md
+======================================================================
+
+# Teorema de Alta Probabilidade para a Energia Residual (M6)
+
+## 1. Definições Formais e Amostragem Sem Reposição
+
+Seja $\Omega_N$ o conjunto das $Q_N = 8\binom{N}{3}$ cláusulas $3$-SAT assinadas possíveis sobre $N$ variáveis booleanas.
+A fórmula $F$ é uma amostra uniforme de $M = \lfloor\alpha N\rfloor$ cláusulas distintas de $\Omega_N$ (modelo uniforme sem reposição).
+
+Consideramos o motivo crítico $M6$, definido como a hiperárvore linear $3$-uniforme de $6$ cláusulas e $13$ variáveis com a estrutura de duplo núcleo e a família de equilíbrios positivos catalogada no certificado original (`CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md:415`).
+O grupo de automorfismos não assinado tem ordem $128$, e a órbita de *gauge* contém exatamente $2^{13}$ configurações de sinais dinamicamente conjugadas.
+
+Definimos a variável aleatória $X_N = X(F)$ como o **número de componentes conexas isoladas em $F$ pertencentes estritamente à órbita de gauge assinada do motivo $M6$**. Uma componente é isolada se nenhuma de suas $13$ variáveis ocorre em qualquer outra cláusula de $F$.
+
+## 2. Diferenças Limitadas e Acoplamento por Troca (Swap)
+
+Analisamos o impacto da substituição de uma única cláusula assinada $c \in F$ por outra cláusula assinada $c' \in \Omega_N \setminus F$.
+Como cada cláusula contém exatamente $3$ variáveis, ela intersecta o suporte de no máximo $3$ componentes isoladas disjuntas da órbita $M6$.
+
+*   **Remoção de $c$:** Se $c$ pertencia a uma componente $M6$ isolada, essa componente é destruída (variação $-1$). Se $c$ era a única conexão externa impedindo o isolamento de componentes $M6$, sua remoção pode isolar no máximo $3$ componentes (variação $+3$).
+*   **Adição de $c'$:** A inserção de $c'$ pode completar a $6^{\rm a}$ cláusula de uma componente isolada (variação $+1$). Se $c'$ incidir sobre componentes $M6$ já isoladas, pode desisolar no máximo $3$ componentes (variação $-3$).
+
+Em qualquer caso, a variação líquida satisfaz rigidamente:
+$ |X(F) - X(F')| \le 4. $
+
+A justificativa estrutural é a seguinte. Ao remover uma cláusula $c$, pode-se destruir no máximo uma componente $M6$ isolada; por outro lado, como $c$ contém exatamente três variáveis, sua remoção pode separar a antiga componente conexa em no máximo três blocos adjacentes a essas variáveis e, portanto, criar no máximo três novas componentes $M6$ isoladas. Assim $-1\le\Delta_{\rm rem}\le3$. Ao adicionar uma cláusula $c'$, ela toca no máximo três componentes conexas distintas e pode destruir no máximo três componentes $M6$ isoladas; como existe uma única componente final contendo $c'$, ela pode criar no máximo uma nova componente $M6$. Assim $-3\le\Delta_{\rm add}\le1$. Somando, obtém-se o limite absoluto $4$.
+
+Para a amostragem sem reposição de $M$ cláusulas, consideramos o martingal de Doob gerado pela revelação sequencial das cláusulas $c_1, \dots, c_M$. Dadas duas realizações possíveis $a,b$ para o passo $k$ sob o mesmo prefixo, acoplamos os sorteios restantes por uma transposição $a\leftrightarrow b$. Os conjuntos finais resultantes são idênticos ou diferem por exatamente uma substituição de cláusula. Pelo limite acima, os possíveis valores finais de $X$ diferem por no máximo $4$; consequentemente, as possíveis expectativas condicionais no passo $k$ ocupam um intervalo de comprimento no máximo $4$. É esta propriedade de **intervalo condicional**, e não apenas a afirmação $|D_k|\le4$, que justifica a forma de Hoeffding usada abaixo.
+
+## 3. Concentração Macroscópica da Densidade
+
+Pela contagem combinatória exata no ensemble (Seção 7 de `CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`), a densidade assintótica esperada de componentes isoladas na órbita de gauge é:
+$$ d = \frac{729}{64}\alpha^6 e^{-39\alpha}. $$
+Para $N$ suficientemente grande, temos $\mathbb{E} X_N \ge \frac{7}{8} d N$.
+Pela Desigualdade de Azuma-Hoeffding/McDiarmid aplicada ao martingal acoplado, com $M = \lfloor\alpha N\rfloor \le \alpha N$ e $C = 4$:
+$$ \Pr\!\left(X_N < \frac{3}{4} d N\right) \le \Pr\!\left(X_N - \mathbb{E} X_N < - \frac{1}{8} d N\right) \le \exp\!\left( - \frac{2 \left(\frac{1}{8} d N\right)^2}{M \cdot 4^2} \right) \le \exp\!\left( - \frac{d^2}{512 \alpha} N \right). $$
+
+## 4. Captura Dinâmica Condicional Exata e Chernoff
+
+Consideramos a dinâmica contínua dada pelo Sistema Dinâmico Projetado (PDS) multilinear original sobre o hipercubo $[-1, 1]^N$, sob inicialização produto uniforme $\mu_0 = \text{Uniforme}([-1, 1]^N)$.
+
+Pelo certificado dinâmico auditado, cada componente isolada na órbita de gauge do motivo $M6$ possui uma bacia de atração contendo uma caixa aberta especificada com probabilidade uniforme normalizada $p_0 = 2^{-53}$ (o volume bruto de Lebesgue em $[-1, 1]^{13}$ é $2^{13} \cdot 2^{-53} = 2^{-40}$).
+Para cada componente isolada $i \in \{1, \dots, X_N\}$, fixamos uma tal caixa aberta certificada $B_i \subset [-1, 1]^{V(i)}$ com medida de probabilidade uniforme normalizada $\mu_{V(i)}(B_i) = p_0 = 2^{-53}$, onde $\mu_{V(i)} = \frac{1}{2^{13}}\lambda_{13}$ denota a distribuição marginal uniforme sobre $[-1, 1]^{V(i)}$.
+
+Como as componentes isoladas possuem suportes disjuntos de variáveis ($V(i) \cap V(j) = \emptyset$ para $i \neq j$), a captura dinâmica opera **componente por componente de forma independente**: não se exige que a inicialização global caia em todas as caixas simultaneamente. Cada componente $i$ cuja coordenada inicial local satisfaça $x(0)_{V(i)} \in B_i$ evolui de forma desacoplada pelo PDS e converge para o continuum de equilíbrios positivos da sua respectiva sub-bacia, deixando ao menos uma cláusula violada no arredondamento.
+
+Sob a medida uniforme produto $\mu_0 = \bigotimes_{j=1}^N \text{Uniforme}([-1, 1])$, os eventos de captura $\{x(0)_{V(i)} \in B_i\}$ são mutuamente independentes condicionados a $F$, cada qual ocorrendo com probabilidade exata $\mu_{V(i)}(B_i) = p_0$.
+Definimos a variável de contagem de componentes certificadamente capturadas:
+$$ Z_N = \sum_{i=1}^{X_N} \mathbf{1}_{\{x(0)_{V(i)} \in B_i\}}. $$
+Condicionado à fórmula $F$, temos rigorosamente:
+$$ Z_N \mid F \sim \operatorname{Binomial}(X_N, p_0). $$
+
+Como cada componente capturada gera ao menos uma violação de cláusula, o número total de capturas dinâmicas da rede satisfaz $Y_N \ge Z_N$.
+
+Aplicando o limite inferior multiplicativo de Chernoff para a variável binomial $Z_N$, no evento estrutural onde $X_N \ge \frac{3}{4} d N$:
+$$ \Pr\!\left(Z_N < \frac{3}{4} p_0 X_N \;\middle|\; F \right) \le \exp\!\left( - \frac{\left(\frac{1}{4}\right)^2 p_0 X_N}{2} \right) \le \exp\!\left( - \frac{3 p_0 d}{128} N \right). $$
+
+## 5. Teorema Limite da Cota Positiva com Alta Probabilidade
+
+A fração normalizada de energia residual após arredondamento satisfaz $\rho_{\rm mult} \ge \frac{Y_N}{M} \ge \frac{Z_N}{M}$.
+Como $M = \lfloor\alpha N\rfloor \le \alpha N$, na interseção dos eventos de concentração de $X_N$ e $Z_N$, temos:
+$$ \rho_{\rm mult} \ge \frac{Z_N}{\alpha N} \ge \frac{\frac{3}{4} p_0 \left( \frac{3}{4} d N \right)}{\alpha N} = \frac{9}{16} \frac{p_0 d}{\alpha}. $$
+
+Substituindo os valores de $d = \frac{729}{64}\alpha^6 e^{-39\alpha}$ e $p_0 = 2^{-53}$:
+$$ \frac{9}{16} \frac{p_0 d}{\alpha} = \frac{9}{16} \cdot 2^{-53} \cdot \frac{729}{64} \alpha^5 e^{-39\alpha} = \frac{6561}{1024} \cdot \frac{\alpha^5 e^{-39\alpha}}{2^{53}} = \frac{6561}{2^{63}} \alpha^5 e^{-39\alpha}. $$
+
+Como $\frac{6561}{2^3} = \frac{6561}{8} = 820{,}125 > 729$, segue que:
+$$ \frac{6561}{2^{63}} = \frac{6561/8}{2^{60}} > \frac{729}{2^{60}}. $$
+Portanto:
+$$ \frac{9}{16} \frac{p_0 d}{\alpha} > \frac{729}{2^{60}} \alpha^5 e^{-39\alpha}. $$
+
+Como a probabilidade de falha é majorada pela união das caudas exponenciais:
+$$ \Pr\!\left( \rho_{\rm mult} < \frac{729}{2^{60}} \alpha^5 e^{-39\alpha} \right) \le \exp\!\left( - \frac{d^2}{512 \alpha} N \right) + \exp\!\left( - \frac{3 p_0 d}{128} N \right) \longrightarrow 0 \quad (N \to \infty). $$
+
+**Teorema (forma conjunta):** Para o fluxo de gradiente projetado multilinear original sobre o hipercubo $[-1, 1]^N$ com inicialização produto uniforme, no modelo de $M = \lfloor\alpha N\rfloor$ cláusulas $3$-SAT assinadas distintas sem reposição ($\alpha > 0$),
+$ \Pr_{F,x_0}\!\left[ \rho_{\rm mult} \ge \frac{729}{2^{60}} \alpha^5 e^{-39\alpha} \right] \longrightarrow 1 \quad \text{quando } N \to \infty. $
+
+Mais precisamente, com
+$ d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha},\qquad p_0=2^{-53}, $
+para $N$ suficientemente grande,
+$
+\Pr_F\!\left[
+  \Pr_{x_0}\!\left(
+    \rho_{\rm mult}\ge \frac{729}{2^{60}}\alpha^5e^{-39\alpha}\mid F
+  \right)
+  \ge 1-\exp\!\left(-\frac{3p_0d(\alpha)}{128}N\right)
+\right]
+\ge
+1-\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right).
+$
+Assim uma fórmula típica já possui probabilidade condicional exponencialmente alta de exibir a densidade residual certificada sob a inicialização produto uniforme. $\blacksquare$
+
+
+## 6. Auditoria independente
+
+A derivação de automorfismos, órbita de gauge, expectativa exata, constante assintótica, sensibilidade por troca e formulação probabilística em dois níveis foi auditada independentemente em `Publicacoes/CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md`.
+
+
+## Escala temporal das coordenadas-fator
+
+As constantes dinâmicas do certificado local M6 usam o tempo original do fluxo em x∈[-1,1]^N. Para z=(1±x)/2,
+
+    ż = (1/4) Proj(-∇_z Φ).
+
+Portanto as derivadas em z devem ser multiplicadas por 1/4 ao serem convertidas em velocidades no tempo original. Em particular:
+
+    31/256 -> 31/1024,
+    1/16   -> 1/64,
+    13/64  -> 13/256.
+
+O tempo de saturação 16/13 e os drifts 31/832 e 1/52 são, portanto, consistentes entre si. A massa da caixa p0=2^-53 não depende dessa reparametrização temporal.
+
+
+
+======================================================================
+ARQUIVO: clg_references.bib
+CAMINHO: Publicacoes/clg_references.bib
+======================================================================
+
+@article{bolte2007lojasiewicz,
+  title={The {\L}ojasiewicz inequality for nonsmooth subanalytic functions with applications to subgradient dynamical systems},
+  author={Bolte, J{\'e}r{\^o}me and Daniilidis, Aris and Lewis, Adrian},
+  journal={SIAM Journal on Optimization},
+  volume={17},
+  number={4},
+  pages={1205--1223},
+  year={2007},
+  doi={10.1137/050644641}
+}
+
+@inproceedings{cook1971complexity,
+  title={The complexity of theorem-proving procedures},
+  author={Cook, Stephen A},
+  booktitle={Proceedings of the third annual ACM symposium on Theory of computing},
+  pages={151--158},
+  year={1971}
+}
+
+@article{karp1972reducibility,
+  title={Reducibility among combinatorial problems},
+  author={Karp, Richard M},
+  journal={Complexity of Computer Computations},
+  pages={85--103},
+  year={1972},
+  publisher={Springer}
+}
+
+@article{hastad2001optimal,
+  title={Some optimal inapproximability results},
+  author={H{\aa}stad, Johan},
+  journal={Journal of the ACM (JACM)},
+  volume={48},
+  number={4},
+  pages={798--859},
+  year={2001},
+  publisher={ACM New York, NY, USA}
+}
+
+@article{goemans1995improved,
+  title={Improved approximation algorithms for maximum cut and satisfiability problems using semidefinite programming},
+  author={Goemans, Michel X and Williamson, David P},
+  journal={Journal of the ACM (JACM)},
+  volume={42},
+  number={6},
+  pages={1115--1145},
+  year={1995}
+}
+
+@inproceedings{khot2002power,
+  title={On the power of unique 2-prover 1-round games},
+  author={Khot, Subhash},
+  booktitle={Proceedings of the thirty-fourth annual ACM symposium on Theory of computing},
+  pages={767--775},
+  year={2002}
+}
+
+@article{ricci2010being,
+  title={Being glassy without being hard to solve},
+  author={Ricci-Tersenghi, Federico},
+  journal={Science},
+  volume={330},
+  number={6011},
+  pages={1639--1640},
+  year={2010},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{mezard2002analytic,
+  title={Analytic and algorithmic solution of random satisfiability problems},
+  author={M{\'e}zard, Marc and Parisi, Giorgio and Zecchina, Riccardo},
+  journal={Science},
+  volume={297},
+  number={5582},
+  pages={812--815},
+  year={2002}
+}
+
+@article{krzakala2007gibbs,
+  title={Gibbs states and the set of solutions of random constraint satisfaction problems},
+  author={Krzakala, Florent and Montanari, Andrea and Ricci-Tersenghi, Federico and Semerjian, Guilhem and Zdeborov{\'a}, Lenka},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={104},
+  number={25},
+  pages={10318--10323},
+  year={2007}
+}
+
+@article{gamarnik2021overlap,
+  title={The overlap gap property: A topological barrier to optimizing over random structures},
+  author={Gamarnik, David},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={118},
+  number={41},
+  pages={e2108492118},
+  year={2021}
+}
+
+@article{gamarnik2014limits,
+  title={Limits of local algorithms over sparse random graphs},
+  author={Gamarnik, David and Sudan, Madhu},
+  journal={The Annals of Probability},
+  volume={45},
+  number={4},
+  pages={2353--2376},
+  year={2017}
+}
+
+@article{hirsch1985systems,
+  title={Systems of differential equations which are competitive or cooperative II: Convergence almost everywhere},
+  author={Hirsch, Morris W},
+  journal={SIAM Journal on Mathematical Analysis},
+  volume={16},
+  number={3},
+  pages={423--439},
+  year={1985}
+}
+
+@article{okamoto1973distinctness,
+  title={Distinctness of the eigenvalues of a quadratic form in a multivariate sample},
+  author={Okamoto, Masashi},
+  journal={The Annals of Statistics},
+  volume={1},
+  number={4},
+  pages={763--765},
+  year={1973}
+}
+
+@techreport{caron2005zero,
+  title={Zero sets of polynomials and Lebesgue measure},
+  author={Caron, Richard and Traynor, Tim},
+  institution={University of Windsor Technical Report},
+  year={2005}
+}
+
+@book{krantz2002primer,
+  title={A Primer of Real Analytic Functions},
+  author={Krantz, Steven G and Parks, Harold R},
+  year={2002},
+  publisher={Birkhauser Boston}
+}
+
+@book{courant1962methods,
+  title={Methods of Mathematical Physics: Partial Differential Equations},
+  author={Courant, Richard and Hilbert, David},
+  volume={2},
+  year={1962},
+  publisher={Interscience Publishers}
+}
+
+@book{evans2010partial,
+  title={Partial Differential Equations},
+  author={Evans, Lawrence C},
+  edition={2nd},
+  year={2010},
+  publisher={American Mathematical Society}
+}
+
+@article{carvalho2026clg,
+  title={Computational Landscape Geometry: Foundations of Continuous Relaxations and Algorithmic Dynamics on Constraint Satisfaction Problems},
+  author={Carvalho, Thiago},
+  journal={Carvalho Research Archive},
+  year={2026}
+}
+
+@article{levin1973universal,
+  title={Universal search problems},
+  author={Levin, Leonid A},
+  journal={Problemy Peredachi Informatsii},
+  volume={9},
+  number={3},
+  pages={115--116},
+  year={1973}
+}
+
+@book{milnor1968singular,
+  title={Singular Points of Complex Hypersurfaces},
+  author={Milnor, John},
+  series={Annals of Mathematics Studies},
+  volume={61},
+  year={1968},
+  publisher={Princeton University Press}
+}
+
+@article{gu1994global,
+  title={Global search methods for solving the satisfiability (SAT) problem},
+  author={Gu, Jun},
+  journal={IEEE Transactions on Knowledge and Data Engineering},
+  volume={6},
+  number={3},
+  pages={361--381},
+  year={1994},
+  publisher={IEEE}
+}
+
+@article{kurchan1993barriers,
+  title={Barriers in the free-energy landscape of spin glasses},
+  author={Kurchan, Jorge and Parisi, Giorgio and Virasoro, Miguel Angel},
+  journal={Journal de Physique I},
+  volume={3},
+  number={8},
+  pages={1819--1838},
+  year={1993}
+}
+
+@article{ercsey2011optimization,
+  title={Optimization hardness as transient chaos: an exponential approach to 3-SAT},
+  author={Ercsey-Ravasz, M{\'a}ria and Toroczkai, Zolt{\'a}n},
+  journal={Nature Physics},
+  volume={7},
+  number={12},
+  pages={966--970},
+  year={2011}
+}
+
+@article{molnar2018continuous,
+  title={A continuous-time approach to minimum clique cover problems},
+  author={Moln{\'a}r, Ferenc and Moln{\'a}r, Szabolcs and Varga, M{\'a}t{\'e} and Toroczkai, Zolt{\'a}n and Ercsey-Ravasz, M{\'a}ria},
+  journal={Nature Communications},
+  volume={9},
+  pages={4864},
+  year={2018}
+}
+
+@article{calinescu2011maximizing,
+  title={Maximizing a submodular set function subject to a matroid constraint},
+  author={C{\u{a}}linescu, Gruia and Chekuri, Chandra and P{\'a}l, Martin and Vondr{\'a}k, Jan},
+  journal={SIAM Journal on Computing},
+  volume={40},
+  number={6},
+  pages={1740--1766},
+  year={2011}
+}
+
+@article{franz2001ferromagnet,
+  title={A ferromagnet with a glass transition},
+  author={Franz, Silvio and M{\'e}zard, Marc and Ricci-Tersenghi, Federico and Weigt, Martin and Zecchina, Riccardo},
+  journal={Europhysics Letters},
+  volume={55},
+  number={4},
+  pages={465--471},
+  year={2001}
+}
+
+@article{mezard2003two,
+  title={Two solutions to dilated p-spin models and XORSAT problems},
+  author={M{\'e}zard, Marc and Ricci-Tersenghi, Federico and Zecchina, Riccardo},
+  journal={Journal of Statistical Physics},
+  volume={111},
+  number={3},
+  pages={505--533},
+  year={2003}
+}
+
+@inproceedings{lee2016gradient,
+  title={Gradient descent only converges to minimizers},
+  author={Lee, Jason D and Simchowitz, Max and Jordan, Michael I and Recht, Benjamin},
+  booktitle={Conference on Learning Theory (COLT)},
+  pages={1246--1257},
+  year={2016}
+}
+
+@article{folena2020rethinking,
+  title={Rethinking mean-field spin-glass dynamics: from the TAP free energy to the dynamics},
+  author={Folena, Giampaolo and Franz, Silvio and Zamponi, Francesco},
+  journal={Physical Review X},
+  volume={10},
+  number={3},
+  pages={031045},
+  year={2020}
+}
+
+@book{nagurney1996projected,
+  title={Projected Dynamical Systems and Variational Inequalities with Applications},
+  author={Nagurney, Anna and Zhang, Ding},
+  year={1996},
+  publisher={Springer}
+}
+
+@book{odonnell2014analysis,
+  title={Analysis of Boolean Functions},
+  author={O'Donnell, Ryan},
+  year={2014},
+  publisher={Cambridge University Press}
+}
+
+@article{thouless1977solution,
+  title={Solution of 'Solvable model of a spin glass'},
+  author={Thouless, David J and Anderson, Philip W and Palmer, Robert G},
+  journal={Philosophical Magazine},
+  volume={35},
+  number={3},
+  pages={593--601},
+  year={1977}
+}
+
+@article{brogliato2006equivalence,
+  title={Equivalence and complementarity issues in projected dynamical systems and differential inclusions},
+  author={Brogliato, Bernard and Daniilidis, Aris and Lemar{\'e}chal, Claude and Malick, J{\'e}r{\^o}me},
+  journal={Mathematical Programming},
+  volume={107},
+  number={3},
+  pages={317--335},
+  year={2006},
+  publisher={Springer}
+}
+
+@book{brezis1973operateurs,
+  title={Op{\'e}rateurs Maximaux Monotones et Semi-groupes de Contractions dans les Espaces de Hilbert},
+  author={Br{\'e}zis, Ha{\"i}m},
+  year={1973},
+  publisher={North-Holland / Elsevier}
+}
+
+@article{lee2019first,
+  title={First-order methods almost always avoid strict saddle points},
+  author={Lee, Jason D and Panageas, Ioannis and Piliouras, Georgios and Simchowitz, Max and Jordan, Michael I and Recht, Benjamin},
+  journal={Mathematical Programming},
+  volume={176},
+  number={1-2},
+  pages={311--337},
+  year={2019},
+  publisher={Springer}
+}
+
+@inproceedings{panageas2017gradient,
+  title={Gradient descent only converges to minimizers: Non-isolated critical points and invariant surfaces},
+  author={Panageas, Ioannis and Piliouras, Georgios},
+  booktitle={Conference on Learning Theory (COLT)},
+  pages={1528--1538},
+  year={2017}
+}
+
+@article{schmidt1985component,
+  title={Component structure in random hypergraphs},
+  author={Schmidt-Pruzan, Jeanette and Shamir, Eli},
+  journal={Combinatorica},
+  volume={5},
+  number={1},
+  pages={81--94},
+  year={1985},
+  publisher={Springer}
+}
+
+@article{karonski2002random,
+  title={The phase transition in a random hypergraph},
+  author={Karo{\'n}ski, Micha{\l} and {\L}uczak, Tomasz},
+  journal={Journal of Combinatorial Theory, Series A},
+  volume={98},
+  number={2},
+  pages={344--368},
+  year={2002},
+  publisher={Elsevier}
+}
+
+@book{smith1995monotone,
+  title={Monotone Dynamical Systems: An Introduction to the Theory of Competitive and Cooperative Systems},
+  author={Smith, Hal L},
+  year={1995},
+  publisher={American Mathematical Society}
+}
+
+@article{bolte2007clarke,
+  title={Clarke Subgradients of Stratifiable Functions},
+  author={Bolte, J{\'e}r{\^o}me and Daniilidis, Aris and Lewis, Adrian and Shiota, Masahiro},
+  journal={SIAM Journal on Optimization},
+  volume={18},
+  number={2},
+  pages={556--572},
+  year={2007},
+  doi={10.1137/060670080}
+}
+
+
+
+======================================================================
+ARQUIVO: CLG_FOUNDATIONS_ARXIV.bbl
+CAMINHO: Publicacoes/CLG_FOUNDATIONS_ARXIV.bbl
+======================================================================
+
+\begin{thebibliography}{10}
+
+\bibitem{bolte2007clarke}
+J{\'e}r{\^o}me Bolte, Aris Daniilidis, Adrian Lewis, and Masahiro Shiota.
+\newblock Clarke subgradients of stratifiable functions.
+\newblock {\em SIAM Journal on Optimization}, 18(2):556--572, 2007.
+\bibitem{bolte2007lojasiewicz}
+J{\'e}r{\^o}me Bolte, Aris Daniilidis, and Adrian Lewis.
+\newblock The {{\L}}ojasiewicz inequality for nonsmooth subanalytic functions
+  with applications to subgradient dynamical systems.
+\newblock {\em SIAM Journal on Optimization}, 17(4):1205--1223, 2007.
+
+\bibitem{brogliato2006equivalence}
+Bernard Brogliato, Aris Daniilidis, Claude Lemar{\'e}chal, and J{\'e}r{\^o}me Malick.
+\newblock Equivalence and complementarity issues in projected dynamical systems and differential inclusions.
+\newblock {\em Mathematical Programming}, 107(3):317--335, 2006.
+
+\bibitem{calinescu2011maximizing}
+Gruia C{\u{a}}linescu, Chandra Chekuri, Martin P{\'a}l, and Jan Vondr{\'a}k.
+\newblock Maximizing a submodular set function subject to a matroid constraint.
+\newblock {\em SIAM Journal on Computing}, 40(6):1740--1766, 2011.
+
+\bibitem{caron2005zero}
+Richard Caron and Tim Traynor.
+\newblock Zero sets of polynomials and {L}ebesgue measure.
+\newblock Technical report, University of Windsor Technical Report, 2005.
+
+\bibitem{cook1971complexity}
+Stephen~A. Cook.
+\newblock The complexity of theorem-proving procedures.
+\newblock In {\em Proceedings of the third annual ACM symposium on Theory of computing}, pages 151--158, 1971.
+
+\bibitem{courant1962methods}
+Richard Courant and David Hilbert.
+\newblock {\em Methods of Mathematical Physics: Partial Differential Equations}, volume~2.
+\newblock Interscience Publishers, 1962.
+
+\bibitem{ercsey2011optimization}
+M{\'a}ria Ercsey-Ravasz and Zolt{\'a}n Toroczkai.
+\newblock Optimization hardness as transient chaos: an exponential approach to {3-SAT}.
+\newblock {\em Nature Physics}, 7(12):966--970, 2011.
+
+\bibitem{evans2010partial}
+Lawrence~C. Evans.
+\newblock {\em Partial Differential Equations}.
+\newblock American Mathematical Society, 2nd edition, 2010.
+
+\bibitem{franz2001ferromagnet}
+Silvio Franz, Marc M{\'e}zard, Federico Ricci-Tersenghi, Martin Weigt, and Riccardo Zecchina.
+\newblock A ferromagnet with a glass transition.
+\newblock {\em Europhysics Letters}, 55(4):465--471, 2001.
+
+\bibitem{goemans1995improved}
+Michel~X. Goemans and David~P. Williamson.
+\newblock Improved approximation algorithms for maximum cut and satisfiability problems using semidefinite programming.
+\newblock {\em Journal of the ACM (JACM)}, 42(6):1115--1145, 1995.
+
+\bibitem{gu1994global}
+Jun Gu.
+\newblock Global search methods for solving the satisfiability ({SAT}) problem.
+\newblock {\em IEEE Transactions on Knowledge and Data Engineering}, 6(3):361--381, 1994.
+
+\bibitem{karp1972reducibility}
+Richard~M. Karp.
+\newblock Reducibility among combinatorial problems.
+\newblock {\em Complexity of Computer Computations}, pages 85--103, 1972.
+
+\bibitem{krantz2002primer}
+Steven~G. Krantz and Harold~R. Parks.
+\newblock {\em A Primer of Real Analytic Functions}.
+\newblock Birkhauser Boston, 2002.
+
+\bibitem{krzakala2007gibbs}
+Florent Krzakala, Andrea Montanari, Federico Ricci-Tersenghi, Guilhem Semerjian, and Lenka Zdeborov{\'a}.
+\newblock Gibbs states and the set of solutions of random constraint satisfaction problems.
+\newblock {\em Proceedings of the National Academy of Sciences}, 104(25):10318--10323, 2007.
+
+\bibitem{kurchan1993barriers}
+Jorge Kurchan, Giorgio Parisi, and Miguel~Angel Virasoro.
+\newblock Barriers in the free-energy landscape of spin glasses.
+\newblock {\em Journal de Physique I}, 3(8):1819--1838, 1993.
+
+\bibitem{lee2019first}
+Jason~D. Lee, Ioannis Panageas, Georgios Piliouras, Max Simchowitz, Michael~I. Jordan, and Benjamin Recht.
+\newblock First-order methods almost always avoid strict saddle points.
+\newblock {\em Mathematical Programming}, 176(1-2):311--337, 2019.
+
+\bibitem{levin1973universal}
+Leonid~A. Levin.
+\newblock Universal search problems.
+\newblock {\em Problemy Peredachi Informatsii}, 9(3):115--116, 1973.
+
+\bibitem{mezard2002analytic}
+Marc M{\'e}zard, Giorgio Parisi, and Riccardo Zecchina.
+\newblock Analytic and algorithmic solution of random satisfiability problems.
+\newblock {\em Science}, 297(5582):812--815, 2002.
+
+\bibitem{mezard2003two}
+Marc M{\'e}zard, Federico Ricci-Tersenghi, and Riccardo Zecchina.
+\newblock Two solutions to dilated $p$-spin models and {XORSAT} problems.
+\newblock {\em Journal of Statistical Physics}, 111(3):505--533, 2003.
+
+\bibitem{milnor1968singular}
+John Milnor.
+\newblock {\em Singular Points of Complex Hypersurfaces}, volume~61 of {\em Annals of Mathematics Studies}.
+\newblock Princeton University Press, 1968.
+
+\bibitem{molnar2018continuous}
+Ferenc Moln{\'a}r, Szabolcs Moln{\'a}r, M{\'a}t{\'e} Varga, Zolt{\'a}n Toroczkai, and M{\'a}ria Ercsey-Ravasz.
+\newblock A continuous-time approach to minimum clique cover problems.
+\newblock {\em Nature Communications}, 9:4864, 2018.
+
+\bibitem{nagurney1996projected}
+Anna Nagurney and Ding Zhang.
+\newblock {\em Projected Dynamical Systems and Variational Inequalities with Applications}.
+\newblock Springer, 1996.
+
+\bibitem{odonnell2014analysis}
+Ryan O'Donnell.
+\newblock {\em Analysis of Boolean Functions}.
+\newblock Cambridge University Press, 2014.
+
+\bibitem{okamoto1973distinctness}
+Masashi Okamoto.
+\newblock Distinctness of the eigenvalues of a quadratic form in a multivariate sample.
+\newblock {\em The Annals of Statistics}, 1(4):763--765, 1973.
+
+\bibitem{panageas2017gradient}
+Ioannis Panageas and Georgios Piliouras.
+\newblock Gradient descent only converges to minimizers: Non-isolated critical points and invariant surfaces.
+\newblock In {\em Conference on Learning Theory (COLT)}, pages 1528--1538, 2017.
+
+\bibitem{ricci2010being}
+Federico Ricci-Tersenghi.
+\newblock Being glassy without being hard to solve.
+\newblock {\em Science}, 330(6011):1639--1640, 2010.
+
+\bibitem{thouless1977solution}
+David~J. Thouless, Philip~W. Anderson, and Robert~G. Palmer.
+\newblock Solution of 'solvable model of a spin glass'.
+\newblock {\em Philosophical Magazine}, 35(3):593--601, 1977.
+
+\end{thebibliography}
+
