@@ -219,8 +219,8 @@ def test_firewall_p_versus_np_distinction():
 def test_arxiv_bibliography_and_bbl_integrity():
     """
     Verifica que o bloqueador técnico de compilação do arXiv foi sanado em definitivo:
-    1. clg_references.bib existe e contém todas as 26 chaves citadas em CLG_FOUNDATIONS_ARXIV.tex.
-    2. CLG_FOUNDATIONS_ARXIV.bbl existe e contém entradas \\bibitem para as 26 chaves.
+    1. clg_references.bib existe e contém todas as chaves citadas em CLG_FOUNDATIONS_ARXIV.tex.
+    2. CLG_FOUNDATIONS_ARXIV.bbl existe e contém entradas \\bibitem para todas as chaves.
     3. O pacote arxiv_package.zip contém CLG_FOUNDATIONS_ARXIV.tex, CLG_FOUNDATIONS_ARXIV.bbl,
        clg_references.bib e as 3 figuras PNG.
     4. O pacote consolidado Enviar_19.zip contém arxiv_package.zip, CLG_FOUNDATIONS_ARXIV.bbl
@@ -262,20 +262,21 @@ def test_arxiv_bibliography_and_bbl_integrity():
         bbl_content = f.read()
         
     # Extrai todas as chaves citadas no tex
-    cites = re.findall(r"\\cite\{([^}]+)\}", tex_content)
+    cites = re.findall(r"\\cite(?:\[[^\]]*\])?\{([^}]+)\}", tex_content)
     cited_keys = set()
     for c in cites:
         for k in c.split(','):
             cited_keys.add(k.strip())
             
-    assert len(cited_keys) == 26, f"Esperado 26 chaves citadas, obtido {len(cited_keys)}"
+    assert cited_keys, "O manuscrito deve conter referências bibliográficas"
+    assert "bolte2007lojasiewicz" in cited_keys
     
-    # Verifica que todas as 26 chaves estão no .bib
+    # Verifica que todas as chaves citadas estão no .bib
     bib_keys = set(re.findall(r"@\w+\{([^,]+),", bib_content))
     missing_in_bib = cited_keys - bib_keys
     assert not missing_in_bib, f"Chaves ausentes no .bib: {missing_in_bib}"
     
-    # Verifica que todas as 26 chaves estão no .bbl
+    # Verifica que todas as chaves citadas estão no .bbl
     bbl_keys = set(re.findall(r"\\bibitem\{([^}]+)\}", bbl_content))
     missing_in_bbl = cited_keys - bbl_keys
     assert not missing_in_bbl, f"Chaves ausentes no .bbl: {missing_in_bbl}"
@@ -307,5 +308,3 @@ def test_arxiv_bibliography_and_bbl_integrity():
                 assert enviar_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC == int_files["CLG_FOUNDATIONS_ARXIV.tex"].CRC
                 assert enviar_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC == int_files["CLG_FOUNDATIONS_ARXIV.bbl"].CRC
                 assert enviar_files["clg_references.bib"].CRC == int_files["clg_references.bib"].CRC
-
-

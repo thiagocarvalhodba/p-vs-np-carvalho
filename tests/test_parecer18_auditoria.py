@@ -72,9 +72,9 @@ def test_latex_textual_consistency_parecer18():
     Verifica que o arquivo CLG_FOUNDATIONS_ARXIV.tex implementou as correções cirúrgicas do Parecer 18:
     1. Não contém 'strictly affine'
     2. Proposição 7A tem o título 'Jacobian Structure for Purely Negative Clause Families'
-    3. T10 item 2 possui a formulação condicional sem 'converge ... almost surely ... rho_mult = 0' direto
+    3. A auditoria posterior marca explicitamente o antigo T10 como refutado
     4. Tabela 2 traz o Teorema 8 como 'Closed as finite-dimensional lower bound' com floor(alpha N)
-    5. Versão 4.0.2 no cabeçalho e tabelas
+    5. Versão auditada 4.0.4 no cabeçalho e tabelas
     """
     tex_path = os.path.join(PUB_DIR, "CLG_FOUNDATIONS_ARXIV.tex")
     assert os.path.exists(tex_path)
@@ -83,14 +83,15 @@ def test_latex_textual_consistency_parecer18():
     
     assert "strictly affine" not in content, "Não deve conter 'strictly affine'"
     assert "Jacobian Structure for Purely Negative Clause Families" in content
-    assert "Conditional Strict-Saddle Evasion" in content
-    assert "Version 4.0.2" in content
+    assert "Audit Refutation of the Former Theorem 10" in content
+    assert r"\frac{729}{2^{59}}" in content
+    assert "Version 4.0.4" in content
     assert r"\lfloor \alpha N \rfloor" in content
 
 def test_monograph_textual_consistency_parecer18():
     """
     Verifica que a monografia ESTUDO_ANALITICO_DO_CONJUNTO_CRITICO.md implementou:
-    1. Versão 4.0.2 no cabeçalho
+    1. Versão 4.0.4 no cabeçalho
     2. Não contém 'estritamente afim'
     3. Proposição 7A renomeada para 'Estrutura do Jacobiano na Família de Cláusulas Negativas'
     4. Matriz de Rigor atualizada para Parecer 18 com T8 em verde (🟢)
@@ -102,6 +103,7 @@ def test_monograph_textual_consistency_parecer18():
     
     assert "estritamente afim" not in content, "Não deve conter 'estritamente afim'"
     assert "Estrutura do Jacobiano na Família de Cláusulas Negativas" in content
-    assert "Versão 4.0.2" in content
-    assert "Evasão Condicional de Selas" in content
+    assert "Versão 4.0.4" in content
+    assert "Teorema 10 (Separação Dinâmica Subcrítica — Refutado)" in content
+    assert r"\frac{729}{2^{59}}" in content
     assert "Parecer 18" in content

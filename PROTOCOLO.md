@@ -4,6 +4,17 @@
 **Status:** Protocolo Congelado (Pre-registered Protocol)  
 **Repositório:** C:\MathDoCarvalho\P_NP
 
+> **Errata pós-registro (22/09/2026; o protocolo original abaixo permanece
+> congelado).** A predição subcrítica atribuída ao antigo Teorema 10 foi
+> refutada por um certificado exato M6: uma hiperárvore linear de seis
+> cláusulas possui bacia aberta de energia-limite positiva, e componentes
+> isoladas desse tipo dão
+> $\liminf\mathbb E[\rho_{\rm mult}]\ge
+> (729/2^{59})\alpha^5e^{-39\alpha}>0$.
+> Assim, resultados finitos deste protocolo não podem confirmar T10 nem a
+> afirmação universal “toda árvore tem zero mínimos espúrios”. Esta errata não
+> altera os dados pré-registrados; corrige somente sua interpretação.
+
 ---
 
 ## 1. Objetivos do Protocolo

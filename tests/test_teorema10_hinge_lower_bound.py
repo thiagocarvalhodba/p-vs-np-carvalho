@@ -1,5 +1,5 @@
 """
-Validação Matemática e Numérica da Resolução da Lacuna 2 do Teorema 10:
+Validação Matemática e Numérica do Lema 10.4 e regressões finitas históricas:
 Lema 10.4 (Cota Inferior da Bacia Espúria do Hinge e Densidade Residual Assintótica Positiva).
 
 Testes implementados:
@@ -9,7 +9,11 @@ Testes implementados:
 3. Simulação Monte Carlo em escala (200.000 amostras) comprovando p_fail = 3/32 com erro < 0.002;
 4. Verificação assintótica da densidade de cláusulas isoladas K/N -> alpha * exp(-9 * alpha);
 5. Integração numérica do fluxo gradiente projetado do Hinge comprovando rho_quad(alpha) >= c(alpha) > 0;
-6. Separação dinâmica estrita comprovando rho_quad > rho_mult = 0.0 a.a.s.
+6. Regressão finita que observa rho_quad > rho_mult = 0.0 na amostra fixada.
+
+O item 6 não é evidência universal nem prova assintótica. O antigo Teorema 10
+foi refutado pelo certificado M6; estes testes preservam apenas o resultado
+independente do Hinge e o comportamento da amostra histórica.
 """
 import os
 import sys
@@ -204,10 +208,12 @@ def test_euler_projected_flow_hinge_residual_density_scaling():
         assert ratio > 0.3, f"Queda anormal de densidade em N=100 para alpha={alpha}: razão={ratio}"
 
 
-def test_subcritical_dynamical_separation_theorem10():
+def test_historical_subcritical_finite_sample_regression():
     """
-    Comprova a separação dinâmica estrita do Teorema 10:
-    lim rho_quad(alpha) >= c(alpha) > lim rho_mult(alpha) = 0.
+    Reproduz uma observação finita, sem inferência a.a.s. ou universal.
+
+    A igualdade amostral mean_mult == 0 abaixo é uma regressão do conjunto de
+    30 instâncias, não uma afirmação sobre o limite N -> infinito.
     """
     N = 50
     alpha = 0.12
@@ -236,12 +242,12 @@ def test_subcritical_dynamical_separation_theorem10():
     mean_quad = float(np.mean(rhos_quad))
     mean_mult = float(np.mean(rhos_mult))
 
-    # Multilinear atinge zero a.a.s.
-    assert mean_mult == 0.0, f"Multilinear falhou no regime subcrítico: rho_mult = {mean_mult}"
+    # Resultado específico da amostra histórica; não promove T10 a teorema.
+    assert mean_mult == 0.0, f"A regressão finita mudou: rho_mult = {mean_mult}"
     # Hinge tem resíduo estritamente positivo
     assert mean_quad > 0.02, f"Hinge não reteve resíduo: rho_quad = {mean_quad}"
-    # Separação estrita
-    assert mean_quad > mean_mult, f"Falha de separação dinâmica: quad={mean_quad}, mult={mean_mult}"
+    # Separação observada somente nesta amostra.
+    assert mean_quad > mean_mult, f"Regressão finita mudou: quad={mean_quad}, mult={mean_mult}"
 
 
 def test_component_decoupling_and_tree_degree_identity():
@@ -309,4 +315,3 @@ def test_component_decoupling_and_tree_degree_identity():
 
     # A fração de defeitos para N=300 é menor ou igual à de N=100
     assert fractions[1] <= fractions[0] + 0.05, f"Defeitos não decrescem: {fractions}"
-

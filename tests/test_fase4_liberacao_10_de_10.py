@@ -4,7 +4,7 @@ Verifica de forma rigorosa e programática:
 1. Paridade byte-a-byte e CRC de .tex, .bbl, .bib e figuras entre arquivos externos e pacotes ZIP.
 2. Inexistência de citações órfãs ou não resolvidas no LaTeX.
 3. Ausência de vocabulário proibido de overclaiming em todo o manuscrito.
-4. Classificação correta de status: T9 e T10 NÃO fechados, Conjectura Central delimitada, Prop 7A sem Item 2.
+4. Classificação correta de status: T9 falsificado e T10 refutado, Conjectura Central delimitada, Prop 7A sem Item 2.
 5. Consistência estrita de hiperparâmetros entre protocolo, código e manuscrito (sem box penalty, sem Adam).
 6. Identidades matemáticas simbólicas (Laplaciano nulo, fatoração Softplus, contração centrípeta, Jacobiano competitivo).
 7. Testes numéricos contra diferenças finitas.
@@ -138,7 +138,8 @@ def test_status_matrix_integrity_in_tex():
     # Extrai Seção de Matriz de Status
     assert "Theorem 9 (Horn Linear Separation) & \\textbf{Falsified / Abandoned}" in content or "Theorem 9" in content
     assert "Falsified / Abandoned" in content
-    assert "Theorem 10 (Subcritical 3-SAT Separation) & \\textbf{Not Closed}" in content or "Not Closed" in content
+    assert "Theorem 10 (Subcritical 3-SAT Separation) & \\textbf{Refuted}" in content
+    assert r"\frac{729}{2^{59}}" in content
     assert "Central Conjecture & \\textbf{Delimited Conjecture}" in content or "Delimited Conjecture" in content
     assert "Epistemological Firewall (3-XOR-SAT)" in content
     assert "Decoupling dynamic hardness from the $P$ versus $NP$ distinction" in content
@@ -270,3 +271,13 @@ def test_mandatory_deliverables_exist():
     ]
     for d in deliverables:
         assert os.path.exists(d), f"Entregável obrigatório não encontrado: {d}"
+
+
+def test_roadmap_does_not_reclose_local_l10_3_as_a_universal_theorem():
+    roadmap_path = os.path.join(REPO_DIR, "ROADMAP_P_VS_NP.md")
+    with open(roadmap_path, encoding="utf-8") as handle:
+        roadmap = handle.read()
+
+    assert "[LOCAL / INSUFICIENTE]" in roadmap
+    assert "família M6 com bacia aberta que refuta T10" in roadmap
+    assert "[PROVADA / FECHADA]" not in roadmap

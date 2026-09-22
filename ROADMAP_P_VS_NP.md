@@ -38,11 +38,12 @@ Os seguintes resultados constituem fatos matemáticos fechados ou delimitados, d
 
 Estas questões constituem problemas de pesquisa abertos e matematicamente frutíferos, publicáveis em periódicos especializados, independentemente do desfecho de P vs NP:
 
-### Etapa 3.1 — Geometria das Variedades Críticas Degeneradas ($d=1$) e Separação Subcrítica [CONCLUÍDA]
-- **Objeto Formal:** O conjunto de arestas $e = [v_1, v_2]$ do hipercubo onde a restrição de $\Phi_{\text{mult}}$ tem inclinação nula ($a = 0$), e a cota inferior assintótica da bacia do Hinge.
-- **Resultado Obtido:** Resolvido integralmente pelos Lemas 10.3 (repulsão transversal estrita via LaSalle) e 10.4 (cota inferior do Hinge $c(\alpha) = \frac{3}{32}\alpha e^{-9\alpha} > 0$), fechando o Teorema 10.
-- **Relevância para P vs NP:** Fecha formalmente a separação dinâmica do Teorema 10 para o regime subcrítico ($\alpha < 1/6$).
-- **Por que não resolve P vs NP:** Trata apenas do regime subcrítico, onde o problema de decisão já é resolvível em tempo linear por busca de componentes conexas no hipergrafo esparso.
+### Etapa 3.1 — Geometria das Variedades Críticas e Separação Subcrítica [T10 REFUTADO]
+- **Objeto Formal:** Equilíbrios projetados positivos em todas as faces do hipercubo, suas bacias, e cotas assintóticas para motivos isolados no ensemble esparso.
+- **Resultado Obtido:** O cálculo de L10.3 permanece apenas local e condicional. O certificado M6 exibe uma família 9-dimensional de mínimos relativos positivos com bacia aberta e prova $\liminf\mathbb E[\rho_{\rm mult}]\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$, refutando o antigo Teorema 10. A cota do Hinge $\frac{3}{32}e^{-9\alpha}>0$ permanece válida.
+- **Próximo problema legítimo:** Provar concentração/segundo momento para o número de componentes M6 isoladas e caracterizar a densidade total de motivos atratores; isso fortalece a descrição probabilística, mas não restaura T10.
+- **Relevância para P vs NP:** Fornece um contraexemplo controlado a uma proposta de separação dinâmica no regime subcrítico e corrige a arquitetura do programa.
+- **Por que não resolve P vs NP:** Trata de um regime esparso e de uma heurística contínua específica; a refutação de T10 não implica $\mathbf P=\mathbf{NP}$ nem $\mathbf P\ne\mathbf{NP}$.
 
 ### Etapa 3.2 — Dinâmica de Sistemas Competitivos de Gradiente em Hipercubos
 - **Objeto Formal:** O campo vetorial $\dot{x} = -\nabla \Phi_{\text{mult}}(x)$ sobre $[-1, 1]^N$ com Jacobiano competitivo $J_{ij} \le 0$ induzido por famílias Horn gerais (DAGs acíclicos).
@@ -113,9 +114,9 @@ A tabela abaixo explicita toda inferência que **NÃO EXISTE** hoje e que seria 
 - **Tentativa de Prova:** Decomposição da medida da bacia de atração do platô LP $Z$ versus a proliferação de clusters de soluções satisfatíveis no formalismo de quebra de simetria de réplicas (1RSB).
 - **Critério de Abandono:** Se a variância de $\rho_{\text{mult}}$ divergir e o tempo de escape de selas no bordo escalar exponencialmente com $N$, o uso de $\Phi_{\text{mult}}$ para alcançar clusters satisfatíveis deve ser abandonado como heurística prática.
 
-### Conjectura 2: Transversalidade Quase-Certa em Arestas Planas Subcríticas ($d=1$) [PROVADA / FECHADA]
-- **Status:** Provada e fechada pelo **Lema 10.3** (Universal Transverse Non-Equilibrium of Degenerate Flat Edges under $H_{\rm leaf}$).
-- **Resultado:** A componente projetada transversal satisfaz $s_\ell \nabla_\ell \Phi \ge \frac{1-|t|}{4} > 0$, de modo que $\operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$ e a bacia de atração é estritamente vazia ($\mu = 0$) pelo Princípio de Invariância de LaSalle.
+### Cálculo local 2: Transversalidade em arestas planas sob folha exclusiva ($d=1$) [LOCAL / INSUFICIENTE]
+- **Status:** O antigo **Lema 10.3** é válido apenas quando a hipótese estrutural $H_{\rm leaf}$ — existência da folha exclusiva relevante — foi demonstrada para a face em análise. Ele não constitui um teorema universal de evasão.
+- **Resultado local:** Sob $H_{\rm leaf}$, a componente projetada transversal satisfaz $s_\ell \nabla_\ell \Phi \ge \frac{1-|t|}{4} > 0$, excluindo equilíbrios no interior relativo daquela aresta específica. O cálculo não exclui mínimos relativos ou atratores em faces de dimensão superior; em particular, não alcança a família M6 com bacia aberta que refuta T10.
 
 ---
 

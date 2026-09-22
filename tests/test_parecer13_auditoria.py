@@ -1,10 +1,10 @@
 """
 Suíte de Testes Automatizada — Auditoria do Parecer nº 13 (Versão 4.0.1)
 ====================================================================
-Verificação computacional exata e probabilística dos 3 Lemas de Fechamento:
+Regressões históricas e verificações locais do Parecer 13:
 - Lema 9.1: Bacia do Hinge via Projeção Isotônica e Teorema de Sparre Andersen
-- Lema 10.1: Estrutura Subcrítica, Peeling de 2-Núcleos e Ausência de Mínimos Discretos
-- Lema 10.2: Strict Saddle Subcrítico via Harmonicidade Multilinear (Tr = 0)
+- Lema 10.1: amostra finita de peeling de 2-núcleos (sem inferir H_leaf universal)
+- Lema 10.2: cálculo de Hessiana para uma cláusula interior (não universal em faces)
 - Teorema 7B: Equivalência Estrita de Equilíbrios Projetados E_proj == Z
 - Teorema 8: Saneamento Assintótico da Cota de Jensen
 """
@@ -111,8 +111,8 @@ def test_multilinear_trace_free_harmonicity():
         assert np.allclose(np.diag(H), 0.0, atol=1e-15)
 
 
-def test_multilinear_strict_saddle_eigenvalues():
-    """Valida que em qualquer ponto não-satisfatível (energia > 0), lambda_min < 0 < lambda_max."""
+def test_one_clause_interior_strict_saddle_eigenvalues():
+    """Valida a Hessiana da instância interior de uma única cláusula."""
     np.random.seed(456)
     N = 3
     sigma = [1, 1, 1]
@@ -170,8 +170,8 @@ def run_leaf_peeling(hyperedges, num_vars):
     return peeling_order, edges
 
 
-def test_subcritical_2core_collapse():
-    """Valida que para alpha < 1/6, o 2-núcleo é vazio quase certamente e o peeling termina."""
+def test_subcritical_2core_collapse_finite_sample():
+    """Regressão finita do peeling; não é prova assintótica nem dinâmica."""
     np.random.seed(789)
     N = 40
     alpha = 0.12  # < 1/6 = 0.1667
@@ -193,7 +193,7 @@ def test_subcritical_2core_collapse():
             # Toda aresta foi podada com sucesso
             assert len(peeling_order) == M
     
-    # No regime subcrítico N=40, alpha=0.12, quase certamente o 2-núcleo é vazio (>= 90%)
+    # Frequência observada na amostra determinística de regressão.
     success_rate = empty_core_count / num_trials
     assert success_rate >= 0.85, f"Taxa de colapso do 2-núcleo {success_rate} abaixo do esperado"
 

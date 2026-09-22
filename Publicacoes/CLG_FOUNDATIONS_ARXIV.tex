@@ -26,7 +26,7 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 
-\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.2):\\
+\title{\textbf{Computational Landscape Geometry and Representation (CLG-R v4.0.4):\\
 Rigorous Structural Results and Open Dynamical Problems\\
 for Continuous 3-SAT Relaxations}}
 
@@ -55,7 +55,7 @@ We prove:
 (7) We establish the Universal Centripetal Contraction Theorem for Hinge ($\langle -\nabla \Phi_{\rm quad}, x \rangle < 0$), proving the absence of stationary points outside the LP polytope $Z$ and universal approach to the LP polytope ($\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$);
 (8) We prove analytically that the normalized volume of the LP polytope in random 3-SAT satisfies the finite-dimensional lower bound $\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} \ge e^{-N \alpha \ln(6/5)} > 0$ via the Irwin-Hall distribution of order 3;
 (9) We analyze dynamical behavior in monotone Horn families, identifying the competitive Jacobian sign ($J_{ij} \le 0$) in negative clause interactions which precludes direct application of Hirsch cooperativity, while demonstrating that Hinge separation requires general DAG structures due to the singleton collapse under positive unit facts;
-(10) We establish the complete dynamical separation in subcritical random 3-SAT ($\alpha < 1/6$): the multilinear relaxation avoids all non-satisfying attractors almost surely ($\lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0$), while the Quadratic Hinge relaxation retains a strictly positive asymptotic residual density under Boolean sign rounding ($\lim_{N \to \infty} \rho_{\rm quad}(\alpha) \ge \frac{3}{32} e^{-9\alpha} > 0$), fully closing the subcritical separation theorem.
+(10) An adversarial audit refutes the previously claimed complete subcritical separation: an isolated six-clause linear hypertree has an open basin of positive multilinear residual energy, yielding $\liminf_{N\to\infty}\mathbb{E}[\rho_{\rm mult}(\alpha)]\ge (729/2^{59})\alpha^5e^{-39\alpha}>0$ for every fixed $\alpha>0$. Pointwise convergence of the projected multilinear flow remains valid through nonsmooth Kurdyka--\L{}ojasiewicz theory, but convergence to zero residual energy does not.
 Finally, we delimit the Central Conjecture of CLG-R to the clustering interval $\alpha \in (\alpha_d, \alpha_s)$.
 \end{abstract}
 
@@ -217,7 +217,7 @@ For any clause $c$, the variables are distinct by (H1). Thus $\frac{\partial^2 \
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\textwidth]{fig_clg_teorema3_4_harmonic_saddles_vertices.png}
-\caption{\textbf{Illustration of Theorems 3 and 4A'/4B:} The multilinear potential $\Phi_{\rm mult}$ is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$). All interior critical points are hyperbolic saddles. Under projected gradient flow, all isolated stable attractors are strictly confined to the discrete vertices $\{-1, +1\}^N$.}
+\caption{\textbf{Illustration of Theorems 3 and 4A'/4B:} The multilinear potential $\Phi_{\rm mult}$ is harmonic ($\Delta \Phi_{\rm mult} \equiv 0$). Every non-degenerate interior critical point is a hyperbolic saddle; degenerate interior points still have lower-energy points in every neighborhood. Under projected gradient flow, all isolated asymptotically stable equilibria are confined to the discrete vertices $\{-1, +1\}^N$, while non-strict attracting continua can occur on the boundary.}
 \label{fig:teorema3_4}
 \end{figure}
 
@@ -420,7 +420,7 @@ For $M = \lfloor \alpha N \rfloor \ge 1$, by Jensen's inequality for the convex 
 This establishes a strictly positive lower bound for each finite dimension $N$. We emphasize that this lower bound does not demonstrate that $\lim_{N \to \infty} \mathbb{E}[\mu_{\rm norm}(Z)] = 0$, which would require an independent upper bound.
 \end{proof}
 
-\section{Theorems 9 and 10: Dynamic Analysis, Structural Lemmata, and Open Challenges}
+\section{Theorems 9 and 10: Dynamic Analysis, Audit, and Refutation}
 
 \begin{lemma}[Lemma 9.1: Implication Chain Dynamics, Stirling Expansion, and Unit-Fact Falsification]
 \label{lem:hinge_basin}
@@ -458,45 +458,33 @@ For random 3-SAT below the subcritical threshold $\alpha < \alpha_c = 1/6$:
     \begin{equation}
     \deg_{F_N}(v) \equiv \deg_{\mathcal{K}_j}(v), \quad \forall v \in V(\mathcal{K}_j).
     \end{equation}
-    On every linear hypertree $\mathcal{K} \in \mathcal{C}_{\rm tree}$, recursive leaf peeling eliminates all hyperedges. Whenever $\Phi_{\mathcal{K}}(x) > 0$, any violated leaf clause contains a variable of degree 1 in $\mathcal{K}$, which is therefore of global degree 1 in $F_N$. Hence, the structural leaf hypothesis $H_{\rm leaf}$ holds \textbf{unconditionally and globally} on every tree component $\mathcal{K} \in \mathcal{C}_{\rm tree}$. In particular, peeling rules out non-zero discrete local minima ($E_{\rm disc} > 0$) on tree components.
+    Recursive leaf peeling eliminates every hyperedge of a linear hypertree, but this combinatorial fact does \emph{not} imply that every positive clause at a projected equilibrium contains a degree-one variable. A four-clause star already has a positive projected equilibrium on its leafless central clause, and the six-clause construction in Theorem~\ref{thm:subcritical_separation} has a positive-dimensional attracting equilibrium family. Thus the former universal hypothesis $H_{\rm leaf}$ is withdrawn; only the local--global degree identity itself remains valid.
     \item \textbf{Defect Tightness and Negligible Density (Strategy B):} Let $\mathcal{C}_{\rm defect}$ denote the collection of connected components containing cycles (either clause pairs sharing $\ge 2$ variables or loose cycles of length $k \ge 3$). Since $R_0 = 6\alpha < 1$, the expected number of cycles of all orders is $\mathcal{O}(1)$ and component sizes exhibit an exponential tail. Thus, the total number of clauses in defective components satisfies $\mathbb{E}[M_{\rm defect}] = \mathcal{O}(1)$, ensuring $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$ (tightness). Even under the worst-case adversarial assumption that every clause in defective components is violated, the multilinear discrete energy contribution from defects is bounded by $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$.
 \end{enumerate}
 \end{lemma}
 
-\begin{lemma}[Lemma 10.2: Strict Saddle Evasion on Tree Components]
+\begin{lemma}[Former Lemma 10.2: Universal Strict-Saddle Claim --- Refuted]
 \label{lem:strict_saddle}
-Let $\mathcal{K} \in \mathcal{C}_{\rm tree}$ be any tree component, let $\mathcal{F} \subseteq [-1, 1]^{V(\mathcal{K})}$ be any face of dimension $d = \dim(\mathcal{F}) \ge 2$, and let $x^* \in \text{relint}(\mathcal{F})$ be a relative critical point of $\Phi_{\mathcal{K}}|_{\mathcal{F}}$ with positive energy $\Phi_{\mathcal{K}}(x^*) > 0$.
-\begin{enumerate}
-    \item $\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) = 0$, identically by coordinate-wise multilinear affinity ($\frac{\partial^2 \Phi_{\mathcal{K}}}{\partial x_i^2} \equiv 0$).
-    \item By the Global Degree Identity of Lemma~\ref{lem:peeling}, every violated leaf clause $c$ in $\mathcal{K}$ contains a variable $x_\ell$ with global degree $\deg_{F_N}(x_\ell) = \deg_{\mathcal{K}}(x_\ell) = 1$. Because $x_\ell$ appears in \textbf{no other clause of the formula}, the cross-derivative:
-    \begin{equation}
-    H_{\ell p} = \frac{\partial^2 \Phi_{\mathcal{K}}}{\partial x_\ell \partial x_p}(x^*) = \frac{\partial^2 P_c}{\partial x_\ell \partial x_p}(x^*) = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0
-    \end{equation}
-    receives zero contribution from any other clause, precluding cross-cancellation and ensuring $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.
-    \item Because $\mathcal{H}_{\mathcal{F}}(x^*)$ is a non-zero symmetric matrix with zero trace, it possesses at least one strictly negative eigenvalue:
-    \begin{equation}
-    \lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) < 0.
-    \end{equation}
-\end{enumerate}
-Thus, every non-satisfying relative critical point on faces of dimension $d \ge 2$ in tree components is unconditionally a strict saddle, avoided almost surely by projected gradient trajectories.
+Coordinate-wise multilinearity still gives
+$\operatorname{Tr}(\mathcal H_{\mathcal F})=0$ on every positive-dimensional
+face.  The former proof, however, inferred
+$\mathcal H_{\mathcal F}\ne0$ from an unproved ``violated leaf clause.''  That
+inference is false.  The six-clause linear hypertree in
+Theorem~\ref{thm:subcritical_separation} has a nine-dimensional family of
+positive non-strict relative minima with an open basin.  Hence neither the
+universal strict-saddle conclusion nor the associated almost-sure evasion
+claim is valid.
 \end{lemma}
 
-\begin{lemma}[Lemma 10.3: Universal Transverse Non-Equilibrium of Flat Edges on Tree Components]
+\begin{lemma}[Former Lemma 10.3: Universal Transverse Repulsion --- Insufficient]
 \label{lem:flat_edge_instability}
-Let $\mathcal{K} \in \mathcal{C}_{\rm tree}$ be any tree component, and let $\mathcal{F}_1 = \{x(t) = x^* + t e_i \mid t \in [-1, 1]\} \subseteq [-1, 1]^{V(\mathcal{K})}$ be any 1-dimensional face (edge) with positive energy $\Phi_{\mathcal{K}}|_{\mathcal{F}_1} \equiv b > 0$ and vanishing longitudinal gradient $a = \nabla_i \Phi_{\mathcal{K}} \equiv 0$:
-\begin{enumerate}
-    \item By the Global Degree Identity of Lemma~\ref{lem:peeling}, every violated clause $c$ along $\mathcal{F}_1$ contains an exclusive leaf variable $x_\ell$ with global degree $\deg_{F_N}(x_\ell) = 1$ sitting on the boundary $s_\ell = x^*_\ell \in \{-1, +1\}$.
-    \item The transverse directional derivative along $x_\ell$ satisfies strictly:
-    \begin{equation}
-    s_\ell \nabla_\ell \Phi_{\mathcal{K}}(x(t)) = \frac{1 - \sigma_i t}{4} \ge \frac{1 - |t|}{4} > 0, \quad \forall t \in (-1, 1).
-    \end{equation}
-    \item Since $-\nabla_\ell \Phi_{\mathcal{K}}(x(t)) = -s_\ell (1 - \sigma_i t)/4$ points strictly toward the interior of $[-1, 1]$, the projection of the negative gradient onto the tangent cone $T_{\mathcal{X}}(x(t))$ does not vanish:
-    \begin{equation}
-    \|\Pi_{T_{\mathcal{X}}(x(t))}(-\nabla \Phi_{\mathcal{K}}(x(t)))\| \ge \frac{1 - |t|}{4} > 0, \quad \forall t \in \operatorname{relint}(\mathcal{F}_1).
-    \end{equation}
-    Consequently, $\operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\rm proj} = \emptyset$, meaning the open flat edge contains no projected equilibrium points.
-    \item By LaSalle's Invariance Principle on $[-1, 1]^{V(\mathcal{K})}$, the $\omega$-limit set satisfies $\omega(x_0) \subseteq \mathcal{E}_{\rm proj}$. Because $\operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\rm proj} = \emptyset$, no trajectory can accumulate on $\operatorname{relint}(\mathcal{F}_1)$, establishing that the basin of attraction is strictly empty: $\mathcal{B}(\operatorname{relint}(\mathcal{F}_1)) = \emptyset \implies \mu(\mathcal{B}(\operatorname{relint}(\mathcal{F}_1))) = 0$.
-\end{enumerate}
+The transverse calculation for an edge that actually has the stipulated
+exclusive leaf remains a valid local statement.  It is not universal on tree
+components, because the existence of that leaf in a positive clause does not
+follow from acyclicity.  More importantly, excluding equilibria from
+one-dimensional open edges cannot exclude attracting equilibrium families on
+higher-dimensional faces.  This lemma therefore supplies no route to the
+former conclusion $\rho_{\rm mult}\to0$.
 \end{lemma}
 
 \begin{lemma}[Lemma 10.4: Subcritical Hinge Basin Lower Bound and Residual Energy Density]
@@ -524,32 +512,111 @@ For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ with $\alpha < 1/6$, unde
 \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[Theorem 10: Multilinear Saddle Avoidance and Complete Subcritical Separation]
+\begin{theorem}[Audit Refutation of the Former Theorem 10]
 \label{thm:subcritical_separation}
-For the random 3-SAT ensemble $\mathcal{E}(N, \alpha)$ below the hypergraph percolation threshold $\alpha < 1/6$:
-\begin{enumerate}
-    \item \textbf{Decoupled Dynamics, Conditional Strict-Saddle Evasion, and Multilinear Convergence:} By the component decoupling of Lemma~\ref{lem:peeling}, the flow decomposes across components.
-    \begin{itemize}
-        \item On all tree components $\mathcal{K} \in \mathcal{C}_{\rm tree}$ (comprising $M - \mathcal{O}_{\mathbb{P}}(1)$ clauses), stable manifold evasion \cite{lee2019first, panageas2017gradient} on faces $d \ge 2$ (Lemma~\ref{lem:strict_saddle}) and LaSalle transverse repulsion on flat edges $d=1$ (Lemma~\ref{lem:flat_edge_instability}) ensure that almost all trajectories converge to satisfying assignments of $\mathcal{K}$, achieving $E_{\mathcal{K}}(\text{sign}(x^*)) = 0$.
-        \item On defective components $\mathcal{C}_{\rm defect}$, the total number of clauses is $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$, so the total discrete energy satisfies $E_{\rm disc}(\text{sign}(x(T))) \le M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$.
-    \end{itemize}
-    Dividing by $M = \alpha N$, the multilinear asymptotic residual violation density satisfies:
-    \begin{equation}
-    \lim_{N \to \infty} \rho_{\rm mult}(\alpha) = 0 \quad \text{a.a.s. and in expectation for all } \alpha < 1/6.
-    \end{equation}
-    \item \textbf{Strictly Positive Quadratic Hinge Density:} By Lemma~\ref{lem:hinge_lower_bound}, trajectories of the Quadratic Hinge relaxation converge to the LP polytope $Z$, retaining a strictly positive fraction of violated clauses under Boolean sign rounding:
-    \begin{equation}
-    \liminf_{N \to \infty} \mathbb{E}[\rho_{\rm quad}(\alpha)] \ge \frac{3}{32} e^{-9\alpha} > 0,
-    \end{equation}
-    and for any $\varepsilon > 0$, $\lim_{N \to \infty} \mathbb{P}\left(\rho_{\rm quad}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1$.
-    \item \textbf{Complete Subcritical Dynamic Separation:} Combining the multilinear and Hinge limits:
-    \begin{equation}
-    \lim_{N \to \infty} \mathbb{P}\left(\rho_{\rm quad}(\alpha) - \rho_{\rm mult}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1 \quad \forall \varepsilon > 0,
-    \end{equation}
-    and $\liminf_{N \to \infty} \left(\mathbb{E}[\rho_{\rm quad}(\alpha)] - \mathbb{E}[\rho_{\rm mult}(\alpha)]\right) \ge \frac{3}{32} e^{-9\alpha} > 0$.
-    Consequently, the dynamical separation between the multilinear harmonic extension and the quadratic Hinge relaxation in subcritical random 3-SAT is \textbf{unconditionally closed and rigorously established}.
-\end{enumerate}
+Let $M=\lfloor\alpha N\rfloor$ with fixed $\alpha>0$, initialize the
+projected multilinear gradient flow uniformly on $[-1,1]^N$, and round its
+limit coordinatewise to a Boolean assignment.  In the uniform model of
+distinct signed clauses,
+\begin{equation}
+\liminf_{N\to\infty}\mathbb E[\rho_{\rm mult}(\alpha)]
+\ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\label{eq:t10_refutation}
+\end{equation}
+The independent-clause model has the same leading constant.  Hence the former
+claim $\rho_{\rm mult}(\alpha)\to0$ in expectation, and therefore the former
+``complete subcritical separation'' theorem for $0<\alpha<1/6$, is false.
 \end{theorem}
+
+\begin{proof}
+Use the signed linear hypertree on vertices $0,\ldots,12$ with clauses
+\begin{equation}
+\begin{split}
+ &(0,1,2),(0,3,4),(1,5,6),\\
+ &(2,7,8),(3,9,10),(4,11,12),
+\end{split}
+\end{equation}
+and sign triples $(+++),(-++),(-++),(-++),(-++),(-++)$.  In affine factor
+coordinates in $[0,1]$, its potential is
+\begin{equation}
+\begin{split}
+\Phi={}&yu_1u_2+(1-y)v_1v_2
+ +(1-u_1)a_1b_1+(1-u_2)a_2b_2\\
+ &+(1-v_1)c_1d_1+(1-v_2)c_2d_2.
+\end{split}
+\label{eq:m6_phi}
+\end{equation}
+The set
+\begin{equation}
+\mathcal M=\{u_1=u_2=v_1=v_2=1, 0<y<1,
+ a_jb_j>y, c_jd_j>1-y\}
+\end{equation}
+is a nine-dimensional family of projected equilibria with $\Phi=1$.  It
+consists locally of non-strict relative minima.  Moreover, the open box
+\begin{equation}
+U=\left\{\frac{31}{64}<y<\frac{33}{64},\quad
+\frac{15}{16}<u_j,v_j,a_j,b_j,c_j,d_j<1\right\}.
+\label{eq:m6_basin}
+\end{equation}
+is captured by $\mathcal M$ in finite time.  Indeed, in the envelope
+$7/16<y<9/16$, with the four core factors at least $15/16$ and the eight leaf
+factors above $7/8$, each unsaturated core factor has speed at least $13/256$
+and reaches one before time $16/13$.  During that interval
+$|\dot y|\le31/1024$ and every leaf speed has magnitude at most $1/64$; the
+total drifts are therefore less than $31/832$ and $1/52$, respectively, so
+the envelope is invariant until capture.  Once the four core factors equal
+one, all projected speeds vanish.  The normalized initial mass of
+\eqref{eq:m6_basin} is
+\begin{equation}
+\mathbb P(U)=\frac1{32}\left(\frac1{16}\right)^{12}=2^{-53}.
+\end{equation}
+After Boolean rounding, exactly one of the two core clauses is violated,
+including under either tie convention for $y=1/2$.
+
+The unsigned motif has automorphism group of order $128$, and its gauge orbit
+contains $2^{13}$ signed patterns.  If $X_{M6}$ counts isolated components in
+this orbit and $Q_N=8\binom N3$, then
+\begin{equation}
+\mathbb E X_{M6}=\frac{(N)_{13}}{128}\,2^{13}
+\frac{\binom{8\binom{N-13}{3}}{M-6}}{\binom{Q_N}{M}},
+\qquad
+\frac{\mathbb E X_{M6}}N\longrightarrow
+\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+For the independent-clause model, with
+$Q_{0,N}=8\binom{N-13}{3}$, the exact finite expectation is
+\begin{equation}
+\mathbb E X_{M6}^{\rm iid}
+=\frac{(N)_{13}}{128}\,2^{13}
+\frac{(M)_6Q_{0,N}^{M-6}}{Q_N^M},
+\qquad
+\frac{\mathbb E X_{M6}^{\rm iid}}N\longrightarrow
+\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+Component decoupling, the basin mass $2^{-53}$, non-negativity of all other
+violations, and division by $M\sim\alpha N$ give
+\eqref{eq:t10_refutation}.  The same local
+calculation applies in the independent-clause model.
+\end{proof}
+
+\begin{remark}[Pointwise PDS convergence survives the refutation]
+Let $X=[-1,1]^N$ and $F=\Phi_{\rm mult}+\delta_X$.  Moreau's decomposition
+identifies the projected flow with
+$-\dot x\in\partial F(x)=\nabla\Phi_{\rm mult}(x)+N_X(x)$ and gives
+$d\Phi_{\rm mult}(x(t))/dt=-\|\dot x(t)\|^2$ almost everywhere.  The function
+$F$ is regular and subanalytic and is continuous on its closed domain.
+Moreover, $G=\nabla\Phi_{\rm mult}\circ\Pi_X$ is a globally Lipschitz
+extension of the gradient restricted to $X$, while $N_X$ is maximal
+monotone.  The Lipschitz-perturbed normal-cone inclusion therefore has a
+unique global absolutely continuous solution for each initial point.
+Because $\nabla\Phi_{\rm mult}$ is bounded on $X$, its composition with that
+solution makes $F\circ x=\Phi_{\rm mult}\circ x$ absolutely continuous.  The
+nonsmooth {\L}ojasiewicz theorem and its dynamical extension
+\cite[Theorem~3.1 and Remark~4.8]{bolte2007lojasiewicz} therefore give finite
+length and convergence of every trajectory to a single projected
+equilibrium.  This result does not imply zero limit energy: the open set
+\eqref{eq:m6_basin} converges to $\mathcal M\subset\{\Phi_{\rm mult}=1\}$.
+\end{remark}
 
 \section{The Central Conjecture of the CLG-R Program}
 
@@ -567,7 +634,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.2 Final).}}
+\caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.4 Audited).}}
 \begin{tabular}{@{}llll@{}}
 \toprule
 \textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
@@ -575,11 +642,11 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \textbf{Regularity} & $\mathcal{C}^1$ (piecewise quadratic) & $\mathcal{C}^\infty$ (polynomial) & $\mathcal{C}^\omega$ (real analytic) \\
 \textbf{Critical Measure $\mu(\mathcal{C}_0)$} & $> 0$ (Plateau $\geq (1/3)^N$) & $= 0$ (Fubini / Polynomials) & $= 0$ (Real Analytic Identity) \\
 \textbf{Laplacian $\Delta\Phi$} & $\equiv 0$ on $\mathcal{U}_N$ & $\equiv 0$ on $\mathbb{R}^N$ (Harmonic) & $\text{Tr}(V^T W V) > 0$ (Subharmonic) \\
-\textbf{Attractor Loci} & LP Polytope $Z$ & Strictly Vertices $\{-1, 1\}^N$ & Unique minimizer if $\text{rank}(V)=N$ \\
+\textbf{Attractor Loci} & LP Polytope $Z$ & Isolated stable points are vertices; positive boundary continua can attract & Unique minimizer if $\text{rank}(V)=N$ \\
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Log-Barrier Smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel \\
-\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Subcritical Closed ($\rho_{\rm mult} = 0 < \rho_{\rm quad}$); Horn DAGs Open & Regularized finite ($\beta < \infty$) \\
+\textbf{Dynamical Separation} & Trapped in LP Polytope $Z$ ($\rho_{\rm quad} \ge c(\alpha) > 0$) & Former subcritical claim refuted: $\liminf\mathbb E\rho_{\rm mult}>0$; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
 \bottomrule
 \end{tabular}
 \label{tab:synthesis}
@@ -588,7 +655,7 @@ Under pure projected gradient flow with uniform initialization $x_0 \sim \text{U
 \begin{table}[htbp]
 \centering
 \small
-\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.2).}}
+\caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.4).}}
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Result} & \textbf{Formal Audit Status} \\
@@ -604,11 +671,11 @@ Theorem 7B (Centripetal Contraction) & \textbf{Closed as Limit Set} ($\mathcal{E
 Proposition 7A (Negative Clause Families) & \textbf{Closed for Competitive Jacobian} (Sign $J_{ij} \le 0$, Hirsch suspended; item 2 expunged) \\
 Theorem 8 (Jensen Volume Bound) & \textbf{Closed as finite-dimensional lower bound} ($\mathbb{E}[\mu_{\rm norm}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$) \\
 Theorem 9 (Horn Linear Separation) & \textbf{Falsified / Abandoned} (Lema 9.1 falsified under unit fact; open for general DAGs) \\
-Lemma 10.1 (Component Decoupling \& Defect Tightness) & \textbf{Closed} (Decoupling $R_0 = 6\alpha < 1$, tree degree identity, defects $M_{\rm defect} = \mathcal{O}_{\mathbb{P}}(1)$) \\
-Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Closed on Tree Components} (Faces $d \ge 2$, $\lambda_{\min} < 0$, stable manifold evasion) \\
-Lemma 10.3 (Degenerate Edge Non-Equilibrium) & \textbf{Closed on Tree Components} (Faces $d = 1$, transverse repulsion, $\mathcal{B} = \emptyset$) \\
+Lemma 10.1 (Component Decoupling \& Defect Tightness) & \textbf{Partial} (decoupling and degree identity remain; universal $H_{\rm leaf}$ is refuted) \\
+Lemma 10.2 (Strict Saddle Subcritical) & \textbf{Refuted as a universal claim} (M6 has positive non-strict relative minima) \\
+Lemma 10.3 (Degenerate Edge Non-Equilibrium) & \textbf{Insufficient} (a one-dimensional local statement cannot exclude higher-dimensional attracting faces) \\
 Lemma 10.4 (Hinge Subcritical Basin Bound) & \textbf{Closed} (Exact $p_{\rm fail} = 3/32$, $\rho_{\rm quad} \ge \frac{3}{32} e^{-9\alpha} > 0$, Chebyshev concentration) \\
-Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Closed} (Previously Not Closed; dynamic separation $\rho_{\rm quad} \ge \frac{3}{32} e^{-9\alpha} > \rho_{\rm mult} = 0$ a.a.s. for $\alpha < 1/6$) \\
+Theorem 10 (Subcritical 3-SAT Separation) & \textbf{Refuted} ($\liminf\mathbb E\rho_{\rm mult}\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$) \\
 Central Conjecture & \textbf{Delimited Conjecture} ($\alpha \in (\alpha_d, \alpha_s)$ / planted ensemble) \\
 Epistemological Firewall (3-XOR-SAT) & \textbf{Epistemological Result} (Decoupling dynamic hardness from the $P$ versus $NP$ distinction) \\
 \bottomrule
@@ -625,7 +692,7 @@ The CLG-R framework establishes an epistemological firewall against illegitimate
 \end{itemize}
 
 \section{Conclusion}
-We have established the rigorous analytical foundations of Computational Landscape Geometry and Representation (CLG-R). By demonstrating the Universal Centripetal Contraction Theorem, the Exact Hessian Factorization, Harmonic Vertex Confinement without boundary degeneracy hypotheses, the Analytical LP Polytope Volume Bound, and establishing clear epistemological boundaries, we provide a rigorous framework for studying divergent dynamical accessibility while strictly adhering to computational complexity barriers.
+We have established rigorous analytical foundations for Computational Landscape Geometry and Representation (CLG-R), including the Universal Centripetal Contraction Theorem, Exact Hessian Factorization, harmonic exclusion of interior minima, vertex confinement for isolated asymptotically stable multilinear equilibria, and a finite-dimensional LP-polytope volume bound.  The adversarial M6 audit also refutes the former complete subcritical-separation claim by exhibiting an attracting non-strict boundary continuum.  Together these results provide a rigorous framework for studying divergent dynamical accessibility, corrected in light of the M6 counterexample, while maintaining explicit computational-complexity boundaries.
 
 \bibliographystyle{plain}
 \bibliography{clg_references}

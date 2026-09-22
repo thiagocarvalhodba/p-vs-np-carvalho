@@ -1,12 +1,16 @@
 """
-Validação Matemática e Numérica da Resolução da Lacuna 1 do Teorema 10:
-Lema 10.3 (Instabilidade Transversal e Não-Equilíbrio de Arestas Planas sob H_leaf).
+Validação local e condicional do antigo Lema 10.3:
+instabilidade transversal de arestas planas quando H_leaf é assumida.
+
+Estes testes não provam H_leaf para toda hiperárvore e não resolvem T10. O
+certificado M6 refuta a extensão universal ao exibir um atrator positivo em
+face de dimensão superior.
 
 Testes implementados:
 1. Identidade Simbólica SymPy da velocidade transversal s_l * grad_l = (1 - sigma_i * t) / 4 > 0;
 2. Projeção no cone tangente: prova de que ||Pi_{T_X(x)}(-grad Phi)||_2 >= (1 - |t|)/4 > 0 em todo relint(F_1);
 3. Repulsão transversal dinâmica e decrescimento estrito de energia ao deixar a aresta;
-4. Simulação Monte Carlo comprovando medida de bacia zero para arestas planas não-satisfatíveis;
+4. Simulação Monte Carlo compatível com bacia nula no exemplo local;
 5. Classificação exaustiva de faces de dimensão d=1 (a != 0, a = 0 satisfatível, a = 0 não-satisfatível).
 """
 import os
@@ -140,7 +144,7 @@ def test_transversal_ejection_and_strict_energy_decrease():
 
 def test_monte_carlo_flat_edge_basin_measure_zero():
     """
-    Comprova via amostragem uniforme (Monte Carlo com 500 pontos) que a bacia
+    Verifica via amostragem uniforme (Monte Carlo com 500 pontos) que a bacia
     de atração do interior relativo da aresta plana tem medida nula (0.0%).
     """
     clauses = [

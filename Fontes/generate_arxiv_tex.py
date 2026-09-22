@@ -1,3 +1,16 @@
+"""LEGACY SNAPSHOT GENERATOR — DO NOT USE FOR THE CURRENT MANUSCRIPT.
+
+This script embeds the pre-audit text that claimed universal vertex
+confinement and a closed Theorem 10.  Both claims were superseded by the exact
+M6 certificate recorded on 2026-09-22.  The authoritative source is
+Publicacoes/CLG_FOUNDATIONS_ARXIV.tex; this historical generator is retained
+only for provenance and is deliberately prevented from overwriting it.
+"""
+
+raise SystemExit(
+    "Legacy generator disabled: it predates the M6 refutation of Theorem 10."
+)
+
 import os
 
 tex_path = r"C:\MathDoCarvalho\P_NP\Publicacoes\CLG_FOUNDATIONS_ARXIV.tex"
