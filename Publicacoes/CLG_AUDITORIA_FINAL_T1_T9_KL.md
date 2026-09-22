@@ -61,7 +61,7 @@ do Remark 4.8 está satisfeita.
 
 F é semialgébrica e l.s.c.
 
-Bolte–Daniilidis–Lewis–Shiota, *Clarke Subgradients of Stratifiable Functions*, SIAM J. Optim. 18(2), 556–572 (2007), Theorem 11, estabelece a desigualdade KL não suave para funções l.s.c. definíveis; o próprio artigo observa que a conclusão permanece válida para subdiferenciais de Fréchet e limiting, por estarem contidos no Clarke.
+Bolte–Daniilidis–Lewis–Shiota, *Clarke Subgradients of Stratifiable Functions*, SIAM J. Optim. 18(2), 556–572 (2007), Theorem 11, é explicitamente o *Nonsmooth Kurdyka–Łojasiewicz inequality* para funções l.s.c. definíveis. O Remark 9 observa que a conclusão permanece válida para os subdiferenciais de Fréchet e limiting, por estarem contidos no Clarke.
 
 Logo F possui a propriedade KL requerida pelo Remark 4.8 de BDL.
 
@@ -218,10 +218,11 @@ Escolhendo uma cláusula com g_c=0:
 
 Os bounds exponenciais do gradiente no box central também conferem.
 
-A terminologia IEEE foi corrigida para distinguir:
-- início da faixa subnormal;
-- escala de underflow gradual a zero;
-- modos de hardware flush-to-zero.
+A terminologia IEEE foi reforçada para distinguir:
+- cruzamento do menor normal;
+- cruzamento do menor subnormal;
+- limiar idealizado de arredondamento para zero em round-to-nearest (metade do menor subnormal);
+- modos FTZ/DAZ e dependência da implementação concreta da sigmoid.
 
 ### Teorema 7B
 
@@ -272,13 +273,15 @@ A antiga expressão
 
     P(x_1^*>0) = C(2K,K)/4^K
 
-não pode ser apresentada como resultado incondicional enquanto a identidade entre o limite do fluxo e a projeção isotônica permanecer sem prova.
-
-O manuscrito agora a apresenta apenas como cálculo **condicional** à hipótese
+não pode ser apresentada como resultado incondicional enquanto a identidade entre o limite do fluxo e a projeção isotônica permanecer sem prova. O manuscrito a apresenta apenas como cálculo **condicional** à hipótese
 
     x^* = Pi_Z(x_0).
 
-Isso elimina uma inconsistência lógica interna.
+Uma auditoria externa posterior encontrou ainda uma caracterização intermediária incorreta: Horn 3-SAT geral não tem Jacobiano off-diagonal de sinal único. Por exemplo, para
+
+    (not x1 or not x2 or x3),
+
+há um par com J_12<=0 e pares com J_13,J_23>=0. A versão atual foi corrigida para afirmar que Horn geral possui interações de sinais mistos e, portanto, não é automaticamente cooperativo nem competitivo na ordem ortante padrão. A Proposição 7A continua válida apenas para a família puramente negativa.
 
 ## 4. Alterações aplicadas à master
 
@@ -302,8 +305,10 @@ Não foi encontrado risco fatal nos Teoremas 1–8.
 Os riscos residuais são:
 
 1. **Teorema 9 permanece deliberadamente aberto.**
-2. A parte Hinge do antigo T10 possui seus próprios lemas probabilísticos/dinâmicos e não foi reaberta nesta auditoria além das dependências já registradas.
-3. A compilação arXiv deve continuar sendo usada como teste operacional separado da validade matemática.
+2. Os ensembles agora são nomeados separadamente como iid e uniforme sem reposição para evitar promoção silenciosa entre modelos.
+3. Uma convenção determinística global para sign(0) foi fixada; resultados tie-independent continuam indicados como tais.
+4. A parte Hinge do antigo T10 mantém seu escopo subcrítico explicitamente indicado na tabela síntese.
+5. A compilação arXiv deve continuar sendo usada como teste operacional separado da validade matemática.
 
 ## 6. Veredito
 
