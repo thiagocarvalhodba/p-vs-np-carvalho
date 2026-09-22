@@ -124,9 +124,22 @@ The foundational structural hypotheses are:
 \subsection{The Four Structural Levels of Critical Geometry}
 We formalize the landscape hierarchy across four structural levels:
 \begin{enumerate}
-    \item \textbf{Level 1 (Static Critical Geometry):} $\mathcal{C}_{\rm spur}(\Phi) \equiv \{ x \in \mathcal{X} \mid \nabla \Phi(x) = \mathbf{0}, \; E_{\rm disc}(\text{sign}(x)) > 0 \}$.
-    \item \textbf{Level 2 (Local Stability):} $\mathcal{S}_{\rm spur}(\Phi) \equiv \{ x^* \in \mathcal{X} \mid x^* \text{ is a Lyapunov-stable equilibrium of } \mathcal{D}_{\rm proj}, \; E_{\rm disc}(\text{sign}(x^*)) > 0 \}$.
-    \item \textbf{Level 3 (Attraction Basins):} $\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}) \equiv \{ x_0 \in \mathcal{X} \mid \omega(x_0; \mathcal{D}) \subseteq \{x \in \mathcal{X} \mid E_{\rm disc}(\text{sign}(x)) > 0\} \}$.
+    \item \textbf{Level 1 (Static Critical Geometry):}
+    \[
+    \mathcal{C}_{\rm spur}(\Phi)
+    \equiv \{x\in\mathcal X:\nabla\Phi(x)=\mathbf0,\ E_{\rm disc}(\operatorname{sign}(x))>0\}.
+    \]
+    \item \textbf{Level 2 (Local Stability):}
+    \[
+    \mathcal{S}_{\rm spur}(\Phi)
+    \equiv \{x^*\in\mathcal X:x^*\text{ is Lyapunov-stable for }\mathcal D_{\rm proj},\ E_{\rm disc}(\operatorname{sign}(x^*))>0\}.
+    \]
+    \item \textbf{Level 3 (Attraction Basins):}
+    \[
+    \mathcal{B}_{\rm spur}(\Phi,\mathcal D)
+    \equiv \{x_0\in\mathcal X:\omega(x_0;\mathcal D)\subseteq
+    \{x\in\mathcal X:E_{\rm disc}(\operatorname{sign}(x))>0\}\}.
+    \]
     \item \textbf{Level 4 (Spurious Dynamical Mass):} $\mathcal{M}_{\rm spur}(\Phi, \mathcal{D}) \equiv \mu_{\rm norm}(\mathcal{B}_{\rm spur}(\Phi, \mathcal{D}))$, with $\mu_{\rm norm}$ the normalized Lebesgue measure on $\mathcal{X}$.
     \item \textbf{Level 5 (Residual Violation Density):} For a finite formula $F$ with $M$ clauses, initial condition $x_0$, and flow state $x_{F,x_0}(T)$, define the random finite-size residual density
     \[
@@ -463,7 +476,16 @@ This establishes a strictly positive lower bound for each finite dimension $N$. 
 \label{lem:hinge_basin}
 Consider an implication chain of length $K \ge 2$, $x_1 \to x_2 \to \dots \to x_K$ ($\neg x_k \lor x_{k+1}$):
 \begin{enumerate}
-    \item \textbf{Pure Implication Chain (Conservation of Mean vs. Isotonic Limit):} In the absence of external facts, the Hinge penalty is purely telescoping: $\Phi_{\rm quad}(x) = \sum_{k=1}^{K-1} \left[\max\left(0, \frac{x_k - x_{k+1}}{2}\right)\right]^2$. Trajectories strictly conserve the center of mass: $\frac{d}{dt}\sum_{k=1}^K x_k(t) \equiv 0$, constraining the dynamics to affine hyperplanes of constant mean. While heuristic and numerical evidence associates the asymptotic state with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ (via Pool Adjacent Violators) onto the cone $Z = \{x \in [-1, 1]^K \mid x_1 \le x_2 \le \dots \le x_K\}$, the rigorous proof that continuous non-smooth Hinge gradient flow trajectories converge identically to $\Pi_Z(x_0)$ constitutes an independent analytical problem and remains open.
+    \item \textbf{Pure Implication Chain (Conservation of Mean vs. Isotonic Limit):} In the absence of external facts, the Hinge penalty is
+    \[
+    \Phi_{\rm quad}(x)=\sum_{k=1}^{K-1}
+    \left[\max\!\left(0,\frac{x_k-x_{k+1}}{2}\right)\right]^2.
+    \]
+    Trajectories strictly conserve the center of mass,
+    \[
+    \frac{d}{dt}\sum_{k=1}^K x_k(t)\equiv0,
+    \]
+    constraining the dynamics to affine hyperplanes of constant mean. While heuristic and numerical evidence associates the asymptotic state with the Euclidean Isotonic Projection $\Pi_Z(x_0)$ (via Pool Adjacent Violators) onto the cone $Z = \{x \in [-1, 1]^K \mid x_1 \le x_2 \le \dots \le x_K\}$, the rigorous proof that continuous non-smooth Hinge gradient flow trajectories converge identically to $\Pi_Z(x_0)$ constitutes an independent analytical problem and remains open.
     \item \textbf{Conditional Sparre--Andersen Calculation:} If the still-unproved identification $x^*=\Pi_Z(x_0)$ with the Euclidean isotonic projection is assumed, then $x_1^*>0$ is equivalent to positivity of all prefix sums of the i.i.d. symmetric continuous increments. Sparre--Andersen then gives
     \begin{equation}
     \mathbb{P}(x^*_1 > 0\mid x^*=\Pi_Z(x_0))
@@ -539,7 +561,12 @@ For the uniform distinct-clause ensemble $\mathcal E_{\rm unif}(N,\alpha)$ with 
     \item \textbf{Boundary Non-Saturation (No-Clipping):} For any initial point outside the LP polytope $Z$ ($S_0 = \sum_{p=1}^3 \sigma_p x_{0, p} < -1$), the trajectory translates linearly at identical rates $\dot{U}_p = g_c(U) > 0$, landing on $\partial Z$ at $U_p^* = U_p(0) + \frac{-1 - S_0}{3}$. Because $U_p^* \in (-1, 1)$ strictly for almost all initial conditions, no boundary clipping occurs before reaching $\partial Z$.
     \item \textbf{Exact Rounding Failure Probability:} The probability that the discrete Boolean assignment $\hat{s} = \text{sign}(x^*)$ violates clause $c$ is given analytically by the sum of two disjoint regions in $[-1, 1]^3$:
     \begin{equation}
-    p_{\rm fail} = \mathbb{P}(x_0 \in Z \text{ and } \hat{s} \text{ violates } c) + \mathbb{P}(x_0 \notin Z \text{ and landing } x^* \text{ violates } c) = \frac{1}{48} + \frac{7}{96} = \frac{3}{32} = 0.09375.
+    \begin{aligned}
+    p_{\rm fail}
+    &={}\mathbb P(x_0\in Z\text{ and }\hat s\text{ violates }c)\\
+    &\quad+\mathbb P(x_0\notin Z\text{ and landing }x^*\text{ violates }c)\\
+    &=\frac1{48}+\frac7{96}=\frac3{32}=0.09375.
+    \end{aligned}
     \end{equation}
     \item \textbf{Density Scaling and Exact Expectation Lower Bound:} In $\mathcal E_{\rm unif}(N,\alpha)$, the expected number of isolated clauses is $\mathbb{E}[|\mathcal{C}_{\rm iso}|] = \alpha N e^{-9\alpha}(1 + \mathcal{O}(1/N))$. Since the discrete residual density is normalized by total clauses $M = \alpha N$, the factor $\alpha$ cancels exactly:
     \begin{equation}
@@ -767,9 +794,9 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
 \caption{\textbf{Consolidated CLG-R Mathematical Synthesis (Version 4.0.5 Audited).}}
-\begin{tabular}{@{}llll@{}}
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}XXX@{}}
 \toprule
 \textbf{Property} & \textbf{Quadratic Hinge ($\Phi_{\rm quad}$)} & \textbf{Multilinear ($\Phi_{\rm mult}$)} & \textbf{Softplus ($\Phi_{\rm soft}$)} \\
 \midrule
@@ -780,15 +807,15 @@ For planted ensembles, no corresponding M6 frequency theorem is asserted here; t
 \textbf{Physical Nature} & Canonical LP Relaxation & Naive Mean-Field / $p$-spin & Smooth Hinge / log-sum-exp smoothing \\
 \textbf{Hessian Condition} & Degenerate on $\mathcal{U}_N$ & Zero diagonal & If $\operatorname{rank}(V)=N$: $\kappa(H) \le \kappa(W) \kappa(V^T V)$ \\
 \textbf{Dynamic Trajectory} & Universal centripetal flow & Projected Lyapunov decay & Strictly convex funnel if $\operatorname{rank}(V)=N$ \\
-\textbf{Dynamical Separation} & Subcritical isolated-clause bound: $\liminf\mathbb E\rho_{\rm quad}\ge\frac{3}{32}e^{-9\alpha}$ for $0<\alpha<1/6$ & Former subcritical claim refuted in expectation and w.h.p.; M6 is minimal on linear hypertrees; Horn DAGs open & Regularized finite ($\beta < \infty$) \\
+\textbf{Dynamical Separation} & Positive subcritical isolated-clause bound (Lemma 10.4, $0<\alpha<1/6$) & Former subcritical claim refuted in expectation and w.h.p.; M6 minimal on linear hypertrees; Horn DAGs open & Finite-$\beta$ regularization \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \label{tab:synthesis}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
 \caption{\textbf{Formal Status Matrix of CLG-R Theoretical Results (Audited Standard --- Version 4.0.5).}}
 \begin{tabularx}{\textwidth}{@{}lX@{}}
 \toprule
