@@ -58,6 +58,10 @@ Os quatro artigos abaixo foram redigidos e estruturados especificamente para sub
    - **Arquivo:** [RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md](file:///C:/MathDoCarvalho/P_NP/Publicacoes/RESPOSTA_FORMAL_AO_PARECER_DO_PROFESSOR.md)
    - **Conteúdo:** Resolução matemática minuciosa dos achados críticos (identidade de $\Omega_{\text{curv}}$, cancelamento algébrico em Equi-3-SAT, controle de Horn-SAT, eliminação do viés UNSAT) e resultados do benchmark definitivo **CLG-03 com 3-XOR-SAT** (provando por que o gradiente contínuo colapsa para $0.0\%$ em problemas solvíveis em $P$ via Gauss $\text{GF}(2)$). Formaliza o reposicionamento epistemológico da tese para limites de GNNs e OGP.
 
+8. 🧮 **T10R — Minimalidade da Obstrução Multilinear em Hiperárvores:**  
+   - **Arquivo:** [CLG_T10R_PROVA_MINIMALIDADE_M6.md](CLG_T10R_PROVA_MINIMALIDADE_M6.md)  
+   - **Resultado:** prova formal independente de \(m_{*,HT}^{\mathrm{mult}}=6\), combinando convergência PDS/KL, contagem de cláusulas positivas, ramo unitário e monotonicidade de folha; a prova não depende de anti-Zeno nem de identificação finita de face.
+
 ---
 
 ## 2. Apresentação Executiva em Marp (PDF & HTML)
