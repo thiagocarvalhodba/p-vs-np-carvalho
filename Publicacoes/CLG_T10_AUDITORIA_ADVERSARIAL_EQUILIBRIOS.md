@@ -20,7 +20,7 @@ $\mathbf{NP}$.
 |---|---|---|
 | $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ para toda hiperárvore | **REFUTADA** | vértice exato de $m=4$ |
 | Não há equilíbrio positivo em face de dimensão positiva para $m\le4$ | **PROVADA** | redução estrutural por cláusula sem folha |
-| Toda bacia positiva tem medida zero para $m\le5$ | **PROVADA** | convergência PDS/KL + folha monotônica |
+| Toda bacia positiva tem medida zero para $m\le5$ | **PROVADA** | prova formal independente em `CLG_T10R_PROVA_MINIMALIDADE_M6.md` |
 | Existe continuum positivo com bacia aberta | **PROVADA** | certificado duplo-núcleo de $m=6$ |
 | $m=6$ é mínimo para bacia positiva em hiperárvores da classe auditada | **PROVADA** | exclusão de medida positiva para $m\le5$ |
 | Toda trajetória PDS converge a um único equilíbrio | **PROVADA** | Moreau + BDL, Teorema 3.1 e Remark 4.8 |
