@@ -1,40 +1,41 @@
 # Auditoria adversarial de equilíbrios projetados do Teorema 10
 
 **Data:** 21 de setembro de 2026  
-**Veredito primário:** **A — CONTRAEXEMPLO COM BACIA POSITIVA ENCONTRADO.**
+**Veredito primário:** **T10 REFUTADO.**
 
-| Afirmação | Dependências | Contraexemplo/tentativa | Prova | Status |
-|---|---|---|---|---|
-| $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ em toda hiperárvore linear | KKT projetado | Certificado de 4 cláusulas abaixo | Gradiente exato nulo e $\Phi=1$ | **REFUTADO** |
-| O vértice certificado é mínimo/atrator positivo | PDS no ortante | Expansão factível $u\ge0$ | Termo quadrático com ambos os sinais | **REFUTADO** |
-| A bacia do vértice certificado tem medida positiva | PDS projetado | Monotonicidade exata das folhas | A bacia é o singleton $\{x^*\}$ | **REFUTADO** |
-| Toda bacia de equilíbrio positivo em hiperárvores tem medida zero | Classificação global | Hiperárvore de 7 cláusulas com aberto atraído para \(\Phi=1\) | Certificado analítico em CLG_T10_CONTRAEXEMPLO_BACIA_POSITIVA_M7.md | **REFUTADO** |
-| Convergência global do PDS CLG a ponto único via BDL | Hipóteses KL exatas | Leitura da fonte primária | Teorema citado não se aplica diretamente a $\Phi+\delta_X$ | **CONDICIONAL** |
+O resultado que decide esta rodada não é apenas a existência de um equilíbrio
+positivo. Há uma hiperárvore linear 3-uniforme de **seis cláusulas** com uma
+família 9-dimensional de mínimos relativos positivos e uma bacia de Lebesgue
+positiva. Mais ainda, componentes isoladas desse tipo produzem uma cota
+inferior assintótica estritamente positiva para a energia discreta multilinear
+**em esperança** no ensemble esparso. Isso contradiz diretamente a conclusão
+$\mathbb E\rho_{\rm mult}(\alpha)\to0$ de T10.
 
-## Catálogo exato: equilíbrios positivos nos vértices
+Este resultado não implica nenhuma conclusão sobre $\mathbf P$ versus
+$\mathbf{NP}$.
 
-Foi executada a enumeração exata de todos os vértices, para $m\le4$, sobre
-as construções de anexação rotuladas e todas as classes de polaridade módulo
-gauge de variável. Toda hiperárvore linear 3-uniforme pode ser obtida por uma
-ordem de anexação de folhas; portanto esse espaço rotulado cobre cada tipo não
-rotulado ao menos uma vez, embora deliberadamente contenha duplicatas e não
-seja uma canonicalização por isomorfismo.
+## Matriz de obrigações
 
-Foram verificados respectivamente $8$, $192$, $7680$ e $430080$ candidatos
-para $m=1,2,3,4$. Não houve equilíbrio positivo nos vértices para $m\le3$.
-Para $m=4$, os 12 certificados retornados são cópias por rotulagem/permutação
-da mesma hiperárvore-estelar de quatro cláusulas já certificada; todos têm
-$\Phi=1$, gradiente nulo e são selas relativas de bacia singleton pela prova
-anterior.
+| Afirmação | Status | Certificação |
+|---|---|---|
+| $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ para toda hiperárvore | **REFUTADA** | vértice exato de $m=4$ |
+| Não há equilíbrio positivo em face de dimensão positiva para $m\le4$ | **PROVADA** | redução estrutural por cláusula sem folha |
+| Toda bacia positiva tem medida zero para $m\le5$ | **PROVADA** | convergência PDS/KL + folha monotônica |
+| Existe continuum positivo com bacia aberta | **PROVADA** | certificado duplo-núcleo de $m=6$ |
+| $m=6$ é mínimo para bacia positiva em hiperárvores da classe auditada | **PROVADA** | exclusão de medida positiva para $m\le5$ |
+| Toda trajetória PDS converge a um único equilíbrio | **PROVADA** | Moreau + BDL, Teorema 3.1 e Remark 4.8 |
+| $\lim \mathbb E\rho_{\rm mult}(\alpha)=0$ para $0<\alpha<1/6$ | **REFUTADA** | contagem exata de componentes M6 isoladas |
+| Cota positiva para $\rho_{\rm mult}$ com alta probabilidade | **ABERTA NESTE RELATÓRIO** | requer segundo momento uniforme; desnecessária para refutar a parte em esperança de T10 |
 
-| estrutura | face | $\Phi$ | classificação | bacia conhecida | certificado |
-|---|---:|---:|---|---|---|
-| $m\le3$, qualquer hiperárvore linear | vértices | — | nenhum equilíbrio positivo | — | enumeração exata |
-| estrela 3-uniforme com 4 cláusulas | vértice | $1$ | sela relativa | $\{x^*\}$, medida zero | seção “Certificado exato” |
-| demais cópias rotuladas da estrela, $m=4$ | vértice | $1$ | sela relativa | $\{x^*\}$, medida zero | mesmo certificado por simetria |
+## Catálogo desta auditoria
 
-Este catálogo não classifica equilíbrios em faces de dimensão positiva e não
-constitui uma prova para $m\ge5$ ou para hiperárvores arbitrárias.
+| $m$ | estrutura/polaridade | dimensão da face mínima | equilíbrio positivo | $\Phi$ | tipo | classificação local | bacia conhecida | certificação |
+|---:|---|---:|---|---:|---|---|---|---|
+| 1--3 | todas as hiperárvores/polaridades | todas | nenhum | — | — | — | — | prova estrutural exata |
+| 4 | estrela, ramos opostos ao núcleo | 0 | vértice conhecido | 1 | isolado | sela relativa | singleton | prova exata; 12 cópias rotuladas na regressão |
+| 5 | todas as hiperárvores/polaridades | não catalogadas ponto a ponto | não excluídos, mas com bacias nulas | não catalogado | não necessário classificar | não alegada | medida zero | prova estrutural + monotonicidade |
+| 6 | duplo núcleo abaixo | 9 | família $\mathcal M$ | 1 | continuum semialgébrico | mínimos relativos não estritos, transversalmente atraentes | contém aberto de medida $2^{-53}$ | álgebra e PDS exatos |
+| 7 | estrela com dois ramos por variável central | 12 | família positiva | 1 | continuum semialgébrico | mínimos relativos não estritos | contém aberto de medida $2^{-48}$ | certificado independente exato |
 
 ## Contraexemplo de bacia positiva (7 cláusulas)
 
@@ -55,172 +56,478 @@ Consequentemente, a bacia ruim possui medida de Lebesgue positiva. Sob inicializ
 
 O certificado completo está em `Publicacoes/CLG_T10_CONTRAEXEMPLO_BACIA_POSITIVA_M7.md`.
 
-Isto refuta a propriedade determinística necessária à prova atual de T10: não é verdade que quase toda trajetória em toda componente hiperarbórea converge para energia zero. A etapa restante para uma refutação assintótica completa da formulação aleatória é contabilizar a densidade de componentes isoladas desse tipo no ensemble \(\mathcal E(N,\alpha)\).
+Isto refuta, de forma independente, a propriedade determinística necessária à antiga prova de T10: não é verdade que quase toda trajetória em toda componente hiperarbórea converge para energia zero. A refutação assintótica da conclusão em esperança já é fornecida abaixo pelo motivo mínimo M6; o M7 permanece como certificado redundante e reprodutível.
 
 ## Afirmação auditada
+A maior face de equilíbrios explicitamente analisada tem dimensão 12 (o
+certificado de sete cláusulas). Para $m\le4$, a classificação estrutural cobre
+**todas** as faces mínimas, de dimensão 0 até 9, sem restringir coordenadas a
+uma grade racional.
 
-Para toda hiperárvore linear 3-uniforme conexa $K$, a afirmação auditada era
+## 1. Coordenadas de fatores e KKT
 
-$$
-\mathcal E_{\rm proj}(K)\subseteq\{x\in[-1,1]^{V(K)}:\Phi_K(x)=0\},
-$$
-
-onde $\Phi_K=\sum_{c\in K}\prod_{i\in c}(1-\sigma_{ci}x_i)/2$ e
-$\mathcal E_{\rm proj}$ é definido por
-$\Pi_{T_{[-1,1]^n}(x)}(-\nabla\Phi_K(x))=0$.
-
-O resultado é **refutado**. Isto invalida a passagem que usava aciclicidade
-para excluir equilíbrios positivos. Não prova, nem sugere, uma resolução de
-P versus NP.
-
-## Certificado exato
-
-Considere as quatro hiperarestas, nos vértices $0,\ldots,8$:
+Para cada variável escolha $\tau_v\in\{\pm1\}$ e ponha
 
 $$
-c_0=(0,1,2),\quad c_1=(0,3,4),\quad
-c_2=(1,5,6),\quad c_3=(2,7,8).
+z_v=\frac{1-\tau_vx_v}{2}\in[0,1].
 $$
 
-Elas formam uma hiperárvore linear: cada aresta adicionada encontra as
-anteriores em exatamente um vértice e introduz dois vértices novos. Em
-particular, a aresta central $c_0$ não possui variável de grau 1.
-
-Use as polaridades
+Cada fator de cláusula torna-se $z_v$ ou $1-z_v$. A mudança é uma isometria
+diagonal seguida de uma escala por $1/2$, logo preserva faces, nulidade de
+medida, estabilidade e as condições de equilíbrio. Nas coordenadas de fatores,
 
 $$
-\sigma_{c_0}=(+,+,+),\qquad
-\sigma_{c_1}=\sigma_{c_2}=\sigma_{c_3}=(-,+,+),
+z_v=0:\ \partial_v\Phi\ge0,\qquad
+0<z_v<1:\ \partial_v\Phi=0,\qquad
+z_v=1:\ \partial_v\Phi\le0.
 $$
 
-na ordem exibida, e tome $x^*=(-1,\ldots,-1)$.
+O PDS é
 
-No termo central todos os fatores são 1, logo $P_{c_0}(x^*)=1$. Em cada
-termo periférico, o fator da variável compartilhada é
-$(1-(-1)(-1))/2=0$, logo $P_{c_j}(x^*)=0$ para $j=1,2,3$. Portanto
+$$
+\dot z=\frac14\Pi_{T_{[0,1]^n}(z)}(-\nabla_z\Phi).
+$$
 
-$$\Phi_K(x^*)=1>0.$$
+O fator $1/4$ apenas reparametriza o tempo.
 
-Cada derivada nas seis folhas periféricas contém esse fator zero. Para cada
-variável central, a derivada $-1/2$ do termo central é cancelada pela derivada
-$+1/2$ do respectivo termo periférico. Assim,
+## 2. Lema estrutural de folha
 
-$$\nabla\Phi_K(x^*)=(0,\ldots,0).$$
+Se $v$ tem grau 1 e aparece apenas na cláusula $c$, oriente sua coordenada para
+que seu fator seja $z_v$. Então
 
-Consequentemente a projeção no cone tangente é exatamente zero; não há questão
-de tolerância numérica nem de sinal KKT.
+$$
+\partial_{z_v}\Phi
+=\prod_{w\in c\setminus\{v\}}\ell_{cw}(z_w)\ge0.
+$$
 
-## Estabilidade relativa à caixa e bacia do certificado
+Se $P_c(z)>0$, temos $z_v>0$ e a derivada acima é estritamente positiva. Isso
+viola KKT tanto no interior quanto em $z_v=1$. Portanto,
 
-Escreva $x=-\mathbf1+u$, com $u\in[0,2]^9$. A expansão exata (não apenas
-uma aproximação de Hessiana) é
+$$
+P_c(z)>0\quad\Longrightarrow\quad
+c\text{ não contém variável de grau }1. \tag{L}
+$$
+
+Este lema não remove uma cláusula de energia zero e não usa a implicação falsa
+$P_c=0\Rightarrow\nabla P_c=0$.
+
+## 3. Classificação exata de todas as faces para $m\le4$
+
+Para $m\le3$, toda cláusula possui uma variável de grau 1. Por (L), não há
+equilíbrio positivo.
+
+Com quatro cláusulas, uma cláusula sem folhas força exatamente a estrela com
+um núcleo e três ramos, um por variável central. Após gauge,
+
+$$
+\Phi=y_1y_2y_3+\sum_{i=1}^3h_i(y_i)a_ib_i,
+\qquad h_i(y_i)\in\{y_i,1-y_i\}.
+$$
+
+A positividade do núcleo dá $y_i>0$. Se $h_i=y_i$, KKT nas folhas força
+$a_ib_i=0$, enquanto
+
+$$
+\partial_{y_i}\Phi=y_jy_k+a_ib_i>0,
+$$
+
+impossível para $y_i>0$. Logo $h_i=1-y_i$. Se $y_i<1$, KKT nas folhas volta a
+forçar $a_ib_i=0$ e dá $\partial_{y_i}\Phi=y_jy_k>0$. Assim $y_i=1$ para os
+três índices. Finalmente, KKT no topo exige
+
+$$
+\partial_{y_i}\Phi=1-a_ib_i\le0,
+$$
+
+portanto $a_i=b_i=1$.
+
+Conclui-se que, módulo gauge/isomorfismo, o vértice de quatro cláusulas já
+conhecido é o único equilíbrio positivo para $m\le4$. Isso cobre coordenadas
+racionais, irracionais algébricas e transcendentes, segmentos, curvas e faces
+inteiras: não houve discretização do espaço contínuo.
+
+No sistema original ele pode ser escrito como
+
+$$
+E=((0,1,2),(0,3,4),(1,5,6),(2,7,8)),
+$$
+
+com sinais $(+++),(-++),(-++),(-++)$ e $x^*=(-1)^9$. Vale
+$\Phi(x^*)=1$, $\nabla\Phi(x^*)=0$. Sua expansão factível tem termo quadrático
+indefinido; ele é uma sela relativa e sua bacia é exatamente o singleton
+$\{x^*\}$, conforme a prova de monotonicidade foliar da rodada anterior.
+
+## 4. Contraexemplo mínimo M6: duplo núcleo
+
+Considere
 
 $$
 \begin{aligned}
-\Phi(-\mathbf1+u)-1
-={}&\frac14\left[u_0u_1+u_0u_2+u_1u_2
--u_0(u_3+u_4)-u_1(u_5+u_6)-u_2(u_7+u_8)\right]\\
-&-\frac18u_0u_1u_2
-+\frac18\left[u_0u_3u_4+u_1u_5u_6+u_2u_7u_8\right].
+E=\{&(0,1,2),(0,3,4),(1,5,6),\\
+    &(2,7,8),(3,9,10),(4,11,12)\},
 \end{aligned}
 $$
 
-O primeiro termo homogêneo não nulo é a forma quadrática exibida na primeira
-linha. Nas direções factíveis $u=t(e_0+e_1)$ e $u=t(e_0+e_3)$, para todo
-$t>0$ pequeno, as diferenças de energia são respectivamente $+t^2/4$ e
-$-t^2/4$. Logo $x^*$ é uma sela relativa à caixa: não é mínimo local nem
-máximo local. Esta conclusão usa perturbações factíveis, não a Hessiana livre
-como critério de estabilidade no vértice.
-
-Há ainda uma prova direta, sem variedade estável, de que sua bacia é unitária.
-As folhas $3,4$ obedecem, no PDS e em coordenadas $u$,
+com polaridades, nessa ordem,
 
 $$
-\dot u_3=\frac{u_0}{4}\left(1-\frac{u_4}{2}\right)\ge0,
-\qquad
-\dot u_4=\frac{u_0}{4}\left(1-\frac{u_3}{2}\right)\ge0,
+(+++),\quad(-++),\quad(-++),\quad(-++),\quad(-++),\quad(-++).
 $$
 
-e as quatro fórmulas análogas valem para os pares $(5,6)$ e $(7,8)$,
-com centros $u_1$ e $u_2$. A projeção no cone tangente preserva essas fórmulas,
-pois $-\partial_{u_\ell}\Phi$ já aponta para dentro do ortante.
-
-Se uma trajetória converge para $u=0$, cada folha, não negativa e não
-decrescente, tem de ser identicamente zero desde o instante inicial. Então as
-equações acima forçam $u_0=u_1=u_2=0$ em todo instante. Portanto
+É uma hiperárvore linear 3-uniforme. Em coordenadas de fatores, escreva
 
 $$
-\{x_0:\ x(t;x_0)\to x^*\}=\{x^*\},
+\begin{aligned}
+\Phi={}&yu_1u_2+(1-y)v_1v_2\\
+&+(1-u_1)a_1b_1+(1-u_2)a_2b_2\\
+&+(1-v_1)c_1d_1+(1-v_2)c_2d_2. \tag{1}
+\end{aligned}
 $$
 
-cuja medida de Lebesgue é zero. O certificado derruba a exclusão de
-equilíbrios positivos, mas **não** fornece uma bacia positiva e não refuta por
-si só a conclusão quase-em-toda-parte de T10.
+### Família positiva
 
-## Checagens de implementação
-
-O programa `Fontes/search_t10_positive_equilibrium_hypertrees.py` usa
-`fractions.Fraction` para $\Phi$, gradiente e condições KKT. Ele enumera
-hiperárvores de anexação, reduz polaridades por gauge de sinais das variáveis e
-testa exatamente os vértices. A execução encontrou o certificado acima na
-primeira família de quatro cláusulas que o contém. Antes disso, a busca exata
-de vértices não encontrou candidato para 1, 2 ou 3 cláusulas.
-
-Os testes em `tests/test_t10_adversarial_equilibria.py` verificam derivadas,
-sinais KKT, projeção no cone tangente, geração estrutural, o certificado de
-quatro cláusulas e um controle não-linear.
-
-## PDS, Moreau e dissipação
-
-Para $X=[-1,1]^n$, $N_X(x)=T_X(x)^\circ$. A decomposição de Moreau de
-$v=-\nabla\Phi(x)$ dá $v=\Pi_Tv+\Pi_Nv$ ortogonalmente. Assim
+O conjunto
 
 $$
-\dot x=\Pi_T(-\nabla\Phi)
-\quad\Longleftrightarrow\quad
--\dot x\in\nabla\Phi(x)+N_X(x).
+\mathcal M=\left\{
+\begin{array}{l}
+u_1=u_2=v_1=v_2=1,\quad 0<y<1,\\
+a_jb_j>y,\quad c_jd_j>1-y
+\end{array}\right\} \tag{2}
 $$
 
-Coordenadamente, em $x_i=1$ o equilíbrio requer
-$\partial_i\Phi\le0$; em $x_i=-1$ requer $\partial_i\Phi\ge0$; no interior
-requer igualdade. A ortogonalidade fornece
-$d\Phi(x(t))/dt=-\|\dot x(t)\|^2$ quase em todo ponto onde a solução é
-diferenciável. Essas identidades formulam o PDS globalmente, mas não excluem
-o certificado acima.
+é uma família semialgébrica 9-dimensional de equilíbrios projetados. Em (2),
 
-## Checagem bibliográfica KL
+$$
+\partial_y\Phi=0,\qquad
+\partial_{u_j}\Phi=y-a_jb_j<0,\qquad
+\partial_{v_j}\Phi=(1-y)-c_jd_j<0,
+$$
 
-Foi verificado o PDF autoral de Bolte--Daniilidis--Lewis (SIAM J. Optim. 17,
-2007, DOI 10.1137/050644641). Sua seção dinâmica assume, para o teorema de
-comprimento finito, uma função convexa semicontínua inferior ou lower-$C^2$
-**com domínio $\mathbb R^n$**. Para
-$F=\Phi+\delta_{[-1,1]^n}$, o domínio é a caixa, não $\mathbb R^n$, e o
-indicador não torna automaticamente $F$ lower-$C^2$. Logo essa referência não
-certifica, na forma citada, comprimento finito ou convergência a ponto único
-do PDS CLG. Esse passo fica **não verificado**, até uma referência aplicável a
-um potencial $C^1$ restrito a um politopo convexo ser mapeada hipótese a
-hipótese.
+e as oito derivadas foliares são zero. Todos os pontos têm $\Phi=1$.
 
-## Consequência lógica e próximo teste barato
+Com $p_j=1-u_j$, $r_j=1-v_j$, $A_j=a_jb_j$ e $C_j=c_jd_j$, a identidade
+exata é
 
-O menor elo que falha é a exclusão universal de equilíbrios positivos em
-hiperárvores. A conclusão assintótica multilinear de T10 permanece aberta; o
-contraexemplo não determina sozinho a medida de sua bacia nem a densidade de
-componentes que contribuem dinamicamente.
+$$
+\begin{aligned}
+\Phi-1={}&p_1(A_1-y)+p_2(A_2-y)+yp_1p_2\\
+&+r_1(C_1-(1-y))+r_2(C_2-(1-y))+(1-y)r_1r_2. \tag{3}
+\end{aligned}
+$$
 
-O próximo passo matematicamente válido é classificar a estabilidade e a bacia
-de outros equilíbrios positivos de hiperárvores pequenas, em particular um
-mínimo relativo positivo ou atrator não pontual, antes de tentar qualquer novo
-argumento de peeling ou qualquer inferência sobre o ensemble aleatório.
+Logo os pontos de (2) são mínimos relativos não estritos numa vizinhança: a
+energia é plana nas nove direções da família e cresce nas quatro direções
+unilaterais transversais.
 
-## Obstrução adicional ao peeling ingênuo
+### Aberto capturado em tempo finito
 
-Mesmo em uma única cláusula positiva $(0,1,2)$, no ponto
-$(x_0,x_1,x_2)=(1,-1,-1)$ vale $P_c=0$, mas
+Defina
 
-$$\nabla P_c=(-1/2,0,0).$$
+$$
+U=\left\{
+\frac{31}{64}<y<\frac{33}{64},\quad
+\frac{15}{16}<u_j,v_j<1,\quad
+\frac{15}{16}<a_j,b_j,c_j,d_j<1
+\right\}. \tag{4}
+$$
 
-Assim, remover uma cláusula apenas porque seu valor é zero não preserva o
-gradiente na variável compartilhada. Qualquer indução por peeling precisa de
-uma condição mais forte (por exemplo, fatores nulos suficientes para anular
-todas as derivadas relevantes), ainda não obtida.
+Considere o envelope
+
+$$
+\frac7{16}<y<\frac9{16},\qquad
+u_j,v_j\ge\frac{15}{16},\qquad
+a_j,b_j,c_j,d_j>\frac78. \tag{5}
+$$
+
+Enquanto uma das quatro coordenadas $u_j,v_j$ está abaixo de 1, (5) implica
+
+$$
+\dot u_j,\dot v_j
+\ge\frac14\left[\left(\frac78\right)^2-\frac9{16}\right]
+=\frac{13}{256}. \tag{6}
+$$
+
+Cada uma atinge 1 em tempo menor que
+
+$$
+T_{\rm hit}<\frac{1/16}{13/256}=\frac{16}{13}. \tag{7}
+$$
+
+Como $u_1u_2,v_1v_2\in[(15/16)^2,1]$,
+
+$$
+|\dot y|\le\frac{31}{1024}.
+$$
+
+Até (7), o deslocamento de $y$ é menor que $31/832$ e
+
+$$
+\frac{31}{64}-\frac{31}{832}>\frac7{16},\qquad
+\frac{33}{64}+\frac{31}{832}<\frac9{16}. \tag{8}
+$$
+
+Cada folha satisfaz $|\dot a|\le(1-u_j)/4\le1/64$, e portanto perde menos que
+$1/52$; exatamente,
+
+$$
+\frac{15}{16}-\frac1{52}>\frac78. \tag{9}
+$$
+
+As estimativas (8)--(9) fecham o bootstrap do envelope. Ao atingir
+$u_1=u_2=v_1=v_2=1$, as velocidades de $y$ e das folhas se anulam e as quatro
+desigualdades ativas continuam estritas. A trajetória congela em $\mathcal M$
+com $\Phi=1$.
+
+A medida normalizada do aberto (4) é
+
+$$
+\mathbb P(U)=\frac1{32}\left(\frac1{16}\right)^{12}=2^{-53}>0. \tag{10}
+$$
+
+Qualquer desempate booleano em $y_\infty=1/2$ também viola exatamente uma das
+duas cláusulas do núcleo; fora do empate, a conclusão é imediata pelo sinal de
+$y_\infty-1/2$.
+
+## 5. Minimalidade: por que $m\le5$ tem bacia positiva nula
+
+Esta prova não usa identificação finita de face, cascata de impacto, Liouville
+iterado ou hipótese de hiperbolicidade.
+
+No grafo de incidência, que é uma árvore, duas cláusulas sem
+variáveis-folha exigem pelo menos seis cláusulas. De fato, o caminho entre os
+dois nós-cláusula usa no máximo uma variável vizinha em cada extremidade; os
+outros dois vizinhos de cada extremidade exigem quatro nós-cláusula externos,
+todos distintos para não criar ciclo. A conta mínima é, portanto, $2+4=6$,
+com igualdade apenas quando as duas cláusulas centrais são adjacentes. Por
+(L), um equilíbrio positivo com $m\le5$ possui exatamente uma cláusula
+positiva $C$.
+
+Oriente os fatores de $C$ como $y_1y_2y_3$. A contribuição de $C$ para
+$\partial_{y_i}\Phi$ é $y_jy_k>0$. Se $y_i<1$, qualquer outra cláusula
+incidente em $y_i$ tem a forma $y_iq_B$ ou $(1-y_i)q_B$. Como sua energia é
+zero e ambos $y_i$ e $1-y_i$ são positivos, temos $q_B=0$ nos dois casos;
+logo sua contribuição à derivada também é zero. Restaria
+$\partial_{y_i}\Phi=y_jy_k>0$, incompatível com KKT no interior. Portanto
+$y_i=1$ para os três índices. Equivalentemente, a única forma de obter uma
+contribuição negativa não nula no bordo é
+
+$$
+(1-y_i)q_B,\qquad q_B>0.
+$$
+
+Ao remover $C$, as $m-1\le4$ cláusulas se distribuem em três ramos não vazios.
+Para $m=4$ os tamanhos são $(1,1,1)$; para $m=5$, $(1,1,2)$. Num ramo unitário,
+a cláusula é a única cláusula adicional incidente em $y_i$ e tem duas folhas
+genuínas, com fatores $a,b$. Seu literal central precisa ser $1-y_i$: com
+$y_i$ ele não forneceria a contribuição negativa necessária. KKT em $y_i=1$
+exige
+
+$$
+1-ab\le0,
+$$
+
+logo $a=b=1$.
+
+Globalmente, a dinâmica dessa folha satisfaz
+
+$$
+\dot a=\Pi_{T_{[0,1]}(a)}
+\left(-\frac14(1-y_i)b\right)\le0.
+$$
+
+Portanto uma trajetória que converge para um equilíbrio positivo com
+$a_\infty=1$ deve ter $a(0)=1$. Para cada uma das finitíssimas possibilidades
+de cláusula positiva $C$, escolha previamente uma folha $a_C$ de um ramo
+unitário. Se $\mathcal B_+$ denota o conjunto de condições iniciais com limite
+de energia positiva, então
+
+$$
+\mathcal B_+\subseteq\bigcup_C\{a_C(0)=1\}.
+$$
+
+Esta é uma união **finita** de faces afins de coordenada e, portanto, tem
+medida de Lebesgue ambiente zero. Não se usa uma união não enumerável de bacias
+individuais.
+
+A convergência a um ponto, demonstrada na seção seguinte, elimina a necessidade
+de supor que a trajetória identifica uma face em tempo finito. Assim, na classe
+de hiperárvores conexas, lineares, 3-uniformes e Berge-áciclicas,
+
+$$
+m_*^{\rm mult}=6
+$$
+
+para o tamanho mínimo de uma componente com bacia de energia-limite positiva de
+medida ambiente positiva.
+
+## 6. PDS/KL: convergência a um único equilíbrio
+
+Defina $X=[-1,1]^n$ e $F=\Phi+\delta_X$. Como $\Phi$ é $C^1$ e $X$ é convexo,
+
+$$
+\widehat\partial F(x)=\partial F(x)=\nabla\Phi(x)+N_X(x).
+$$
+
+Para $d(x)=\Pi_{T_X(x)}(-\nabla\Phi(x))$, a decomposição de Moreau dá
+
+$$
+-d(x)\in\partial F(x),
+$$
+
+e, mais fortemente,
+
+$$
+\|d(x)\|
+=\operatorname{dist}(-\nabla\Phi(x),N_X(x))
+=\operatorname{dist}(0,\partial F(x)). \tag{11}
+$$
+
+Ao longo da solução,
+
+$$
+\frac d{dt}\Phi(x(t))=-\|\dot x(t)\|^2\quad\text{a.e.} \tag{12}
+$$
+
+O Teorema 3.1 de Bolte--Daniilidis--Lewis aplica a desigualdade de
+Łojasiewicz a funções subanalíticas com domínio fechado e continuidade relativa
+ao domínio. O **Remark 4.8** do mesmo artigo estende explicitamente os Teoremas
+4.5/4.7 quando $\widehat\partial F=\partial F$, $F$ é contínua no domínio, tem a
+propriedade Łojasiewicz e a inclusão possui solução global única com $F\circ x$
+absolutamente contínua.
+
+Todas essas hipóteses valem aqui: $F$ é regular e semialgébrica; $X$ é compacto;
+$\nabla\Phi$ é Lipschitz na caixa; $N_X$ é maximal monotônico; a perturbação
+Lipschitz fornece solução global única; e (12) dá a continuidade absoluta. Logo
+toda trajetória possui comprimento finito e converge para um único equilíbrio
+projetado.
+
+Fonte primária verificada em 21/09/2026: J. Bolte, A. Daniilidis e A. Lewis,
+*The Łojasiewicz Inequality for Nonsmooth Subanalytic Functions with
+Applications to Subgradient Dynamical Systems*, SIAM J. Optim. 17 (2007),
+1205--1223, DOI 10.1137/050644641,
+<https://www.arisdaniilidis.at/pr_loja.pdf>. O PDF foi lido na fonte autoral;
+nenhuma cópia local/cache ou hash foi criada nesta rodada.
+
+Isso fecha convergência pontual, mas não provaria sozinho energia zero. O M6
+mostra precisamente por que essa conclusão adicional é falsa.
+
+## 7. Propagação exata ao ensemble e refutação de T10
+
+Considere primeiro o modelo uniforme sem reposição, com
+
+$$
+Q_N=8\binom N3,\qquad M=\lfloor\alpha N\rfloor,
+$$
+
+e $M$ cláusulas assinadas distintas. O M6 tem 13 variáveis, grupo de
+automorfismos não assinado de ordem
+
+$$
+2\cdot2^2\cdot2^4=128,
+$$
+
+e $2^{13}$ polaridades na órbita de gauge, todas dinamicamente conjugadas.
+Se $X_{M6}$ conta componentes isoladas nessa órbita, então a expectativa exata
+é
+
+$$
+\mathbb E X_{M6}
+=\frac{(N)_{13}}{128}\,2^{13}
+\frac{\binom{8\binom{N-13}{3}}{M-6}}
+     {\binom{8\binom N3}{M}}. \tag{13}
+$$
+
+No modelo de $M$ cláusulas assinadas i.i.d. (com reposição), ponha
+$Q=8\binom N3$ e $Q_0=8\binom{N-13}{3}$. A expressão finita correspondente é
+
+$$
+\mathbb E X_{M6}^{\rm iid}
+=\frac{(N)_{13}}{128}\,2^{13}
+\frac{(M)_6Q_0^{M-6}}{Q^M}. \tag{13-iid}
+$$
+
+Aqui $(M)_6$ escolhe uma injeção ordenada das seis cláusulas do motivo nos
+slots de amostragem, e os $M-6$ draws restantes evitam todas as 13 variáveis.
+
+Com $M=\lfloor\alpha N\rfloor$ e $\alpha>0$ fixo,
+
+$$
+\frac{\mathbb E X_{M6}}N
+\longrightarrow
+\frac{729}{64}\alpha^6e^{-39\alpha}. \tag{14}
+$$
+
+O fator $e^{-39\alpha}$ é a probabilidade assintótica de nenhuma cláusula
+adicional tocar os 13 vértices. As expressões (13) e (13-iid) têm a mesma
+constante principal.
+
+Cada componente é dinamicamente desacoplada e cai no aberto (4) com
+probabilidade $2^{-53}$. Ela deixa exatamente uma cláusula violada. Pela
+linearidade da esperança e pela não negatividade das demais contribuições,
+
+$$
+\liminf_{N\to\infty}\mathbb E\rho_{\rm mult}(\alpha)
+\ge
+\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0
+\qquad(\alpha>0). \tag{15}
+$$
+
+Não é necessário provar concentração para refutar T10: o enunciado reivindica
+simultaneamente colapso a.a.s. **e em esperança**, e (15) contradiz a segunda
+reivindicação para todo $0<\alpha<1/6$.
+
+Uma conclusão com alta probabilidade é plausível via segundo momento para
+componentes isoladas, mas não é promovida a teorema neste relatório sem o
+cálculo uniforme das covariâncias de pares disjuntos.
+
+## 8. Auditoria dos documentos Gemini
+
+O arquivo `GEMINI_T10_PROVA_INDEPENDENTE.md` foi útil como alvo adversarial,
+mas sua prova não sobrevive:
+
+1. segunda ordem deve ser testada no cone crítico, não em todo o cone tangente;
+2. uma direção de descida não implica instabilidade nem bacia nula;
+3. vértices de uma face não controlam atração transversal da face inteira;
+4. união não enumerável de bacias nulas pode ter medida positiva;
+5. hiperbolicidade não pode ser declarada sem não degenerescência;
+6. teoremas de variedade estável suaves não se transferem automaticamente ao
+   PDS não suave no bordo.
+
+O M6 contradiz diretamente o “Lema D1”: ele possui mínimos relativos positivos,
+continuum não hiperbólico e bacia aberta.
+
+Os arquivos não rastreados `GEMINI_T10R_PROGRAMA_COMPLETO.md` e
+`ROADMAP_T10R.md` ainda afirmam minimalidade $m=7$; essa afirmação está
+refutada pelo certificado M6 e esses arquivos não são evidência aceita.
+
+A parte PDS/KL pode ser reparada independentemente pelo Teorema 3.1 e Remark
+4.8 de BDL, como feito acima. Esse reparo fortalece a refutação: as trajetórias
+do aberto M6 convergem efetivamente a pontos do continuum positivo.
+
+## 9. Cobertura computacional e limites
+
+O programa `Fontes/search_t10_positive_equilibrium_hypertrees.py` contém:
+
+- aritmética `Fraction` para $\Phi$, gradiente, KKT e campos adaptados;
+- o catálogo de vértices até $m=4$ como regressão;
+- validadores estruturais de aresta sem folha e tamanhos de ramos;
+- os certificados M6 e M7;
+- as identidades exatas de energia e os campos PDS adaptados;
+- a medida dos abertos $2^{-53}$ e $2^{-48}$;
+- a expectativa finita (13) e a constante assintótica (15).
+
+Os testes validam a implementação; a prova matemática está nas seções
+anteriores. Não se usa Monte Carlo negativo como prova, e não se afirma uma
+enumeração simbólica ponto a ponto de todos os equilíbrios de $m=5$ ou $m=6$.
+
+## 10. Estado final e próxima lacuna
+
+O gargalo anterior — encontrar uma bacia positiva — está resolvido por
+contraexemplo. O Teorema 10 original deve permanecer marcado **REFUTADO**, e
+qualquer manuscrito que afirme $\rho_{\rm mult}=0$ no regime subcrítico precisa
+ser corrigido.
+
+A próxima questão legítima não é tentar restaurar T10, mas caracterizar a
+densidade completa de motivos atratores e comparar cotas inferiores/superiores
+das duas relaxações sem extrapolar isso para complexidade de Turing.

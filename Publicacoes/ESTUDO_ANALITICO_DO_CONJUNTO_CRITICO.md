@@ -1,8 +1,8 @@
 # Estudo Analítico do Conjunto Crítico e Massa de Bacia Espúria no Framework CLG-R
-**Versão 4.0.3 — Auditoria dinâmica estratificada do Teorema 10 (Evolução pós-Parecer 16, Parecer 18 e Parecer 19)**  
+**Versão 4.0.4 — Auditoria adversarial e refutação do Teorema 10 (Evolução pós-Parecer 16, Parecer 18 e Parecer 19)**
 **Data:** 21 de Setembro de 2026  
 **Área:** Otimização Contínua, Topologia Diferencial, Sistemas Dinâmicos e Teoria da Computação  
-**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; o uso de $H_{\text{leaf}}$ em L10.1--L10.3 foi refutado por contraexemplo exato numa hiperárvore linear; L10.4 mantido; L10.5 em auditoria; Teorema 10 aberto.
+**Status:** Teoremas T1 a T6 Fechados sob Hipóteses; T4A′/4B Fechados; T7B Fechado como Conjunto Limite ($\text{dist}(x(t), Z) \to 0$); Proposição 7A Fechada para Jacobiano Competitivo; T8 Fechado como Cota Finita; T9 Mantido em Aberto; o uso de $H_{\text{leaf}}$ em L10.1--L10.3 foi refutado; L10.4 mantido; a convergência pontual PDS/KL de L10.5 foi provada, mas sua evasão universal foi refutada; o Teorema 10 está **refutado** por uma hiperárvore linear de seis cláusulas com bacia aberta e por uma cota assintótica positiva em esperança.
 
 ---
 
@@ -305,31 +305,15 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.2 (Strict Saddle Subcrítico em Componentes em Árvore --- Reaberto)
-> **Lema 10.2 (Strict Saddle Subcrítico via Traço Nulo e Identidade de Grau de Folha).**  
-> *Seja $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ qualquer componente em árvore, seja $\mathcal{F} \subseteq [-1, 1]^{V(\mathcal{K})}$ qualquer face de dimensão $d = \dim(\mathcal{F}) \ge 2$, e seja $x^* \in \text{relint}(\mathcal{F})$ um ponto crítico relativo de $\Phi_{\mathcal{K}}|_{\mathcal{F}}$ com energia positiva $\Phi_{\mathcal{K}}(x^*) > 0$:*
-> 1. *$\text{Tr}(\mathcal{H}_{\mathcal{F}}(x^*)) \equiv 0$, decorrente da multilinearidade coordenada a coordenada ($\frac{\partial^2 \Phi_{\mathcal{K}}}{\partial x_i^2} \equiv 0$).*
-> 2. *Pela Identidade de Grau Global do Lema 10.1, toda cláusula folha violada $c$ em $\mathcal{K}$ possui uma variável $x_\ell$ com grau global $\deg_{F_N}(x_\ell) = \deg_{\mathcal{K}}(x_\ell) = 1$. Como $x_\ell$ aparece em **nenhuma outra cláusula da fórmula**, a derivada cruzada:*
->    $$H_{\ell p} = \frac{\partial^2 \Phi_{\mathcal{K}}}{\partial x_\ell \partial x_p}(x^*) = \frac{\partial^2 P_c}{\partial x_\ell \partial x_p}(x^*) = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$$
->    *não sofre cancelamento de nenhuma outra cláusula da fórmula inteira, garantindo $\mathcal{H}_{\mathcal{F}}(x^*) \ne \mathbf{0}$.*
-> 3. *Toda matriz simétrica não-nula com traço nulo possui ao menos um autovalor estritamente negativo:*
->    $$\lambda_{\min}(\mathcal{H}_{\mathcal{F}}(x^*)) < 0$$
-> *Assim, todo ponto crítico não-satisfatível em faces de dimensão $d \ge 2$ em componentes em árvore é incondicionalmente uma sela estrita, evitada quase certamente por trajetórias do fluxo projetado.* $\blacksquare$
+### Antigo Lema 10.2 (Strict Saddle Subcrítico --- Refutado como afirmação universal)
+
+> A identidade $\operatorname{Tr}(\mathcal H_{\mathcal F})=0$ continua válida em toda face positiva-dimensional. O passo $\mathcal H_{\mathcal F}\ne0$, porém, dependia da existência não provada de uma cláusula positiva com folha exclusiva. O certificado M6 tem uma família 9-dimensional de mínimos relativos positivos não estritos e uma bacia aberta. Portanto, nem a conclusão universal de sela estrita nem a evasão quase certa correspondente são verdadeiras.
 
 ---
 
-### Lema 10.3 (Universalidade de Repulsão Transversal em Arestas Planas Degeneradas --- Reaberto)
-> **Lema 10.3 (Não-Equilíbrio Projetado e Bacia Vazia de Arestas Planas em Componentes em Árvore).**  
-> *Seja $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ qualquer componente em árvore, e seja $\mathcal{F}_1 = \{x(t) = x^* + t e_i \mid t \in [-1, 1]\} \subseteq [-1, 1]^{V(\mathcal{K})}$ qualquer face 1-dimensional (aresta) com energia positiva $\Phi_{\mathcal{K}}|_{\mathcal{F}_1} \equiv b > 0$ e gradiente longitudinal nulo $a = \nabla_i \Phi_{\mathcal{K}} \equiv 0$:*
-> 1. *Pela Identidade de Grau Global do Lema 10.1, toda cláusula violada $c$ ao longo de $\mathcal{F}_1$ admite uma variável folha exclusiva $x_\ell$ com grau global $\deg_{F_N}(x_\ell) = 1$ posicionada no bordo $s_\ell = x^*_\ell \in \{-1, +1\}$.*
-> 2. *A derivada direcional transversal satisfaz estritamente:*
->    $$s_\ell \nabla_\ell \Phi_{\mathcal{K}}(x(t)) = \frac{1 - \sigma_i t}{4} \ge \frac{1 - |t|}{4} > 0, \quad \forall t \in (-1, 1)$$
-> 3. *Como o campo $-\nabla_\ell \Phi_{\mathcal{K}}(x(t)) = -s_\ell (1 - \sigma_i t)/4$ aponta estritamente para o interior de $[-1, 1]$, a projeção ortogonal sobre o cone tangente $T_{\mathcal{X}}(x(t))$ não se anula:*
->    $$\|\Pi_{T_{\mathcal{X}}(x(t))}(-\nabla \Phi_{\mathcal{K}}(x(t)))\| \ge \frac{1 - |t|}{4} > 0, \quad \forall t \in \operatorname{relint}(\mathcal{F}_1)$$
->    *Portanto, $\operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$, isto é, a aresta plana aberta não contém nenhum ponto de equilíbrio projetado.*
-> 4. *Pelo Princípio de Invariância de LaSalle em $[-1, 1]^{V(\mathcal{K})}$, o conjunto ômega-limite satisfaz $\omega(x_0) \subseteq \mathcal{E}_{\text{proj}}$. Como $\operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$, nenhuma trajetória pode acumular em $\operatorname{relint}(\mathcal{F}_1)$, estabelecendo bacia de atração estritamente vazia:*
->    $$\mathcal{B}(\operatorname{relint}(\mathcal{F}_1)) = \emptyset \implies \mu(\mathcal{B}(\operatorname{relint}(\mathcal{F}_1))) = 0$$
-> *Assim, a evasão quase certa de arestas planas é uma consequência direta da ausência local de equilíbrios projetados via LaSalle.* $\blacksquare$
+### Antigo Lema 10.3 (Repulsão Transversal em Arestas --- Insuficiente)
+
+> O cálculo transversal permanece correto quando a aresta possui de fato a folha exclusiva postulada. Essa existência não decorre de aciclicidade. Além disso, excluir equilíbrios de arestas abertas unidimensionais não exclui famílias atratoras em faces de dimensão superior. Logo, L10.3 não sustenta a conclusão assintótica do antigo T10.
 
 ---
 
@@ -346,28 +330,20 @@ A auditoria matemática independente refinou o entendimento estrutural de $\Phi_
 
 ---
 
-### Lema 10.5 (PDS / Convergência / Evasão — Reaberto após auditoria adversarial)
+### Lema 10.5 (PDS / Convergência / Evasão — Convergência fechada; evasão refutada)
 
-> **Status.** A prova da PR #2 não é mais considerada fechamento. A etapa de trocas de face por mapas de impacto foi retirada como fundamento: o semifluxo projetado pode perder invertibilidade no bordo, e pré-imagem de conjunto nulo por mapa C¹ exige hipóteses adicionais de posto. A dinâmica global é formulada por Moreau como
+> **Status.** A etapa de trocas de face por mapas de impacto foi retirada como fundamento: o semifluxo projetado pode perder invertibilidade no bordo, e pré-imagem de conjunto nulo por mapa C¹ exige hipóteses adicionais de posto. A dinâmica global é formulada por Moreau como
 > $$-\dot x\in \nabla\Phi(x)+N_{\mathcal X}(x)=\partial(\Phi+\delta_{\mathcal X})(x),$$
-> com identidade de dissipação $d\Phi/dt=-\|\dot x\|^2$ a.e. Isso fornece uma rota correta para aplicar teoria KL/subgradiente através das faces, condicionada às hipóteses exatas do teorema de comprimento finito utilizado.
+> com identidade de dissipação $d\Phi/dt=-\|\dot x\|^2$ a.e. Para $F=\Phi+\delta_{\mathcal X}$, temos $\widehat\partial F=\partial F=\nabla\Phi+N_{\mathcal X}$; a caixa é compacta, $F$ é regular, contínua no domínio e semialgébrica, e a inclusão possui solução global única. O Teorema 3.1 e o Remark 4.8 de Bolte--Daniilidis--Lewis aplicam-se hipótese a hipótese. Logo, toda trajetória tem comprimento finito e converge a um único equilíbrio projetado.
 >
-> A auditoria adversarial agora produziu um contraexemplo exato à afirmação auxiliar mais forte $\mathcal E_{\rm proj}(K)\subseteq\{\Phi_K=0\}$ para hiperárvores lineares: ver `Publicacoes/CLG_T10_AUDITORIA_ADVERSARIAL_EQUILIBRIOS.md`. Logo, a aciclicidade não apenas deixa de provar que cada cláusula violada tem folha; ela não exclui equilíbrios projetados positivos. L10.2/L10.3 e a passagem multilinear de T10 não podem ser usados até uma nova hipótese ou novo lema resolver esse contraexemplo.
+> Essa convergência não implica energia-limite zero. A hiperárvore M6 do relatório adversarial possui um aberto de medida normalizada $2^{-53}$ cujas trajetórias atingem em tempo finito um continuum de equilíbrios com $\Phi=1$. Portanto, a parte PDS/KL de L10.5 está provada e a parte de evasão universal está **refutada**.
 
-### Teorema 10 (Separação Dinâmica Subcrítica — Reaberto)
-> **Teorema 10 (Separação Dinâmica Subcrítica Completa).**  
-> *Para o ensemble de 3-SAT aleatório $\mathcal{E}(N, \alpha)$ abaixo do limiar de percolação de hipergrafos $\alpha < 1/6$:*
-> 1. *Evasão Condicional de Selas e Convergência Multilinear via Desacoplamento:* Pelo desacoplamento em componentes do Lema 10.1:
->    - Em todas as componentes em árvore $\mathcal{K} \in \mathcal{C}_{\text{tree}}$ (abrangendo $M - \mathcal{O}_{\mathbb{P}}(1)$ cláusulas), o Lema 10.5, construído a partir da evasão de selas do Lema 10.2, da repulsão transversal do Lema 10.3 e do controle estratificado das trocas de face, garante que quase todas as trajetórias convergem para atribuições satisfatíveis ($E_{\mathcal{K}}(\operatorname{sign}(x^*)) = 0$).
->    - Nas componentes com defeito $\mathcal{C}_{\text{defect}}$, o número total de cláusulas é $M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$, de modo que a energia discreta total satisfaz $E_{\text{disc}}(\operatorname{sign}(x(T))) \le M_{\text{defect}} = \mathcal{O}_{\mathbb{P}}(1)$.
->    Dividindo por $M = \alpha N$, a densidade assintótica de resíduo multilinear colapsa estritamente:
->    $$\lim_{N \to \infty} \rho_{\text{mult}}(\alpha) = 0 \quad \text{a.a.s. e em esperança para todo } \alpha < 1/6.$$
-> 2. *Densidade Residual do Hinge Estritamente Positiva:* Pelo Lema 10.4, as trajetórias do Hinge contraem para o politopo LP $Z$, retendo resíduo positivo sob arredondamento de sinal:
->    $$\liminf_{N \to \infty} \mathbb{E}[\rho_{\text{quad}}(\alpha)] \ge \frac{3}{32} e^{-9\alpha} > 0, \quad \text{e} \quad \lim_{N \to \infty} \mathbb{P}\left(\rho_{\text{quad}}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1.$$
-> 3. *Separação Dinâmica Definitiva:* Combinando os dois limites, para qualquer $\varepsilon > 0$:
->    $$\lim_{N \to \infty} \mathbb{P}\left(\rho_{\text{quad}}(\alpha) - \rho_{\text{mult}}(\alpha) \ge \frac{3}{32} e^{-9\alpha} - \varepsilon\right) = 1,$$
->    e em esperança: $\liminf_{N \to \infty} \left(\mathbb{E}[\rho_{\text{quad}}(\alpha)] - \mathbb{E}[\rho_{\text{mult}}(\alpha)]\right) \ge \frac{3}{32} e^{-9\alpha} > 0$.
->    Consequentemente, a separação dinâmica entre a extensão harmônica multilinear e a relaxação quadrática Hinge em 3-SAT subcrítico está **incondicionalmente fechada e rigorosamente demonstrada**. $\blacksquare$
+### Teorema 10 (Separação Dinâmica Subcrítica — Refutado)
+
+> **Refutação certificada.** Para o ensemble uniforme de cláusulas assinadas distintas, com $M=\lfloor\alpha N\rfloor$ e qualquer $\alpha>0$ fixo, a contagem exata de componentes M6 isoladas e a bacia de massa $2^{-53}$ dão
+> $$\liminf_{N\to\infty}\mathbb E[\rho_{\rm mult}(\alpha)]
+> \ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.$$
+> O modelo de cláusulas i.i.d. tem a mesma constante principal. Assim, a conclusão anterior $\mathbb E[\rho_{\rm mult}(\alpha)]\to0$ é falsa, em particular no intervalo $0<\alpha<1/6$. Isso basta para refutar o enunciado original, que reivindicava simultaneamente convergência a zero em esperança e a.a.s. A concentração com alta probabilidade das contribuições M6 permanece uma questão separada; não é necessária para esta refutação. Nenhuma conclusão sobre $\mathbf P$ versus $\mathbf{NP}$ decorre deste resultado.
 
 ---
 
@@ -393,7 +369,7 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 
 ---
 
-### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Pareceres 18 e 19 / Versão 4.0.2 Homologada)
+### 13. Matriz Consolidada de Rigor Científico (Auditoria do Avaliador — Pareceres 18 e 19 / Versão 4.0.4)
 
 | Resultado | Status de Auditoria | Qualificação Técnica Formal e Limites Analíticos |
 | :--- | :---: | :--- |
@@ -407,11 +383,11 @@ A teoria CLG-R estabelece um firewall epistemológico contra inferências de dif
 | **T7B** (Contração Centrípeta e LaSalle) | 🟢 **Fechado como Conjunto Limite** | Equivalência $\mathcal{E}_{\text{proj}} \equiv Z$; $\lim_{t \to \infty} \text{dist}(x(t), Z) = 0$; projeção ortogonal no cone tangente. |
 | **Proposição 7A** (Estrutura do Jacobiano Negativo) | 🟢 **Fechado para Jacobiano Competitivo** | Derivada cruzada $\partial^2 P_c / \partial x_i \partial x_j \ge 0 \implies J_{ij} \le 0$ (competitivo/fracamente inibitório; Hirsch suspenso; item 2 de $A_N$ expurgado). |
 | **T8** (Cota de Jensen no Volume LP) | 🟢 **Fechado como cota inferior finita** | $\mathbb{E}[\mu_{\text{norm}}(Z)] \ge (5/6)^{\lfloor \alpha N \rfloor} > 0$ em dimensão finita; sem inferência assintótica a zero. |
-| **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🔴 **Parcial / item de folha refutado** | A identidade de grau local-global não implica $H_{\text{leaf}}$; há hiperárvore linear com equilíbrio projetado positivo exato. |
-| **Lema 10.2** (Strict Saddle Subcrítico) | 🟡 **Reaberto** | Traço nulo e $H_{\ell p} = \frac{\sigma_\ell \sigma_p}{8}(1 - \sigma_k x^*_k) \ne 0$ garantem $\lambda_{\min} < 0$ em faces $d \ge 2$. |
-| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟡 **Reaberto** | Projeção $s_\ell \nabla_\ell \Phi \ge (1-|t|)/4 > 0 \implies \operatorname{relint}(\mathcal{F}_1) \cap \mathcal{E}_{\text{proj}} = \emptyset$; bacia vazia $\mathcal{B} = \emptyset$ via LaSalle. |
+| **Lema 10.1** (Desacoplamento e Tightness de Defeitos) | 🔴 **Parcial / item de folha refutado** | Desacoplamento, identidade de grau e cota de defeitos permanecem; a identidade local-global não implica $H_{\text{leaf}}$. |
+| **Lema 10.2** (Strict Saddle Subcrítico) | 🔴 **Refutado como universal** | O M6 possui família 9-dimensional de mínimos relativos positivos não estritos com bacia aberta. |
+| **Lema 10.3** (Repulsão Transversal em Arestas $d=1$) | 🟠 **Insuficiente** | Um cálculo local em arestas com folha exclusiva não exclui atratores em faces de dimensão superior. |
 | **Lema 10.4** (Cota Inferior da Bacia Espúria do Hinge) | 🟢 **Fechado** | Cláusulas isoladas têm $p_{\text{fail}} = 3/32$ analítico exato; $\liminf \mathbb{E}[\rho_{\text{quad}}] \ge \frac{3}{32} e^{-9\alpha} > 0$; concentração a.a.s. via Chebyshev. |
-| **Lema 10.5** (PDS/KL/Evasão) | 🟡 **Reaberto** | Estratificação de Whitney finita; direção instável transversal; variedades centro-estáveis de codimensão ≥1; controle das trocas de face por indução de dimensão. |
-| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Aberto; prova atual inválida** | A passagem para $\rho_{\text{mult}}=0$ dependia da exclusão universal de equilíbrios positivos em árvores, refutada pelo certificado adversarial. Nenhuma conclusão sobre P versus NP decorre deste estado. |
+| **Lema 10.5** (PDS/KL/Evasão) | 🟢/🔴 **Convergência provada; evasão refutada** | Moreau + BDL dão convergência pontual; o aberto M6 converge a energia positiva. |
+| **Teorema 10** (Separação em 3-SAT Subcrítico) | 🔴 **Refutado** | $\liminf\mathbb E\rho_{\rm mult}\ge(729/2^{59})\alpha^5e^{-39\alpha}>0$; nenhuma conclusão sobre P versus NP decorre disso. |
 | **Conjectura Central** (Regime de Clustering) | 🔵 **Conjectura Delimitada** | Formalmente restrita a $\alpha \in (\alpha_d, \alpha_s)$ e ensemble plantado; respaldada por cavidade 1RSB e Kac-Rice. |
 | **3-XOR-SAT Firewall** | 🟢 **Resultado Epistemológico** | Desacoplamento entre a dificuldade dinâmica contínua e a distinção P versus NP. |
