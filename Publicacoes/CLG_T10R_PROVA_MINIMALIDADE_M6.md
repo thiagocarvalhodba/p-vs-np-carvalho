@@ -22,9 +22,21 @@ A energia é
 
 Cada P_c é multilinear e não negativo em [0,1]^n.
 
-O fluxo projetado é, a menos de uma constante positiva de reparametrização temporal proveniente da mudança afim x ↔ z,
+Se z=(1±x)/2 é a coordenada-fator associada a uma coordenada original x∈[-1,1], então
 
-    ż = Proj_{T_[0,1]^n(z)}(-∇Φ(z)).
+    ∂_x Φ = ±(1/2) ∂_z Φ
+    e
+    ż = ±(1/2) ẋ.
+
+Portanto, no tempo original t do fluxo em x,
+
+    ż = (1/4) Proj_{T_[0,1]^n(z)}(-∇_z Φ(z)).
+
+Se reparametrizamos o tempo por τ=t/4, obtemos exatamente
+
+    dz/dτ = Proj_{T_[0,1]^n(z)}(-∇_z Φ(z)).
+
+Toda a prova qualitativa abaixo usa essa forma reparametrizada; os conjuntos de órbitas, equilíbrios, bacias e propriedades de medida são invariantes por essa reparametrização positiva. Quando constantes quantitativas de tempo são usadas no certificado M6, o fator 1/4 deve ser mantido explicitamente.
 
 Para z_v = 0, a condição KKT é ∂_v Φ ≥ 0; para 0 < z_v < 1, ∂_v Φ = 0; para z_v = 1, ∂_v Φ ≤ 0.
 
