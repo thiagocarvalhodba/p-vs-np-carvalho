@@ -25,12 +25,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore raster figures referenced by TeX
+      - name: Install TeX toolchain and restore raster figures
         shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update -qq
-          sudo apt-get install -y -qq librsvg2-bin
+          sudo apt-get install -y -qq \
+            librsvg2-bin \
+            latexmk \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            poppler-utils
           cd Publicacoes
           python3 - <<'PY'
           import pathlib, re, subprocess
@@ -45,6 +52,52 @@ jobs:
                       subprocess.run(["rsvg-convert", "-o", str(p), str(svg)], check=True)
                       print(f"generated {p} from {svg}")
           PY
+
+      - name: Compile manuscript and fail on unresolved references
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd Publicacoes
+
+          latexmk -pdf \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            CLG_FOUNDATIONS_ARXIV.tex
+
+          test -s CLG_FOUNDATIONS_ARXIV.pdf
+
+          if grep -Eq \
+            'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)' \
+            CLG_FOUNDATIONS_ARXIV.log; then
+            echo "Unresolved LaTeX citation/reference detected"
+            grep -E \
+              'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)' \
+              CLG_FOUNDATIONS_ARXIV.log || true
+            exit 1
+          fi
+
+          if grep -Eq 'Label .* multiply defined|multiply-defined labels' CLG_FOUNDATIONS_ARXIV.log; then
+            echo "Multiply-defined LaTeX label detected"
+            grep -E 'Label .* multiply defined|multiply-defined labels' CLG_FOUNDATIONS_ARXIV.log || true
+            exit 1
+          fi
+
+          echo "=== PDF INFO ==="
+          pdfinfo CLG_FOUNDATIONS_ARXIV.pdf | grep -E '^(Pages|Page size|File size):' || true
+
+          echo "=== NON-FATAL LATEX WARNINGS ==="
+          grep -E '^(LaTeX|Package .* Warning)' CLG_FOUNDATIONS_ARXIV.log || true
+
+      - name: Upload compiled manuscript and log
+        uses: actions/upload-artifact@v4
+        with:
+          name: clg-r-v4.0.5-compiled
+          path: |
+            Publicacoes/CLG_FOUNDATIONS_ARXIV.pdf
+            Publicacoes/CLG_FOUNDATIONS_ARXIV.log
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Build deterministic arXiv source package
         shell: bash
@@ -119,6 +172,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Publicacoes/arxiv_package.zip Publicacoes/ARXIV_PACKAGE_MANIFEST.txt
+          git add Publicacoes/CLG_FOUNDATIONS_ARXIV.bbl || true
           git add -f Publicacoes/*.png || true
           git commit -m "build(arxiv): regenerate v4.0.5 source package"
           git push origin HEAD:master
