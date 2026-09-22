@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{bolte2007clarke}
+J{\'e}r{\^o}me Bolte, Aris Daniilidis, Adrian Lewis, and Masahiro Shiota.
+\newblock Clarke subgradients of stratifiable functions.
+\newblock {\em SIAM Journal on Optimization}, 18(2):556--572, 2007.
 \bibitem{bolte2007lojasiewicz}
 J{\'e}r{\^o}me Bolte, Aris Daniilidis, and Adrian Lewis.
 \newblock The {{\L}}ojasiewicz inequality for nonsmooth subanalytic functions
