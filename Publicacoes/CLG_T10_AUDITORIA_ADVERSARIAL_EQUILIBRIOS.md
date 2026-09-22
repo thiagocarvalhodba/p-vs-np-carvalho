@@ -25,7 +25,7 @@ $\mathbf{NP}$.
 | $m=6$ é mínimo para bacia positiva em hiperárvores da classe auditada | **PROVADA** | exclusão de medida positiva para $m\le5$ |
 | Toda trajetória PDS converge a um único equilíbrio | **PROVADA** | Moreau + BDL, Teorema 3.1 e Remark 4.8 |
 | $\lim \mathbb E\rho_{\rm mult}(\alpha)=0$ para $0<\alpha<1/6$ | **REFUTADA** | contagem exata de componentes M6 isoladas |
-| Cota positiva para $\rho_{\rm mult}$ com alta probabilidade | **PROVADA** | concentração de McDiarmid (swap sem reposição) + Chernoff condicional exato em `PROVA_ALTA_PROBABILIDADE_M6.md` |
+| Cota positiva para $\rho_{\rm mult}$ com alta probabilidade | **PROVADA** | `PROVA_ALTA_PROBABILIDADE_M6.md` + auditoria independente `CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md` |
 
 ## Catálogo desta auditoria
 
