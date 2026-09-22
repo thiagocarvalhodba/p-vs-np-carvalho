@@ -591,6 +591,19 @@ coordinates in $[0,1]$, its potential is
 \end{split}
 \label{eq:m6_phi}
 \end{equation}
+The quantitative bounds below use the original projected-flow time in
+$x\in[-1,1]^N$.  If a factor coordinate is
+$z=(1\pm x)/2$, then
+$\partial_x\Phi=\pm\tfrac12\partial_z\Phi$ and
+$\dot z=\pm\tfrac12\dot x$; hence, away from the harmless tangent-cone
+projection notation,
+\[
+\dot z=\frac14\,\Pi_{T_{[0,1]}(z)}(-\nabla_z\Phi).
+\]
+Equivalently, with the rescaled time $\tau=t/4$ one recovers
+$dz/d\tau=\Pi_{T_{[0,1]}(z)}(-\nabla_z\Phi)$.  Thus all orbit and basin
+statements are unchanged by the affine coordinate change, while numerical
+speed bounds in the original time carry the factor $1/4$.
 The set
 \begin{equation}
 \mathcal M=\{u_1=u_2=v_1=v_2=1, 0<y<1,
@@ -663,7 +676,7 @@ $Z_N\mid F\sim\operatorname{Binomial}(X_{M6},2^{-53})$.
 A multiplicative Chernoff bound gives
 \[
 \mathbb P_{x_0}\left[
-Z_N<\frac34,2^{-53}X_{M6}\mid F
+Z_N<\frac34\,2^{-53}X_{M6}\mid F
 \right]
 \le
 \exp\!\left(-\frac{3\,2^{-53}d(\alpha)}{128}N\right).
