@@ -95,6 +95,7 @@ jobs:
               manifest_lines.append(f"{hashlib.sha256(data).hexdigest()}  {p.name}")
 
           manifest = "\n".join(manifest_lines) + "\n"
+          (root / "ARXIV_PACKAGE_MANIFEST.txt").write_text(manifest, encoding="utf-8")
           out = root / "arxiv_package.zip"
           with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
               for p in sorted(unique, key=lambda x: x.name):
@@ -117,6 +118,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Publicacoes/arxiv_package.zip Publicacoes/*.png
+          git add Publicacoes/arxiv_package.zip Publicacoes/ARXIV_PACKAGE_MANIFEST.txt
+          git add -f Publicacoes/*.png || true
           git commit -m "build(arxiv): regenerate v4.0.5 source package"
           git push origin HEAD:master
