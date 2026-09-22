@@ -244,9 +244,9 @@ To rigorously understand why SATMetaGNN succeeds where standard gradient descent
 2. **Harmonicity and Total Absence of Interior Minima in Multilinear Potentials:**  
    For the multilinear relaxation $\mathcal{L}_{\text{SAT}}$, the Laplacian vanishes identically everywhere:
    $$\Delta \mathcal{L}_{\text{SAT}}(x) = \text{Tr}(\nabla^2 \mathcal{L}_{\text{SAT}}(x)) \equiv 0, \quad \forall x \in \mathbb{R}^n$$
-   By the **Strong Minimum Principle for Harmonic Functions**, $\mathcal{L}_{\text{SAT}}$ contains **no local minima (strict or degenerate) in the interior** of the hypercube. All interior critical points are strictly **saddle points** ($1 \le m \le n-1$).
+   By the **Strong Minimum Principle for Harmonic Functions**, $\mathcal{L}_{\text{SAT}}$ contains **no local minima (strict or degenerate) in the interior** of the hypercube. Every non-degenerate interior critical point is a strict saddle ($1 \le m \le n-1$); a degenerate interior critical point still has lower-energy points in every neighborhood, but need not be hyperbolic.
 3. **The Vertex Confinement Theorem:**  
-   Under projected gradient dynamics on $[-1, 1]^n$, every local minimum of $\mathcal{L}_{\text{SAT}}$ is strictly confined to the $2^n$ discrete vertices $\{-1, +1\}^n$. The interior is a repelling harmonic corridor that forces trajectories toward boolean corners.
+   Under projected gradient dynamics on $[-1, 1]^n$, every strict local minimum and every isolated asymptotically stable equilibrium of $\mathcal{L}_{\text{SAT}}$ is confined to a discrete vertex in $\{-1,+1\}^n$. Non-strict continua of relative boundary minima can attract open sets, as shown by the six-clause M6 certificate; vertex confinement must not be extended to such families.
 4. **Convex Semidefinite Funnels via Softplus Regularization:**  
    When regularized via log-sum-exp / Softplus activations ($\beta > 0$), the Hessian becomes globally positive semidefinite: $\nabla^2 \Phi_{\text{soft}} \succeq 0$. This destroys the harmonic saddle condition, converting the landscape into a smooth convex funnel and explaining why SATMetaGNN's continuous dynamics achieve $98.4\% - 99.25\%$ satisfaction near the critical threshold.
 

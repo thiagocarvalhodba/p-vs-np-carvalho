@@ -161,7 +161,13 @@ ax2.axhline(0, color='#94A3B8', linestyle=':', lw=1)
 ax2.axvline(0, color='#94A3B8', linestyle=':', lw=1)
 ax2.set_xlabel(r'Coordinate $x_1$', fontsize=11, fontweight='bold')
 ax2.set_ylabel(r'Coordinate $x_2$', fontsize=11, fontweight='bold')
-ax2.set_title(r'(B) Teorema da Localização Estrita nos Vértices' + '\n' + r'All Projected Minima Confined to $\{-1, +1\}^N$ (Theorem 4)', fontsize=11, fontweight='bold')
+ax2.set_title(
+    r'(B) Equilíbrios Estáveis Isolados nos Vértices'
+    + '\n'
+    + r'Strict Minima / Isolated Attractors Confined to $\{-1, +1\}^N$',
+    fontsize=11,
+    fontweight='bold',
+)
 ax2.legend(loc='lower left', fontsize=8.5, framealpha=0.95)
 ax2.grid(True, linestyle='--', alpha=0.3)
 

@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{bolte2007lojasiewicz}
+J{\'e}r{\^o}me Bolte, Aris Daniilidis, and Adrian Lewis.
+\newblock The {{\L}}ojasiewicz inequality for nonsmooth subanalytic functions
+  with applications to subgradient dynamical systems.
+\newblock {\em SIAM Journal on Optimization}, 17(4):1205--1223, 2007.
+
 \bibitem{brogliato2006equivalence}
 Bernard Brogliato, Aris Daniilidis, Claude Lemar{\'e}chal, and J{\'e}r{\^o}me Malick.
 \newblock Equivalence and complementarity issues in projected dynamical systems and differential inclusions.
