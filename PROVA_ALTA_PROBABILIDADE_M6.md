@@ -92,3 +92,18 @@ Assim uma fórmula típica já possui probabilidade condicional exponencialmente
 ## 6. Auditoria independente
 
 A derivação de automorfismos, órbita de gauge, expectativa exata, constante assintótica, sensibilidade por troca e formulação probabilística em dois níveis foi auditada independentemente em `Publicacoes/CLG_T10R_AUDITORIA_PROBABILISTICA_M6.md`.
+
+
+## Escala temporal das coordenadas-fator
+
+As constantes dinâmicas do certificado local M6 usam o tempo original do fluxo em x∈[-1,1]^N. Para z=(1±x)/2,
+
+    ż = (1/4) Proj(-∇_z Φ).
+
+Portanto as derivadas em z devem ser multiplicadas por 1/4 ao serem convertidas em velocidades no tempo original. Em particular:
+
+    31/256 -> 31/1024,
+    1/16   -> 1/64,
+    13/64  -> 13/256.
+
+O tempo de saturação 16/13 e os drifts 31/832 e 1/52 são, portanto, consistentes entre si. A massa da caixa p0=2^-53 não depende dessa reparametrização temporal.
