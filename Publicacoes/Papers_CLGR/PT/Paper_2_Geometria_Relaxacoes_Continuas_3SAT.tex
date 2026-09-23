@@ -1,0 +1,210 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry,microtype,booktabs,tabularx}
+\geometry{margin=2.2cm}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}[theorem]{Corolário}
+\newcommand{\X}{\mathcal X}
+\title{Geometria de Relaxações Contínuas de 3-SAT\\\large Platôs Hinge, paisagens multilineares harmônicas e convexidade Softplus}
+\author{Thiago Carvalho\\Pesquisador Independente\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Versão para análise -- derivada da fonte auditada CLG-R v4.0.5 (setembro de 2026)}
+\begin{document}
+\maketitle
+\begin{abstract}
+Comparamos três representações contínuas de 3-SAT no hipercubo $[-1,1]^N$: uma penalidade Hinge quadrática da relaxação linear por cláusula, a extensão multilinear natural da contagem Booleana de violações e um alisamento Softplus das mesmas violações afins. Embora as três estejam associadas à mesma estrutura discreta de cláusulas, suas geometrias interiores são qualitativamente distintas. Provamos que a relaxação Hinge contém a caixa fracionária universal $(-1/3,1/3)^N$, na qual energia e gradiente são nulos, fornecendo uma manifestação geométrica direta da folga interior $0{,}5$ da relaxação LP por cláusula. Sob uma condição de não degenerescência do objetivo Booleano, os conjuntos críticos das relaxações multilinear e Softplus têm medida de Lebesgue zero. A extensão multilinear é harmônica, portanto não possui mínimos locais interiores; todo ponto crítico interior não degenerado é sela, e todo mínimo local estrito no cubo projetado é um vértice Booleano. Em contraste, a Hessiana Softplus fatora globalmente como $V^TW(x)V\succeq0$ e se torna definida positiva quando a matriz de incidência de cláusulas possui posto de coluna completo. Derivamos cotas espectrais e de Lipschitz explícitas, incluindo $L_\beta=\Theta(\beta)$. Finalmente, para o fluxo Hinge quadrático provamos uma identidade universal de contração centrípeta e mostramos que o conjunto de equilíbrios projetados coincide exatamente com o politopo LP por cláusula. Os resultados isolam a geometria da representação, e não apenas os valores nos vértices Booleanos, como propriedade matematicamente decisiva das formulações contínuas de SAT.
+\end{abstract}
+\noindent\textbf{Palavras-chave:} 3-SAT; relaxação contínua; funções harmônicas; fluxo de gradiente projetado; Softplus; convexidade; relaxação LP.
+
+\section{Formulação e três representações contínuas}
+Seja $F$ uma fórmula 3-CNF com $M$ cláusulas em $N$ variáveis e $\sigma^{(c)}\in\{-1,0,+1\}^N$ o vetor de polaridade da cláusula $c$. Assumimos três variáveis distintas por cláusula e que toda variável aparece em pelo menos uma cláusula. Defina
+\begin{equation}
+g_c(x)=-\frac12\bigl(1+\sigma^{(c)}\cdot x\bigr),\qquad x\in\X=[-1,1]^N.
+\end{equation}
+Em um vértice Booleano $s\in\{-1,+1\}^N$, $g_c(s)=1$ exatamente quando a cláusula $c$ é violada.
+
+Estudamos os potenciais
+\begin{align}
+\Phi_{\rm quad}(x)&=\sum_{c=1}^M[\max(0,g_c(x))]^2,\\
+\Phi_{\rm mult}(x)&=\sum_{c=1}^M\prod_{j\in c}\frac{1-\sigma_j^{(c)}x_j}{2},\\
+\Phi_{\rm soft}(x)&=\sum_{c=1}^M\frac1\beta\log\bigl(1+e^{\beta g_c(x)}\bigr),\qquad \beta>0.
+\end{align}
+A dinâmica é o fluxo de gradiente projetado
+\begin{equation}
+\dot x=\Pi_{T_\X(x)}(-\nabla\Phi(x)).
+\end{equation}
+Para os resultados de medida zero assumimos que a energia Booleana é não constante, equivalentemente $\operatorname{Var}(E_{\rm disc})>0$.
+
+\section{O platô Hinge universal}
+Seja $\mathcal U_N=(-1/3,1/3)^N$.
+
+\begin{theorem}[Caixa fracionária central]
+Para toda fórmula 3-CNF,
+\[
+\Phi_{\rm quad}(x)=0,\qquad \nabla\Phi_{\rm quad}(x)=0\qquad \forall x\in\mathcal U_N.
+\]
+Logo o volume normalizado do politopo LP de energia zero é ao menos $(1/3)^N$. Se a energia Booleana é não constante, o conjunto crítico espúrio possui medida normalizada ao menos $(1/6)^N$.
+\end{theorem}
+
+\noindent\textit{Prova.} Para $x\in\mathcal U_N$ e qualquer cláusula,
+\[
+\sum_{j\in c}\sigma_j^{(c)}x_j\ge-\sum_{j\in c}|x_j|>-1,
+\]
+portanto $g_c(x)<0$ e todos os termos Hinge estão simultaneamente inativos. Para uma cláusula fixa, introduza as coordenadas de satisfação literal
+\[
+q_{cj}=\frac{1+\sigma_j^{(c)}x_j}{2}.
+\]
+Então $g_c(x)\le0$ equivale a $\sum_{j\in c}q_{cj}\ge1$. Na origem, cada $q_{cj}=1/2$, logo a desigualdade LP possui folga exata $3/2-1=0{,}5$. \hfill$\square$
+
+\section{Conjuntos críticos de medida zero fora do platô Hinge}
+\begin{theorem}[Conjuntos críticos analíticos]
+Se a energia Booleana é não constante,
+\[
+\mu\{\nabla\Phi_{\rm mult}=0\}=0,\qquad \mu\{\nabla\Phi_{\rm soft}=0\}=0.
+\]
+\end{theorem}
+
+\noindent\textit{Prova.} O potencial multilinear é um polinômio não constante. Portanto ao menos uma derivada parcial é um polinômio não nulo, cujo conjunto de zeros tem medida de Lebesgue zero \cite{Okamoto,Caron}; o conjunto crítico completo está contido nele. O potencial Softplus é real-analítico. A fatoração de Hessiana da Seção~\ref{sec:soft} implica
+\[
+\Delta\Phi_{\rm soft}(x)=\frac34\sum_{c=1}^M w_c(x)>0,
+\]
+logo a função é não constante. Alguma derivada parcial analítica é não trivial, e seu conjunto de zeros tem medida zero \cite{Krantz}. \hfill$\square$
+
+\section{Harmonicidade da extensão multilinear}
+\begin{theorem}[Estrutura harmônica de sela]
+O potencial multilinear satisfaz
+\[
+\Delta\Phi_{\rm mult}\equiv0.
+\]
+Consequentemente, não possui mínimo local interior. Todo ponto crítico interior não degenerado é uma sela hiperbólica com pelo menos um autovalor positivo e um negativo da Hessiana; todo ponto crítico interior possui pontos de energia menor em qualquer vizinhança.
+\end{theorem}
+
+\noindent\textit{Prova.} Cada termo de cláusula é multilinear em variáveis distintas, então todas as segundas derivadas puras $\partial_{ii}^2\Phi_{\rm mult}$ se anulam. O Princípio do Mínimo Forte exclui mínimos locais interiores para funções harmônicas não constantes \cite{Courant,Evans}. Em ponto crítico não degenerado, a Hessiana simétrica é invertível e tem traço zero, o que força autovalores de ambos os sinais. No caso degenerado, a ausência de mínimo local já garante pontos de menor energia arbitrariamente próximos; seleção de curvas pode reforçar a conclusão \cite{Milnor}. \hfill$\square$
+
+\section{Faces de bordo e atratores projetados}
+Fixar coordenadas em $\pm1$ preserva multilinearidade nas coordenadas livres, portanto o Laplaciano intrínseco de toda face positiva-dimensional também é nulo.
+
+\begin{theorem}[Mínimos em faces herdam energia de vértices]
+Se $x^*$ é mínimo local relativo de $\Phi_{\rm mult}$ no interior relativo de uma face $\mathcal F$, então $\Phi_{\rm mult}$ é constante em $\mathcal F$ e
+\[
+\Phi_{\rm mult}(x^*)=E_{\rm disc}(v)\qquad\text{para todo vértice Booleano }v\in\mathcal V(\mathcal F).
+\]
+Em particular, todo mínimo local estrito relativo ao cubo é um vértice Booleano.
+\end{theorem}
+
+\begin{corollary}[Equilíbrios estáveis isolados são vértices]
+Sob o fluxo multilinear projetado, todo equilíbrio assintoticamente estável e isolado pertence a $\{-1,+1\}^N$.
+\end{corollary}
+
+\noindent\textit{Prova.} Pela projeção de Moreau,
+\[
+\frac{d}{dt}\Phi_{\rm mult}(x(t))=-\|\Pi_{T_\X(x)}(-\nabla\Phi_{\rm mult})\|^2\le0.
+\]
+Um equilíbrio assintoticamente estável isolado deve ser mínimo local estrito: estados próximos de energia menor não podem convergir para cima, e um ponto distinto de mesma energia ou cai imediatamente abaixo dessa energia ou é outro equilíbrio. O teorema anterior força, então, uma face de dimensão zero. \hfill$\square$
+
+A palavra \emph{isolado} é essencial: contínuos atratores não estritos de dimensão positiva podem existir em faces de bordo; o motivo M6 fornece exemplo explícito.
+
+\section{Fatoração da Hessiana Softplus e condicionamento}\label{sec:soft}
+Seja $V\in\mathbb R^{M\times N}$ com linha $v_c^T=-\frac12(\sigma^{(c)})^T$. Defina
+\[
+w_c(x)=\beta\,\sigma(\beta g_c(x))\bigl(1-\sigma(\beta g_c(x))\bigr)>0,\qquad W(x)=\operatorname{diag}(w_1,\ldots,w_M),
+\]
+onde $\sigma(u)=(1+e^{-u})^{-1}$.
+
+\begin{theorem}[Fatoração exata da Hessiana]
+\[
+\nabla^2\Phi_{\rm soft}(x)=V^TW(x)V\succeq0.
+\]
+Assim, $\Phi_{\rm soft}$ é globalmente convexa. Se $\operatorname{rank}(V)=N$, ela é estritamente convexa e
+\[
+\kappa(\nabla^2\Phi_{\rm soft})\le\kappa(W)\,\kappa(V^TV).
+\]
+\end{theorem}
+
+\noindent Como $g_c(x)=v_c^Tx-1/2$,
+\[
+\nabla\Phi_{\rm soft}=V^T\sigma(\beta g),\qquad \nabla^2\Phi_{\rm soft}=V^TWV.
+\]
+Para qualquer $z$, $z^TV^TWVz=\|W^{1/2}Vz\|^2\ge0$; Courant--Fischer fornece a cota de condicionamento quando $V^TV$ é definida positiva.
+
+\section{Rigidez Softplus e precisão finita}
+Seja $d_{\max}$ o número máximo de cláusulas incidentes a uma variável.
+
+\begin{theorem}[Escala Lipschitz do gradiente]
+A constante global $L_\beta=\sup_x\|\nabla^2\Phi_{\rm soft}(x)\|_2$ satisfaz
+\[
+\frac3{16}\beta\le L_\beta\le\frac{3d_{\max}}{16}\beta.
+\]
+Para $\mathcal U_N(\rho)=(-\rho,\rho)^N$, $\rho<1/3$,
+\[
+\|\nabla\Phi_{\rm soft}\|_\infty\le\frac M2e^{-\beta(1-3\rho)/2},\qquad
+\|\nabla\Phi_{\rm soft}\|_2\le\frac{\sqrt3M}{2}e^{-\beta(1-3\rho)/2}.
+\]
+\end{theorem}
+
+Como $w_c\le\beta/4$,
+\[
+\|\nabla^2\Phi_{\rm soft}\|_2\le\frac\beta4\lambda_{\max}(V^TV).
+\]
+A soma absoluta da linha de $V^TV$ associada à variável $i$ é no máximo $3d_i/4$, e Gershgorin dá a cota superior. Se $g_c(x)=0$ para uma cláusula, então $w_c=\beta/4$ e o somando de posto um possui valor espectral $3\beta/16$, dando a cota inferior.
+
+Na origem, a escala exponencial relevante é $e^{-\beta/2}$. Os cruzamentos idealizados do menor normal, menor subnormal e metade do menor subnormal são, em binary32, aproximadamente $174{,}67$, $206{,}56$ e $207{,}94$; em binary64, $1416{,}79$, $1488{,}88$ e $1490{,}27$. Esses números descrevem a escala do fator exponencial, não limiares independentes de implementação para uma rotina específica de sigmoid; modos FTZ/DAZ podem zerar subnormais antes.
+
+\section{Contração centrípeta universal do fluxo Hinge quadrático}
+Seja
+\[
+Z=\{x\in\X:g_c(x)\le0\ \forall c\}
+\]
+o politopo LP por cláusula.
+
+\begin{theorem}[Contração centrípeta]
+Para todo $x\notin Z$,
+\[
+\langle-\nabla\Phi_{\rm quad}(x),x\rangle=-\sum_{c\in\operatorname{act}(x)}\bigl(2g_c(x)^2+g_c(x)\bigr)<0.
+\]
+Sob o fluxo projetado, $\|x(t)\|_2^2$ decresce estritamente fora de $Z$. Além disso, o conjunto de equilíbrios projetados coincide com $Z$ e toda trajetória satisfaz
+\[
+\operatorname{dist}(x(t),Z)\to0.
+\]
+\end{theorem}
+
+\noindent Para uma cláusula ativa, $\sigma^{(c)}\cdot x=-(2g_c+1)$ e
+\[
+-\nabla\Phi_{\rm quad}=\sum_{c\in\operatorname{act}}g_c\sigma^{(c)}.
+\]
+Escreva $v=-\nabla\Phi=d+n$ por Moreau, com $d=\Pi_Tv$ e $n\in N_\X(x)$. Para a caixa, $\langle x,n\rangle\ge0$, logo $\langle x,d\rangle\le\langle x,v\rangle<0$. Isso exclui equilíbrios projetados fora de $Z$; em $Z$ todos os termos Hinge estão inativos. LaSalle fornece aproximação a $Z$ \cite{Brogliato,Nagurney}.
+
+\section{Síntese}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lXXX@{}}
+\toprule
+& Hinge & Multilinear & Softplus\\
+\midrule
+Massa crítica central & platô positivo & medida zero & medida zero\\
+Curvatura & quadrática por partes/plana & harmônica, traço zero & $V^TWV\succeq0$\\
+Mínimos interiores & pontos do platô & inexistentes & único se $\operatorname{rank}(V)=N$\\
+Equilíbrios projetados & politopo LP $Z$ & conjunto de bordo dependente da representação & minimizadores convexos\\
+Questão de parâmetro grande & planicidade exata & não há análogo Softplus & $L_\beta=\Theta(\beta)$ e gradiente central exponencialmente pequeno\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+As três representações implementam geometrias interiores radicalmente diferentes. O Hinge introduz um conjunto fracionário estacionário de dimensão plena; a representação multilinear elimina mínimos interiores, mas ainda pode sustentar atratores não estritos no bordo; a Softplus restaura convexidade ao custo de uma troca entre rigidez global e gradientes centrais muito pequenos quando $\beta$ cresce.
+
+\section{Conclusão}
+Relaxações contínuas de 3-SAT que codificam as mesmas cláusulas podem possuir geometrias críticas fundamentalmente distintas. O platô fracionário Hinge, a extensão multilinear harmônica e a fatoração convexa Softplus definem três regimes analíticos. Esses resultados determinísticos formam uma camada geométrica reutilizável para investigações probabilísticas ou algorítmicas posteriores, mas por si só não constituem qualquer afirmação sobre classes de complexidade computacional.
+
+\begin{thebibliography}{9}
+\bibitem{Okamoto} M. Okamoto, ``Distinctness of the eigenvalues of a quadratic form in a multivariate sample'', \emph{Ann. Stat.} 1(4):763--765, 1973.
+\bibitem{Caron} R. Caron e T. Traynor, ``Zero sets of polynomials and Lebesgue measure'', University of Windsor Technical Report, 2005.
+\bibitem{Krantz} S. G. Krantz e H. R. Parks, \emph{A Primer of Real Analytic Functions}. Birkhäuser, 2002.
+\bibitem{Courant} R. Courant e D. Hilbert, \emph{Methods of Mathematical Physics: Partial Differential Equations}, vol. 2. Interscience, 1962.
+\bibitem{Evans} L. C. Evans, \emph{Partial Differential Equations}, 2a ed. AMS, 2010.
+\bibitem{Milnor} J. Milnor, \emph{Singular Points of Complex Hypersurfaces}. Princeton Univ. Press, 1968.
+\bibitem{Brogliato} B. Brogliato, A. Daniilidis, C. Lemaréchal e J. Malick, ``Equivalence and complementarity issues in projected dynamical systems and differential inclusions'', \emph{Math. Programming} 107(3):317--335, 2006.
+\bibitem{Nagurney} A. Nagurney e D. Zhang, \emph{Projected Dynamical Systems and Variational Inequalities with Applications}. Springer, 1996.
+\end{thebibliography}
+\end{document}
