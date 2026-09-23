@@ -1,0 +1,292 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\geometry{margin=2.4cm}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.15em}
+
+\title{\textbf{Obstruções de Medida Positiva em Dinâmicas Multilineares Projetadas de 3-SAT}\\[0.3em]
+\large Uma armadilha hiperarbórea de seis cláusulas e sua ocorrência com densidade linear em fórmulas aleatórias esparsas}
+\author{Thiago Carvalho\\Pesquisador independente\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Rascunho para análise -- derivado da fonte auditada CLG-R v4.0.5 (setembro de 2026)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Estudamos a dinâmica de gradiente projetado da extensão multilinear natural de 3-SAT no hipercubo $[-1,1]^N$. A questão determinística central é identificar o menor componente conexo, linear, 3-uniforme e Berge-acíclico capaz de sustentar uma bacia de medida de Lebesgue positiva cujo limite, após arredondamento Booleano, viole pelo menos uma cláusula. Provamos que o mínimo é de seis cláusulas. A cota inferior para todos os componentes com no máximo cinco cláusulas é obtida sem recorrer a argumentos de variedade estável: cláusulas positivas forçam variáveis de grau um em quantidade suficiente; cada uma dessas variáveis requer uma cláusula nula restauradora distinta; e a estrutura arbórea resultante contém um ramo unitário com uma coordenada-folha globalmente monótona. A convergência a um equilíbrio de energia positiva força então a condição inicial a pertencer a um hiperplano de bordo, portanto a um conjunto de medida nula. Para a cota superior correspondente, apresentamos um motivo explícito de seis cláusulas, denominado M6, com uma família de equilíbrios de dimensão nove na energia um e uma caixa aberta de captura certificada de massa $2^{-53}$. Em seguida, contamos cópias assinadas isoladas de M6 no ensemble aleatório uniforme esparso de 3-SAT. Sua densidade esperada converge para
+\[
+ d(\alpha)=\frac{729}{64}\alpha^6 e^{-39\alpha}.
+\]
+Um argumento de diferenças limitadas por uma única troca de cláusula, combinado com um cálculo binomial condicional de captura, fornece uma cota inferior com probabilidade exponencialmente alta para a densidade residual final de violações. Em particular,
+\[
+ \liminf_{N\to\infty}\mathbb E\rho_{N,\mathrm{mult}}
+ \ge \frac{729}{2^{59}}\alpha^5 e^{-39\alpha}>0,
+\]
+e uma cota conservadora com constante $729/2^{60}$ vale com probabilidade tendendo a um. O resultado diz respeito à dinâmica dessa representação contínua e não implica qualquer conclusão sobre o problema $P$ versus $NP$.
+\end{abstract}
+
+\noindent\textbf{Palavras-chave.} sistemas dinâmicos projetados; 3-SAT; extensão multilinear; hipergrafos aleatórios; desigualdade de Kurdyka--\L{}ojasiewicz; atratores espúrios.
+
+\section{Introdução}
+Um objetivo Booleano pode ser estendido dos vértices de um hipercubo para o seu interior de muitas formas inequivalentes. Mesmo quando duas extensões coincidem exatamente em todas as atribuições Booleanas, sua geometria crítica contínua e sua dinâmica de gradiente projetado podem diferir substancialmente. Este artigo isola um mecanismo concreto na representação multilinear de 3-SAT: um pequeno componente acíclico pode possuir uma bacia aberta que converge para uma família de equilíbrios não estritos de energia positiva.
+
+A contribuição tem duas partes. Primeiro, na classe $HT$ de hipergrafos de cláusulas conexos, lineares, 3-uniformes e Berge-acíclicos, determinamos exatamente o número mínimo de cláusulas necessário para uma bacia ruim de medida positiva. Segundo, mostramos que o motivo mínimo ocorre com densidade linear em um ensemble padrão de fórmulas aleatórias esparsas, de modo que a obstrução não é apenas um exemplo patológico finito.
+
+A cota inferior determinística é deliberadamente elementar depois que a convergência é estabelecida. Ela não utiliza identificação finita de faces ativas, exclusão de comutações de Zeno, mapas de impacto, fórmulas de coárea ou teoria de variedades estáveis. O ponto-chave é uma coordenada-folha globalmente monótona, forçada pela combinatória da hiperárvore.
+
+\section{Dinâmica multilinear projetada de 3-SAT}
+Seja $F$ uma fórmula 3-CNF com $M$ cláusulas sobre $N$ variáveis. Cada cláusula possui vetor de polaridades $\sigma^{(c)}\in\{-1,0,+1\}^N$ com exatamente três entradas não nulas. O potencial multilinear natural de violação é
+\begin{equation}
+\Phi_{\mathrm{mult}}(x)=\sum_{c=1}^M\prod_{j\in c}\frac{1-\sigma_j^{(c)}x_j}{2},
+\qquad x\in\mathcal X=[-1,1]^N.
+\end{equation}
+Nos vértices Booleanos, esse potencial coincide com o número de cláusulas violadas.
+
+Consideramos o fluxo de gradiente projetado
+\begin{equation}
+\dot x=\Pi_{T_{\mathcal X}(x)}\bigl(-\nabla\Phi_{\mathrm{mult}}(x)\bigr).
+\end{equation}
+Para os argumentos combinatórios locais, é conveniente orientar cada variável e usar coordenadas-fator $z_v\in[0,1]$. Cada fator literal em uma cláusula assume então a forma $z_v$ ou $1-z_v$, de modo que
+\[
+\Phi(z)=\sum_{c\in E}P_c(z),\qquad
+P_c(z)=\prod_{v\in c}\ell_{cv}(z_v),\qquad
+\ell_{cv}\in\{z_v,1-z_v\}.
+\]
+Se $z=(1\pm x)/2$, então, no tempo original,
+\begin{equation}
+\dot z=\frac14\Pi_{T_{[0,1]^n}(z)}(-\nabla_z\Phi).
+\end{equation}
+Uma reparametrização temporal positiva não altera equilíbrios nem bacias; por isso, a prova qualitativa de minimalidade pode usar o sistema reescalado $dz/d\tau=\Pi_T(-\nabla_z\Phi)$.
+
+\subsection{Convergência pontual}
+Defina $G(z)=\Phi(z)+\delta_{[0,1]^n}(z)$. Como $\Phi$ é polinomial e a caixa é compacta e semialgébrica, $G$ é própria, semicontínua inferiormente e semialgébrica. A decomposição de Moreau fornece
+\[
+-\nabla\Phi=d+n,\qquad d=\Pi_T(-\nabla\Phi),\qquad n\in N_X,\qquad \langle d,n\rangle=0,
+\]
+logo
+\[
+-d\in\partial G(z),\qquad \|d\|=\operatorname{dist}(0,\partial G(z)).
+\]
+Ao longo de toda solução absolutamente contínua,
+\begin{equation}
+\frac{d}{dt}\Phi(z(t))=-\|\dot z(t)\|^2\quad\text{q.t.p.}
+\end{equation}
+A teoria não suave de Kurdyka--\L{}ojasiewicz para funções definíveis, em conjunto com a boa colocação padrão de sistemas dinâmicos projetados com campo Lipschitz sobre conjuntos convexos fechados, fornece comprimento finito de trajetória e convergência para um único ponto crítico projetado \cite{bolte2007lojasiewicz,bolte2007clarke,brogliato2006equivalence,nagurney1996projected}.
+
+\section{Minimalidade exata em hiperárvores lineares}
+Seja $m_{*,HT}^{\mathrm{mult}}$ o menor número de cláusulas em um componente de $HT$ para o qual o fluxo multilinear projetado possui um conjunto de condições iniciais de medida de Lebesgue positiva cujo limite, após arredondamento Booleano, viole ao menos uma cláusula.
+
+\begin{theorem}[Obstrução hiperarbórea mínima]
+Para componentes conexos, lineares, 3-uniformes e Berge-acíclicos,
+\[
+ m_{*,HT}^{\mathrm{mult}}=6.
+\]
+\end{theorem}
+A cota superior virá da construção explícita M6 da Seção~\ref{sec:m6}. Provamos primeiro a cota inferior.
+
+\subsection{Cláusulas positivas e folhas}
+Fixe um equilíbrio de energia positiva $z^*$ e chame uma cláusula de positiva se $P_c(z^*)>0$.
+
+\begin{lemma}[Uma cláusula nula não equilibra uma coordenada livre]
+Se $0<z_v^*<1$ e $P_c(z^*)=0$, então $\partial_vP_c(z^*)=0$.
+\end{lemma}
+\begin{proof}
+O fator associado a $v$ é estritamente positivo. Como o produto da cláusula é zero, algum outro fator é zero, e esse fator permanece após a diferenciação em relação a $z_v$.
+\end{proof}
+
+Considere uma componente conexa do sub-hipergrafo de cláusulas positivas com $t$ cláusulas. A Berge-aciclicidade e a 3-uniformidade implicam $|V|=2t+1$. Se $L$ denota o número de variáveis de grau um nessa componente positiva,
+\[
+\sum_{v\in V}(\deg_+(v)-1)=3t-(2t+1)=t-1,
+\]
+de modo que no máximo $t-1$ vértices podem ter grau pelo menos dois. Portanto
+\begin{equation}
+L\ge t+2.
+\end{equation}
+Somar sobre várias componentes positivas apenas reforça a desigualdade.
+
+Cada variável-folha positiva deve estar no bordo superior em uma orientação na qual seu fator positivo seja $u_v$. A cláusula positiva a empurra para o interior. O equilíbrio KKT no bordo superior exige, portanto, uma cláusula nula com derivada restauradora não nula. Uma cláusula nula restaura no máximo uma folha positiva: se dois de seus fatores forem zero, a derivada em relação a qualquer um ainda contém o outro fator nulo. Assim, se o componente completo possui $m$ cláusulas,
+\begin{equation}
+m-t\ge L\ge t+2,
+\end{equation}
+logo
+\begin{equation}
+m\ge 2t+2.
+\end{equation}
+Para $m\le5$, isso força $t=1$.
+
+\subsection{Ramo unitário forçado e folha monótona}
+Seja a única cláusula positiva
+\[
+C_0=y_1y_2y_3.
+\]
+Os três fatores satisfazem $y_i^*=1$, e cada um necessita de uma cláusula restauradora distinta. Remover $C_0$ da árvore de incidência deixa três ramos não vazios. Para $m=4$, os números de cláusulas nos ramos são $(1,1,1)$; para $m=5$, são $(1,1,2)$, a menos de permutação. Portanto sempre existe um ramo unitário. Orientando suas duas novas folhas,
+\begin{equation}
+A_y=(1-y)ab.
+\end{equation}
+Como o ramo não contém outra cláusula, $a$ e $b$ são variáveis globais de grau um.
+
+No equilíbrio $y^*=1$,
+\[
+\partial_y\Phi(z^*)=1-a^*b^*\le0,
+\]
+logo $a^*b^*\ge1$ e, como $a^*,b^*\in[0,1]$, obtemos $a^*=b^*=1$. Globalmente,
+\begin{equation}
+\partial_a\Phi=(1-y)b\ge0,
+\end{equation}
+o que implica $\dot a\le0$ sob projeção. Consequentemente, qualquer trajetória que converja a esse equilíbrio positivo precisa satisfazer $a(0)=1$. Sua bacia está contida em um hiperplano de bordo e tem medida de Lebesgue ambiente zero.
+
+Há apenas um número finito de escolhas para a cláusula positiva central e para o ramo unitário em um componente finito. A união dos hiperplanos correspondentes permanece nula. Finalmente, se a energia contínua limite é zero, toda cláusula possui um fator de violação nulo em um endpoint Booleano que satisfaz aquele literal; assim, o arredondamento compatível com os endpoints satisfaz todas as cláusulas. Logo toda bacia ruim tem medida zero para $m\le5$.
+
+\section{A obstrução de seis cláusulas M6}\label{sec:m6}
+Considere a hiperárvore linear assinada sobre os vértices $0,\ldots,12$ com hipera-restas
+\[
+(0,1,2),(0,3,4),(1,5,6),(2,7,8),(3,9,10),(4,11,12),
+\]
+e triplas de sinais
+\[
+(+++) ,(-++),(-++),(-++),(-++),(-++).
+\]
+Em coordenadas-fator, seu potencial é
+\begin{align}
+\Phi={}&yu_1u_2+(1-y)v_1v_2+(1-u_1)a_1b_1+(1-u_2)a_2b_2\notag\\
+&+(1-v_1)c_1d_1+(1-v_2)c_2d_2.
+\end{align}
+
+\begin{proposition}[Família positiva de equilíbrios]
+O conjunto
+\[
+\mathcal M=\{u_1=u_2=v_1=v_2=1,\ 0<y<1,\ a_jb_j>y,\ c_jd_j>1-y\}
+\]
+é uma família de equilíbrios projetados de dimensão nove, com $\Phi=1$, e é localmente constituída por mínimos relativos não estritos.
+\end{proposition}
+
+Mais importante, a caixa aberta
+\begin{equation}
+U=\left\{\frac{31}{64}<y<\frac{33}{64},\quad
+\frac{15}{16}<u_j,v_j,a_j,b_j,c_j,d_j<1\right\}
+\end{equation}
+é capturada por $\mathcal M$ em tempo finito. Durante a captura, use o envelope
+\[
+\frac{7}{16}<y<\frac{9}{16},\qquad
+\min(u_1,u_2,v_1,v_2)\ge\frac{15}{16},\qquad
+\text{todas as folhas}>\frac78.
+\]
+Cada fator central não saturado possui derivada em coordenada-fator de pelo menos $13/64$, portanto velocidade no tempo original de pelo menos $13/256$, alcançando um em no máximo
+\[
+T\le\frac{1/16}{13/256}=\frac{16}{13}.
+\]
+Ao mesmo tempo,
+\[
+|\partial_y\Phi|\le1-(15/16)^2=\frac{31}{256},\qquad
+|\partial_a\Phi|\le\frac1{16},
+\]
+e, portanto,
+\[
+|\dot y|\le\frac{31}{1024},\qquad |\dot a|\le\frac1{64}.
+\]
+Os deslocamentos totais antes da saturação central obedecem
+\[
+|\Delta y|\le\frac{31}{832}<\frac3{64},\qquad
+|\Delta a|\le\frac1{52}<\frac1{16},
+\]
+fechando o bootstrap. Quando os quatro fatores centrais atingem um, todas as velocidades projetadas se anulam.
+
+Como as coordenadas-fator afins são variáveis independentes uniformes em $[0,1]$ sob inicialização uniforme no cubo original,
+\begin{equation}
+\mathbb P(U)=\frac1{32}\left(\frac1{16}\right)^{12}=2^{-53}=:p_0.
+\end{equation}
+Após o arredondamento Booleano, exatamente uma das duas cláusulas centrais é violada; essa conclusão independe da convenção de desempate em $y=1/2$. Junto com a seção anterior, isso prova o teorema de minimalidade.
+
+\section{Ocorrência em fórmulas aleatórias esparsas}
+Seja $M=\lfloor\alpha N\rfloor$, $Q_N=8\binom N3$, e amostre uniformemente entre os subconjuntos de $M$ cláusulas assinadas distintas. Seja $X_{M6}$ o número de componentes assinados isolados pertencentes à órbita de gauge de M6.
+
+O motivo não assinado satisfaz
+\[
+|\operatorname{Aut}(M6)|=128.
+\]
+A ação em embeddings injetivos é livre: se $f\circ g=f$ para um embedding injetivo $f$, então $g$ é a identidade. Cada um dos 13 flips de gauge de variável altera ao menos uma ocorrência literal, produzindo $2^{13}$ padrões assinados distintos para uma cópia estrutural fixa. Assim, o número de embeddings candidatos assinados é
+\[
+\frac{(N)_{13}}{128}\,2^{13}=64(N)_{13}.
+\]
+Para um suporte fixo de 13 variáveis, o isolamento exige que todas as demais cláusulas amostradas estejam completamente fora desse suporte, de modo que
+\[
+Q_{0,N}=8\binom{N-13}{3},
+\]
+e
+\begin{equation}
+\mathbb E X_{M6}
+=\frac{(N)_{13}}{128}\,2^{13}
+\frac{\binom{Q_{0,N}}{M-6}}{\binom{Q_N}{M}}.
+\end{equation}
+Usando
+\[
+\frac{Q_{0,N}}{Q_N}=1-\frac{39}{N}+O(N^{-2})
+\]
+e $M\sim\alpha N$, obtemos
+\begin{equation}
+\frac{\mathbb E X_{M6}}{N}\longrightarrow d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+O modelo de cláusulas independentes tem a mesma densidade líder.
+
+\section{Concentração e cotas inferiores residuais}
+Uma troca de uma cláusula altera $X_{M6}$ em no máximo quatro. Na remoção, no máximo um M6 isolado é destruído e no máximo três são expostos; na adição, no máximo três são destruídos e no máximo um é criado. No martingale de exposição de Doob para a amostra de tamanho fixo, um acoplamento por transposição mostra que as expectativas condicionais possíveis em cada passo pertencem a um intervalo de comprimento no máximo quatro. Portanto, para $N$ suficientemente grande,
+\begin{equation}
+\mathbb P_F\!\left(X_{M6}<\frac34d(\alpha)N\right)
+\le\exp\!\left(-\frac{d(\alpha)^2}{512\alpha}N\right).
+\end{equation}
+
+Condicionado à fórmula, os componentes isolados possuem suportes de variáveis disjuntos. Seus eventos de captura dependem, portanto, de blocos disjuntos da inicialização produto-uniforme e são independentes:
+\[
+Z_N\mid F\sim\operatorname{Binomial}(X_{M6},p_0).
+\]
+Chernoff fornece, no evento acima,
+\[
+\mathbb P_{x_0}\!\left(Z_N<\frac34p_0X_{M6}\mid F\right)
+\le\exp\!\left(-\frac{3p_0d(\alpha)}{128}N\right).
+\]
+Cada componente capturado produz ao menos uma cláusula violada distinta, logo $\rho_{N,\mathrm{mult}}\ge Z_N/M$.
+
+\begin{theorem}[Cotas residuais]
+Para todo $\alpha>0$ fixo,
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{N,\mathrm{mult}}
+\ge\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\]
+Além disso,
+\[
+\mathbb P\!\left(\rho_{N,\mathrm{mult}}\ge\frac{729}{2^{60}}\alpha^5e^{-39\alpha}\right)\longrightarrow1.
+\]
+\end{theorem}
+Uma estimativa condicional aninhada mais forte resulta da combinação das duas cotas exponenciais acima.
+
+\section{Discussão e escopo}
+O teorema determinístico é deliberadamente restrito a componentes conexos, lineares, 3-uniformes e Berge-acíclicos. Não se afirma que M6 seja a menor obstrução entre componentes arbitrariamente cíclicos ou não lineares. Da mesma forma, o teorema de fórmulas aleatórias conta cópias isoladas do motivo certificado; ele não caracteriza todos os atratores de energia positiva.
+
+A prova também separa duas questões que frequentemente são confundidas. O argumento KL estabelece a convergência pontual de cada trajetória multilinear projetada a um único equilíbrio projetado. A construção M6 mostra que convergência pontual não implica convergência a energia residual zero. A obstrução, portanto, não é não convergência, mas convergência para uma família de bordo, não estrita e de energia positiva.
+
+Finalmente, o resultado diz respeito a uma representação contínua específica de SAT. Ele não fornece um algoritmo polinomial para SAT nem implica qualquer separação entre classes de complexidade.
+
+\section{Conclusão}
+Seis cláusulas são necessárias e suficientes, no interior da classe de hiperárvores lineares 3-uniformes, para a existência de uma bacia ruim de medida positiva sob a dinâmica multilinear projetada de 3-SAT. O motivo mínimo ocorre com densidade linear em fórmulas aleatórias esparsas e produz cotas inferiores residuais explícitas tanto em esperança quanto com probabilidade assintoticamente alta. A combinação entre geometria exata de pequenos componentes e contagem em estruturas aleatórias fornece um mecanismo concreto pelo qual uma extensão contínua exata nos vértices Booleanos pode preservar erro discreto não nulo após a convergência.
+
+\begin{thebibliography}{9}
+\bibitem{bolte2007lojasiewicz} J. Bolte, A. Daniilidis e A. Lewis, "The \L{}ojasiewicz inequality for nonsmooth subanalytic functions with applications to subgradient dynamical systems", \emph{SIAM Journal on Optimization}, 17(4):1205--1223, 2007.
+\bibitem{bolte2007clarke} J. Bolte, A. Daniilidis, A. Lewis e M. Shiota, "Clarke subgradients of stratifiable functions", \emph{SIAM Journal on Optimization}, 18(2):556--572, 2007.
+\bibitem{brogliato2006equivalence} B. Brogliato, A. Daniilidis, C. Lemar\'echal e J. Malick, "Equivalence and complementarity issues in projected dynamical systems and differential inclusions", \emph{Mathematical Programming}, 107(3):317--335, 2006.
+\bibitem{nagurney1996projected} A. Nagurney e D. Zhang, \emph{Projected Dynamical Systems and Variational Inequalities with Applications}. Springer, 1996.
+\bibitem{odonnell2014analysis} R. O'Donnell, \emph{Analysis of Boolean Functions}. Cambridge University Press, 2014.
+\end{thebibliography}
+\end{document}
