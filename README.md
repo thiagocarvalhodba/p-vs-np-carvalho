@@ -1,6 +1,6 @@
 # Pesquisa P vs NP: Neuro-Meta-Heurística de Carvalho
 
-**Autor:** Thiago Carvalho  
+**Autor:** Thiago Carvalho  (thiagocarvalho.dba@gmail.com)
 **Ano/Data:** 2026  
 **Ambiente:** Python 3.13 / 3.14 | PyTorch | CPU/CUDA  
 **Diretório do Projeto:** `C:\MathDoCarvalho\P_NP`  
