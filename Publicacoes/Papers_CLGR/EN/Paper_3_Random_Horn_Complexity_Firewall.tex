@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry,microtype,booktabs,tabularx}
+\geometry{margin=2.2cm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\X}{\mathcal X}
+\title{Random and Structured Continuous SAT Dynamics\\\large LP-volume bounds, Horn chains, subcritical Hinge residuals, and a complexity firewall}
+\author{Thiago Carvalho\\Independent Researcher\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Draft for analysis -- derived from audited CLG-R v4.0.5 source (September 2026)}
+\begin{document}
+\maketitle
+\begin{abstract}
+We collect results on random and structured 3-SAT instances under continuous projected dynamics, emphasizing what can and cannot be inferred from low-dimensional trapping phenomena. For the independent-clause model, we prove by Fubini, the Irwin--Hall law and Jensen's inequality that the expected normalized volume of the squared-Hinge zero set is bounded below by $(5/6)^{\lfloor\alpha N\rfloor}$. In the uniform sparse model below the branching threshold $\alpha<1/6$, isolated clauses occur with normalized density $e^{-9\alpha}$. Their three-dimensional projected Hinge dynamics has exact Boolean rounding failure probability $3/32$, yielding a positive residual lower bound $(3/32)e^{-9\alpha}$ in expectation and with asymptotically high probability. We then examine Horn implication chains. Pure chains conserve the coordinate mean, while identification of their continuous limit with Euclidean isotonic projection remains unproved; the associated Sparre--Andersen expression is therefore only conditional. Adding a positive head fact destroys mean conservation and collapses the zero set to a singleton, falsifying a previously contemplated large trapping basin on this family. General Horn clauses have mixed Jacobian signs, so neither standard cooperative nor standard competitive monotonicity theory settles their dynamics. We conclude with an epistemological firewall: continuous glassy or metastable behavior is not a proxy for Turing complexity, as illustrated by the polynomial-time solvability of 3-XOR-SAT despite glassy continuous landscapes studied in the statistical-physics literature.
+\end{abstract}
+\noindent\textbf{Keywords:} random 3-SAT; Hinge relaxation; Horn-SAT; projected dynamics; LP polytope; XORSAT; spin glasses.
+
+\section{Introduction}
+Continuous SAT relaxations can fail for very different reasons. Some representations contain high-dimensional fractional zero-energy regions; others have isolated or structured positive-energy attractors; still others may converge reliably on particular graph families. These mechanisms should be separated before drawing algorithmic conclusions.
+
+This note records four rigorously distinct statements. First, the LP/Hinge zero set has a finite-dimensional expected-volume lower bound in the independent-clause model. Second, isolated clauses alone certify positive subcritical Hinge residuals. Third, Horn implication chains possess an exact conservation law, but a proposed identification with Euclidean isotonic projection remains open and a positive head fact destroys the suspected trap. Fourth, continuous dynamical difficulty must not be confused with computational complexity; 3-XOR-SAT supplies a useful firewall example.
+
+\section{Finite-dimensional lower bound for LP-polytope volume}
+Let $F\sim\mathcal E_{\rm iid}(N,\alpha)$ have $M=\lfloor\alpha N\rfloor$ independent random signed 3-clauses, and let
+\[
+Z(F)=\{x\in[-1,1]^N:g_c(x)\le0\ \forall c\}
+\]
+be the zero-energy polytope of the squared-Hinge relaxation.
+
+\begin{theorem}[Jensen lower bound]
+For $F\sim\mathcal E_{\rm iid}(N,\alpha)$ with $M=\lfloor\alpha N\rfloor$ and $N\ge3$,
+\[
+\mathbb E_F\mu_{\rm norm}(Z(F))\ge\left(\frac56\right)^{\lfloor\alpha N\rfloor}\ge e^{-\alpha N\ln(6/5)}>0.
+\]
+Moreover, $\mathbb E\mu_{\rm norm}(Z)\ge(1/3)^N$ because the universal box $(-1/3,1/3)^N$ is contained in $Z$ for every formula.
+\end{theorem}
+
+\noindent\textit{Proof.} Fubini and clause independence give
+\[
+\mathbb E_F\mu_{\rm norm}(Z)=\int_{[-1,1]^N}p(x)^M\frac{dx}{2^N},
+\]
+where $p(x)$ is the probability that a random clause satisfies its continuous LP inequality at $x$. Averaging jointly over $x$ and random literal signs makes the three literal-satisfaction coordinates i.i.d. $U[0,1]$. For $S_3=U_1+U_2+U_3$,
+\[
+\mathbb P(S_3<1)=\frac16,
+\]
+the volume of the standard three-dimensional simplex, hence $\int p(x)dx/2^N=5/6$. Jensen for $t\mapsto t^M$ gives the bound. \hfill$\square$
+
+The theorem is intentionally one-sided: it gives a nonzero finite-dimensional lower bound but does not determine the true asymptotic exponential rate of the expected volume.
+
+\section{Exact isolated-clause dynamics in the subcritical model}
+Now take $F\sim\mathcal E_{\rm unif}(N,\alpha)$ with $\alpha<1/6$. The clause-exploration branching factor is $6\alpha<1$, so component sizes have an exponential tail and isolated clauses occur with positive density.
+
+Consider one isolated signed clause and transform coordinates by its literal signs so that the active half-space is
+\[
+S=x_1+x_2+x_3<-1.
+\]
+Outside $Z$, the three transformed coordinates move at the same speed. If the initial sum is $S_0<-1$, the trajectory reaches $\partial Z$ at
+\begin{equation}
+U_p^*=U_p(0)+\frac{-1-S_0}{3}.
+\end{equation}
+For almost every initial point, this landing occurs strictly before any coordinate reaches the box boundary.
+
+\begin{proposition}[Exact rounding failure]
+For uniform initialization of an isolated clause,
+\begin{align}
+p_{\rm fail}&=\mathbb P(x_0\in Z\ \text{and rounding violates})\\
+&\quad+\mathbb P(x_0\notin Z\ \text{and the landing point rounds to violation})\\
+&=\frac1{48}+\frac7{96}=\frac3{32}.
+\end{align}
+\end{proposition}
+
+In the uniform sparse ensemble,
+\[
+\mathbb E|\mathcal C_{\rm iso}|=\alpha Ne^{-9\alpha}(1+O(N^{-1})).
+\]
+Normalizing by $M\sim\alpha N$ cancels the factor $\alpha$.
+
+\begin{theorem}[Subcritical Hinge residual]
+For $0<\alpha<1/6$,
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{\rm quad}(\alpha)\ge\frac3{32}e^{-9\alpha}>0.
+\]
+Moreover, for every $\varepsilon>0$,
+\[
+\mathbb P\!\left(\rho_{\rm quad}(\alpha)\ge\frac3{32}e^{-9\alpha}-\varepsilon\right)\to1.
+\]
+\end{theorem}
+
+Conditioned on the formula, isolated clauses have disjoint supports and independent initialization blocks. Each fails with probability $3/32$. The isolated-clause count has variance $O(N)$ in the subcritical regime, so its normalized density concentrates by Chebyshev. Combining the two sources of randomness yields the bound.
+
+\section{Implication chains: a correct conservation law and an open identification}
+Consider
+\[
+x_1\to x_2\to\cdots\to x_K,
+\qquad
+\Phi_{\rm chain}(x)=\sum_{k=1}^{K-1}\left[\max\left(0,\frac{x_k-x_{k+1}}2\right)\right]^2.
+\]
+The internal forces telescope, so
+\begin{equation}
+\frac{d}{dt}\sum_{k=1}^Kx_k(t)=0.
+\end{equation}
+Thus pure chains remain on affine hyperplanes of fixed mean. The zero-energy set is the isotonic cone intersected with the cube,
+\[
+Z=\{x_1\le x_2\le\cdots\le x_K\}.
+\]
+It is tempting to conjecture that continuous Hinge flow converges to the Euclidean isotonic projection $\Pi_Z(x_0)$, but the audited source does not prove this identity, and we retain it as an open analytic problem.
+
+If that identity is assumed, positivity of the first projected coordinate reduces to classical prefix-sum conditions and the Sparre--Andersen survival expression is
+\begin{equation}
+\mathbb P(x_1^*>0\mid x^*=\Pi_Z(x_0))=\frac{\binom{2K}{K}}{4^K}=\frac1{\sqrt{\pi K}}\left(1-\frac1{8K}+O(K^{-2})\right).
+\end{equation}
+This expression is conditional evidence, not an unconditional theorem about the continuous flow.
+
+\section{A positive head fact destroys the proposed trap}
+Add the positive fact through
+\[
+h(x_1)=\left[\max\left(0,\frac{1-x_1}{2}\right)\right]^2.
+\]
+For $x_1<1$,
+\[
+-\partial_{x_1}h=\frac{1-x_1}{2}>0,
+\]
+so mean conservation is broken. More decisively, the zero-energy set of the resulting convex squared-Hinge objective collapses to
+\[
+Z=\{(+1,\ldots,+1)\}.
+\]
+Convergence of projected convex gradient flow forces every trajectory to this singleton. Hence a previously contemplated spurious basin of mass $1-o(1)$ for chains with a positive head fact is false. This negative result is useful because it eliminates a family that cannot witness the desired Hinge--multilinear separation.
+
+\section{Horn clauses and Jacobian sign patterns}
+For a purely negative clause
+\[
+(\neg x_i\lor\neg x_j\lor\neg x_k),\qquad P_c(x)=\frac{(1+x_i)(1+x_j)(1+x_k)}8,
+\]
+we have
+\[
+\partial_{ij}^2P_c=\frac{1+x_k}{8}\ge0,
+\]
+so off-diagonal entries of the Jacobian of the unprojected field $-\nabla\Phi_{\rm mult}$ satisfy $J_{ij}\le0$. Purely negative families therefore have a weakly competitive sign pattern.
+
+General Horn clauses do not preserve one sign. For example, for
+\[
+(\neg x_1\lor\neg x_2\lor x_3)
+\]
+we obtain
+\[
+J_{12}=-\frac{1-x_3}{8}\le0,\qquad J_{13}=\frac{1+x_2}{8}\ge0,\qquad J_{23}=\frac{1+x_1}{8}\ge0.
+\]
+Thus general Horn 3-SAT is not automatically cooperative or competitive under the standard positive-orthant order. Classical monotone-system theorems do not by themselves settle the global dynamics.
+
+\begin{remark}[Open problem]
+The exact spurious-basin mass for general Horn DAGs remains open. The pure implication chain with a positive head fact does not solve the problem because its zero-energy set is a singleton.
+\end{remark}
+
+\section{Relation to the multilinear obstruction}
+The Hinge isolated-clause lower bound and the multilinear M6 obstruction answer different questions. The Hinge mechanism is driven by a large fractional zero-energy polytope and already appears in a single isolated clause. The multilinear mechanism has no interior plateau; its certified positive residual arises from a six-clause positive-energy boundary equilibrium family. In the uniform ensemble, the M6 theorem gives
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{N,\rm mult}(\alpha)\ge\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0
+\]
+for every fixed $\alpha>0$. Thus positivity of the two residuals is not the remaining comparative question; the open random problem is whether one residual is strictly larger than the other in the relevant density regime.
+
+\section{Complexity firewall: 3-XOR-SAT}
+Continuous dynamics should not be used as a surrogate definition of computational difficulty. The firewall example is 3-XOR-SAT: a system of XOR clauses is a linear system over $\mathbb F_2$ and can be solved deterministically in polynomial time by Gaussian elimination. Nevertheless, associated continuous multilinear landscapes may display glassy trapping in experiments, and diluted p-spin/XORSAT models have an extensive statistical-physics literature on metastability \cite{Mezard,Ricci}.
+
+The logical conclusion is simple:
+\begin{quote}
+Failure or success of one particular continuous flow neither implies nor is implied by the Turing complexity of the underlying discrete problem.
+\end{quote}
+Consequently, none of the geometric or dynamical phenomena discussed here constitutes evidence for $P\ne NP$ or $P=NP$.
+
+\section{Research agenda}
+The audited material supports several sharply delimited future questions:
+\begin{enumerate}
+\item prove or refute the isotonic-projection identity for Hinge flow on implication chains;
+\item characterize the global dynamics of general Horn DAGs with mixed Jacobian signs;
+\item extend random residual comparisons beyond isolated local motifs;
+\item establish motif-frequency theorems for planted ensembles;
+\item determine the asymptotic LP-polytope volume rate, since Jensen supplies only a lower bound;
+\item compare Hinge and multilinear residual densities directly in the random clustering regime without confusing positivity with strict separation.
+\end{enumerate}
+
+\section{Conclusion}
+The random and structured results in this note separate mechanisms that are easy to conflate. The Hinge LP polytope has a positive finite-dimensional expected-volume lower bound. Isolated clauses alone certify a positive subcritical Hinge residual. Pure Horn chains obey an exact conservation law, but the proposed isotonic limit remains unproved, and a positive unit fact destroys the suspected large trap. General Horn clauses have mixed interaction signs. Finally, 3-XOR-SAT illustrates why continuous dynamical difficulty and discrete computational complexity must remain conceptually separate.
+
+\begin{thebibliography}{9}
+\bibitem{Krzakala} F. Krzakala, A. Montanari, F. Ricci-Tersenghi, G. Semerjian and L. Zdeborov\'a, ``Gibbs states and the set of solutions of random constraint satisfaction problems'', \emph{PNAS} 104(25):10318--10323, 2007.
+\bibitem{Mezard} M. M\'ezard, F. Ricci-Tersenghi and R. Zecchina, ``Two solutions to diluted p-spin models and XORSAT problems'', \emph{J. Stat. Phys.} 111(3):505--533, 2003.
+\bibitem{Ricci} F. Ricci-Tersenghi, ``Being glassy without being hard to solve'', \emph{Science} 330(6011):1639--1640, 2010.
+\bibitem{Brogliato} B. Brogliato, A. Daniilidis, C. Lemar\'echal and J. Malick, ``Equivalence and complementarity issues in projected dynamical systems and differential inclusions'', \emph{Math. Programming} 107(3):317--335, 2006.
+\bibitem{Nagurney} A. Nagurney and D. Zhang, \emph{Projected Dynamical Systems and Variational Inequalities with Applications}. Springer, 1996.
+\end{thebibliography}
+\end{document}
