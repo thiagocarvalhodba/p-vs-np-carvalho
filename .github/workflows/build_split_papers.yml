@@ -1,0 +1,91 @@
+name: Build split papers
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'Publicacoes/Papers/**/*.tex'
+      - '.github/workflows/build_split_papers.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install TeX toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            latexmk \
+            lmodern \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-lang-portuguese \
+            poppler-utils
+
+      - name: Compile all six papers
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in \
+            Publicacoes/Papers/EN/Paper_1_M6_Minimal_Obstruction.tex \
+            Publicacoes/Papers/EN/Paper_2_Geometry_Continuous_3SAT_Relaxations.tex \
+            Publicacoes/Papers/EN/Paper_3_Random_Horn_Complexity_Firewall.tex \
+            Publicacoes/Papers/PT/Paper_1_M6_Obstrucao_Minima_PT.tex \
+            Publicacoes/Papers/PT/Paper_2_Geometria_Relaxacoes_3SAT_PT.tex \
+            Publicacoes/Papers/PT/Paper_3_Dinamicas_Aleatorias_Horn_PT.tex
+          do
+            dir="$(dirname "$f")"
+            base="$(basename "$f")"
+            echo "=== Compiling $f ==="
+            (
+              cd "$dir"
+              latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error "$base"
+            )
+          done
+
+      - name: Validate author email in PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for pdf in Publicacoes/Papers/EN/*.pdf Publicacoes/Papers/PT/*.pdf
+          do
+            echo "Checking $pdf"
+            pdftotext "$pdf" - | grep -F "thiagocarvalho.dba@gmail.com"
+            if pdftotext "$pdf" - | grep -F "thiago.carvalho.dba@gmail.com"; then
+              echo "Old email found in $pdf"
+              exit 1
+            fi
+          done
+
+      - name: Commit generated PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Publicacoes/Papers/EN/*.pdf Publicacoes/Papers/PT/*.pdf
+          if git diff --cached --quiet; then
+            echo "No PDF changes."
+            exit 0
+          fi
+          git commit -m "build(papers): compile English and Portuguese PDFs"
+          git push origin master
+
+      - name: Upload PDFs as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: split-papers-en-pt
+          path: |
+            Publicacoes/Papers/EN/*.pdf
+            Publicacoes/Papers/PT/*.pdf
+          retention-days: 30
