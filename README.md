@@ -149,7 +149,9 @@ O uso, redistribuição, cópia ou engenharia reversa sem autorização expressa
 Para mais informações, consulte o arquivo [LICENSE](LICENSE).
 
 
-Para "leigo entender":
+---
+
+## 📄 Para "leigo entender":
 
 Artigo 1: Paper_1_M6_Minimal_Obstruction.pdf
 Artigo 2: Paper_2_Geometry_Continuous_3SAT_Relaxations
