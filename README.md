@@ -147,3 +147,81 @@ python Fontes/fase3_op3_extreme_scale.py
 Todos os direitos reservados a **Thiago Carvalho (2026)**.  
 O uso, redistribuição, cópia ou engenharia reversa sem autorização expressa é estritamente proibido.  
 Para mais informações, consulte o arquivo [LICENSE](LICENSE).
+
+
+Para "leigo entender":
+
+Artigo 1: Paper_1_M6_Minimal_Obstruction.pdf
+Artigo 2: Paper_2_Geometry_Continuous_3SAT_Relaxations
+Artigo 3: Paper_3_Random_Horn_Complexity_Firewall
+
+
+Para entender esses três artigos de forma intuitiva, imagine o seguinte cenário geral:
+
+Você tem um grande quebra-cabeça de lógica pura (o famoso problema **3-SAT**), composto por milhares de interruptores que só podem estar **ligados (Verdadeiro)** ou **desligados (Falso)**, e uma lista de regras que precisam ser satisfeitas ao mesmo tempo.
+
+Como testar todas as combinações de interruptores uma a uma é impraticável, muitos cientistas tentam transformar esse quebra-cabeça discreto numa **paisagem montanhosa contínua** (onde os interruptores viram botões giratórios que deslizam suavemente entre $-1$ e $+1$). A ideia é soltar uma bolinha no topo dessa montanha e deixar a gravidade (o método de gradiente) guiá-la para o vale mais fundo, que corresponderia à solução do quebra-cabeça.
+
+Os três artigos investigam **quando, como e por que essa bolinha fica presa no caminho**.
+
+---
+
+### Artigo 1: O Tamanho Mínimo de uma Armadilha
+
+*(Minimal Positive-Measure Obstructions in Projected Multilinear 3-SAT Dynamics)*
+
+Este artigo responde a uma pergunta fundamental: **qual é a menor estrutura de regras lógicas interligadas capaz de criar um "buraco" onde a bolinha fica presa com certeza e não consegue sair?**
+
+* **A barreira dos 5:** O autor prova matematicamente que, em redes lógicas lineares sem ciclos (árvores), qualquer conjunto com até 5 regras é incapaz de prender a bolinha em uma região real de volume positivo. Nesses casos menores, o relevo força sempre uma ponta solta que escorrega a bolinha em direção à saída ou para a borda.
+
+
+* **A armadilha mínima (M6):** O trabalho descobre que a menor armadilha possível exige exatamente **6 regras interligadas** num desenho específico de 13 variáveis chamado $M6$. Nesse formato, cria-se um vale plano falso onde a bolinha para, e, ao tentar arredondar a posição da bolinha para "ligado" ou "desligado", pelo menos uma regra é violada.
+
+
+* **Presença no mundo real:** O artigo demonstra que essa armadilha de 6 regras não é uma raridade teórica; ela surge com frequência previsível em fórmulas aleatórias grandes, provando que o método da bolinha sempre vai errar uma fração das vezes em problemas reais esparsos.
+
+
+
+---
+
+### Artigo 2: O Formato da Montanha Muda Tudo
+
+*(Geometry of Continuous 3-SAT Relaxations: Hinge Plateaus, Harmonic Multilinear Landscapes, and Softplus Convexity)*
+
+Este artigo mostra que **a maneira matemática como você desenha a montanha altera completamente o relevo**, mesmo que no final todos os topos e vales de interruptores ligados/desligados representem exatamente o mesmo quebra-cabeça. O autor compara três tipos de relevo:
+
+* **O Relevo Hinge (Quadrático):** Cria um **platô central gigantesco e perfeitamente plano**. Quando a bolinha entra nessa região central neutra (onde os interruptores estão no meio-termo), a inclinação é zero absoluto. A bolinha simplesmente estagna sem saber para onde ir, resultando em respostas indecisas.
+
+
+* **O Relevo Multilinear:** Funciona como uma superfície cheia de curvas no estilo "sela de cavalo" ou batata frita *Pringles* (uma superfície harmônica). Por definição geométrica, esse relevo não tem buracos ou poços no meio do terreno; a bolinha nunca fica presa no interior, mas pode ficar retida nas quinas e paredes da caixa.
+
+
+* **O Relevo Softplus:** Uma tentativa de arredondar o terreno para que ele se torne uma "tigela" com um único fundo (convexo). O artigo revela o preço dessa escolha: para a tigela ser fiel às regras lógicas, as encostas tornam-se paredes verticais e o fundo fica tão plano que os computadores perdem a precisão numérica (acontece o chamado *underflow*, em que os números viram zero na memória da máquina).
+
+
+
+---
+
+### Artigo 3: Cadeias de Causa e Efeito e o "Alarme Falso" da Complexidade
+
+*(Random and Structured Continuous SAT Dynamics: LP-Volume Bounds, Horn Chains, Subcritical Hinge Residuals, and a Complexity Firewall)*
+
+Este terceiro artigo investiga problemas com encadeamento lógico (como "se A, então B; se B, então C") e faz um alerta essencial para a ciência da computação:
+
+* **Cadeias lógicas de Horn:** O artigo estuda o que acontece em correntes de causa e efeito. Ele mostra que a bolinha move as variáveis em bloco, como uma média que se equilibra. Mas basta introduzir uma única certeza factual no início da cadeia ("A é verdadeiro com certeza") para todo o platô desaparecer e a bolinha correr direto para a resposta correta.
+
+
+* **Regras isoladas falham sozinhas:** O autor calcula que, no modelo Hinge, mesmo uma regra simples e totalmente isolada do resto do quebra-cabeça tem uma probabilidade exata de $3/32$ (cerca de $9{,}4\%$) de fazer a bolinha parar num ponto que resulta em erro.
+
+
+* **O "Firewall" (O Alarme Falso):** É a mensagem epistemológica mais importante do trabalho. Muitas vezes, ao ver uma bolinha rolando ficar presa num labirinto montanhoso hipercomplexo, pesquisadores concluem precipitadamente que o problema original é intrinsecamente "impossível" ou insolúvel rapidamente para computadores ($P \neq NP$). O artigo usa o problema **3-XOR-SAT** para desmentir isso: o relevo contínuo dele é um pesadelo intransponível para a bolinha, mas qualquer computador de bolso resolve o mesmo problema em milissegundos usando eliminação simples de matrizes (álgebra linear de colégio). O fato de a bolinha se perder diz respeito apenas às limitações do método contínuo, e não à verdadeira dificuldade do problema lógico.
+
+
+
+---
+
+### Resumo em Uma Frase
+O **Artigo 2** mostra como diferentes fórmulas criam paisagens montanhosas completamente distintas; o **Artigo 1** encontra o menor buraco possível nessas paisagens que consegue capturar o algoritmo; e o **Artigo 3** demonstra como regras em cadeia se comportam e adverte que a bolinha ficar presa não significa que o problema seja computacionalmente impossível de resolver.
+
+
+
