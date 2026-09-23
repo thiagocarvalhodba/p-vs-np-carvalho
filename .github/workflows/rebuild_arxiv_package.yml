@@ -211,4 +211,5 @@ jobs:
           fi
 
           git commit -m "build(publications): regenerate manuscript and bilingual papers"
+          git pull --rebase origin master
           git push origin HEAD:master
