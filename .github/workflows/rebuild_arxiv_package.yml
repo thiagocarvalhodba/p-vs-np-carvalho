@@ -12,6 +12,7 @@ on:
       - 'Publicacoes/*.jpg'
       - 'Publicacoes/*.jpeg'
       - 'Publicacoes/*.pdf'
+      - 'Publicacoes/Papers_CLGR/**/*.tex'
 
 permissions:
   contents: write
@@ -100,6 +101,34 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      - name: Compile bilingual CLG-R papers
+        shell: bash
+        run: |
+          set -euo pipefail
+          for dir in Publicacoes/Papers_CLGR/EN Publicacoes/Papers_CLGR/PT; do
+            for tex in "$dir"/*.tex; do
+              echo "Compiling $tex"
+              latexmk -pdf                 -interaction=nonstopmode                 -halt-on-error                 -file-line-error                 "$tex"
+              pdf="${tex%.tex}.pdf"
+              test -s "$pdf"
+              log="${tex%.tex}.log"
+              if grep -Eq                 'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)'                 "$log"; then
+                echo "Unresolved citation/reference in $tex"
+                exit 1
+              fi
+            done
+          done
+
+      - name: Upload bilingual paper PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: clg-r-bilingual-papers
+          path: |
+            Publicacoes/Papers_CLGR/EN/*.pdf
+            Publicacoes/Papers_CLGR/PT/*.pdf
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Build deterministic arXiv source package
         shell: bash
         run: |
@@ -162,18 +191,24 @@ jobs:
           print("ZIP SHA256:", hashlib.sha256(out.read_bytes()).hexdigest())
           PY
 
-      - name: Commit regenerated package
+      - name: Commit regenerated publication artifacts
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- Publicacoes/arxiv_package.zip; then
-            echo "arxiv_package.zip already current"
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add Publicacoes/arxiv_package.zip Publicacoes/ARXIV_PACKAGE_MANIFEST.txt
           git add Publicacoes/CLG_FOUNDATIONS_ARXIV.bbl || true
+          git add -f Publicacoes/CLG_FOUNDATIONS_ARXIV.pdf
+          git add -f Publicacoes/Papers_CLGR/EN/*.pdf
+          git add -f Publicacoes/Papers_CLGR/PT/*.pdf
           git add -f Publicacoes/*.png || true
-          git commit -m "build(arxiv): regenerate v4.0.5 source package"
+
+          if git diff --cached --quiet; then
+            echo "Publication artifacts already current"
+            exit 0
+          fi
+
+          git commit -m "build(publications): regenerate manuscript and bilingual papers"
           git push origin HEAD:master
