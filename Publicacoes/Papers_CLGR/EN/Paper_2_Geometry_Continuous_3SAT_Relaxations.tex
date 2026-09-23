@@ -1,0 +1,217 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry,microtype,booktabs,tabularx}
+\geometry{margin=2.2cm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\X}{\mathcal X}
+\title{Geometry of Continuous 3-SAT Relaxations\\\large Hinge plateaus, harmonic multilinear landscapes, and Softplus convexity}
+\author{Thiago Carvalho\\Independent Researcher\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Draft for analysis -- derived from audited CLG-R v4.0.5 source (September 2026)}
+\begin{document}
+\maketitle
+\begin{abstract}
+We compare three continuous representations of 3-SAT on the hypercube $[-1,1]^N$: a squared Hinge penalty for the clause-wise linear relaxation, the natural multilinear extension of the Boolean violation count, and a Softplus smoothing of the same affine clause violations. Although all three are tied to the same discrete clause structure, their interior geometries are qualitatively different. We prove that the Hinge relaxation contains the universal fractional box $(-1/3,1/3)^N$, where both energy and gradient vanish, giving a direct geometric manifestation of the $0.5$ interior slack of the clause-wise LP relaxation. Under a non-degeneracy condition on the Boolean objective, the critical sets of the multilinear and Softplus relaxations have Lebesgue measure zero. The multilinear extension is harmonic, hence has no interior local minima; every non-degenerate interior critical point is a saddle, and every strict local minimum on the projected cube is a Boolean vertex. In contrast, the Softplus Hessian factors globally as $V^TW(x)V\succeq0$ and becomes positive definite when the clause incidence matrix has full column rank. We derive explicit spectral and Lipschitz bounds, including $L_\beta=\Theta(\beta)$. Finally, for the squared Hinge flow we prove a universal centripetal contraction identity and show that the set of projected equilibria coincides exactly with the clause-wise LP polytope. These results isolate representation geometry, rather than Boolean vertex values alone, as a mathematically decisive property of continuous SAT formulations.
+\end{abstract}
+\noindent\textbf{Keywords:} 3-SAT; continuous relaxation; harmonic functions; projected gradient flow; Softplus; convexity; LP relaxation.
+
+\section{Formulation and three continuous representations}
+Let $F$ be a 3-CNF formula with $M$ clauses on $N$ variables and let $\sigma^{(c)}\in\{-1,0,+1\}^N$ denote the polarity vector of clause $c$. We assume three distinct variables per clause and that every variable appears in at least one clause. Define
+\begin{equation}
+g_c(x)=-\frac12\bigl(1+\sigma^{(c)}\cdot x\bigr),\qquad x\in\X=[-1,1]^N.
+\end{equation}
+At a Boolean vertex $s\in\{-1,+1\}^N$, $g_c(s)=1$ exactly when clause $c$ is violated.
+
+We study the potentials
+\begin{align}
+\Phi_{\rm quad}(x)&=\sum_{c=1}^M[\max(0,g_c(x))]^2,\\
+\Phi_{\rm mult}(x)&=\sum_{c=1}^M\prod_{j\in c}\frac{1-\sigma_j^{(c)}x_j}{2},\\
+\Phi_{\rm soft}(x)&=\sum_{c=1}^M\frac1\beta\log\bigl(1+e^{\beta g_c(x)}\bigr),\qquad \beta>0.
+\end{align}
+The dynamics is projected gradient flow
+\begin{equation}
+\dot x=\Pi_{T_\X(x)}(-\nabla\Phi(x)).
+\end{equation}
+For the measure-zero results we assume that the Boolean energy is nonconstant, equivalently $\operatorname{Var}(E_{\rm disc})>0$.
+
+\section{The universal Hinge plateau}
+Let $\mathcal U_N=(-1/3,1/3)^N$.
+
+\begin{theorem}[Central fractional box]
+For every 3-CNF formula,
+\[
+\Phi_{\rm quad}(x)=0,\qquad \nabla\Phi_{\rm quad}(x)=0\qquad \forall x\in\mathcal U_N.
+\]
+Hence the normalized volume of the zero-energy LP polytope is at least $(1/3)^N$. If the Boolean energy is nonconstant, the spurious critical set has normalized measure at least $(1/6)^N$.
+\end{theorem}
+
+\noindent\textit{Proof.} For $x\in\mathcal U_N$ and any clause,
+\[
+\sum_{j\in c}\sigma_j^{(c)}x_j\ge-\sum_{j\in c}|x_j|>-1,
+\]
+so $g_c(x)<0$ and all Hinge terms are simultaneously inactive. For a fixed clause, introduce literal-satisfaction coordinates
+\[
+q_{cj}=\frac{1+\sigma_j^{(c)}x_j}{2}.
+\]
+Then $g_c(x)\le0$ is equivalent to $\sum_{j\in c}q_{cj}\ge1$. At the origin every $q_{cj}=1/2$, so the LP inequality has exact slack $3/2-1=0.5$. \hfill$\square$
+
+\section{Measure-zero critical sets outside the Hinge plateau}
+\begin{theorem}[Analytic critical sets]
+If the Boolean energy is nonconstant,
+\[
+\mu\{\nabla\Phi_{\rm mult}=0\}=0,\qquad \mu\{\nabla\Phi_{\rm soft}=0\}=0.
+\]
+\end{theorem}
+
+\noindent\textit{Proof.} The multilinear potential is a nonconstant polynomial. Hence at least one partial derivative is a nonzero polynomial, whose zero set has Lebesgue measure zero \cite{Okamoto,Caron}; the full critical set is contained in it. The Softplus potential is real analytic. The Hessian factorization in Section~\ref{sec:soft} gives
+\[
+\Delta\Phi_{\rm soft}(x)=\frac34\sum_{c=1}^M w_c(x)>0,
+\]
+so the function is nonconstant. Some analytic partial derivative is nontrivial, and its zero set has measure zero \cite{Krantz}. \hfill$\square$
+
+\section{Harmonicity of the multilinear extension}
+\begin{theorem}[Harmonic saddle structure]
+The multilinear potential satisfies
+\[
+\Delta\Phi_{\rm mult}\equiv0.
+\]
+Consequently, it has no interior local minimum. Every non-degenerate interior critical point is a hyperbolic saddle with at least one positive and one negative Hessian eigenvalue; every interior critical point has lower-energy points in every neighborhood.
+\end{theorem}
+
+\noindent\textit{Proof.} Every clause term is multilinear in distinct variables, so all pure second derivatives $\partial_{ii}^2\Phi_{\rm mult}$ vanish. The Strong Minimum Principle excludes interior local minima for nonconstant harmonic functions \cite{Courant,Evans}. At a non-degenerate critical point the symmetric Hessian is invertible and has zero trace, forcing eigenvalues of both signs. In the degenerate case, absence of a local minimum already yields arbitrarily nearby lower-energy points; curve selection can strengthen the conclusion \cite{Milnor}. \hfill$\square$
+
+\section{Boundary faces and projected attractors}
+Fixing coordinates at $\pm1$ preserves multilinearity in the free coordinates, so the intrinsic Laplacian on every positive-dimensional face also vanishes.
+
+\begin{theorem}[Face minima inherit vertex energies]
+If $x^*$ is a relative local minimum of $\Phi_{\rm mult}$ in the relative interior of a face $\mathcal F$, then $\Phi_{\rm mult}$ is constant on $\mathcal F$ and
+\[
+\Phi_{\rm mult}(x^*)=E_{\rm disc}(v)\qquad\text{for every Boolean vertex }v\in\mathcal V(\mathcal F).
+\]
+In particular, every strict local minimum relative to the cube is a Boolean vertex.
+\end{theorem}
+
+\begin{corollary}[Isolated stable equilibria are vertices]
+Under projected multilinear flow, every isolated asymptotically stable equilibrium belongs to $\{-1,+1\}^N$.
+\end{corollary}
+
+\noindent\textit{Proof.} Moreau projection gives
+\[
+\frac{d}{dt}\Phi_{\rm mult}(x(t))=-\|\Pi_{T_\X(x)}(-\nabla\Phi_{\rm mult})\|^2\le0.
+\]
+An isolated asymptotically stable equilibrium must be a strict local minimum: nearby states with lower energy cannot converge upward, while a distinct point of equal energy either immediately drops below that value or is another equilibrium. The preceding theorem then forces a zero-dimensional face. \hfill$\square$
+
+The word \emph{isolated} is essential: positive-dimensional non-strict attracting continua can occur on boundary faces; the M6 motif gives an explicit example.
+
+\section{Softplus Hessian factorization and conditioning}\label{sec:soft}
+Let $V\in\mathbb R^{M\times N}$ have row $v_c^T=-\frac12(\sigma^{(c)})^T$. Define
+\[
+w_c(x)=\beta\,\sigma(\beta g_c(x))\bigl(1-\sigma(\beta g_c(x))\bigr)>0,\qquad W(x)=\operatorname{diag}(w_1,\ldots,w_M),
+\]
+where $\sigma(u)=(1+e^{-u})^{-1}$.
+
+\begin{theorem}[Exact Hessian factorization]
+\[
+\nabla^2\Phi_{\rm soft}(x)=V^TW(x)V\succeq0.
+\]
+Thus $\Phi_{\rm soft}$ is globally convex. If $\operatorname{rank}(V)=N$, it is strictly convex and
+\[
+\kappa(\nabla^2\Phi_{\rm soft})\le\kappa(W)\,\kappa(V^TV).
+\]
+\end{theorem}
+
+\noindent Since $g_c(x)=v_c^Tx-1/2$,
+\[
+\nabla\Phi_{\rm soft}=V^T\sigma(\beta g),\qquad \nabla^2\Phi_{\rm soft}=V^TWV.
+\]
+For every $z$, $z^TV^TWVz=\|W^{1/2}Vz\|^2\ge0$; Courant--Fischer gives the condition-number bound when $V^TV$ is positive definite.
+
+\section{Softplus stiffness and finite precision}
+Let $d_{\max}$ be the maximum number of clauses incident to any variable.
+
+\begin{theorem}[Gradient Lipschitz scale]
+The global constant $L_\beta=\sup_x\|\nabla^2\Phi_{\rm soft}(x)\|_2$ satisfies
+\[
+\frac3{16}\beta\le L_\beta\le\frac{3d_{\max}}{16}\beta.
+\]
+For $\mathcal U_N(\rho)=(-\rho,\rho)^N$, $\rho<1/3$,
+\[
+\|\nabla\Phi_{\rm soft}\|_\infty\le\frac M2e^{-\beta(1-3\rho)/2},\qquad
+\|\nabla\Phi_{\rm soft}\|_2\le\frac{\sqrt3M}{2}e^{-\beta(1-3\rho)/2}.
+\]
+\end{theorem}
+
+Since $w_c\le\beta/4$,
+\[
+\|\nabla^2\Phi_{\rm soft}\|_2\le\frac\beta4\lambda_{\max}(V^TV).
+\]
+The absolute row sum of $V^TV$ associated with variable $i$ is at most $3d_i/4$, and Gershgorin gives the upper bound. If $g_c(x)=0$ for one clause, then $w_c=\beta/4$ and that rank-one summand has spectral value $3\beta/16$, giving the lower bound.
+
+At the origin, the relevant exponential scale is $e^{-\beta/2}$. The idealized crossings of the smallest normal, smallest subnormal, and half the smallest subnormal are, in binary32, approximately $174.67$, $206.56$, and $207.94$; in binary64, $1416.79$, $1488.88$, and $1490.27$. These numbers describe the exponential factor, not implementation-independent thresholds for a specific sigmoid routine; FTZ/DAZ modes may zero subnormals earlier.
+
+\section{Universal centripetal contraction of squared Hinge flow}
+Let $Z=\{x\in\X:g_c(x)\le0\ \forall c\}$.
+
+For every active clause $g_c(x)>0$,
+\[
+\sigma^{(c)}\cdot x=-(2g_c(x)+1),
+\]
+and
+\[
+-\nabla\Phi_{\rm quad}(x)=\sum_{c\in\mathrm{act}(x)}g_c(x)\sigma^{(c)}.
+\]
+Therefore
+\begin{equation}
+\langle-\nabla\Phi_{\rm quad}(x),x\rangle=-\sum_{c\in\mathrm{act}(x)}\bigl(2g_c(x)^2+g_c(x)\bigr)<0.
+\end{equation}
+
+\begin{theorem}[Centripetal contraction]
+For projected squared-Hinge flow,
+\[
+\frac{d}{dt}\|x(t)\|_2^2<0\qquad\text{whenever }x(t)\notin Z.
+\]
+Moreover, the projected equilibrium set is exactly $Z$, and every trajectory satisfies
+\[
+\operatorname{dist}(x(t),Z)\to0.
+\]
+\end{theorem}
+
+\noindent\textit{Proof.} Write $v=-\nabla\Phi_{\rm quad}=d+n$ by Moreau decomposition, where $d=\Pi_{T_\X(x)}v$ and $n\in N_\X(x)$. For the box, $\langle x,n\rangle\ge0$, hence
+\[
+\langle x,d\rangle\le\langle x,v\rangle<0
+\]
+outside $Z$. Thus the projected radial norm decreases strictly. If a projected equilibrium existed outside $Z$, then $v\in N_\X(x)$ would imply $\langle x,v\rangle\ge0$, contradiction. Inside $Z$, the gradient vanishes. LaSalle then yields convergence in distance to $Z$. \hfill$\square$
+
+\section{Synthesis}
+The three representations agree on Boolean clause values but differ strongly in the interior:
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lXXX@{}}
+\toprule
+ & Hinge & Multilinear & Softplus\\
+\midrule
+Interior geometry & full-dimensional zero-gradient plateau & harmonic, no interior minima & convex; strictly convex if $\operatorname{rank}(V)=N$\\
+Critical set & positive volume & measure zero under nondegeneracy & measure zero under nondegeneracy\\
+Projected equilibria & exactly the LP polytope $Z$ & vertices and possible boundary continua & minimizers of a convex smooth objective\\
+Large-parameter effect & exact flatness & not applicable & $L_\beta=\Theta(\beta)$ and exponentially small gradients in the central box\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The main computational lesson is not that one representation is universally superior, but that agreement on Boolean vertices does not determine continuous optimization geometry.
+
+\section{Conclusion}
+Three Boolean-equivalent continuous representations of 3-SAT display sharply different landscapes. Squared Hinge creates a universal LP plateau and contracts trajectories toward that polytope. The multilinear extension is harmonic, ruling out interior minima but allowing non-strict attracting boundary families. Softplus is globally convex and can be strictly convex, at the cost of increasing stiffness and exponentially small central gradients as $\beta$ grows. These structural distinctions provide a rigorous basis for analyzing solver behavior at the representation level rather than solely at the discrete objective level.
+
+\begin{thebibliography}{9}
+\bibitem{Okamoto} M. Okamoto, ``Distinctness of the eigenvalues of a quadratic form in a multivariate sample'', \emph{Ann. Statist.}, 1973.
+\bibitem{Caron} R. Caron and T. Traynor, ``The zero set of a polynomial'', technical note, 2005.
+\bibitem{Krantz} S. Krantz and H. Parks, \emph{A Primer of Real Analytic Functions}. Birkh\"auser, 2002.
+\bibitem{Courant} R. Courant and D. Hilbert, \emph{Methods of Mathematical Physics, Vol. II}. Wiley, 1962.
+\bibitem{Evans} L. Evans, \emph{Partial Differential Equations}. AMS, 2010.
+\bibitem{Milnor} J. Milnor, \emph{Singular Points of Complex Hypersurfaces}. Princeton Univ. Press, 1968.
+\end{thebibliography}
+\end{document}
