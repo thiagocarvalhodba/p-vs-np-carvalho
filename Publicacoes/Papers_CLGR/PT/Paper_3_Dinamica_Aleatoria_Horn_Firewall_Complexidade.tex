@@ -1,0 +1,201 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry,microtype,booktabs,tabularx}
+\geometry{margin=2.2cm}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{remark}[theorem]{Observação}
+\newcommand{\X}{\mathcal X}
+\title{Dinâmica Contínua de SAT em Instâncias Aleatórias e Estruturadas\\\large Cotas de volume LP, cadeias Horn, resíduos Hinge subcríticos e um firewall de complexidade}
+\author{Thiago Carvalho\\Pesquisador Independente\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Versão para análise -- derivada da fonte auditada CLG-R v4.0.5 (setembro de 2026)}
+\begin{document}
+\maketitle
+\begin{abstract}
+Reunimos resultados sobre instâncias aleatórias e estruturadas de 3-SAT sob dinâmica contínua projetada, enfatizando o que pode e o que não pode ser inferido de fenômenos de aprisionamento em baixa dimensão. Para o modelo de cláusulas independentes, provamos por Fubini, pela lei de Irwin--Hall e por Jensen que o volume normalizado esperado do conjunto de energia zero Hinge é limitado inferiormente por $(5/6)^{\lfloor\alpha N\rfloor}$. No modelo uniforme esparso abaixo do limiar de ramificação $\alpha<1/6$, cláusulas isoladas aparecem com densidade normalizada $e^{-9\alpha}$. Sua dinâmica Hinge projetada tridimensional tem probabilidade exata de falha de arredondamento $3/32$, produzindo a cota residual positiva $(3/32)e^{-9\alpha}$ em esperança e com probabilidade assintoticamente alta. Em seguida examinamos cadeias de implicação Horn. Cadeias puras conservam a média das coordenadas, mas a identificação de seu limite contínuo com a projeção isotônica Euclidiana permanece não demonstrada; a expressão associada de Sparre--Andersen é, portanto, apenas condicional. A adição de um fato positivo na cabeça destrói a conservação da média e colapsa o conjunto de energia zero para um singleton, refutando uma grande bacia de aprisionamento anteriormente cogitada nessa família. Cláusulas Horn gerais têm sinais mistos no Jacobiano, de modo que nem a teoria cooperativa padrão nem a competitiva padrão resolvem a dinâmica. Concluímos com um firewall epistemológico: comportamento contínuo vítreo ou metaestável não é proxy de complexidade de Turing, como mostra a solubilidade polinomial de 3-XOR-SAT apesar de paisagens contínuas vítreas estudadas na literatura de física estatística.
+\end{abstract}
+\noindent\textbf{Palavras-chave:} 3-SAT aleatório; relaxação Hinge; Horn-SAT; dinâmica projetada; politopo LP; XORSAT; vidros de spin.
+
+\section{Introdução}
+Relaxações contínuas de SAT misturam três perguntas logicamente distintas: a geometria da relaxação de energia zero, a dinâmica de um fluxo particular e a complexidade computacional do problema discreto subjacente. O objetivo central desta nota é manter esses níveis separados.
+
+Começamos por um resultado geométrico em dimensão finita para o politopo LP por cláusula induzido pela relaxação Hinge quadrática. Depois isolamos um mecanismo aleatório subcrítico que cria densidade residual positiva após arredondamento Hinge: cláusulas isoladas. Em seguida revisitamos cadeias de implicação e cláusulas Horn gerais, registrando resultados rigorosos e um problema analítico ainda aberto. Por fim, explicamos por que aprisionamento dinâmico não pode, por si só, servir como evidência de separação entre classes de complexidade.
+
+Usamos
+\[
+g_c(x)=-\frac12(1+\sigma^{(c)}\cdot x),\qquad \Phi_{\rm quad}(x)=\sum_c[\max(0,g_c(x))]^2,
+\]
+no cubo $\X=[-1,1]^N$, com fluxo $\dot x=\Pi_{T_\X(x)}(-\nabla\Phi_{\rm quad}(x))$. Distinguimos o modelo de cláusulas independentes $\mathcal E_{\rm iid}(N,\alpha)$ do modelo uniforme de cláusulas distintas $\mathcal E_{\rm unif}(N,\alpha)$.
+
+\section{Cota finita-dimensional para o volume do politopo LP}
+Seja
+\[
+Z(F)=\{x\in[-1,1]^N:g_c(x)\le0\ \text{para toda cláusula }c\}.
+\]
+
+\begin{theorem}[Cota de Jensen]
+Para $F\sim\mathcal E_{\rm iid}(N,\alpha)$ com $M=\lfloor\alpha N\rfloor$ e $N\ge3$,
+\[
+\mathbb E_F\mu_{\rm norm}(Z(F))\ge\left(\frac56\right)^{\lfloor\alpha N\rfloor}\ge e^{-\alpha N\ln(6/5)}>0.
+\]
+Além disso, $\mathbb E\mu_{\rm norm}(Z)\ge(1/3)^N$ porque a caixa universal $(-1/3,1/3)^N$ está contida em $Z$ para toda fórmula.
+\end{theorem}
+
+\noindent\textit{Prova.} Fubini e independência das cláusulas dão
+\[
+\mathbb E_F\mu_{\rm norm}(Z)=\int_{[-1,1]^N}p(x)^M\frac{dx}{2^N},
+\]
+onde $p(x)$ é a probabilidade de uma cláusula aleatória satisfazer a desigualdade LP contínua em $x$. Ao promediar conjuntamente sobre $x$ e os sinais aleatórios dos literais, as três coordenadas de satisfação tornam-se i.i.d. $U[0,1]$. Para $S_3=U_1+U_2+U_3$,
+\[
+\mathbb P(S_3<1)=\frac16,
+\]
+o volume do simplex padrão tridimensional; logo $\int p(x)dx/2^N=5/6$. Jensen para $t\mapsto t^M$ fornece a cota. \hfill$\square$
+
+O teorema é deliberadamente unilateral: fornece cota não nula em dimensão finita, mas não determina a taxa exponencial assintótica do volume esperado verdadeiro.
+
+\section{Dinâmica exata de cláusula isolada no modelo subcrítico}
+Agora tomamos $F\sim\mathcal E_{\rm unif}(N,\alpha)$ com $\alpha<1/6$. O fator de ramificação da exploração de cláusulas é $6\alpha<1$, logo os tamanhos de componentes têm cauda exponencial e componentes isolados aparecem com densidade positiva.
+
+Considere uma cláusula assinada isolada e transforme as coordenadas por seus sinais literais, de modo que a meia-espaço ativa seja descrita por
+\[
+S=x_1+x_2+x_3<-1.
+\]
+Fora de $Z$, as três coordenadas transformadas se movem à mesma velocidade. Se a soma inicial é $S_0<-1$, a trajetória chega a $\partial Z$ em
+\begin{equation}
+U_p^*=U_p(0)+\frac{-1-S_0}{3}.
+\end{equation}
+Para quase todo ponto inicial, a chegada ocorre estritamente antes de qualquer coordenada atingir o bordo da caixa.
+
+\begin{proposition}[Falha exata de arredondamento]
+Para inicialização uniforme de uma cláusula isolada,
+\begin{align}
+p_{\rm fail}&=\mathbb P(x_0\in Z\ \text{e o arredondamento viola})\\
+&\quad+\mathbb P(x_0\notin Z\ \text{e o ponto de chegada arredonda para violação})\\
+&=\frac1{48}+\frac7{96}=\frac3{32}.
+\end{align}
+\end{proposition}
+
+No ensemble uniforme esparso,
+\[
+\mathbb E|\mathcal C_{\rm iso}|=\alpha Ne^{-9\alpha}(1+O(N^{-1})).
+\]
+Normalizar por $M\sim\alpha N$ cancela o fator $\alpha$.
+
+\begin{theorem}[Residual Hinge subcrítico]
+Para $0<\alpha<1/6$,
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{\rm quad}(\alpha)\ge\frac3{32}e^{-9\alpha}>0.
+\]
+Além disso, para todo $\varepsilon>0$,
+\[
+\mathbb P\!\left(\rho_{\rm quad}(\alpha)\ge\frac3{32}e^{-9\alpha}-\varepsilon\right)\to1.
+\]
+\end{theorem}
+
+Condicionado à fórmula, cláusulas isoladas têm suportes disjuntos e blocos independentes de inicialização. Cada uma falha com probabilidade $3/32$. A contagem de cláusulas isoladas tem variância $O(N)$ no regime subcrítico, então sua densidade normalizada concentra por Chebyshev. A combinação dessas duas fontes de aleatoriedade fornece a cota.
+
+\section{Cadeias de implicação: uma lei de conservação correta e uma identificação aberta}
+Considere
+\[
+x_1\to x_2\to\cdots\to x_K,
+\qquad
+\Phi_{\rm chain}(x)=\sum_{k=1}^{K-1}\left[\max\left(0,\frac{x_k-x_{k+1}}2\right)\right]^2.
+\]
+As forças internas telescopam, de modo que
+\begin{equation}
+\frac{d}{dt}\sum_{k=1}^Kx_k(t)=0.
+\end{equation}
+Assim, cadeias puras permanecem em hiperplanos afins de média fixa. O conjunto de energia zero é o cone isotônico intersectado com o cubo,
+\[
+Z=\{x_1\le x_2\le\cdots\le x_K\}.
+\]
+É tentador conjecturar que o fluxo Hinge contínuo converge à projeção isotônica Euclidiana $\Pi_Z(x_0)$, mas a fonte auditada não prova essa identidade e a mantemos como problema analítico aberto.
+
+Se essa identidade for assumida, a positividade da primeira coordenada projetada se reduz às condições clássicas de somas parciais e a expressão de sobrevivência de Sparre--Andersen é
+\begin{equation}
+\mathbb P(x_1^*>0\mid x^*=\Pi_Z(x_0))=\frac{\binom{2K}{K}}{4^K}=\frac1{\sqrt{\pi K}}\left(1-\frac1{8K}+O(K^{-2})\right).
+\end{equation}
+Essa expressão é evidência condicional, não teorema incondicional do fluxo contínuo.
+
+\section{Um fato positivo na cabeça destrói a armadilha proposta}
+Adicione o fato positivo por
+\[
+h(x_1)=\left[\max\left(0,\frac{1-x_1}{2}\right)\right]^2.
+\]
+Para $x_1<1$,
+\[
+-\partial_{x_1}h=\frac{1-x_1}{2}>0,
+\]
+logo a conservação da média é quebrada. Mais decisivamente, o conjunto de energia zero do objetivo convexo Hinge quadrático resultante colapsa para
+\[
+Z=\{(+1,\ldots,+1)\}.
+\]
+A convergência do fluxo de gradiente projetado convexo força toda trajetória a esse singleton. Portanto uma bacia espúria de massa $1-o(1)$ anteriormente cogitada para cadeias com fato positivo na cabeça é falsa. Esse resultado negativo é útil porque elimina uma família que não pode testemunhar a separação Hinge--multilinear procurada.
+
+\section{Cláusulas Horn e padrões de sinal do Jacobiano}
+Para uma cláusula puramente negativa
+\[
+(\neg x_i\lor\neg x_j\lor\neg x_k),\qquad P_c(x)=\frac{(1+x_i)(1+x_j)(1+x_k)}8,
+\]
+temos
+\[
+\partial_{ij}^2P_c=\frac{1+x_k}{8}\ge0,
+\]
+portanto as entradas fora da diagonal do Jacobiano do campo não projetado $-\nabla\Phi_{\rm mult}$ satisfazem $J_{ij}\le0$. Famílias puramente negativas têm, assim, padrão fracamente competitivo.
+
+Cláusulas Horn gerais não preservam um único sinal. Por exemplo, para
+\[
+(\neg x_1\lor\neg x_2\lor x_3)
+\]
+obtemos
+\[
+J_{12}=-\frac{1-x_3}{8}\le0,\qquad J_{13}=\frac{1+x_2}{8}\ge0,\qquad J_{23}=\frac{1+x_1}{8}\ge0.
+\]
+Logo Horn-3-SAT geral não é automaticamente cooperativo nem competitivo na ordem positiva padrão. Teoremas clássicos de sistemas monotônicos não resolvem, isoladamente, a dinâmica global.
+
+\begin{remark}[Problema aberto]
+A massa exata da bacia espúria para DAGs Horn gerais permanece aberta. A cadeia de implicação pura com fato positivo na cabeça não resolve o problema porque seu conjunto de energia zero é um singleton.
+\end{remark}
+
+\section{Relação com a obstrução multilinear}
+A cota Hinge por cláusulas isoladas e a obstrução multilinear M6 respondem a perguntas distintas. O mecanismo Hinge é dirigido pelo grande politopo fracionário de energia zero e já aparece em uma única cláusula isolada. O mecanismo multilinear não possui platô interior; seu residual positivo certificado surge de uma família de equilíbrios de bordo com seis cláusulas. No ensemble uniforme, o teorema M6 dá
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{N,\rm mult}(\alpha)\ge\frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0
+\]
+para todo $\alpha>0$ fixo. Assim, a positividade isolada dos dois resíduos não é a questão comparativa remanescente; o problema aleatório aberto é saber se um residual é estritamente maior que o outro no regime relevante de densidade.
+
+\section{Firewall de complexidade: 3-XOR-SAT}
+Dinâmica contínua não deve ser usada como definição substituta de dificuldade computacional. O exemplo de firewall é 3-XOR-SAT: um sistema de cláusulas XOR é um sistema linear sobre $\mathbb F_2$ e pode ser resolvido em tempo polinomial determinístico por eliminação de Gauss. Ainda assim, paisagens multilineares contínuas associadas podem exibir aprisionamento vítreo em experimentos, e modelos p-spin diluídos/XORSAT possuem extensa literatura de metaestabilidade \cite{Mezard,Ricci}.
+
+A conclusão lógica é simples:
+\begin{quote}
+Falha ou sucesso de um fluxo contínuo particular não implica, nem é implicado, pela complexidade de Turing do problema discreto subjacente.
+\end{quote}
+Consequentemente, nenhum dos fenômenos geométricos ou dinâmicos aqui discutidos constitui evidência para $P\ne NP$ ou $P=NP$.
+
+\section{Agenda de pesquisa}
+O material auditado sustenta perguntas futuras bem delimitadas:
+\begin{enumerate}
+\item provar ou refutar a identidade com projeção isotônica para o fluxo Hinge em cadeias de implicação;
+\item caracterizar a dinâmica global de DAGs Horn gerais com sinais mistos no Jacobiano;
+\item estender comparações residuais aleatórias além de motivos locais isolados;
+\item estabelecer teoremas de frequência de motivos para ensembles plantados;
+\item determinar a taxa assintótica do volume do politopo LP, pois Jensen fornece apenas cota inferior;
+\item comparar diretamente as densidades residuais Hinge e multilinear no regime de clustering aleatório sem confundir positividade com separação estrita.
+\end{enumerate}
+
+\section{Conclusão}
+Os resultados aleatórios e estruturados desta nota separam mecanismos que podem ser facilmente confundidos. O politopo LP Hinge tem cota inferior positiva de volume esperado em dimensão finita. Cláusulas isoladas, por si só, certificam residual Hinge positivo no regime subcrítico. Cadeias Horn puras obedecem uma lei de conservação exata, mas seu limite isotônico proposto permanece não demonstrado, e um fato unitário positivo elimina a grande bacia suspeita. Cláusulas Horn gerais têm sinais mistos de interação. Finalmente, 3-XOR-SAT mostra por que dificuldade dinâmica contínua e complexidade computacional discreta devem permanecer conceitualmente separadas.
+
+\begin{thebibliography}{9}
+\bibitem{Krzakala} F. Krzakala, A. Montanari, F. Ricci-Tersenghi, G. Semerjian e L. Zdeborová, ``Gibbs states and the set of solutions of random constraint satisfaction problems'', \emph{PNAS} 104(25):10318--10323, 2007.
+\bibitem{Mezard} M. Mézard, F. Ricci-Tersenghi e R. Zecchina, ``Two solutions to diluted p-spin models and XORSAT problems'', \emph{J. Stat. Phys.} 111(3):505--533, 2003.
+\bibitem{Ricci} F. Ricci-Tersenghi, ``Being glassy without being hard to solve'', \emph{Science} 330(6011):1639--1640, 2010.
+\bibitem{Brogliato} B. Brogliato, A. Daniilidis, C. Lemaréchal e J. Malick, ``Equivalence and complementarity issues in projected dynamical systems and differential inclusions'', \emph{Math. Programming} 107(3):317--335, 2006.
+\bibitem{Nagurney} A. Nagurney e D. Zhang, \emph{Projected Dynamical Systems and Variational Inequalities with Applications}. Springer, 1996.
+\end{thebibliography}
+\end{document}
