@@ -1,0 +1,219 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry,microtype,booktabs,tabularx}
+\geometry{margin=2.2cm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\X}{\mathcal X}
+\newcommand{\Mmot}{\mathcal M}
+\title{Minimal Positive-Measure Obstructions in Projected Multilinear 3-SAT Dynamics\\\large A six-clause hypertree trap and its linear-density occurrence in sparse random formulas}
+\author{Thiago Carvalho\\Independent Researcher\\\texttt{thiagocarvalho.dba@gmail.com}}
+\date{Draft for analysis -- derived from audited CLG-R v4.0.5 source (September 2026)}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study projected gradient dynamics for the natural multilinear extension of 3-SAT on the hypercube $[-1,1]^N$. The main deterministic question is the smallest connected, linear, 3-uniform, Berge-acyclic component that can support a positive-Lebesgue-measure basin whose limiting Boolean rounding violates at least one clause. We prove that the minimum is six clauses. The lower bound for all components with at most five clauses is obtained without stable-manifold arguments: positive clauses force degree-one variables, each such variable requires a distinct restoring zero clause, and the resulting tree structure contains a unit branch with a globally monotone leaf coordinate. Convergence to a positive-energy equilibrium then forces the initial condition onto a boundary hyperplane, hence a null set. For the matching upper bound we give an explicit six-clause motif M6 with a nine-dimensional equilibrium family at energy one and an open certified capture box of mass $2^{-53}$. We then count isolated signed copies of M6 in the uniform sparse random 3-SAT ensemble. Their expected density converges to
+\[
+d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha}.
+\]
+A one-swap bounded-difference argument and a conditional binomial capture calculation yield an exponentially high-probability lower bound on the final residual violation density. In particular,
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{N,\mathrm{mult}}\ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0,
+\]
+and a conservative bound with constant $729/2^{60}$ holds with probability tending to one. The result concerns the dynamics of this continuous representation and has no implication for the $P$ versus $NP$ problem.
+\end{abstract}
+\noindent\textbf{Keywords:} projected dynamical systems; 3-SAT; multilinear extension; random hypergraphs; Kurdyka--\L{}ojasiewicz inequality; spurious attractors.
+
+\section{Introduction}
+A Boolean objective can be extended from the vertices of a hypercube to its interior in many inequivalent ways. Even when two extensions agree exactly on all Boolean assignments, their continuous critical geometry and projected gradient dynamics may differ substantially. We isolate one concrete mechanism in the multilinear 3-SAT representation: a small acyclic component can possess an open basin converging to a non-strict positive-energy equilibrium family.
+
+The contribution has two parts. First, within the class HT of connected, linear, 3-uniform, Berge-acyclic clause hypergraphs, we determine the exact minimum number of clauses required for a positive-measure bad basin. Second, we show that the minimal motif occurs with linear density in a sparse random ensemble, so the obstruction is not merely a finite pathological example.
+
+\section{Projected multilinear 3-SAT dynamics}
+Let $F$ be a 3-CNF formula with $M$ clauses on $N$ variables. For each clause $c$, let $\sigma^{(c)}\in\{-1,0,+1\}^N$ be its polarity vector, with exactly three nonzero entries. The natural multilinear violation potential is
+\begin{equation}
+\Phi_{\rm mult}(x)=\sum_{c=1}^M\prod_{j\in c}\frac{1-\sigma_j^{(c)}x_j}{2},\qquad x\in\X=[-1,1]^N.
+\end{equation}
+At Boolean vertices it equals the number of violated clauses. We consider the projected gradient flow
+\begin{equation}
+\dot x=\Pi_{T_\X(x)}(-\nabla\Phi_{\rm mult}(x)).
+\end{equation}
+For local arguments, orient each variable and use factor coordinates $z_v\in[0,1]$, so that every literal factor is $z_v$ or $1-z_v$. If $z=(1\pm x)/2$, then in the original time variable
+\begin{equation}
+\dot z=\frac14\Pi_{T_{[0,1]^n}(z)}(-\nabla_z\Phi).
+\end{equation}
+A positive time reparametrization does not change orbits, equilibria, or basins.
+
+\subsection{Pointwise convergence}
+Define $G(z)=\Phi(z)+\delta_{[0,1]^n}(z)$. Since $\Phi$ is polynomial and the box is compact semialgebraic, $G$ is proper, lower semicontinuous, and semialgebraic. Moreau decomposition gives
+\[
+-\nabla\Phi=d+n,\qquad d=\Pi_T(-\nabla\Phi),\qquad n\in N_X,\qquad \langle d,n\rangle=0,
+\]
+so
+\[
+-d\in\partial G(z),\qquad \|d\|=\operatorname{dist}(0,\partial G(z)),
+\]
+and along every absolutely continuous solution,
+\begin{equation}
+\frac{d}{dt}\Phi(z(t))=-\|\dot z(t)\|^2\quad\text{a.e.}
+\end{equation}
+Nonsmooth Kurdyka--\L{}ojasiewicz theory for definable functions, combined with well-posedness of projected dynamical systems with Lipschitz vector fields on closed convex sets, yields finite length and convergence to a single projected critical point \cite{BDL,BDLS,Brogliato,Nagurney}.
+
+\section{Exact minimality on linear hypertrees}
+Let $m_{*,HT}^{\rm mult}$ be the smallest number of clauses in an HT component for which there exists a positive-Lebesgue-measure set of initial conditions whose rounded limit violates at least one clause.
+
+\begin{theorem}[Minimal obstruction]
+For connected, linear, 3-uniform, Berge-acyclic components,
+\[
+m_{*,HT}^{\rm mult}=6.
+\]
+\end{theorem}
+
+Fix a positive-energy equilibrium $z^*$ and call a clause positive if $P_c(z^*)>0$.
+
+\begin{lemma}[Zero clause and free coordinate]
+If $0<z_v^*<1$ and $P_c(z^*)=0$, then $\partial_vP_c(z^*)=0$.
+\end{lemma}
+\noindent Indeed, the factor associated with $v$ is strictly positive; since the product is zero, another factor vanishes and remains after differentiating with respect to $v$.
+
+Consider a connected component of the positive-clause subhypergraph with $t$ clauses. Berge acyclicity and 3-uniformity give $|V|=2t+1$. If $L$ denotes the number of degree-one variables in that component,
+\[
+\sum_{v\in V}(\deg_+(v)-1)=3t-(2t+1)=t-1,
+\]
+hence
+\begin{equation}
+L\ge t+2.
+\end{equation}
+Each positive leaf must lie on the upper boundary, in an orientation where its positive factor is $u_v$, and it requires a restoring zero clause. A zero clause cannot restore two leaves simultaneously, because two zero factors annihilate both relevant derivatives. If the full component has $m$ clauses,
+\[
+m-t\ge L\ge t+2,
+\]
+so $m\ge2t+2$. For $m\le5$, necessarily $t=1$.
+
+\subsection{Unit branch and monotone leaf}
+If the unique positive clause is $C_0=y_1y_2y_3$, then $y_i^*=1$ and each $y_i$ requires a distinct restoring clause. Removing $C_0$ from the incidence tree produces three nonempty branches. For $m=4$ the branch sizes are $(1,1,1)$; for $m=5$ they are $(1,1,2)$. Thus a unit branch always exists. After orientation,
+\begin{equation}
+A_y=(1-y)ab.
+\end{equation}
+The variables $a,b$ are global leaves. At the equilibrium $y^*=1$,
+\[
+\partial_y\Phi(z^*)=1-a^*b^*\le0,
+\]
+so $a^*=b^*=1$. Moreover, globally,
+\begin{equation}
+\partial_a\Phi=(1-y)b\ge0,
+\end{equation}
+therefore $\dot a\le0$. Any trajectory converging to this equilibrium must have $a(0)=1$. Its basin is contained in a boundary hyperplane and has zero ambient measure. Since there are only finitely many possible choices of central clause and unit branch, the relevant union remains null. If the limiting energy is zero, each clause has at least one violation factor equal to zero at a satisfying Boolean endpoint, so compatible rounding satisfies the entire formula. Therefore every bad basin has measure zero for $m\le5$.
+
+\section{The six-clause obstruction M6}
+Consider the signed hypertree on vertices $0,\ldots,12$, with edges
+\[
+(0,1,2),(0,3,4),(1,5,6),(2,7,8),(3,9,10),(4,11,12),
+\]
+and sign triples $(+++),(-++),(-++),(-++),(-++),(-++)$. In factor coordinates,
+\begin{align}
+\Phi={}&yu_1u_2+(1-y)v_1v_2+(1-u_1)a_1b_1+(1-u_2)a_2b_2\\
+&+(1-v_1)c_1d_1+(1-v_2)c_2d_2.
+\end{align}
+
+\begin{proposition}[Positive equilibrium family]
+The set
+\[
+\Mmot=\{u_1=u_2=v_1=v_2=1,\ 0<y<1,\ a_jb_j>y,\ c_jd_j>1-y\}
+\]
+is a nine-dimensional family of projected equilibria with $\Phi=1$ and consists locally of non-strict relative minima.
+\end{proposition}
+
+The open box
+\begin{equation}
+U=\left\{\frac{31}{64}<y<\frac{33}{64},\quad \frac{15}{16}<u_j,v_j,a_j,b_j,c_j,d_j<1\right\}
+\end{equation}
+is captured by $\Mmot$ in finite time. In the envelope $7/16<y<9/16$, with the four core factors at least $15/16$ and the leaves above $7/8$, each unsaturated core factor has factor-coordinate derivative at least $13/64$, hence original-time speed at least $13/256$. It reaches $1$ in time at most
+\[
+T\le \frac{1/16}{13/256}=\frac{16}{13}.
+\]
+Meanwhile,
+\[
+|\partial_y\Phi|\le\frac{31}{256},\qquad |\partial_a\Phi|\le\frac1{16},
+\]
+so
+\[
+|\dot y|\le\frac{31}{1024},\qquad |\dot a|\le\frac1{64}.
+\]
+The total drifts satisfy
+\[
+|\Delta y|\le\frac{31}{832}<\frac3{64},\qquad |\Delta a|\le\frac1{52}<\frac1{16},
+\]
+which closes the bootstrap. Once the four core factors saturate, all projected speeds vanish. Under uniform initialization in the original cube, the factor coordinates are independent uniform variables on $[0,1]$, and
+\begin{equation}
+\mathbb P(U)=\frac1{32}\left(\frac1{16}\right)^{12}=2^{-53}=:p_0.
+\end{equation}
+After rounding, exactly one of the two central clauses is violated, independently of the tie convention at $y=1/2$.
+
+\section{Occurrence in sparse random formulas}
+Let $M=\lfloor\alpha N\rfloor$ and $Q_N=8\binom N3$. Sample uniformly among the $M$-subsets of distinct signed clauses. Let $X_{M6}$ denote the number of isolated components in the gauge orbit of M6.
+
+The unsigned motif has $|\operatorname{Aut}(M6)|=128$. Its action on injective embeddings is free, and the 13 gauge flips produce $2^{13}$ distinct signed patterns per structural copy. For a fixed 13-variable support,
+\[
+Q_{0,N}=8\binom{N-13}{3},
+\]
+and
+\begin{equation}
+\mathbb E X_{M6}=\frac{(N)_{13}}{128}\,2^{13}\frac{\binom{Q_{0,N}}{M-6}}{\binom{Q_N}{M}}.
+\end{equation}
+Since
+\[
+\frac{Q_{0,N}}{Q_N}=1-\frac{39}{N}+O(N^{-2}),
+\]
+we obtain
+\begin{equation}
+\frac{\mathbb E X_{M6}}{N}\longrightarrow d(\alpha)=\frac{729}{64}\alpha^6e^{-39\alpha}.
+\end{equation}
+The independent-clause model has the same leading constant.
+
+\section{Concentration and residual lower bounds}
+A single clause swap changes $X_{M6}$ by at most four in absolute value. In the Doob exposure martingale for the fixed-size model, a transposition coupling places the possible conditional expectations at each step in an interval of length at most four. For all sufficiently large $N$,
+\begin{equation}
+\mathbb P_F\!\left[X_{M6}<\frac34d(\alpha)N\right]\le \exp\!\left[-\frac{d(\alpha)^2}{512\alpha}N\right].
+\end{equation}
+Conditioned on the formula, isolated components have disjoint supports, so their capture events depend on independent blocks of the product initialization:
+\[
+Z_N\mid F\sim\operatorname{Binomial}(X_{M6},p_0).
+\]
+Chernoff gives, on the event above,
+\[
+\mathbb P_{x_0}\!\left[Z_N<\frac34p_0X_{M6}\mid F\right]\le \exp\!\left[-\frac{3p_0d(\alpha)}{128}N\right].
+\]
+Each capture yields at least one distinct violated clause, hence $\rho_{N,\mathrm{mult}}\ge Z_N/M$.
+
+\begin{theorem}[Residual lower bounds]
+For every fixed $\alpha>0$,
+\[
+\liminf_{N\to\infty}\mathbb E\rho_{N,\mathrm{mult}}\ge \frac{729}{2^{59}}\alpha^5e^{-39\alpha}>0.
+\]
+Moreover,
+\[
+\mathbb P\!\left(\rho_{N,\mathrm{mult}}\ge \frac{729}{2^{60}}\alpha^5e^{-39\alpha}\right)\to1.
+\]
+\end{theorem}
+
+\section{Discussion and scope}
+The deterministic theorem is restricted to connected, linear, 3-uniform, Berge-acyclic components. We do not claim that M6 is the smallest obstruction among cyclic or nonlinear components. The random result counts isolated copies of the certified motif; it does not characterize every positive-energy attractor.
+
+The proof also separates two issues that are often conflated. The KL argument establishes pointwise convergence of each projected multilinear trajectory to a single equilibrium. The M6 construction shows that pointwise convergence does not imply zero residual energy. The obstruction is therefore not nonconvergence, but convergence to a non-strict positive-energy boundary family.
+
+\section{Conclusion}
+Six clauses are necessary and sufficient, within linear 3-uniform hypertrees, for a positive-measure bad basin under projected multilinear 3-SAT dynamics. The minimal motif occurs with linear density in sparse random formulas and produces explicit lower bounds on the residual in expectation and with asymptotically high probability. The combination of exact small-component geometry with counting in random structures gives a concrete mechanism by which a continuous extension that is exact on Boolean vertices can preserve nonzero discrete error after convergence.
+
+\begin{thebibliography}{9}
+\bibitem{BDL} J. Bolte, A. Daniilidis and A. Lewis, ``The \L{}ojasiewicz inequality for nonsmooth subanalytic functions with applications to subgradient dynamical systems'', \emph{SIAM J. Optim.} 17(4):1205--1223, 2007.
+\bibitem{BDLS} J. Bolte, A. Daniilidis, A. Lewis and M. Shiota, ``Clarke subgradients of stratifiable functions'', \emph{SIAM J. Optim.} 18(2):556--572, 2007.
+\bibitem{Brogliato} B. Brogliato, A. Daniilidis, C. Lemar\'echal and J. Malick, ``Equivalence and complementarity issues in projected dynamical systems and differential inclusions'', \emph{Math. Programming} 107(3):317--335, 2006.
+\bibitem{Nagurney} A. Nagurney and D. Zhang, \emph{Projected Dynamical Systems and Variational Inequalities with Applications}. Springer, 1996.
+\end{thebibliography}
+\end{document}
