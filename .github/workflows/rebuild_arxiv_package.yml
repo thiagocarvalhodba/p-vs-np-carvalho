@@ -106,17 +106,19 @@ jobs:
         run: |
           set -euo pipefail
           for dir in Publicacoes/Papers_CLGR/EN Publicacoes/Papers_CLGR/PT; do
-            for tex in "$dir"/*.tex; do
-              echo "Compiling $tex"
-              latexmk -pdf                 -interaction=nonstopmode                 -halt-on-error                 -file-line-error                 "$tex"
+            pushd "$dir" >/dev/null
+            for tex in *.tex; do
+              echo "Compiling $dir/$tex"
+              latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error "$tex"
               pdf="${tex%.tex}.pdf"
               test -s "$pdf"
               log="${tex%.tex}.log"
-              if grep -Eq                 'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)'                 "$log"; then
-                echo "Unresolved citation/reference in $tex"
+              if grep -Eq 'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)' "$log"; then
+                echo "Unresolved citation/reference in $dir/$tex"
                 exit 1
               fi
             done
+            popd >/dev/null
           done
 
       - name: Upload bilingual paper PDFs
